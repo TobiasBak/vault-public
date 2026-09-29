@@ -1,0 +1,5 @@
+.pi-subagents/
+.playwright-cli/
+.knowledge-bank/state/
+__pycache__/
+*.py[cod]

@@ -1,0 +1,9 @@
+{
+  "enabled": ["knowledge"],
+  "reviews": [
+    {
+      "id": "knowledge",
+      "objective": "Review changed knowledge for contradictions, unnecessary duplication, misplaced or low-value material, lost scope, and violations of the vault operating contract. Report only actionable issues."
+    }
+  ]
+}

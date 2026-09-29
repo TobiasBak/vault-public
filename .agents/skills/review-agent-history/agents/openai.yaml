@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Agent History"
+  short_description: "Find reusable knowledge or recurring correction patterns"
+  default_prompt: "Use $review-agent-history to review selected Pi or Codex histories for reusable findings or recurring corrections."
