@@ -2,7 +2,7 @@
 
 DeepSeek V4.1 Flash works through Codex using an OpenCode Go subscription. The agent harness and model supplier are separate choices: T3 Code → Codex → OpenCode Go → DeepSeek. Installing the OpenCode CLI does not mean DeepSeek must run in the OpenCode harness.
 
-Tobias added this as an option for testing on 2026-09-10, not as a replacement for his daily [[Working with GPT-6 Astra|Astra]] setup.
+Tobias added this as an option for testing on 2026-09-10, not as the daily default. [[Choosing and steering coding models]] routes the current daily choice.
 
 ## Installed T3 option
 

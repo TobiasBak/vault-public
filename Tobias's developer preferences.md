@@ -1,6 +1,6 @@
 # Tobias's developer preferences
 
-User-confirmed through 2026-09-27. Weigh these preferences heavily when they fit the purpose, evidence, risk, and project constraints. They are decision guidance, not requirements to force onto every system. Repository reality and explicit project policy take precedence.
+User-confirmed through 2026-09-29. Weigh these preferences heavily when they fit the purpose, evidence, risk, and project constraints. They are decision guidance, not requirements to force onto every system. Repository reality and explicit project policy take precedence.
 
 ## Priorities and architecture
 
@@ -89,7 +89,7 @@ Treat consequential numeric limits as tripwires rather than unexplained constant
 
 Here, “number” means a consequential engineering limit or threshold. Its receipt is the basis that justifies it: measurement where safe, otherwise an external contract or explicit safety, risk, or resource policy. Hard safety and integrity limits precede experimentation.
 
-As of 2026-09-05, Tobias uses GPT-6 Astra in Codex for day-to-day coding-agent work and prefers Codex's native tooling over custom workers or model-routing policies. T3 Code remains the normal interactive environment; use it with Codex (reconsider Pi there only if T3 Code supports it), or use another interface when the task or available tooling calls for it. See [[Working with GPT-6 Astra]].
+On 2026-09-29, Tobias chose GPT-6.1 Sol over Astra for day-to-day coding-agent work because of its capability-to-cost-per-task tradeoff, using Artificial Analysis's benchmark comparison rather than only token prices. This replaces the earlier Astra preference; it is a chosen default, not merely a candidate awaiting a benchmark. He still prefers Codex's native tooling over custom workers or model-routing policies, without an added instruction encouraging delegation. T3 Code remains the normal interactive environment; use it with Codex (reconsider Pi there only if T3 Code supports it), or use another interface when the task or available tooling calls for it. [[Choosing and steering coding models]] owns model capabilities and the scoped cost comparison. This decision does not select a new reasoning effort or change installed configuration by itself.
 
 Phrase agent authorization guidance as an activatable condition, such as “invoke the live workflow only when Tobias allows it,” rather than as an absolute prohibition. A clear current request to perform the scoped action is the required authorization and should not cause a redundant confirmation or a refusal based on the default-off wording. Reserve “never,” “prohibited,” and equivalent hard language for constraints that Tobias genuinely cannot override in the current instruction hierarchy.
 

@@ -1,8 +1,6 @@
 # Working with GPT-6 Astra
 
-Tobias chose Astra for daily interactive Codex work on 2026-09-05 and prefers Codex CLI's native tooling over custom workers and model-routing policies. This preference does not call for an added instruction encouraging delegation.
-
-This preference concerns interactive work. [[Choosing and steering coding models]] covers current OpenAI and Anthropic alternatives without changing that preference.
+This note owns Astra-specific behavior and integration guidance, not the daily model choice. [[Tobias's developer preferences]] owns that choice; [[Choosing and steering coding models]] compares current capabilities and costs.
 
 ## Context and instructions
 

@@ -71,6 +71,7 @@ A graph asks what may run next and what crosses the boundary. A loop asks how th
 - [[Text-as-image context compression]] - a cautionary hypothesis about lossy, model-specific visual text compression.
 - [[Programmatic tool calling]] - distinguish ordinary tool calls, hosted programmatic orchestration, agent-host behavior, and MCP.
 - [[Subagent delegation]] - delegate bounded, independently useful work when isolation or parallelism outweighs coordination cost.
+- [[Always-on agents and OpenAI dots]] - persistent responsibilities, background follow-through, cloud and local execution, and useful ongoing work.
 - [[Irreducible codebase documentation]] - keep rationale, domain language, navigation, and external context in documents while making the code express executable knowledge directly.
 
 ## Evaluation and improvement
@@ -87,7 +88,7 @@ A graph asks what may run next and what crosses the boundary. A loop asks how th
 ## Model behavior and policy
 
 - [[Jev and decision models]] - bounded semantic judgments, calibration limits, and relevance to order automation and outcome feedback.
-- [[Working with GPT-6 Astra]] - current interactive Codex model, native-tooling preference, and prompting guidance.
+- [[Working with GPT-6 Astra]] - Astra-specific prompting, context management, and integration guidance.
 - [[DeepSeek V4.1 Flash in Codex]] - separate Codex/OpenCode Go test option and its verified configuration.
 - [[Choosing and steering coding models]] - current GPT-6 and Claude model roles, effort calibration, behavior, and integration boundaries.
 - [[AI-generated UI convergence and restrained design]] - recognize generic interface convergence and apply restrained, brief-sensitive design guidance.

@@ -49,7 +49,7 @@ Tobias confirmed 2026-07-30 that T3 Code should treat provider-native agents and
 - Remote: <https://github.com/pingdotgg/t3code>
 - Start with the checkout's `AGENTS.md` for source work. For the installed service and update procedure, follow `/home/tobias/code/dotfiles/AGENTS.md`, under `Installed T3 Code service`.
 
-[[DeepSeek V4.1 Flash in Codex]] records the separate Codex/OpenCode Go test option, its configuration route, and verified compatibility. It does not replace the daily Astra preference.
+[[Choosing and steering coding models]] routes the daily model choice and current model guidance. [[DeepSeek V4.1 Flash in Codex]] records the separate Codex/OpenCode Go test option, its configuration route, and verified compatibility; it is not the daily default.
 
 Service updates or restarts can terminate hosted coding-agent sessions. [[Projects#Dotfiles|Dotfiles]] owns the installed runtime's operational guidance; the T3 repository owns source development and verification.
 
