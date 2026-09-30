@@ -44,7 +44,7 @@ Document-processing workflows have a stronger fit than numeric market prediction
 
 TypeSafe's feature-discovery example combines an LLM proposing questions, Jev turning text into numeric features, and CatBoost learning from labels. This is a concrete connection to [[Autoresearch]] and [[Outcome-based learning for adaptive systems]]. The task-specific predictor and Jev remain separate models. [Feature-discovery cookbook](https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery)
 
-For [[Projects#Poly Executor|Poly Executor and poly-llm]], returning probabilities does not establish an advantage over models trained on market sequences. Jev's documented strengths concern language judgments; the current offline models consume numeric market history. The execution and selection problems recorded in [[Poly Trader]] remain unchanged.
+For [[Projects#Poly Executor|Poly Executor and poly-llm]], returning probabilities does not establish an advantage over models trained on market sequences. Jev's documented strengths concern language judgments; the current offline models consume numeric market history.
 
 For coding-agent work, bounded relevance checks and routing are plausible supporting roles. Jev cannot replace repository investigation, code generation, or behavioral tests. A cheap model judgment must not become the ground truth used to promote changes.
 

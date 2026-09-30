@@ -1,6 +1,6 @@
 # Context-sensitive code review
 
-Context-sensitive review follows the risks exposed by a change. A single agent can do this with native repository and review tools. It does not require delegated reviewers, a custom orchestrator, or persisted review telemetry.
+Context-sensitive review follows a change's risks. One agent with native repository and review tools can do it without delegation, a custom orchestrator, or stored review telemetry.
 
 For a deliberately orchestrated review system, keep three concerns separate:
 
@@ -8,35 +8,41 @@ For a deliberately orchestrated review system, keep three concerns separate:
 2. **Context retrieval** exposes repository, diff, symbol, relation, history, and validation evidence without embedding a review workflow.
 3. **Structured findings** carry the affected artifact and location, violated contract or risk, supporting evidence, consequence, and confidence or unresolved question.
 
-This separation keeps retrieval reusable outside review, lets orchestration evolve without rewriting context tools, and prevents a findings format from dictating how analysis must proceed.
+This keeps retrieval reusable, orchestration independent of context tools, and findings formats from dictating analysis.
 
 ## Initial contract and map
 
-A reviewer needs the change's intent, candidate identity, relevant requirements, and access to evidence. Much of this may already be available in the task and repository. When handing work to separate reviewers, a shared compact contract and change map can preserve the needed context without forwarding the author's entire exploration. Include the non-goals, authority, known risks, and acceptance conditions that affect that review, not a fixed inventory for every task. Requirement fidelity and repository-convention compliance are distinct dimensions; passing one does not establish the other. A map is orientation, not a substitute for source.
+Reviewers need intent, requirements, invariants, base and candidate identities, the diff, context routes, and validation evidence. Reuse what the task and repository already provide. Keep the author's investigation and conclusions out of separate reviewers' inputs. Include relevant non-goals, authority, risks, and acceptance criteria. Requirement fidelity and repository compliance are separate checks; neither proves the other. A change map guides reading; it does not replace source.
+
+Name the relevant failure classes: contract drift, missed callers, state transitions, idempotency, external effects, or inadequate behavioral verification. Ask for findings, not a repository tour.
 
 Apply progressive disclosure on two axes:
 
-- **Authority:** keep global constraints and project rules available, then retrieve folder-specific instructions when analysis enters that subtree. Nearer authority refines or overrides broader authority; do not flatten all scopes into one duplicated prompt.
-- **Evidence:** move from PR intent and change map to a relevant file, changed symbol, and then callers, callees, tests, types, configuration, external boundaries, or history as the emerging hypothesis requires.
+- **Authority:** keep global and project rules available; retrieve folder-specific instructions when entering that subtree. Nested rules refine or override broader rules. Preserve their scopes rather than flattening them into one prompt.
+- **Evidence:** start with PR intent and the change map, then follow relevant files and symbols to callers, callees, tests, types, configuration, external boundaries, or history as the hypothesis requires.
 
-Retrieve **semantic neighborhoods**, not fixed token windows. A useful neighborhood may include a declaration, enclosing state transition, related type, call site, test, and configuration despite crossing files, while omitting adjacent code with no bearing on the behavior. Preserve stable source identities, revision, truncation status, and routes for expansion. Let the model choose the next retrieval from its current risk hypothesis; tools should support progressive expansion rather than precompute an oversized universal bundle. This specializes [[Agent context engineering]] and [[Search-driven code discoverability]] for review.
+Retrieve **semantic neighborhoods**, not fixed token windows. Include related declarations, transitions, types, callers, tests, and configuration across files; omit unrelated adjacent code. Retain source identities, revision, truncation status, and expansion routes. Let the current risk hypothesis guide retrieval rather than precomputing a universal bundle. See [[Agent context engineering]] and [[Search-driven code discoverability]].
+
+Search changed symbols and domain terms for definitions and tests, then follow reverse references, alternate spellings, adapters, external boundaries, and retained legacy paths. Check owning types and rationale against regression or public-interface evidence. Cite exact paths and evidence. Missing evidence is not a verified negative. Stop when the requested concerns are covered.
 
 ## Reviewers and authority
 
-A review lens focuses attention on a concern such as security, concurrency, data integrity, API compatibility, or test adequacy. It need not imply a separate agent or fixed persona. If the workflow deliberately delegates review, [[Subagent delegation]] covers the relevant handoff and authority boundaries.
+A review lens focuses attention on security, concurrency, data integrity, API compatibility, or test adequacy; it need not be a separate agent or persona. [[Subagent delegation]] covers delegated handoffs and authority.
 
-Give reviewers broad analytical capability: they may inspect the repository, follow relations, search history, run tools, and test hypotheses. Keep side-effect authority narrow. Review should normally be read-only against the candidate and may mutate only disposable snapshots or dedicated scratch space for shell commands, builds, generated artifacts, and tests. This permits realistic verification without contaminating shared state or granting repository write authority.
+Independent review helps most when failure is consequential, validation is weak, or fresh context can challenge assumptions. For delegated PR review, start with one general reviewer; add specialists only for distinct risks in the diff. Give each a narrow responsibility and evidence access beyond the diff. Irrelevant panel members add cost and duplicate findings.
+
+Reviewers may inspect code, follow relations, search history, run tools, and test hypotheses. Review should normally leave the candidate read-only, with verification mutations confined to disposable snapshots or dedicated scratch space. This allows realistic verification without changing shared state or granting repository write authority.
 
 ## Tools and growth path
 
-When building review tooling, keep retrieval capabilities separate from orchestration. Change mapping, scoped-instruction lookup, source retrieval, relation traversal, search, history, and validation tools return evidence and routes to more detail. They need not decide which reviewer runs or prescribe a fixed sequence.
+Retrieval tools supply change maps, scoped instructions, source, relations, search, history, validation evidence, and expansion routes. Orchestration decides which reviewer runs; retrieval need not prescribe a sequence.
 
-Start with ordinary repository snapshots, search, language tooling, dependency relations, shell access, and tests. Add specialized AST, semantic-graph, runtime-trace, blame, or domain tools only after a recurring retrieval failure demonstrates their value. Concepts seen in review products such as Hunk—change maps, review lenses, symbol-centered context, and structured findings—are useful examples, not architectural dependencies.
+Start with repository snapshots, search, language tooling, dependency relations, shell access, and tests. Add AST, semantic-graph, runtime-trace, blame, or domain tools only when recurring retrieval failures demonstrate their value. Hunk's change maps, review lenses, symbol-centered context, and structured findings are examples, not architectural dependencies.
 
-Review is complete when its requested scope is covered, not when every available context source has been exhausted. Findings need supporting evidence; absence of a finding says nothing about an unexamined area.
+Finish when the requested scope is covered, not when every source is exhausted. Support findings with evidence. The absence of findings does not clear an unexamined area.
 
 ## Review history and automation discovery
 
-For a review system that deliberately collects history to study repeated findings, store outcomes outside the reviewed worktree. Target identity, staleness, changed files, review scope, model and effort, findings, and compact execution telemetry support comparison without retaining full prompts or tool traces. A commit identity can route back to committed evidence, but a working-tree fingerprint cannot reconstruct unstaged or untracked content after it changes; a compressed target patch can preserve that evidence when exact later inspection matters. This is an optional system design, not a logging requirement for native Codex reviews.
+If collecting history to study repeated findings, store outcomes outside the reviewed worktree. Retain target identity, staleness, changed files, scope, model, effort, findings, and compact telemetry rather than full prompts or traces. A commit identifies committed evidence; a working-tree fingerprint cannot recover changed unstaged or untracked content. Retain a compressed target patch when exact recovery matters. Native Codex reviews do not require this logging system.
 
-History is evidence for improving the system, not authority to create a rule automatically. Recurring findings may expose a contract that code, a schema, a focused tool, lint, or CI can enforce. Broken local links suit deterministic validation; whether an archived concept is misleading or an abstraction is misplaced usually needs judgment. Validate a mechanical replacement when a real contract will rely on it. Retiring a redundant review instruction needs no replacement. This is the review-specific application of [[Prompting tool-using agents#Promote settled cognition into machinery|promoting settled cognition into machinery]].
+History informs improvements; it does not authorize new rules. Recurring findings may reveal contracts enforceable through code, schemas, tools, lint, or CI. Broken links suit deterministic validation; misleading concepts or misplaced abstractions usually need judgment. Validate mechanical replacements for real contracts. Redundant review instructions need no replacement. See [[Prompting tool-using agents#Promote settled cognition into machinery|promoting settled cognition into machinery]].

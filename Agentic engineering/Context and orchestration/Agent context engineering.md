@@ -1,16 +1,16 @@
 # Agent context engineering
 
-Context engineering is the harness policy for selecting, ordering, shaping, preserving, and retiring what a model sees at each inference step. [[Prompting tool-using agents]] defines the task contract; context engineering keeps that contract, the relevant evidence, tools, and execution state legible over a long trajectory.
+Context engineering controls what a model sees at each inference: selection, order, presentation, retention, and removal. [[Prompting tool-using agents]] defines the task contract; context engineering keeps it, relevant evidence, tools, and execution state usable throughout the task.
 
-The central distinction is between the **working set** and the **system of record**. Active context is a small, metered, lossy view assembled for the next decision. Repository files, task records, raw tool artifacts, checkpoints, and traces are durable state from which that view can be rebuilt.
+The **working set** is a small, metered, lossy view for the next decision. The **system of record** holds repository files, task records, raw tool artifacts, checkpoints, and traces from which that view can be rebuilt.
 
 ## Decide what context matters
 
-Information matters when it changes the intended outcome, a decision, an authority boundary, or the evidence needed to judge success. Topical similarity alone is not enough. Use the [[Prompting tool-using agents#Task contract|task contract]] to identify what the agent needs to understand, decide, do, and demonstrate. Relevant context includes accepted decisions and their rationale, applicable preferences, domain distinctions, constraints, current state, and unresolved questions. Retrieve enough to preserve their meaning and scope.
+Retrieve information that changes the outcome, a decision, authority, or evidence of success; topical similarity is not enough. The [[Prompting tool-using agents#Task contract|task contract]] identifies what the agent must understand, decide, do, and demonstrate. Preserve the meaning and scope of accepted decisions, rationale, preferences, domain distinctions, constraints, current state, and unresolved questions.
 
-The goal directs retrieval, and retrieved knowledge can refine the understanding of the goal. A performance task needs the affected user operation, its baseline and measurement conditions, and the required improvement. An architectural choice needs the relevant owners, contracts, and reasons earlier choices were accepted or rejected. Resolve what existing evidence establishes; bring material gaps or conflicting requirements to the user. A task description need not become a formal specification to make these distinctions clear.
+The goal directs retrieval; retrieved knowledge can clarify its meaning. Performance work needs the user operation, baseline, measurement conditions, and required improvement. Architecture work needs owners, contracts, and reasons earlier choices were accepted or rejected. Resolve what evidence establishes and bring material gaps or conflicts to the user without requiring a formal specification.
 
-Storing a principle does not ensure it influences work. Important knowledge needs an owner, an appropriate scope, and a route into context before the decision it governs. When improving an agent setup, inspect the active instructions and retrieval routes as well as the reference notes. [[Concise AGENTS.md for capable coding agents#Placement and authority]] explains how to translate context knowledge into instructions, conditional guidance, references, or executable protection.
+Stored knowledge needs an owner, scope, and retrieval route that reaches the agent before the relevant decision. When improving an agent setup, inspect active instructions and retrieval routes, not just reference notes. [[Concise AGENTS.md for capable coding agents#Placement and authority]] covers placement in instructions, conditional guidance, references, or executable protection.
 
 ## State tiers
 
@@ -22,29 +22,29 @@ Treat state according to how it must survive:
 - **Evidence archive:** full logs, source documents, traces, diffs, and test output. Keep stable references and retrieve narrow ranges when needed.
 - **Ephemeral scratch:** tentative hypotheses and superseded plans. Let these expire unless they changed a decision or exposed a reusable failure.
 
-External storage is useful only when artifacts have stable identities and are retrieved at the decision that needs them. Keep a concise orientation alongside authoritative originals: the summary speeds recovery, while the original supports exact inspection.
+External artifacts need stable identities and timely retrieval. Keep short orientation alongside authoritative originals for quick recovery and exact inspection.
 
 ## Usable capacity
 
-Advertised context capacity is not reliable usable capacity. At the current capability frontier, context remains scarce in attention, latency, and cost: retrieval, multi-hop reasoning, and aggregation can degrade well before the request exceeds the nominal window. Tool definitions, outputs, images, examples, and repeated instructions also consume attention and tokens. Prompt caching may reduce cost or latency, but it does not make the cached material disappear from context.
+Advertised context capacity is not reliable usable capacity. Retrieval, multi-hop reasoning, and aggregation can degrade before the nominal window fills. Tool definitions, outputs, images, examples, and repeated instructions consume attention and tokens. Caching may reduce cost or latency, but cached material still occupies context.
 
-Additional context is not inherently harmful. Relevant constraints and evidence can improve work; irrelevant, redundant, or competing rules consume the same working set and can pull behavior in conflicting directions. Context design also determines how much judgment the agent can exercise. Even a short, clear instruction can steer work unnecessarily when the model or host already supplies the behavior. Optimize for useful information and intended collaboration, not minimum tokens or maximum procedural coverage. [[Concise AGENTS.md for capable coding agents]] owns this instruction-admission distinction.
+Relevant constraints and evidence can improve work; irrelevant, repeated, or competing rules consume attention and can conflict. Even a short instruction can constrain judgment unnecessarily when the model or host already supplies the behavior. Optimize useful information and intended collaboration, not minimum tokens or maximum procedure. [[Concise AGENTS.md for capable coding agents]] owns instruction admission.
 
-In workflows that manage context explicitly, useful maintenance points include validated milestones, subsystem switches, handoffs, and changes that make restart instructions unsafe. A host with native context management can own window transitions; these boundaries do not imply a second mandatory agent-maintained checkpoint process.
+For explicit context maintenance, use validated milestones, subsystem switches, handoffs, or changes that invalidate restart instructions. Native host management can own window transitions without a second mandatory checkpoint process.
 
 ## Conditional context and activation
 
-A skill is a conditional context bundle plus an activation policy. A model-visible skill description is not a passive catalog entry: it is an always-active retrieval cue that competes for attention and can load a procedural body when the task only weakly matches. Once activated, that body joins the working set and can displace a simpler capable-model response.
+A skill combines conditional context with an activation policy. Its model-visible description is an always-active retrieval cue, not a passive catalog entry. A weak match can load unnecessary procedure into the working set and displace a simpler response.
 
-Automatic exposure is useful when the agent should discover a specialized capability or chosen behavior without an explicit invocation. Its value depends on what it adds beyond the model and host, how well the trigger distinguishes relevant tasks, and the cost of mistaken activation. Broad triggers can raise recall while reducing precision. Use representative work to resolve meaningful uncertainty about activation; a formal failure study is not a prerequisite for every skill or removal. A skill encoding a chosen style has a different purpose from one correcting an old model weakness.
+Automatic exposure lets agents discover specialized capabilities or chosen behavior. Judge what the skill adds beyond the model and host, trigger precision, and mistaken-activation cost. Broad triggers may increase recall while reducing precision. Use representative work for meaningful activation uncertainty; not every skill or removal needs a formal failure study. Chosen style and corrective coaching have different purposes.
 
-Explicit invocation removes default model exposure but makes the human responsible for discovery and selection; it does not make the skill body free once invoked. It suits deliberately selected modes. Put reusable knowledge in ordinary retrievable reference when it does not need to activate itself, and omit procedural context that adds no behavioral value over the model's default.
+Explicit invocation suits deliberately selected modes: it removes default exposure but makes the human discover and select the skill. Its body still costs context when invoked. Knowledge that need not activate itself belongs in retrievable references; omit procedure that adds no value over default behavior.
 
 ## Context continuation and checkpoints
 
-Summary-based compaction is a lossy continuation mechanism, not durable truth. It can omit details whose importance appears later, blur attempted and completed work, revive stale decisions, or cause duplicate side effects around unfinished tool calls. Repeated summaries amplify drift.
+Summary compaction is lossy continuation, not durable truth. It can lose later-important details, confuse attempted and completed work, revive stale decisions, or duplicate effects around unfinished tool calls. Repeated summaries amplify drift.
 
-Codex's experimental notes-and-searchable-history system offers another implementation. Notes survive across windows, and earlier messages and tool outputs remain searchable when a note omitted something. [[Working with GPT-6 Astra]] records availability and the inspected local configuration. Native continuation does not replace authoritative repository state, but it can remove the need to duplicate the host's context maintenance in manual task files.
+Codex's experimental notes-and-searchable-history system retains notes across windows and searchable earlier messages and outputs. [[Working with GPT-6 Astra]] records availability and inspected local configuration. Native continuation can replace duplicate manual context maintenance, not authoritative repository state.
 
 For hosts that rely on summary compaction, or a handoff that must survive independently of the originating session, a restart-ready checkpoint can retain:
 
@@ -57,26 +57,24 @@ For hosts that rely on summary compaction, or a handoff that must survive indepe
 - remaining work in dependency order, including one concrete next action;
 - unresolved questions, safety boundaries, and escalation conditions.
 
-Use only the fields the handoff needs. Prefer a small structured snapshot plus retrievable evidence over a narrative diary. Neither a checkpoint nor native notes establish the current repository state. Where retries or context transitions can cross a mutation boundary, idempotency or deduplication prevents repeated effects.
+Keep only needed handoff fields in a small snapshot with retrievable evidence, not a diary. Checkpoints and native notes do not establish current repository state. Use idempotency or deduplication where retries or context transitions can repeat mutations.
 
 ## Retrieval and tool results
 
-Use progressive disclosure: map or index first, focused search hits next, narrow source ranges after that, and complete artifacts only when necessary. Summaries, symbols, paths, timestamps, and extracted facts should add retrieval routes, not replace originals. Inline material required on every path and disclose branch-specific material. A pointer should encode a discriminating applicability condition and retrieval action, not merely name a target; if required material is repeatedly missed, sharpen the pointer before moving the full reference inline.
+Start with orientation, then focused search and narrow source ranges; load complete artifacts only when needed. Summaries, symbols, paths, timestamps, and extracted facts should lead to originals, not replace them. Inline universally required material and disclose branch-specific detail conditionally. Pointers need an applicability cue and retrieval action. If agents repeatedly miss required material, sharpen the pointer before inlining the reference.
 
-A useful result includes stable identifiers, source location and revision, truncation status, enough neighboring context to interpret the hit, and a route to more detail. Shape results around the next decision: selected matches, relevant fields, actionable errors, and references to raw output. Avoid dumping repositories, complete logs, or every API field into active context.
+Return stable identifiers, source location and revision, truncation status, enough context to interpret a hit, and expansion routes. Supply selected matches, relevant fields, actionable errors, and raw-output references for the next decision, not complete repositories, logs, or API responses.
 
-Use host-side filtering or [[Programmatic tool calling]] for deterministic joins, ranking, and aggregation when bulky intermediates need not reach the model. Keep evidence required for final verification. Retrieval should optimize downstream success and invariant retention, not token reduction alone: omitting one governing constraint can be worse than several extra files.
+Use host filtering or [[Programmatic tool calling]] for deterministic joins, ranking, and aggregation that need not enter model context. Retain final-verification evidence. Optimize task success and invariant retention, not token reduction: one omitted governing constraint can cost more than several extra files.
 
 ## Repository retrieval surface
 
-Context assembly begins before the harness runs. Filenames, symbols, types, tests, error terms, comments, and domain documents determine which lexical searches reach useful evidence and how much irrelevant material enters the working set. Distinctive names, one spelling per concept, precise signatures, concept-named modules, behavior-named tests, and short rationale on owning definitions create stable retrieval handles. Generic aliases, `Any`-shaped boundaries, grab-bag files, and duplicated terminology force more search and inference.
+Context assembly begins before the harness runs. Repository names, types, tests, and domain language determine what lexical searches can retrieve. [[Search-driven code discoverability]] owns the naming practices and compact query maps that let an agent reach authoritative code without loading a prose copy of the implementation.
 
-Diagnostics are part of this retrieval surface. A breached limit should name the resource or budget in its owning domain terms, the configured limit, the actual or requested value, and the location or corrective route when known. Silent clamping, truncation, or blank failure removes the evidence and retrieval handles an agent needs to recover.
-
-Repository context should act as a compact query map: define preferred terms, ownership boundaries, hazards, and routes to narrower authorities. Those terms should continue into code and tests so retrieval still works after the context document leaves the active window. It should not preload a prose copy of implementation. [[Search-driven code discoverability]] holds the design and reviewer guidance.
+Limit failures should name the resource or budget, configured limit, actual or requested value, and known location or corrective route in domain terms. Silent clamping, truncation, or blank failures remove the evidence an agent needs to recover.
 
 ## Context isolation
 
-A subagent isolates context only when it receives a bounded contract and reduced context, performs noisy exploration privately, and returns a compact result or durable artifact reference. Passing the full parent transcript or full child trace merely adds cost. See [[Subagent delegation]] for task shape, handoff, and authority rules.
+A subagent isolates context through a bounded contract, reduced inputs, private exploration, and a compact result or durable artifact reference. Full parent transcripts or child traces add cost. [[Subagent delegation]] covers task shape, handoffs, and authority.
 
-Context remains reconstructable when the always-active contract is concise, durable state is authoritative, lossy views point back to originals, and every handoff can survive a fresh session. Judge the policy by completed-work correctness and recovery, not window utilization.
+Keep the active contract concise, durable state authoritative, and lossy views linked to originals so a fresh session can recover. Judge correctness and recovery, not window utilization.

@@ -1,14 +1,14 @@
 # Irreducible codebase documentation
 
-Code is authoritative for implemented behavior; tests and examples document and check intended observable behavior. Documentation should preserve knowledge they cannot express reliably, not maintain a prose copy of the implementation. Use the saved maintenance and context budget to make names, types, APIs, module boundaries, state models, tests, examples, and user-facing language more legible.
+Code owns implemented behavior; tests and examples express and check intended observable behavior. Prose should retain what these cannot express reliably, not copy the implementation. Spend the saved maintenance and context budget on clearer names, types, APIs, boundaries, state models, tests, examples, and UI language.
 
-Tests and examples demonstrate observable behavior. Manifests, named scripts, task runners, and CI own ordinary setup and validation commands. Comments should capture a local invariant or rationale that is not evident from mechanics and sit on the definition that owns it. This is also the location a search-driven agent is most likely to read. Prose that narrates control flow, repeats signatures, inventories changing files, or copies executable command configuration will drift and should usually be removed.
+Manifests, named scripts, task runners, and CI own ordinary setup and validation commands. Where comments are allowed, put non-obvious invariants or rationale on the owning definition, where a searching agent will find them. Usually remove prose that narrates control flow, repeats signatures, inventories changing files, or copies executable command configuration; it will drift.
 
 ## Comments as precedent for agents
 
-Agents can treat a comment explaining a workaround as permission to keep it and copy it elsewhere. Before explaining an avoidable compromise, fix the boundary, data structure, or API, or add a check. A comment is no substitute for that work.
+Agents may treat an explained workaround as permission to copy it. Fix an avoidable compromise through the boundary, data structure, API, or a check rather than justifying it in a comment.
 
-This is why [[Tobias's developer preferences|Tobias favors a no-comments rule]] for agent-written code. He wants to stop agents from justifying bad patterns that later agents will copy. [[Agentic engineering#Constrained codebases for low-context contributors]] covers making the easiest change follow the intended design.
+This is why [[Tobias's developer preferences|Tobias favors a no-comments rule]] for agent-written code. See [[Agentic engineering#Constrained codebases for low-context contributors]] for making the easiest change follow the design.
 
 ## What prose should preserve
 
@@ -20,11 +20,11 @@ Keep documentation for:
 - **Navigation:** short maps to authoritative modules, decisions, tests, and operational artifacts.
 - **External contracts:** user expectations, organizational constraints, integration behavior, and procedures that cannot safely live in code.
 
-A glossary should constrain implementation rather than merely explain it. Use one preferred term per concept across names, types, APIs, tests, and UI copy. Make overloaded terms and boundary-specific meanings explicit. Represent meaningful states and transitions structurally. A disagreement between glossary and implementation is domain-model drift, not a reason to add another explanatory layer.
+A glossary should constrain implementation. Use one preferred term per concept across names, types, APIs, tests, and UI copy; explain overloaded terms and boundary-specific meanings. Model states and transitions structurally. If the glossary and code disagree, repair the domain-model drift rather than adding another explanation.
 
-When domain semantics change, resolve vague or overloaded terms against concrete edge cases and current code before treating the glossary as settled. A definition that cannot distinguish realistic boundary cases is not yet precise enough to constrain implementation.
+When semantics change, resolve vague or overloaded terms against real boundary cases and current code. A definition that cannot distinguish those cases cannot yet constrain implementation.
 
-Use an ADR when a decision is hard to reverse, surprising without context, and the result of a real trade-off. Record the decision and why; add status, alternatives, or consequences only when they carry information future maintainers will need.
+Use an ADR when a decision is hard to reverse, surprising without context, and reflects a real tradeoff. Record the choice and why; add status, alternatives, or consequences only when future maintainers need them.
 
 ## Review test
 
@@ -36,4 +36,4 @@ Ask:
 4. Does implementation consistently use the documented domain language?
 5. Can a new human or agent reach the right authority through a short link chain?
 
-Compact semantic anchors and navigation improve retrieval; self-explanatory code lets an agent continue without loading a parallel manual. Use the same preferred terms in context, filenames, symbols, types, tests, and errors so each artifact provides a route to the next authority. [[Search-driven code discoverability]] covers this lexical retrieval surface. This is the code-and-prose authority boundary used by [[Agent context engineering]].
+Use consistent terms in context, filenames, symbols, types, tests, and errors so each leads to the next authority. Clear code and short navigation avoid a parallel manual. [[Search-driven code discoverability]] covers retrieval; [[Agent context engineering]] uses this code-and-prose authority boundary.

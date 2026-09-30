@@ -26,21 +26,11 @@ Repository context should help an agent formulate the right searches and recogni
 
 A context file does not compensate for opaque code. Its terms should appear in filenames, symbols, types, tests, errors, and UI language so the route continues after the context leaves the working set. Root guidance should point to narrower authorities rather than preload all subsystem detail.
 
-Progressive disclosure does not require a prose route for every discoverable fact. Current capable agents can ordinarily recover standard setup and validation commands from manifests, named scripts, task runners, and CI. A separate development guide or command map earns its maintenance and retrieval cost only when representative agents repeatedly make a meaningful wrong choice and the executable surfaces cannot make the correct path obvious. When a route is justified, encode the applicability cue and owning executable surface rather than copying a command inventory or CI workflow.
+Ordinary setup and validation commands belong in manifests, named scripts, task runners, and CI. Add a prose route only when representative agents repeatedly make a meaningful wrong choice that clearer executable entrypoints cannot prevent. Encode the applicability cue and owner rather than copying commands. [[Concise AGENTS.md for capable coding agents#Placement and authority]] owns the instruction-placement decision.
 
 ## Reviewer-agent context
 
-A fresh reviewer should receive the requirements and governing invariants, the base and candidate artifact identities, the actual diff, relevant repository context routes, and the validation contract. Do not preload the author's exploration trace or conclusions; independence is lost when the reviewer merely confirms the same narrative.
-
-The reviewer should use the diff as a starting point, then search outward:
-
-1. locate definitions and tests through distinctive changed symbols and domain terms;
-2. search reverse references, alternate spellings, adapters, external boundaries, and retained legacy paths;
-3. inspect the authoritative type, context, or rationale at each affected seam;
-4. compare behavior with the best named regression or public-interface evidence;
-5. report exact paths and evidence for findings, distinguish absence of evidence from a verified negative, and stop when the stated review concerns are covered.
-
-Ask reviewers for risk-focused findings, not a generic repository tour. A review contract should name the failure classes that matter, such as contract drift, missed callers, state transitions, idempotency, external side effects, or inadequate behavioral verification. Searchability raises the chance that a bounded reviewer reaches those seams before its budget expires.
+Distinctive symbols, consistent domain terms, and behavior-named tests help a reviewer move from the diff to affected callers and independent evidence. [[Context-sensitive code review#Initial contract and map]] owns the reviewer's inputs, outward search, evidence requirements, and stopping criteria.
 
 ## Local evidence
 

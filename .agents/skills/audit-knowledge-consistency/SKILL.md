@@ -21,7 +21,7 @@ The read-only link verifier checks visible Markdown across the vault, including 
 python "$SKILL_DIR/scripts/verify_links.py" --vault "$VAULT_ROOT" --json
 ```
 
-Keep its output as the structural baseline. It skips external URLs and hidden files, so success does not verify sources or skill references. Report unrelated existing link failures without silently widening the edit scope.
+Keep its output as the structural baseline. Hidden files are not scanned as source notes, but explicit Markdown links to hidden files and directories are checked, including anchors in Markdown targets. External URLs are not fetched. Report unrelated existing link failures without silently widening the edit scope.
 
 ## Report or integrate
 

@@ -74,17 +74,6 @@ A Polymarket research system split between execution and offline model work.
 
 `poly-executor` owns capture, replay, policy, risk, and execution. `poly-llm` owns offline model work and exchanges only immutable artifacts with the executor. The deployed capture uses v4. The original v3 database was deleted on 2026-07-31 after full migration and historical parity verification; pinned archive branches retain code only, so exact v3 reproduction needs an independently retained snapshot. Persistent capture, training, paper, and research snapshot data live on `data-2tb`; the legacy `~/poly-executor-snapshots` path resolves there. Live execution is prohibited for agents; the repository guidance owns the exact capture and development allowances.
 
-## Poly Trader
-
-[[Poly Trader]] records the retrospective and durable lessons from Tobias's experimental Polymarket Bitcoin five-minute trader.
-
-- Repository: `/home/tobias/code/poly-trader`
-- Recovered SQLite evidence: no longer present on this machine; see [[Poly Trader]]
-- Default branch: `main`
-- Start with `AGENTS.md`; never enable real buys without explicit approval.
-
-The repositories own implementation and raw evidence. The knowledge note owns the project-level interpretation and future direction.
-
 ## Cross-repository ownership
 
 SWE Benchmarking owns task construction, evaluator policy, and benchmark evidence about pinned target-repository revisions. Skills Autoresearch owns experiments and promotion decisions while consuming that benchmark as a protected dependency. Dotfiles owns machine and agent-host configuration; the sibling skills repository owns model-invoked skill source; T3 Code owns Tobias's preferred interactive coding-agent workspace and its provider integration. Poly Executor owns capture, replay, policy, risk, and execution; its offline `poly-llm` sibling owns model-bundle and evaluation-request production.

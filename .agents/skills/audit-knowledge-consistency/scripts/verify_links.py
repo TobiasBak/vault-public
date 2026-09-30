@@ -2,9 +2,10 @@
 """Verify internal links in a Markdown knowledge vault.
 
 Checks Obsidian wikilinks, relative Markdown links, headings, and block references.
-External URLs are counted but deliberately not fetched. Hidden directories, runtime
-state, fenced or indented code, inline code, HTML comments, and Obsidian comments
-are excluded from link extraction.
+External URLs are counted but deliberately not fetched. Only visible Markdown
+sources are scanned; explicit targets can be hidden files or directories. Fenced
+or indented code, inline code, HTML comments, and Obsidian comments are excluded
+from link extraction.
 """
 
 from __future__ import annotations
@@ -221,6 +222,17 @@ def build_anchor_index(masked: str) -> HeadingIndex:
 
 def relative_posix(path: Path, root: Path) -> str:
     return path.relative_to(root).as_posix()
+
+
+def read_note(path: Path, root: Path) -> Note:
+    text = path.read_text(encoding="utf-8")
+    return Note(
+        path,
+        nfc(relative_posix(path, root)),
+        text,
+        mask_ignored(text),
+        build_anchor_index(mask_ignored(text, mask_inline_code=False)),
+    )
 
 
 def path_is_excluded(relative: Path, extra: list[str]) -> bool:
@@ -591,16 +603,13 @@ class Verifier:
         for path in (item for item in self.all_visible_files if item.suffix.lower() == ".md"):
             relative = nfc(relative_posix(path, self.root))
             try:
-                text = path.read_text(encoding="utf-8")
+                note = read_note(path, self.root)
             except (OSError, UnicodeDecodeError) as exc:
                 self.unreadable_notes.add(relative)
                 self.unreadable_stems.setdefault(nfc(path.stem).casefold(), []).append(relative)
                 if path in self.source_paths:
                     self._issue("scan-error", f"cannot read Markdown: {exc}", relative, 1, 1)
                 continue
-            masked = mask_ignored(text)
-            heading_text = mask_ignored(text, mask_inline_code=False)
-            note = Note(path, relative, text, masked, build_anchor_index(heading_text))
             self.notes[relative] = note
             without_suffix = relative[:-3]
             for key in (relative, without_suffix):
@@ -761,8 +770,12 @@ class Verifier:
         if not Path(relative).suffix:
             alternatives.append(relative + ".md")
         for item in alternatives:
-            if item in self.visible_paths:
-                return self.visible_paths[item], None, [], unquote(parsed.fragment)
+            path = self.visible_paths.get(item, self.root / item)
+            if path.is_file() or path.is_dir():
+                path = path.resolve()
+                if not path.is_relative_to(self.root):
+                    return None, "outside", [], unquote(parsed.fragment)
+                return path, None, [], unquote(parsed.fragment)
         matches: list[str] = []
         for item in alternatives:
             matches.extend(self.visible_paths_casefold.get(item.casefold(), []))
@@ -795,12 +808,15 @@ class Verifier:
         if status == "missing" or path is None:
             self._issue("missing-file", "Markdown link target does not exist", source.relative, line, column, link.raw, link.target)
             return
-        if fragment and path.suffix.lower() == ".md":
+        if fragment and path.is_file() and path.suffix.lower() == ".md":
             target = self.notes.get(nfc(relative_posix(path, self.root)))
-            if target:
-                self._check_anchor(source, target, fragment, link)
-                return
-            self._issue("unverifiable-target", "Markdown target exists but its anchor cannot be checked", source.relative, line, column, link.raw, link.target)
+            if target is None:
+                try:
+                    target = read_note(path, self.root)
+                except (OSError, UnicodeDecodeError) as exc:
+                    self._issue("unverifiable-target", f"Markdown target exists but cannot be read: {exc}", source.relative, line, column, link.raw, link.target)
+                    return
+            self._check_anchor(source, target, fragment, link)
             return
         self.counts["valid"] += 1
 
