@@ -1,10 +1,12 @@
 # AI-era software durability
 
-Checked 2026-07-30. Market structure, provider products, and model capabilities are volatile; the durable distinctions matter more than the named vendors.
+Market and labour evidence checked 2026-07-30; provider integration checked 2026-09-26. Products and capabilities change faster than the distinctions below.
 
-AI is reducing the cost of producing code and operating software, but it is not removing the need for reliable state, execution, accountability, and domain knowledge. The current labour evidence similarly supports task reorganization more strongly than wholesale worker replacement. The ILO's June 2026 evidence review found limited large-scale displacement and uneven productivity gains; the clearest risks were weaker opportunities for younger workers and changes to job organization rather than a general employment collapse ([ILO review](https://www.ilo.org/publications/impact-genai-jobs-productivity-and-work-organization-review-empirical)). US software-development postings have rebounded, but remained 27.5% below their pre-pandemic level in June 2026, with most of the recovery coming from senior and AI-related roles ([Indeed Hiring Lab](https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/)).
+AI makes code production and software operation cheaper. Reliable state, execution, accountability, and domain knowledge remain valuable.
 
-The practical direction is therefore **people and organizations amplified by AI, with fewer people required for a fixed amount of routine output**. Total employment can still grow when lower cost creates enough additional demand. The distribution is unlikely to be even: experienced workers who can direct and verify agents gain leverage, while routine digital work and the traditional junior-development pathway face more pressure.
+The labour evidence supports task reorganization more than wholesale replacement. The ILO's June 2026 review found limited large-scale displacement, uneven productivity gains, and weaker opportunities for younger workers ([ILO review](https://www.ilo.org/publications/impact-genai-jobs-productivity-and-work-organization-review-empirical)). US software-development postings rebounded but remained 27.5% below pre-pandemic levels in June 2026; senior and AI-related roles drove most of the recovery ([Indeed Hiring Lab](https://www.hiringlab.org/2026/07/08/ai-and-job-postings-from-destruction-to-creation/)).
+
+Expect **fewer people needed for a fixed amount of routine output**, not necessarily fewer jobs overall. Lower cost can create demand. Workers who direct and verify agents gain leverage, while routine digital work and the junior-development pathway face more pressure.
 
 ## What software is exposed
 
@@ -16,7 +18,7 @@ The vulnerable product is a replaceable interaction layer:
 - per-seat tools whose revenue depends on many humans manually navigating the product;
 - products with no authoritative state, difficult integration, proprietary outcome loop, network, distribution advantage, or accountability boundary.
 
-The 2026 software selloff is evidence that investors expect pressure on these products, not proof that enterprises have already replaced them. The S&P North American Technology Software Index fell more than 20% through 6 February while analysts found little evidence of corporations abandoning major SaaS vendors for generated internal replacements. Slower mature-SaaS growth, per-seat exposure, and stock-based compensation were material alongside AI fears ([S&P Global](https://www.spglobal.com/market-intelligence/en/news-insights/articles/2026/2/software-sell-off-may-be-overdone-yet-exposes-deeper-concerns-97965687)).
+The 2026 software selloff reflects investor expectations, not proof of enterprise replacement. The S&P North American Technology Software Index fell more than 20% through 6 February, yet analysts found little evidence of companies replacing major SaaS vendors with generated software. Slower mature-SaaS growth, per-seat exposure, and stock-based compensation mattered alongside AI fears ([S&P Global](https://www.spglobal.com/market-intelligence/en/news-insights/articles/2026/2/software-sell-off-may-be-overdone-yet-exposes-deeper-concerns-97965687)).
 
 ## What remains durable
 
@@ -28,13 +30,13 @@ Software remains valuable when it owns something the model cannot regenerate fro
 - **Proprietary evidence and feedback:** real inputs, accepted outcomes, evaluator history, and the ability to improve from deployment without confusing user edits with universal truth. See [[Outcome-based learning for adaptive systems]].
 - **Embedded domain process:** exception handling, approvals, institutional rules, and workflows that co-evolved with the organization.
 - **Networks and collaboration:** products whose value comes from other participants, shared history, distribution, or a marketplace rather than the interface alone.
-- **Agent substrate:** compilers, tests, schemas, APIs, sandboxes, observability, CI, and other machinery that gives agents trustworthy feedback and constrained action.
+- **Agent tools:** compilers, tests, schemas, APIs, sandboxes, observability, CI, and other machinery that gives agents trustworthy feedback and constrained action.
 
-A system of record is not automatically safe. AI lowers the cost of rebuilding its common data model and happy paths. Durability comes from the remaining exceptions, integrations, authority, and accountability. The user interface may recede while the product becomes a machine-facing system of action.
+A system of record is not automatically durable. AI makes its common data model and happy paths cheaper to rebuild. Exceptions, integrations, authority, and accountability supply the harder-to-replace value. The interface may shrink while agents increasingly operate the product through APIs.
 
 ## Likely architecture as intelligence becomes cheap
 
-The relevant boundary is not whether behavior can be expressed in code. Almost anything can. Code remains cheaper and more deterministic per execution, while agent reasoning becomes attractive when behavior is ambiguous, changes often, or would otherwise require accumulating brittle branches. The likely system spends model intelligence on semantic judgment and keeps settled cognition in code.
+Use code for settled behavior and agents for semantic judgment. Code remains cheaper and more deterministic per execution. Agent reasoning fits ambiguity, frequent change, and cases that would otherwise accumulate brittle branches.
 
 ```text
 unstructured input
@@ -64,7 +66,7 @@ A likely application therefore consists of:
 - a thin runtime that triggers agents, supplies context, records evidence, and enforces authority;
 - a smaller interface focused on review, exceptions, approval, and observability rather than manually walking every workflow.
 
-Feedback should move through progressively stronger representations. An isolated correction remains an example. A recurring local pattern becomes scoped knowledge or configuration. A recurring general pattern becomes shared guidance. Stable behavior with mechanically observable applicability becomes code. States that must never occur become schemas, permissions, or deterministic validation. Do not turn every lesson into code, but do not pay an agent to rediscover a settled rule on every run. See [[Outcome-based learning for adaptive systems]] and [[Prompting tool-using agents#Promote settled cognition into machinery]].
+Keep isolated corrections as examples, recurring local patterns as scoped knowledge or configuration, and transferable patterns as shared guidance. Put stable, mechanically detectable behavior in code, and exclude forbidden states through schemas, permissions, or validation. Not every lesson belongs in code, but agents should not rediscover settled rules on every run. See [[Outcome-based learning for adaptive systems]] and [[Prompting tool-using agents#Promote settled cognition into machinery]].
 
 As model cost falls, products can afford interpretation, critique, replay, and improvement for each case. Their differentiation shifts away from code volume and handcrafted workflow screens toward domain capabilities, difficult integrations, proprietary outcome history, evaluation quality, and safe authority over real systems.
 
@@ -103,6 +105,6 @@ An independent coding product can remain valuable by owning:
 - issue, CI, production, and business-system integration;
 - provider selection and migration where this produces real leverage.
 
-Multi-provider support alone is a weak moat and may sacrifice native capability. Prefer native harness integration behind a stable product-level task and evidence model. Tobias confirmed this direction for [[Projects#T3 Code|T3 Code]] on 2026-07-30: it should own the collaborative workspace and control surface over provider-native agents, not compete by recreating one generic coding loop.
+Multi-provider support alone is easy to copy and may sacrifice native capability. Integrate native harnesses behind a stable product-level task and evidence model. Tobias confirmed this direction for [[Projects#T3 Code|T3 Code]] on 2026-07-30: own the collaborative workspace and controls around provider-native agents rather than recreate a generic coding loop.
 
 The general product test is: **if the provider model and harness became dramatically better and cheaper tomorrow, would this product become more valuable or disappear?** Durable tools gain leverage from better intelligence because they own state, action, feedback, or accountability. Thin wrappers lose their reason to exist.

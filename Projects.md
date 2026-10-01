@@ -72,7 +72,11 @@ A Polymarket research system split between execution and offline model work.
 - Default branch: `main` in both repositories
 - Start with the relevant `AGENTS.md`; when changing a cross-repository contract or its producer or consumer, read both repositories' guidance and owning definitions.
 
-`poly-executor` owns capture, replay, policy, risk, and execution. `poly-llm` owns offline model work and exchanges only immutable artifacts with the executor. The deployed capture uses v4. The original v3 database was deleted on 2026-07-31 after full migration and historical parity verification; pinned archive branches retain code only, so exact v3 reproduction needs an independently retained snapshot. Persistent capture, training, paper, and research snapshot data live on `data-2tb`; the legacy `~/poly-executor-snapshots` path resolves there. Live execution is prohibited for agents; the repository guidance owns the exact capture and development allowances.
+`poly-executor` owns capture, replay, policy, risk, and execution. `poly-llm` owns offline model work. It may read executor-manifest-selected finalized cycles directly from active capture SQLite; other exchanges use immutable manifests and derived artifacts. It must not import executor source or connect to a running executor process. Repository guidance owns current capture versions and cross-repository contracts.
+
+The original v3 database was deleted on 2026-07-31 after full migration and historical parity verification. Pinned archive branches retain code only, so exact v3 reproduction needs an independently retained snapshot. The legacy `~/poly-executor-snapshots` path also resolves onto `data-2tb`.
+
+Capture, paper, shadow, development, and tests must not submit real orders, access wallets, or use trading credentials. Production trading requires an explicit user request to run the production engine. Follow the repository's `AGENTS.md` for permitted capture and development work.
 
 ## Cross-repository ownership
 

@@ -1,18 +1,18 @@
 # Windows GUI automation
 
-Windows GUI automation should start with the accessibility model, not pixels. Microsoft UI Automation (UIA) exposes application windows and controls as a tree with properties and interaction patterns. The tree is dynamic: parts are created on demand, and elements move, appear, and disappear as the interface changes. It is therefore a live state model, not a recorded interaction log like a browser HAR. [Microsoft's UIA tree overview](https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-treeoverview)
+Start Windows GUI automation with the accessibility model, not pixels. Microsoft UI Automation (UIA) exposes windows and controls as a tree with properties and interaction patterns. Elements appear, move, and disappear as the interface changes. The tree describes live state, not a recorded interaction log like a browser HAR. [Microsoft's UIA tree overview](https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-treeoverview)
 
 ## Default choice
 
-As of July 2026, **WinApp CLI is the best default discovery and control layer for an agent or shell-driven workflow**, but it is not the best Windows automation tool for every use case.
+As of July 2026, **WinApp CLI is the default for agent or shell-driven discovery and control**. Use the table below for other needs.
 
 WinApp CLI packages the useful primitives into small commands: inspect or search the UIA tree, emit JSON, capture a screenshot, invoke controls, set and read values, wait for state, and fall back to real input for operations that UIA patterns cannot express. It works across Win32, WinForms, WPF, WinUI, and Electron to the extent that those applications expose UIA. Its `AutomationId` selectors are preferable when unique; generated slugs can become stale after the UI changes. [WinApp CLI UIA and input model](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md#L6-L15), [selector behavior](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md#L67-L83), [JSON tree output](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md#L668-L687)
 
-The recommendation is an inference from interface fit, not a benchmark result. WinApp CLI is unusually well shaped for agents because it is stateless, CLI-native, machine-readable, screenshot-aware, and provides waits with meaningful exit codes. It is also still a young `0.5.0` tool, so use focused real-application verification before depending on it for a consequential workflow. [WinApp CLI 0.5.0 version](https://github.com/microsoft/winappCli/blob/fd7cb6f235fa54dd2c6e26386e65e967a2c8797a/version.json#L1-L3)
+This recommendation rests on interface fit, not a benchmark: stateless commands, machine-readable output, screenshots, and waits with meaningful exit codes. At the reviewed `0.5.0` release, the tool was young. Verify the real application before relying on it for consequential work. [WinApp CLI 0.5.0 version](https://github.com/microsoft/winappCli/blob/fd7cb6f235fa54dd2c6e26386e65e967a2c8797a/version.json#L1-L3)
 
 ## Driver, not workflow architecture
 
-WinApp CLI is intended for automation and CI, not only debugging. It can be a reasonable production dependency for bounded flows whose controls expose reliable UIA patterns. Its natural role is nevertheless a **GUI automation driver**: find a target, perform an operation, read a value, wait for a condition, or capture evidence. The caller still owns the workflow. [WinApp CLI CI and assertion examples](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md#L620-L665)
+WinApp CLI supports automation and CI, not just debugging. It can drive bounded production flows with reliable UIA controls: find a target, act, read a value, wait, or capture evidence. The caller owns the workflow. [WinApp CLI CI and assertion examples](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md#L620-L665)
 
 Keep these concerns in application code or an automation platform:
 
@@ -22,9 +22,9 @@ Keep these concerns in application code or an automation platform:
 - readiness conditions that combine UIA, native windows, process state, or image evidence;
 - domain-specific result classification, observability, and operator handoff.
 
-Use a direct library or hybrid implementation when the target application needs escape hatches that the CLI does not expose, such as mixing UIA with native Win32 messages, application-specific image interpretation, or tightly controlled focus and timing. A specialized production automation can therefore keep its existing workflow and interaction implementation while using WinApp CLI alongside it for selector discovery, screenshots, recordings, diagnostics, and isolated smoke checks.
+Use a direct library or hybrid when the CLI cannot express needed Win32 messages, image interpretation, or focus and timing control. Existing production automation can keep its workflow and interaction code while using WinApp CLI for discovery, capture, diagnostics, and smoke checks.
 
-Do not introduce a generic interchangeable driver interface merely because WinApp CLI is available. Add that seam only when a second driver can cover a real workflow end to end; otherwise it adds indirection while application-specific exceptions continue to leak through.
+Add an interchangeable driver interface only when a second driver covers a real workflow end to end. Otherwise it adds indirection without containing application-specific exceptions.
 
 Choose by use case:
 
@@ -40,7 +40,7 @@ Power Automate Desktop's recorded flow is the closest option when the requiremen
 
 ## A HAR-like capture bundle
 
-There is no platform-standard Windows GUI artifact with HAR's combination of recording, interchange, and replay. The closest useful workflow is to capture a **UIA JSON tree plus screenshot at every meaningful state**, alongside a short action log. This is an inference from the dynamic UIA model and the available automation interfaces.
+Windows has no standard GUI artifact combining HAR's recording, interchange, and replay. Capture a **UIA JSON tree and screenshot at each meaningful state**, plus a short action log.
 
 For each step, retain:
 

@@ -9,7 +9,7 @@ Coding agents usually navigate repositories through a loop of lexical search, na
 - Let directories supply scope for private implementation names. Global uniqueness does not justify mechanically expanding every local `service.py` or helper into a fully qualified phrase.
 - Use concept-named modules when a file otherwise becomes a large grab-bag. Name tests after the source or behavior they protect so a definition search reaches the best executable evidence.
 - Prefer precise signatures and domain types. They can answer usage questions without opening implementations, and compiler errors produce concrete names that lead the agent to the next authority. An `Any`-shaped boundary often forces multi-file inference.
-- Put a short comment on the owning definition when a real invariant or rationale is not recoverable from mechanics. Do not narrate control flow. The valuable comment explains why an apparently reasonable change is unsafe.
+- Where repository policy allows comments, put non-obvious invariants or rationale on the owning definition, not a narration of control flow. Under [[Tobias's developer preferences|Tobias's no-comments policy]], use enforceable structure and short linked documentation instead. See [[Irreducible codebase documentation]].
 - Remove obsolete paths when possible. If a retained path must not be selected, make that status explicit and locally discoverable.
 
 Longer is not automatically better. Optimize for a stable, discriminating phrase that matches the language a task, error, domain document, or reviewer will use. Over-specific names increase reading friction without adding retrieval value.

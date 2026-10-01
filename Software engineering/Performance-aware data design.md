@@ -1,24 +1,14 @@
 # Performance-aware data design
 
-An idiomatic, locally correct data model can become the dominant cost of a hot path. Coding agents naturally reach for rich objects and general-purpose containers because they make ownership clear, features easy to add, and correctness easy to test. Those qualities fit tests, scripts, bindings, and cold API glue. In a frequently executed kernel, however, allocation, copying, lookup, formatting, indirection, and memory layout can cost more than the domain computation itself.
+An idiomatic, correct data model can dominate a hot path's cost. Rich objects and general containers make ownership clear and features easy to add and test. They suit scripts, bindings, and cold API glue, but allocation, copying, lookup, formatting, indirection, and memory layout can cost more than the computation in a frequently executed kernel.
 
-This makes data representation part of the performance architecture. The important question is not whether a type is modern or idiomatic, but what data the workload moves, how often it moves it, and how the consuming kernel accesses it.
+Data representation is part of performance architecture. Ask what data the workload moves, how often, and how the kernel accesses it, not whether a type is modern or idiomatic.
 
 ## Failure pattern
 
-An agent-shaped failure pattern to watch for develops like this:
+An agent builds a convenient record containing everything any consumer needs, using owned containers and readable strings. Correctness tests pass. Features and usage grow without revisiting the layout. When the path becomes hot, profiling reveals that moving and accessing data costs more than the math, and the record must be redesigned.
 
-1. Implement a feature with rich objects because that is locally easy.
-2. Put everything needed by any consumer into one record.
-3. Use general containers because they simplify ownership.
-4. Use strings because they are readable and stable at boundaries.
-5. Add correctness tests and establish that the feature works.
-6. Extend the feature repeatedly without revisiting the representation.
-7. Discover that the formerly small path now runs thousands of times.
-8. Profile it and find that allocation, copying, lookup, formatting, indirection, and topology dominate rather than the actual math.
-9. Spend several iterations undoing the original data model.
-
-The characteristic C++ shape is convenient and reasonable in isolation:
+Common C++ examples are:
 
 ```cpp
 std::vector<T> out;
@@ -29,7 +19,7 @@ std::function<void(...)> callback;
 std::ostringstream message;
 ```
 
-None of these types is inherently unsuitable for performance-sensitive code. Their cost depends on ownership shape, record count, allocation pattern, access order, reuse, and which fields the kernel actually touches.
+None is inherently unsuitable for a hot path. Cost depends on ownership, scale, allocation, access order, reuse, and the fields the kernel touches.
 
 | Convenient representation | Possible hot-path cost | Representation to investigate when measured |
 | --- | --- | --- |
@@ -40,9 +30,9 @@ None of these types is inherently unsuitable for performance-sensitive code. The
 | `function` callbacks | Indirect dispatch, opaque ownership, and possible allocation | Explicit staged dispatch, function pointers, variants, or callbacks outside the inner path |
 | `ostringstream` | General formatting machinery and repeated allocation | Preallocated formatting or producing diagnostics outside the kernel |
 
-`vector` is often an excellent hot-path container because it is contiguous. The problematic shape is commonly thousands of separately owned dynamic vectors or rich elements containing cold state, not `vector` itself. Likewise, array-of-structures and structure-of-arrays are workload choices: processing whole records can favor the former, while scanning a few fields across many records can favor the latter.
+`vector` is often an excellent hot-path container because it is contiguous. Thousands of separately owned vectors or rich elements carrying cold state are the common problem, not `vector` itself. Processing whole records can favor an array of structures; scanning a few fields across many records can favor a structure of arrays.
 
-“Topology shape” includes the relationships and traversal pattern between objects: pointer graphs, nested ownership, hashes, linked structures, and the order in which memory is visited. A mathematically cheap operation can still be slow when reaching its operands requires scattered reads and unpredictable control flow.
+Memory topology includes object relationships and traversal order: pointer graphs, nested ownership, hashes, and linked structures. Cheap math can still be slow when reaching its operands requires scattered reads and unpredictable control flow.
 
 ## Design and measurement method
 
@@ -58,23 +48,9 @@ Correctness tests cannot establish that the cost model still fits. When performa
 
 ## Working with coding agents
 
-An agent that is not given the workload will reasonably optimize for local clarity and correctness. For performance-sensitive work, make the operating model available before it chooses or extends the data representation:
+Give the agent the workload before it chooses or extends the representation: known hot paths, the performance owner, representative inputs and scale, target hardware, and a route to benchmarks or profiles. Without that context, optimizing for local clarity and correctness is reasonable.
 
-- identify known hot paths and the owner of their performance contract;
-- provide representative inputs, scale, hardware, and benchmark or profiling commands;
-- require inspection of allocation, copying, lookup, formatting, indirection, and access patterns rather than timing only the core algorithm;
-- ask whether new fields are hot, cold, diagnostic, or consumer-specific before adding them to a shared record;
-- require a measured comparison before accepting a more specialized representation;
-- remeasure after feature growth instead of assuming a once-small path remains cold.
-
-Useful review questions are:
-
-- Has one record become the union of everything any consumer might need?
-- Does the inner path allocate, hash, copy, format, parse, or traverse strings?
-- Are cold metadata and diagnostics carried through every operation?
-- Is the benchmark measuring domain computation or mostly representation overhead?
-- Does the access pattern match the container and layout?
-- Has usage changed enough to invalidate the original design decision?
+Review changes against the measured access pattern. New fields may be cold or consumer-specific rather than belong in every hot record. Feature growth can invalidate the original layout. Accept a specialized representation only after measuring the gain and its complexity cost.
 
 Do not promote this into a global ban on rich objects or standard containers. Cold paths should usually optimize for clarity, correctness, and changeability. Hot-path redesign should follow representative evidence, not performance folklore or an agent's preference for low-level cleverness.
 

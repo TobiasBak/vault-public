@@ -35,7 +35,7 @@ As of the initial public release:
 - Windows has received little testing; WSL is recommended.
 - Exact compatibility has a performance cost, and unusual tokenizer definitions may expose mismatches that should be validated before processing a full corpus.
 
-Install with `pip install gigatoken`. A useful first check is the built-in `gigatoken bench` command with `--validate`, which tests both performance and output agreement for a chosen Hugging Face tokenizer and representative local data.
+Add it to a uv project with `uv add gigatoken`. Run `gigatoken bench` through `uv run` with `--validate` to check throughput and output agreement for a chosen Hugging Face tokenizer and representative local data.
 
 ## Sources
 
