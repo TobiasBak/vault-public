@@ -39,9 +39,26 @@ Not exhaustive. Search with `rg`.
 - [software/browser-derived-clients.md](software/browser-derived-clients.md): turning browser traces into HTTP clients; Danish supermarket offers
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
 
-## Skills (`.agents/skills/`)
+## Global skills (`skills/`)
 
+Model-invoked:
 - `potato-approach`: make agent-maintained codebases easy to change correctly
-- `audit-knowledge-consistency`: find and fix duplicate or contradictory vault knowledge, and verify links
+- `ui-design`: restrained, purposeful product UI
+- `unslop`: concise, natural prose
+- `domain-modeling` (Matt Pocock): glossary and ADRs
+- `grilling` (Matt Pocock): stress-test a plan by interview
+
+Explicit-only:
+- `frontend-design` (Anthropic): bold, distinctive visual direction when you want a statement look; `ui-design` is the default
+- `grill-with-docs` (Matt Pocock): grilling plus domain docs
+- `maintainability-audit`: how easily fresh agents can change the source
+- `repo-context-audit`: which instructions and docs earn their place
+- `retro`: repo improvements from session friction
+- `review-test-quality`: keep, rewrite, or delete tests
+- `create-verification-skill`, `maintain-verification-skill` (adapted from pstack): project verification skills and feature maps
+- `theory-lab`: mechanistic theories and discriminating experiments
+
+## Vault-only skills (`.agents/skills/`)
+
+- `audit-knowledge-consistency`: find and fix duplicate or contradictory knowledge, and verify links
 - `review-agent-history`: mine Pi and Codex histories for reusable knowledge
-- `review-test-quality`: classify tests as keep, rewrite, delete, or uncertain

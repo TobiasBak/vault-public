@@ -31,4 +31,4 @@ When correcting an agent, put the knowledge in the strongest place that fits, in
 
 Someone has to own this upkeep. Lauren Tan calls it gardening. Her Dune framework keeps features together, checks imports between Electron main and renderer, and bans comments. Combine constraints, skills, and [runtime verification](testing-with-agents.md) before scaling parallelism. Once agents can reproduce and verify, reports and alerts can become coding tasks automatically.
 
-Source: Lauren Tan, [September 2026 talk on trusting coding agents](https://x.com/poteto/status/2102050467505430555/video/1). The operational method lives in the [potato-approach skill](../.agents/skills/potato-approach/SKILL.md).
+Source: Lauren Tan, [September 2026 talk on trusting coding agents](https://x.com/poteto/status/2102050467505430555/video/1). The operational method lives in the [potato-approach skill](../skills/potato-approach/SKILL.md).

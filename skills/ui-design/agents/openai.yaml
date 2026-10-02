@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Design"
+  short_description: "Build clear, compact, purposeful interfaces"
+  default_prompt: "Use $ui-design to build this interface with deliberate controls, hierarchy, density, iconography, copy, and rendered verification."

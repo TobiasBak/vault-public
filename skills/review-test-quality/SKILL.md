@@ -1,6 +1,7 @@
 ---
 name: review-test-quality
 description: Review selected tests or test-cleanup changes for contract value and classify them keep, rewrite, delete, or uncertain. Use only when this skill is invoked by name, not for ordinary implementation or code review.
+disable-model-invocation: true
 ---
 
 # Review test quality
@@ -28,4 +29,4 @@ Run focused checks when they settle a dispute. An injected fault can show lost d
 
 ## Report
 
-Lead with the recommendation and the inspected scope. For material findings, give the test, file, class, protected or missing contract, reason, and action, grouping related assertions. Say what ran, what wasn't inspected, and any product question left open. Say when a cut is sound. Background: [testing with agents](../../../agents/testing-with-agents.md#pruning-tests).
+Lead with the recommendation and the inspected scope. For material findings, give the test, file, class, protected or missing contract, reason, and action, grouping related assertions. Say what ran, what wasn't inspected, and any product question left open. Say when a cut is sound. Background: [testing with agents](../../agents/testing-with-agents.md#pruning-tests).

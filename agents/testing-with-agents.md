@@ -15,7 +15,7 @@ An agent's claim of success is weak evidence. Checkers need authoritative state;
 
 ## Verification tooling
 
-Agents need two things: a **maintained control CLI** (launch, reset, act, inspect, collect traces, clean up while keeping evidence) and a **feature map** (what the product does, how users reach each feature, and what result shows it worked). Lauren Tan's Control Glass is the example. Keep both with the project's verification skill. Report blocked or incomplete runs explicitly; they are never passes. The [potato-approach skill](../.agents/skills/potato-approach/SKILL.md) has the build procedure.
+Agents need two things: a **maintained control CLI** (launch, reset, act, inspect, collect traces, clean up while keeping evidence) and a **feature map** (what the product does, how users reach each feature, and what result shows it worked). Lauren Tan's Control Glass is the example. Keep both with the project's verification skill. Report blocked or incomplete runs explicitly; they are never passes. Build them with the `create-verification-skill` skill and keep them current with `maintain-verification-skill`.
 
 **Fresh-agent handoff check:** give a new agent a representative report, the repo, and normal tools, with no prior investigation. Can it find the feature, reproduce, fix, and prove the fix without coaching? Where it struggles shows what to repair:
 

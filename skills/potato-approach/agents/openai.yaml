@@ -1,0 +1,4 @@
+interface:
+  display_name: "Potato Approach"
+  short_description: "Make the easiest change the correct one"
+  default_prompt: "Use $potato-approach to harden this codebase so agents make correct changes and can verify them."

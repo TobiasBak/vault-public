@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repo retrospective"
+  short_description: "Improve repos from coding-agent session friction"
+  default_prompt: "Use $retro to review recent coding-agent sessions for this repository and recommend concrete improvements to navigation, checks, tooling, and instructions."
+policy:
+  allow_implicit_invocation: false

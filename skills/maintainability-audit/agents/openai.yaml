@@ -1,0 +1,6 @@
+interface:
+  display_name: "Agent-Native Source Audit"
+  short_description: "Review self-explanatory code and maintainability"
+  default_prompt: "Use $maintainability-audit to review how easily a fresh coding agent can understand, change, and verify this codebase, favoring self-explanatory source over more documentation."
+policy:
+  allow_implicit_invocation: false

@@ -36,3 +36,7 @@ This order decides where knowledge lives, not what to do on every task.
 | Agents repeatedly need help choosing an investigation method | [engineering-workflows.md](references/engineering-workflows.md) |
 
 Combine them as needed: cleanup removes bad examples, and hardening prevents their return.
+
+## Verification
+
+Show the new check rejecting the known bad pattern and accepting the supported one through its real pre-commit and CI entrypoints, and exercise the affected user behavior through the project's verification tooling. A passing static check proves the rule, not the behavior.

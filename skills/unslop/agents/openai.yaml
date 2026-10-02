@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unslop"
+  short_description: "Write concise, natural prose without AI filler"
+  default_prompt: "Use $unslop to make this writing concise and natural while preserving its meaning and voice."

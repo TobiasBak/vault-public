@@ -1,0 +1,6 @@
+interface:
+  display_name: "Repository Context Audit"
+  short_description: "Audit repository context and retrieval"
+  default_prompt: "Use $repo-context-audit to audit this repository's agent-facing context and recommend focused improvements."
+policy:
+  allow_implicit_invocation: false

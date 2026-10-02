@@ -47,6 +47,8 @@ Keep it a snapshot, not a diary. Checkpoint at validated milestones, subsystem s
 
 A skill's description is always in context as a trigger. A loose match loads unnecessary procedure and displaces a simpler response. Judge each skill by what it adds over the model and host, how precise its trigger is, and what a false activation costs. Explicit-only invocation suits deliberately chosen modes. Knowledge that needn't activate itself belongs in retrievable notes.
 
+Hosts expose only each skill's `name`, `description`, and path until it is selected, so the front-loaded `description` is the whole discovery surface. Codex's optional `agents/openai.yaml` adds display name, starter prompt, and `policy.allow_implicit_invocation`; Pi and Claude Code ignore it and use `disable-model-invocation` in `SKILL.md` instead, so explicit-only skills need both. Naming the skill explicitly (`$name`) gives deterministic selection.
+
 ## Text as images
 
 Rendering text as images can cut metered tokens, but the compression is lossy, model-specific, and unverified locally. Upload and vision latency, lost cache reuse, retries, and OCR-like errors (punctuation, indentation, page breaks, small fonts) can erase the saving. Never put instructions, tool protocols, code, paths, IDs, or numbers in pixels, and keep the exact text retrievable. Use it only if representative trials show equal correctness at lower cost per successful task.
