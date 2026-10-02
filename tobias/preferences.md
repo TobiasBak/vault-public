@@ -25,7 +25,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 - Agents take the easiest local patch and copy what they see, so make the easiest change the correct one through constraints and static checks. Then neither the strongest model nor constant attention is needed. See [agent-native codebases](../agents/agent-native-codebases.md).
 - Modular monorepo by default; splitting agent work across repos raised coordination cost.
 - No mandatory paradigm. He leans object-oriented out of familiarity; use functional or data-oriented designs when clearer.
-- Minimize dependencies. Own small capabilities locally; never rebuild security-sensitive or standards-heavy infrastructure.
+- Minimize dependencies, but check existing ones (docs and types) before reimplementing, and prefer an established, maintained library when it removes real complexity. Own small capabilities locally; never rebuild security-sensitive or standards-heavy infrastructure. No stopgaps meant to be replaced later.
 - A repo-wide no-code-comments rule enforced by lint or CI, because comments justify workarounds that the next agent copies. See [documentation and naming](../agents/documentation-and-naming.md).
 - Keep READMEs and agent guidance short. Commands belong in manifests and scripts, not prose.
 

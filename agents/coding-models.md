@@ -50,6 +50,16 @@ Compare model-plus-effort configurations, not model names. Credit rates don't de
 - **Interruptions:** provider [misalignment monitoring](https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring) can flag legitimate work. `misalignment_policy_violation` is not a transient error to retry, and AGENTS.md edits can't remove it.
 - **Codex subagents** ([docs](https://learn.chatgpt.com/docs/agent-configuration/subagents)): built-in default, worker, and explorer agents inherit the parent's model and effort unless custom agent files override them.
 
+### Claude Code specifics
+
+Checked on Claude Code 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings-reference)). Dotfiles keeps Claude, Codex, and Pi on one shared global AGENTS.md and the `~/.agents/skills` set.
+
+- **Response length:** `verbose` and `viewMode` only change how much tool output the transcript shows. Claude has no `model_verbosity` equivalent; the built-in `Concise` output style shortens responses without reducing work.
+- **Attribution:** commits get `Co-Authored-By` and PRs get a footer by default. `attribution: false` (2.1.281+) removes both.
+- **Effort:** Opus 5.5 defaults to `medium` and ignores a top-level `effortLevel` in user settings; set it per model under `modelSettings` or with `/effort`.
+- **Discovery:** Claude reads `~/.claude/CLAUDE.md` and `~/.claude/skills`, not `~/.agents/skills`. It reads a project's AGENTS.md only when no CLAUDE.md exists there. T3 Code loads user, project, and local settings.
+- **Auto memory** is on by default and builds a second, unreviewed store under `~/.claude/projects`. It's off so the vault stays the only knowledge store.
+
 ## DeepSeek V4.1 Flash in Codex
 
 A test option added 2026-09-10, not the default. The chain is T3 Code → Codex → OpenCode Go subscription → DeepSeek; the OpenCode harness isn't involved.
