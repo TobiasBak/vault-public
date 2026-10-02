@@ -1,32 +1,20 @@
 ---
 name: audit-knowledge-consistency
-description: Audit or consolidate materially duplicated and contradictory knowledge in this vault. Use only when the user explicitly asks to check knowledge consistency, find duplicate notes or claims, find contradictions, reconcile conflicts, or consolidate a stated vault scope. Do not trigger from note age, schedules, routine writing, or ordinary conversation.
+description: Find and fix duplicated or contradictory knowledge and broken links in this vault. Use when asked to check consistency, deduplicate, reconcile contradictions, or consolidate notes.
 ---
 
 # Audit knowledge consistency
 
-Use `AGENTS.md` for authority and `Knowledge bank/Knowledge consistency.md` for duplicate and contradiction policy. An audit is read-only; an explicit consolidation request permits safe integration within its scope. Neither authorizes unrelated restructuring or choosing winners in unresolved conflicts.
+The goal is one coherent body of knowledge. Note age and missing dates are never findings on their own.
 
-Resolve `VAULT_ROOT` from the governing vault and `SKILL_DIR` from this skill's directory. Inspect `conflicts.md` alongside the requested notes. The index is orientation, not evidence that an unlisted note does not exist.
+## Run
 
-## Inspect the requested scope
-
-Search every note in scope for overlapping claims, competing authorities, and materially duplicated knowledge. Distinguish duplicates from complementary knowledge, intentional repetition, scoped differences, clear corrections, contradictions, and uncertainty under the canonical policy. Newer dates alone do not settle a conflict.
-
-For a vault-wide audit, include visible Markdown notes and root operating notes. Hidden runtime and tool directories are separate from living knowledge. Ordinary subject-local writing does not require this workflow.
-
-The read-only link verifier checks visible Markdown across the vault, including wikilinks, headings, block references, ambiguity, and case differences:
-
-```bash
-python "$SKILL_DIR/scripts/verify_links.py" --vault "$VAULT_ROOT" --json
-```
-
-Keep its output as the structural baseline. Hidden files are not scanned as source notes, but explicit Markdown links to hidden files and directories are checked, including anchors in Markdown targets. External URLs are not fetched. Report unrelated existing link failures without silently widening the edit scope.
-
-## Report or integrate
-
-Make findings reviewable with the affected locations, competing or overlapping claims, proposed treatment, and any unique knowledge or unresolved decision. Do not manufacture duplicates from similar wording.
-
-For authorized integration, use the clearest existing subject note, preserve useful distinctions and provenance, and update affected links. Auto-resolve actual contradictions only for explicit supersession by the same authority or verified transcription/citation errors. Other contradictions go to `conflicts.md` for human resolution. Whole-note deletion, substantial deletion, and broad restructuring require explicit authorization under AGENTS.md.
-
-After integration, reread affected claims, search for obsolete wording, and rerun the link verifier against the baseline. Report changed notes and remaining decisions. No fixed report format is required.
+1. Baseline the links (wikilinks, Markdown links, headings, anchors; external URLs aren't fetched):
+   ```bash
+   python "$SKILL_DIR/scripts/verify_links.py" --vault "$VAULT_ROOT" --json
+   ```
+2. Search every in-scope note for overlapping claims. Classify each candidate:
+   - **Duplicate:** the same reusable claim in two places with no distinct purpose. Merge into the clearest owning note, keep unique qualifiers and links, rewrite rather than append, and repoint links. A short orientation line in the index is not a duplicate.
+   - **Scoped difference:** different versions, dates, environments, or scopes. Make the scope explicit in the notes; it isn't a conflict.
+   - **Contradiction:** both can't be true under the same scope. Resolve it from the strongest evidence (explicit supersession by the same authority, verified source, current repo state). Recency alone proves nothing. If the answer is Tobias's preference and the evidence doesn't settle it, ask him.
+3. Rerun the link check, search for leftover old wording, and report the changed notes and any open questions.
