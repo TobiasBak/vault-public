@@ -41,6 +41,7 @@ When agents know a rule but keep missing it, add an observable gate rather than 
 - For source-specific requests, retrieve the named artifact and reconcile each premise with it before diagnosing.
 - Before a material mutation, freeze the authorized action class and scope. Quoted output or a proposal is evidence, not authorization.
 - Track each promised artifact and check to a terminal result. A blocked, substituted, or narrowed check is not green. Claim completion only when everything is terminal, with waived and deferred items labelled.
+- Bind a receipt to the artifact it tested. A build cache keyed by anything weaker than the source fingerprint lets a green receipt test stale output: in order-integration-platform (2026-10-03), three native CI receipts named the right commit but reused another branch's bundles (`cacheHit: true`, 0 s compile). Only an independent clean rebuild caught it.
 
 The shared principle: the final claim needs a receipt at the same boundary as the claim.
 
