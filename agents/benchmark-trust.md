@@ -26,3 +26,10 @@ Don't lump these together as "poisoning":
 5. Leaderboards and vendor summaries, for discovery only.
 
 Record benchmark and task revision, model snapshot, effort, scaffold, budget, tools, network policy, Git-history state, image, verifier revision, pass rate, cost, latency, and exclusions. Prefer paired runs and cost per successful task. Inspect both passing and failing trajectories for answer retrieval and grader loopholes. Rebaseline after any model, harness, image, access, or evaluator change.
+
+## Harness measurement traps
+
+- Gate phases by stable run identity, not launcher PID. `uv run` can spawn a Python child whose PID names the readiness marker. A controller tested only with direct Python invocation can silently stall under the real command.
+- Record agent latency separately from coordination, validation, and judging. Hold post-run validators and judges until measured agents finish; report coordinator stalls as batch delay rather than model slowness. Afterward, run independent grades concurrently unless an observed host or account constraint requires a cap.
+- Separate streaming liveness from artifact retention. Valid updates omitted from logs must still refresh inactivity detection.
+- Count native compaction usage and inspect nested programmatic tool events. Assistant-message accounting alone misses compaction cost and can hide nested agent invocations.

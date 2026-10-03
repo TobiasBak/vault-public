@@ -23,7 +23,7 @@ Not exhaustive. Search with `rg`.
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
-- [agents/coding-models.md](agents/coding-models.md): daily model (GPT-6.1 Sol), model roles and effort, Sol vs Astra cost, Astra and Opus specifics, DeepSeek in Codex
+- [agents/coding-models.md](agents/coding-models.md): daily model (GPT-6.1 Sol), model roles and effort, Sol vs Astra cost, Astra and Opus specifics, OpenCode v2
 - [agents/ui-design-convergence.md](agents/ui-design-convergence.md): generic AI UI style and the restrained-design fix
 - [agents/jev.md](agents/jev.md): TypeSafe's Jev decision model, limits, and where it fits
 

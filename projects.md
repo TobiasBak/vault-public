@@ -31,12 +31,12 @@ Machine and dev-environment config for Windows, NixOS WSL, NixOS servers, and Ar
 
 ## T3 Code
 
-Tobias's daily interactive coding-agent environment. Use it with Codex until it supports Pi.
+Tobias's daily interactive coding-agent environment. Codex remains the daily provider; [Orchestrator V2](https://github.com/pingdotgg/t3code/releases/tag/v0.0.46-nightly.20261003.2610) added Pi support in the nightly released 2026-10-03.
 
 - `/home/tobias/code/t3code`, <https://github.com/pingdotgg/t3code>
 - Source work follows the checkout's `AGENTS.md`; the installed service and updates follow dotfiles. Restarting the service can kill running agent sessions.
 - Direction (confirmed 2026-07-30): provider-native agents are engines. T3 owns the collaborative workspace around them (shared task state, policy, evidence, provider integration), not a generic agent loop. See [AI-era durability](software/ai-era-durability.md).
-- Live provider registration: `~/.t3/userdata/settings.json`. The DeepSeek test provider is described in [coding models](agents/coding-models.md#deepseek-v41-flash-in-codex).
+- Live provider registration: `~/.t3/userdata/settings.json`.
 
 ## System Canvas
 

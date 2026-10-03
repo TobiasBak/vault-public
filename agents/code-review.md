@@ -12,6 +12,7 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 - **Evidence:** start from intent and the change map, then follow symbols to callers, callees, tests, types, config, and history as the hypothesis requires.
 - Retrieve semantic neighborhoods (related declarations, types, callers, tests across files), not fixed token windows.
 - Search changed symbols and domain terms, then reverse references, alternate spellings, adapters, and legacy paths.
+- For shared identity rules, check every supported input shape, not just value variations. The same entity may keep facts under a wrapper at the top level and directly on a nested row. A test for placement or numeric noise alone can miss a false split between those representations.
 - Cite exact paths. Missing evidence is not a negative, and no findings does not clear unexamined areas. Stop when the requested concerns are covered.
 
 ## Reviewers

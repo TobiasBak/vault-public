@@ -21,7 +21,7 @@ Context engineering controls what the model sees at each inference. The **workin
 
 ## Continuation
 
-Summary compaction is lossy. It drops details, confuses attempted with completed work, revives stale decisions, and can duplicate effects around unfinished tool calls; repeated summaries compound the drift. Codex's experimental notes plus searchable history avoid that (see [coding models](coding-models.md#astra-specifics)). Native continuation never replaces repository state.
+Summary compaction is lossy. It drops details, confuses attempted with completed work, revives stale decisions, and can duplicate effects around unfinished tool calls; repeated summaries compound the drift. Codex's experimental notes plus searchable history avoid that (see [coding models](coding-models.md#astra-specifics)). Native continuation never replaces repository state. During parallel work, reproduce a reported failure against current file bytes and verify the imported module's path. A delayed report or loaded module can describe code that another agent already replaced.
 
 When a handoff must survive independently, a checkpoint holds:
 

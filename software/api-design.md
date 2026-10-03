@@ -27,6 +27,8 @@ Make domain semantics explicit and transport mechanics incidental. Pick the prot
 - **Retry safety:** a caller-supplied operation ID returns the original admission on exact retry and fails explicitly on conflicting reuse. A timeout must never leave the caller unsure whether a retry duplicates work.
 - **Live vs durable events:** live events are low-latency and may be lost; durable history supports replay. Document disconnect, overflow, ordering, cursor, and backpressure behavior. Advance cursors only on committed events and order by an authoritative sequence, not timestamps. Robust clients treat live events as a doorbell and reconcile from history pages.
 - **Errors:** declare expected domain failures per operation, with a stable tag, IDs, message, and status. Keep them distinct from transport, decode, and unexpected-status failures and from defects. Callers should never parse strings.
+- **Explicit clears:** preserving employee edits requires distinguishing an absent field from a marked `null`. Read the validated draft directly instead of remigrating it through sparse extraction payloads. Numeric-only lifecycle checks can miss this: a real review command preserved an edited price but changed an explicitly cleared price to zero because serialization discarded the null.
+- **Executable intent:** updating a mutable draft does not revise an immutable execution plan. A decision command must return the plan for its final protected facts and invalidate approval of the old reference. Lifecycle checks should inspect the immediate plan response and reject the old reference, not rely on a later browser reload or automatic planning request to repair it.
 
 ## Transports and extensions
 
