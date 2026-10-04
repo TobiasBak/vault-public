@@ -9,6 +9,7 @@ Not exhaustive. Search with `rg`.
 
 - [tobias/preferences.md](tobias/preferences.md): engineering taste, stack, testing, how to involve him
 - [tobias/partnership.md](tobias/partnership.md): agent character, voice, disagreement, and pressure tests
+- [tobias/shopping.md](tobias/shopping.md): shopping priorities and Danish availability
 
 ## Agents
 
