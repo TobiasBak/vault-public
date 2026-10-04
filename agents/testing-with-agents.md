@@ -25,6 +25,17 @@ Agents need two things: a **maintained control CLI** (launch, reset, act, inspec
 - made an architectural mistake: API or enforced boundary
 - claimed unsupported success: checks
 
+## Where agent verification time goes
+
+Measure from session logs, receipts and PR timelines before tuning test runtime. In order-integration on 2026-10-02 to 04, the biggest losses weren't test execution:
+
+- PRs sat ready overnight (10.2h) because owners lacked merge authority.
+- A dead hosted workflow burned 19 × 30-minute Windows jobs.
+- Native builds were discarded after every run, worktree and head move: 2.3h of compiling.
+- Windows VM housekeeping (leftover guest state, a full disk, manual session setup) took 54 of a 98-minute qualification.
+
+Review/repair rounds mostly found real bugs. Fixes: delegate merge authority with a readiness bar, disable dead CI, keep build outputs in a content-keyed cross-run cache, and give every platform run a clean, self-provisioning environment.
+
 ## Pruning tests
 
 Keep tests that catch broken contracts or meaningful regressions across internal rewrites. Judge each assertion, not the test's category: a UI assertion may protect accessibility, a provider fixture may protect a protocol, and a registration test may be a discovery contract. Delete tests with no independent requirement, tests that mirror structure, and checks duplicated by cheaper equivalents. Coverage and count are not goals. The `review-test-quality` skill does this review.
