@@ -42,7 +42,8 @@ Not exhaustive. Search with `rg`.
 ## Global skills (`skills/`)
 
 Model-invoked:
-- `potato-approach`: make agent-maintained codebases easy to change correctly
+- `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
+- `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
 - `ui-design`: restrained, purposeful product UI
 - `unslop`: concise, natural prose
 - `domain-modeling` (Matt Pocock): glossary and ADRs

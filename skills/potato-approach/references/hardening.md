@@ -13,6 +13,8 @@ Tobias's rollout policy for a settled rule:
 
 No migration baselines, per-file suppressions, warning-only modes, or narrowed scope. Fix a wrong check against the real contract; never weaken a correct one to fit the code. If you must stop, leave the gate enabled and failing and record the command, the remaining failures, and where to resume.
 
+The failing gate lives on the repair branch. Merge the gate and its full repair together; a red gate on a shared default branch blocks every other agent's commits, and a baseline merged to get green breaks the policy.
+
 ## Put the decision in the design
 
 Start from a real correction. Identify what the engineer decided, what it protects, and who owns that state. Don't turn an accident of one bad patch into a universal rule. Change types, data structures, APIs, or boundaries so the mistake can't be expressed. A written rule can't compensate for a design where the shortcut is easier.

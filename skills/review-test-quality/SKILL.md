@@ -25,7 +25,7 @@ Split tests that mix useful and disposable assertions. When merging or parameter
 
 ## Evidence
 
-Run focused checks when they settle a dispute. An injected fault can show lost detection, but tie it to a real contract before calling it valuable. A passing suite doesn't prove that pruning kept useful coverage. Separate demonstrated loss from inference.
+Run focused checks when they settle a dispute. A cheap vacuity probe: would the test still pass if the code under test returned nothing or a constant? An injected fault can show lost detection, but tie it to a real contract before calling it valuable. A passing suite doesn't prove that pruning kept useful coverage. Separate demonstrated loss from inference.
 
 ## Report
 

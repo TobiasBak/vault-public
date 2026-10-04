@@ -23,7 +23,7 @@ For a correction or settled decision, use the strongest place that fits:
 4. Skills, for methods that need judgment.
 5. Human-enforced style guides.
 
-This order decides where knowledge lives, not what to do on every task.
+This order decides where knowledge lives, not what to do on every task. When a correction repeats a rule that is already written down, the prose failed: fix the mistake and move the rule up a level in the same change.
 
 ## Pick the work
 
@@ -31,7 +31,8 @@ This order decides where knowledge lives, not what to do on every task.
 |---|---|
 | Repeated mistakes, too many choices, rules to enforce, bad examples or workarounds to remove, comments | [hardening.md](references/hardening.md) |
 | Rules that need judgment to check | [review-agents.md](references/review-agents.md) |
-| Mining PR comments and escaped bugs for missing protection | [pr-feedback.md](references/pr-feedback.md) |
+| Mining PR comments, fix and revert commits, and escaped bugs for missing protection | [mistake-history.md](references/mistake-history.md) |
+| Choosing a design or screening a proposed shape | [design.md](references/design.md) |
 | Agents can't find, run, or verify product behavior | [verification.md](references/verification.md) |
 | Agents repeatedly need help choosing an investigation method | [engineering-workflows.md](references/engineering-workflows.md) |
 

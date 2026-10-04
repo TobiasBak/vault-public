@@ -25,6 +25,6 @@ An idiomatic, correct data model can dominate a hot path's cost. Rich records an
 6. **Validate correctness** against an independent expectation and remeasure.
 7. **Record the trigger** for revisiting: changes in frequency, cardinality, consumers, payload, or hardware.
 
-Keep a representative benchmark or measured tripwire next to the behavioral tests when performance is a contract, but don't make noisy timings hard gates.
+Vet every reported number with the [benchmark checklist](../skills/benchmark-checklist/SKILL.md). Keep a representative benchmark or measured tripwire next to the behavioral tests when performance is a contract, but don't make noisy timings hard gates.
 
 **With agents:** give them hot paths, scale, hardware, and benchmark routes before they design data structures. Without that, optimizing for clarity is correct. Never ban rich objects globally; redesign hot paths from evidence, not folklore. [Gigatoken](gigatoken.md) is an example.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Benchmark checklist"
+  short_description: "Vet a performance number before reporting it"
+  default_prompt: "Use $benchmark-checklist to vet this measurement before reporting the result."
