@@ -22,7 +22,7 @@ State the goal and deliverable, the minimum context with exact evidence location
 - The orchestrator owns requirements, decomposition, open decisions, integration, and acceptance. Children escalate any unapproved product, architecture, or scope choice.
 - One writer per shared state. Multiple writers need isolated state plus an explicit merge and validation.
 - Inspect diffs and artifacts, not just reports.
-- A parent saying work is "still running" is a claim, not evidence. Check for a live child or process and recent worktree writes. On 2026-10-04 a Pi parent reported two implementations as running while both worktrees had sat untouched with no live child.
+- Before declaring delegated work stalled, check file mtimes recursively (`git status` paths, not directory mtimes) and live `pi` processes (`pgrep -x pi`). A Pi parent's own subagents run in-process and never appear as T3 children. On 2026-10-04 a triage pass misread two live writers as stalled from T3 thread status and top-level directory mtimes, and its "resume" spawned colliding writers.
 - State merge authority in the task. Without it, owner threads open PRs and then wait indefinitely for a go-ahead. Give them a readiness bar (reviews clean, CI green on the head, required platform run) and let them merge.
 - Wait only on correctness-critical results. Schedule on events rather than in barrier batches, and cancel optional work once the evidence suffices.
 - Workers verify their own boundary; the orchestrator runs integration validation once. Report blocked shared tooling instead of having every worker investigate it.
