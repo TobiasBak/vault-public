@@ -4,7 +4,7 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. Roles below reflect provider gu
 
 ## Current choice
 
-Tobias's daily model is **GPT-6.1 Sol** in Codex via T3 Code, chosen 2026-09-29 over Astra for capability per task cost. Recording a preference doesn't change installed config or effort; dotfiles owns those.
+Since 2026-10-04, Tobias talks to **Claude Opus 5.5** in T3 Code as the orchestrator. It delegates the work to **GPT-6.1 Sol** children in Pi; see [subagent delegation](subagent-delegation.md#compute-routing). Sol was chosen over Astra on 2026-09-29 for capability per task cost. No measurement yet shows Opus-orchestrates-Sol beats plain Sol on cost per finished task. Compare Opus parent usage with Pi child costs (see [Pi specifics](#pi-specifics)) before treating it as settled. Recording a preference doesn't change installed config or effort; dotfiles owns those.
 
 | Model | Role | Effort |
 |---|---|---|

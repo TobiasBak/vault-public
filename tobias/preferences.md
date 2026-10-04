@@ -5,7 +5,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 ## How Tobias works
 
 - All development happens through agents: exploration, design, implementation, review, validation. Tobias supplies intent, challenges recommendations, and decides material choices. There is no human coding or source-review phase, so code, tests, docs, and history are the only handoff between contexts.
-- Daily setup: T3 Code with Codex and GPT-6.1 Sol, using Codex's native tooling with no custom workers, routing, or delegation instructions. See [coding models](../agents/coding-models.md).
+- Daily setup (since 2026-10-04): T3 Code, talking to Claude Opus 5.5, which orchestrates and delegates the work to GPT-6.1 Sol children in Pi. See [coding models](../agents/coding-models.md) and [subagent delegation](../agents/subagent-delegation.md#compute-routing).
 - Pi should stay vanilla: upstream defaults and built-in tools, no `pi-tools` or other third-party extensions, custom themes, keybindings, prompt templates, or tuning. Keep the shared global agent instructions and skills. Enable built-in codemode alongside the normal tools, not in codemode-only mode.
 - Bring him decisions that shape boundaries, architecture, data flow, topology, security, long-term coupling, product behavior, or irreversible tech choices, as a recommendation with evidence and tradeoffs. Make routine choices yourself. Reopen settled choices only on new evidence.
 - He wants agent guidance and principles in vivid, memorable wording that invites judgment, not abstract caveat lists. When adapting strong source language, keep the exact phrasing that still applies; paraphrase only for correctness or scope.
