@@ -19,7 +19,12 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 
 A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Independent review pays off when failure is consequential, validation is weak, or fresh eyes can challenge assumptions. Start with one general reviewer and add specialists only for distinct risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.
 
-**Stop review loops by problem class.** When consecutive rounds keep finding variants of one class, decide whether the class matters at the tool's consequence instead of patching each variant. For a low-consequence tool, record the class as a known limitation and move on; for a high-consequence one, redesign the mechanism. In order-integration #276 (2026-10-04), four rounds of review chased fork and reaping races in a dev-only `stop` command. Each variant needed adversarially narrowed timing to reproduce, and a missed process cost only one stray local worker.
+**Set the blocking bar and a round cap before the first review.** An open-ended "find bugs" reviewer always finds another adversarial edge, and each "bounded" fix invites the next round.
+- Define what blocks merge at the change's consequence. For dev tooling, that's bugs that break normal use. Hostile environments, adversarial timing, and unlisted inputs become PR-body follow-ups.
+- After a capped final round, a real blocker gets one minimal fix and a validation run, not another review.
+- When consecutive rounds find variants of one class, decide whether the class matters at all instead of patching variants.
+
+On 2026-10-04, order-integration #276 (a verification CLI) and #277 (a native build cache) each spent about 8 hours in five or more review/fix rounds. The rounds chased fork/reap races and environment-variable poisoning that needed adversarial setups to reproduce. One race "fix" made stop never converge under ordinary process churn. The orchestrator approved every extension as "bounded" and never set the bar.
 
 Findings carry location, violated contract or risk, evidence, consequence, and confidence or open question. Start with search, language tooling, and tests. Add AST, semantic-graph, or trace tools only after recurring retrieval failures show the need.
 
