@@ -27,6 +27,12 @@ Re-capture after every menu, dialog, or tab, because one dump never covers later
 
 Image matching, OCR, shortcuts, and coordinate input are fallbacks for opaque regions only. They break on layout, scaling, focus, theme, and locale, so confirm each effect with another capture. Physical input needs an unlocked desktop and matching privilege; UAC, elevation mismatch, and RDP state can block it ([UIPI](https://learn.microsoft.com/en-us/troubleshoot/power-platform/power-automate/desktop-flows/ui-automation/uipi-issues)).
 
+## Guest automation tokens and tasks
+
+- Windows OpenSSH runs outside the interactive desktop. Launch GUI workers as the existing console user with an interactive, elevated task principal; verify the desktop inside the worker.
+- Administrative SSH access can still fail Windows Update Agent COM with `80070005`. A bounded local SYSTEM scheduled task worked on Windows Server 2025. Keep servicing separate from the interactive GUI worker.
+- `Start-ScheduledTask` can return before execution starts. Wait for `LastRunTime` to change and for a terminal state/result. Treat `Queued` and `Running` as active, including during cleanup and evidence export. Otherwise a queued worker can be unregistered before it starts.
+
 ## Keeping the desktop alive after RDP
 
 Closing an RDP client locks the session. Instead, move the session to the console with `tscon`: the desktop stays unlocked and processes keep running. Reconnecting via RDP pulls it back, so repeat the move after every maintenance connection.
