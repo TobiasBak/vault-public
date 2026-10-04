@@ -26,6 +26,7 @@ Machine and dev-environment config for Windows, NixOS WSL, NixOS servers, and Ar
 - Start with root `AGENTS.md`; for NixOS hosts and remote rebuilds, `nixos/README.md`.
 - Get explicit approval before running installers or rebuild entrypoints. A file under the checkout is active only if its home or host target is a verified symlink or junction.
 - Owns the installed T3 Code service (`AGENTS.md`, section "Installed T3 Code service"), the active Codex config, and the global `AGENTS.md`.
+- Windows test VM lab ownership belongs here: `oip-windows-vm`, the single shared VM limit, and workload isolation are host policy. Keep its persisted home `~/.local/share/oip-windows-vm`. Product repositories own guest qualification; frozen misc snapshots are not maintained tooling. Ownership is decided; verify migration and activation before assuming the command is installed.
 - Agent skills live in this vault under `skills/` (see [AGENTS.md](AGENTS.md#skills)); `scripts/bootstrap-developer-tools.sh` links them. Some agent files are generated; check guidance before editing.
 - Taildrop on the `pc` device: `taildrop-receiver.service` drains incoming files to `~/Phone/Inbox`, with numbered suffixes on collisions. A manual `tailscale file get` therefore shows `0/0 files`. Configured in `nixos/home/tobias/desktop.nix`.
 
