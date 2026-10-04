@@ -34,7 +34,7 @@ Measure from session logs, receipts and PR timelines before tuning test runtime.
 - Native builds were discarded after every run, worktree and head move: 2.3h of compiling.
 - Windows VM housekeeping (leftover guest state, a full disk, manual session setup) took 54 of a 98-minute qualification.
 
-Review/repair rounds mostly found real bugs. Fixes: delegate merge authority with a readiness bar, disable dead CI, keep build outputs in a content-keyed cross-run cache, and give every platform run a clean, self-provisioning environment.
+Review/repair rounds mostly found real bugs. Fixes: delegate merge authority with a readiness bar, disable dead CI, keep build outputs in a content-keyed cross-run cache, carry receipts forward to a new head when its diff touches none of a job's inputs (order-integration `packages_ci.py --carry-forward`), run the full suite once on the final head, and give every platform run a clean, self-provisioning environment.
 
 ## Pruning tests
 
