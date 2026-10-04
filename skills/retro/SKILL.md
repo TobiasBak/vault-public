@@ -1,7 +1,6 @@
 ---
 name: retro
-description: Review coding-agent sessions for concrete improvements to a repository's navigation, checks, tools, and instructions. Use for a repo-focused retrospective, not a vault knowledge review.
-disable-model-invocation: true
+description: Review coding-agent sessions for concrete improvements to a repository's navigation, checks, tools, and instructions. Use when repeated failed lookups, broken checks, awkward tools, or repeated steering reveal friction worth fixing, or for a repo-focused retrospective. Not a vault knowledge review.
 ---
 
 # Repo retrospective

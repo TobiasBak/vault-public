@@ -1,7 +1,6 @@
 ---
 name: repo-context-audit
 description: Audit repository instructions, documentation ownership, and retrieval for context that adds value beyond the active model and host.
-disable-model-invocation: true
 ---
 
 # Repository context audit

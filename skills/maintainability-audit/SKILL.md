@@ -1,7 +1,6 @@
 ---
 name: maintainability-audit
 description: Audit source design for self-explanatory code that fresh coding agents can understand, change, and verify. Use for source maintainability reviews, not reviews of agents operating the product or general bug hunts.
-disable-model-invocation: true
 ---
 
 # Agent-native source maintainability audit

@@ -2,5 +2,3 @@ interface:
   display_name: "Create verification skill"
   short_description: "Build a tested project verification workflow"
   default_prompt: "Use $create-verification-skill to create and prove a project-local verification skill and feature map for this app."
-policy:
-  allow_implicit_invocation: false

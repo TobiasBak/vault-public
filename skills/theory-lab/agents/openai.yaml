@@ -1,6 +1,0 @@
-interface:
-  display_name: "Theory Lab"
-  short_description: "Develop and test mechanistic theories"
-  default_prompt: "Use $theory-lab to develop mechanistically distinct theories for this question and propose discriminating experiments."
-policy:
-  allow_implicit_invocation: false

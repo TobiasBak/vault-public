@@ -1,5 +1,5 @@
-# Refresh Matt Pocock's vendored skills byte-identical from upstream.
-# Keeps each skill's local agents/openai.yaml and copies the upstream LICENSE in.
+# Refresh Matt Pocock's vendored skills, keeping upstream content except invocation metadata.
+# Keeps each skill's local agents/openai.yaml, enables model discovery, and copies LICENSE in.
 # Refuses to overwrite uncommitted changes unless -Force.
 param([switch]$Force)
 $ErrorActionPreference = "Stop"
@@ -34,6 +34,10 @@ try {
         if (Test-Path $Dest) { Remove-Item -Recurse -Force $Dest }
         Copy-Item -Recurse $Src $Dest
         Copy-Item (Join-Path $Repo "LICENSE") (Join-Path $Dest "LICENSE")
+        $SkillPath = Join-Path $Dest "SKILL.md"
+        $Content = [System.IO.File]::ReadAllText($SkillPath)
+        $Content = [regex]::Replace($Content, '(?m)^disable-model-invocation:[^\r\n]*(?:\r?\n|$)', '')
+        [System.IO.File]::WriteAllText($SkillPath, $Content, [System.Text.UTF8Encoding]::new($false))
         if (Test-Path $SavedMeta) {
             New-Item -ItemType Directory -Force (Split-Path $Meta) | Out-Null
             Copy-Item $SavedMeta $Meta

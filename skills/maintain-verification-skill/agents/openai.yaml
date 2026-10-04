@@ -2,5 +2,3 @@ interface:
   display_name: "Maintain verification skill"
   short_description: "Check verification instructions against the app"
   default_prompt: "Use $maintain-verification-skill to check this project's verification skill and feature map against source and live behavior, and correct proven drift."
-policy:
-  allow_implicit_invocation: false

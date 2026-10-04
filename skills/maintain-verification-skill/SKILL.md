@@ -1,7 +1,6 @@
 ---
 name: maintain-verification-skill
-description: Check an existing project verification skill and feature map against source and live behavior, then fix proven drift. Use when asked to audit or maintain that verification workflow.
-disable-model-invocation: true
+description: Check an existing project verification skill and feature map against source and live behavior, then fix proven drift. Use when verification instructions are stale, incomplete, or failing, or user-facing changes need to be reflected in the feature map.
 ---
 
 # Maintain a verification skill

@@ -1,7 +1,6 @@
 ---
 name: create-verification-skill
-description: Create a project-local verification skill and feature map that drive the real app. Use when asked to build a reusable verification or control workflow for a project.
-disable-model-invocation: true
+description: Create a project-local verification skill and feature map that drive the real app. Use when a project needs a reusable verification or control workflow and lacks tested instructions for launching and exercising the real app.
 ---
 
 # Create a verification skill

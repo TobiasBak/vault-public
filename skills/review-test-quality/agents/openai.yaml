@@ -2,5 +2,3 @@ interface:
   display_name: "Review Test Quality"
   short_description: "Assess test value without losing useful coverage"
   default_prompt: "Use $review-test-quality to review the selected tests and recommend what to keep, rewrite, or delete based on the contracts they protect."
-policy:
-  allow_implicit_invocation: false

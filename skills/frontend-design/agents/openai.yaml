@@ -2,5 +2,3 @@ interface:
   display_name: "Frontend Design"
   short_description: "Distinctive frontend design from Anthropic"
   default_prompt: "Use $frontend-design to design and build this interface with a distinctive visual direction."
-policy:
-  allow_implicit_invocation: false

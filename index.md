@@ -42,23 +42,19 @@ Not exhaustive. Search with `rg`.
 
 ## Global skills (`skills/`)
 
-Model-invoked:
+All model-invoked; agents select relevant skills automatically:
 - `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
-- `ui-design`: restrained, purposeful product UI
 - `unslop`: concise, natural prose
 - `domain-modeling` (Matt Pocock): glossary and ADRs
 - `grilling` (Matt Pocock): stress-test a plan by interview
-
-Explicit-only:
-- `frontend-design` (Anthropic): bold, distinctive visual direction when you want a statement look; `ui-design` is the default
+- `frontend-design` (Anthropic): distinctive, intentional visual design
 - `grill-with-docs` (Matt Pocock): grilling plus domain docs
 - `maintainability-audit`: how easily fresh agents can change the source
 - `repo-context-audit`: which instructions and docs earn their place
 - `retro`: repo improvements from session friction
 - `review-test-quality`: keep, rewrite, or delete tests
 - `create-verification-skill`, `maintain-verification-skill` (adapted from pstack): project verification skills and feature maps
-- `theory-lab`: mechanistic theories and discriminating experiments
 
 ## Vault-only skills (`.agents/skills/`)
 

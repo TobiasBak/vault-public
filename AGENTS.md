@@ -20,9 +20,9 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 `skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
 
-- Every global skill has `SKILL.md` and `agents/openai.yaml`. Explicit-only skills set both `disable-model-invocation: true` and `policy.allow_implicit_invocation: false`; model-invoked skills set neither.
+- Every global skill has `SKILL.md` and `agents/openai.yaml`. All global skills are model-invoked: omit `disable-model-invocation` and `policy.allow_implicit_invocation`. Tobias wants agents to discover relevant skills without him remembering their names. Descriptions must say when the skill applies.
 - Skills that guide code changes end with a `Verification` section naming the behavioral check expected.
-- `domain-modeling`, `grill-with-docs`, `grilling`: byte-identical from Matt Pocock; refresh with `scripts/update-vendored-skills.sh`, never hand-edit. `frontend-design` is Anthropic's with local metadata, explicit-only invocation (so it doesn't fight `ui-design`), and a `Verification` section. Adapted skills carry `SOURCE.md` and `LICENSE`.
+- `domain-modeling`, `grill-with-docs`, `grilling`: vendored from Matt Pocock; refresh with `scripts/update-vendored-skills.sh`. Keep upstream content byte-identical except local invocation metadata; the updater removes `disable-model-invocation`. Never hand-edit their bodies. `frontend-design` is Anthropic's with local metadata and a `Verification` section. Adapted skills carry `SOURCE.md` and `LICENSE`.
 
 ## Public repository
 

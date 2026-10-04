@@ -45,7 +45,7 @@ Keep it a snapshot, not a diary. Checkpoint at validated milestones, subsystem s
 
 ## Skills as conditional context
 
-A skill's description is always in context as a trigger. A loose match loads unnecessary procedure and displaces a simpler response. Judge each skill by what it adds over the model and host, how precise its trigger is, and what a false activation costs. Explicit-only invocation suits deliberately chosen modes. Knowledge that needn't activate itself belongs in retrievable notes.
+A discoverable skill's description is always in context as a trigger. A loose match loads unnecessary procedure and displaces a simpler response. Judge each skill by what it adds over the model and host, how precise its trigger is, and what a false activation costs. Tobias wants every global skill model-invoked so agents find relevant workflows without him remembering skill names. Keep triggers precise rather than hiding skills behind explicit invocation. Knowledge that needn't activate itself belongs in retrievable notes.
 
 Hosts expose only each skill's `name`, `description`, and path until it is selected, so the front-loaded `description` is the whole discovery surface. Codex's optional `agents/openai.yaml` adds display name, starter prompt, and `policy.allow_implicit_invocation`; Pi and Claude Code ignore it and use `disable-model-invocation` in `SKILL.md` instead, so explicit-only skills need both. Naming the skill explicitly (`$name`) gives deterministic selection.
 

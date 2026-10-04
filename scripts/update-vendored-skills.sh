@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Refresh Matt Pocock's vendored skills byte-identical from upstream.
-# Keeps each skill's local agents/openai.yaml and copies the upstream LICENSE in.
+# Refresh Matt Pocock's vendored skills, keeping upstream content except invocation metadata.
+# Keeps each skill's local agents/openai.yaml, enables model discovery, and copies LICENSE in.
 # Refuses to overwrite uncommitted changes unless --force.
 set -euo pipefail
 
@@ -30,6 +30,8 @@ for name in "${!UPSTREAM[@]}"; do
   [ -f "$dest/agents/openai.yaml" ] && cp "$dest/agents/openai.yaml" "$meta"
   rm -rf "$dest" && cp -R "$src" "$dest" && cp "$TMP/repo/LICENSE" "$dest/LICENSE"
   [ -f "$meta" ] && mkdir -p "$dest/agents" && cp "$meta" "$dest/agents/openai.yaml"
+  awk 'BEGIN { frontmatter = 0 } /^---$/ { frontmatter++ } !(frontmatter == 1 && /^disable-model-invocation:/)' "$dest/SKILL.md" > "$TMP/$name.SKILL.md"
+  mv "$TMP/$name.SKILL.md" "$dest/SKILL.md"
 done
 
 echo "Updated from mattpocock/skills@$(git -C "$TMP/repo" rev-parse --short HEAD). Review:"

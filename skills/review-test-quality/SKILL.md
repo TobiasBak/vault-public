@@ -1,7 +1,6 @@
 ---
 name: review-test-quality
-description: Review selected tests or test-cleanup changes for contract value and classify them keep, rewrite, delete, or uncertain. Use only when this skill is invoked by name, not for ordinary implementation or code review.
-disable-model-invocation: true
+description: Review tests for contract value and classify them keep, rewrite, delete, or uncertain. Use when writing, reviewing, refactoring, or pruning tests, especially when assertions mirror internals or tests obstruct changes.
 ---
 
 # Review test quality
