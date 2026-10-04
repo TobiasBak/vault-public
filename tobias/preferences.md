@@ -60,6 +60,7 @@ This is the method he is growing toward, not a description of current habit:
 - **Hard bug:** build the fastest repeatable signal for the exact symptom. Trace to the first incorrect state and the invariant owner. Minimize, change one variable at a time, keep the minimized case as a regression test at the real seam, and rerun the original scenario.
 - **Flaky bug:** raise and measure the reproduction rate through repetition, stress, narrowed timing windows, or pinned environment variables. Don't wait for full determinism.
 - **Integration-heavy systems:** run the real app against realistic local black-box service doubles. Record requests and assert visible requests, state, and behavior instead of mocking internals.
+- **Secondary platforms gate promotion, not every PR.** When the dev platform catches nearly everything, PRs merge on dev-platform evidence; the other platform (e.g., the order-integration Windows VM) qualifies only the release promotion (main→staging), and issues found there get fixed there. Decided 2026-10-04 after Windows runs on typing and docs PRs dominated the queue.
 - **Numeric limits are tripwires.** Measure before choosing a limit and keep the basis next to its definition. Remeasure when conditions change. A limit developers can hit is a limit they must see: every budget failure names the budget, the limit, and the ask. A silent budget is worse than no budget.
 
 ## Interests
