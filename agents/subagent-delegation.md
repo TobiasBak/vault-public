@@ -17,12 +17,16 @@ Split by dependencies, ownership, and independently testable behavior, not by fi
 
 State the goal and deliverable, the minimum context with exact evidence locations, decisions already approved, permissions and side-effect limits, success criteria, output shape, and when to stop or escalate. Let the child choose its own procedure. Pass reduced inputs, not the parent transcript, and get back a compact result or an artifact reference.
 
+- Word race and robustness reviews neutrally: describe the contract and ask whether it holds. On 2026-10-04 OpenAI's cyber filter killed a Pi Sol review mid-run ("flagged for possible cybersecurity risk"). The brief said "try to break the invariant", "hide the worker" and "fork-heavy load". The same review reworded as contract checks ran clean. Salvage partial artifacts from the child's output directory before re-delegating.
+- Children that run tests or probes on a candidate get a disposable `git worktree add` and run `uv` from its root. Copying the candidate's venv or entrypoints keeps absolute shebangs, so imports and artifacts land back in the candidate checkout.
+
 ## Authority and shared state
 
 - The orchestrator owns requirements, decomposition, open decisions, integration, and acceptance. Children escalate any unapproved product, architecture, or scope choice.
 - One writer per shared state. Multiple writers need isolated state plus an explicit merge and validation.
 - Inspect diffs and artifacts, not just reports.
 - Before declaring delegated work stalled, check file mtimes recursively (`git status` paths, not directory mtimes) and live `pi` processes (`pgrep -x pi`). A Pi parent's own subagents run in-process and never appear as T3 children. On 2026-10-04 a triage pass misread two live writers as stalled from T3 thread status and top-level directory mtimes, and its "resume" spawned colliding writers.
+- To stop a stray writer, find its PID with `pgrep` and kill that PID. `pkill -f <pattern>` also matches the shell running the command, because the pattern is on its command line. The shell dies (exit 144), and the rest of the command, such as follow-up edits, never runs.
 - State merge authority in the task. Without it, owner threads open PRs and then wait indefinitely for a go-ahead. Give them a readiness bar (reviews clean, CI green on the head, required platform run) and let them merge.
 - Wait only on correctness-critical results. Schedule on events rather than in barrier batches, and cancel optional work once the evidence suffices.
 - Workers verify their own boundary; the orchestrator runs integration validation once. Report blocked shared tooling instead of having every worker investigate it.
