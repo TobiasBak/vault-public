@@ -19,7 +19,7 @@ Not exhaustive. Search with `rg`.
 - [agents/subagent-delegation.md](agents/subagent-delegation.md): when and how to split work, handoffs, one writer
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
-- [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, test pruning, team adoption
+- [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, refactor equivalence, test pruning, team adoption
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
@@ -30,7 +30,7 @@ Not exhaustive. Search with `rg`.
 ## Software
 
 - [software/architecture.md](software/architecture.md): spotting architectural decisions, styles, ports and adapters, an order-integration example
-- [software/api-design.md](software/api-design.md): consumer-shaped APIs, one contract, lifecycle, events, errors, plugins
+- [software/api-design.md](software/api-design.md): consumer-shaped APIs, one contract, lifecycle, events, errors, plugins, persisted-format renames
 - [software/ai-era-durability.md](software/ai-era-durability.md): what survives cheap AI, the typed-plan architecture, provider-native harnesses
 - [software/performance-aware-data-design.md](software/performance-aware-data-design.md): when data layout dominates hot paths
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer

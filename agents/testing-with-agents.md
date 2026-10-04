@@ -29,6 +29,17 @@ Agents need two things: a **maintained control CLI** (launch, reset, act, inspec
 
 Keep tests that catch broken contracts or meaningful regressions across internal rewrites. Judge each assertion, not the test's category: a UI assertion may protect accessibility, a provider fixture may protect a protocol, and a registration test may be a discovery contract. Delete tests with no independent requirement, tests that mirror structure, and checks duplicated by cheaper equivalents. Coverage and count are not goals. The `review-test-quality` skill does this review.
 
+## Refactor equivalence
+
+Before a behaviour-preserving refactor merges, compare the base and the branch under the same test set. Record each durable output through pytest plugins (saved plans, HTTP exchanges, persisted session writes), then diff the outputs per test node and call index. Translate only the deliberate renames, removals and additions, and list each one; anything left over is unexplained. Add normalised accessibility snapshots and pixel diffs of the main screens.
+
+Normalisation pitfalls, from order-integration M9:
+
+- Under xdist, pytest temp paths gain `popen-gwN/`. Strip it, or compare runs that used the same worker mode.
+- Random IDs inside strings (`execution-<hex8>`, upload hash directories, UUIDs) need stable placeholders. Map UUIDs in order of appearance.
+- Evidence ZIP byte counts change with path lengths. Compare the unpacked, normalised JSON, not the size.
+- Renamed test nodes must be mapped, or their records look like additions and removals.
+
 ## Team adoption
 
 For a team adopting AI in development, shorten the time from a change to trustworthy feedback. Measure confirmed defects found, defects missed, false alarms, investigation time, and maintenance cost, not generated code or test counts. The durable investments are representative cases, clear expectations, easy startup, isolated data, and inspectable results. A sensible first pilot runs an agent alongside the existing process on one troublesome workflow and compares findings and effort. Cheap judgment models like [Jev](jev.md) could later cluster failures or classify environment-vs-app issues, but they should never gate releases.

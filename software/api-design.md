@@ -39,4 +39,6 @@ Make domain semantics explicit and transport mechanics incidental. Pick the prot
 
 A major version is the moment to remove transport leakage, duplicate concepts, aliases, and accidental coupling. Prefer a coherent breaking contract over compatibility paths, unless an external consumer or durable data requires them. Success means ordinary use is easier, misuse is harder, recovery is explicit, and all projections agree.
 
+When durable data does require it, rename persisted fields with a versioned upgrade, not kept keys: stamp a format number on write, upgrade older formats on read in one module, and refuse unknown versions. The model then carries only current names. The order-integration session files took this route (format 1 to 2) when `monitor_*` fields became `erp_*`.
+
 **Example:** OpenCode 2 generates server and clients from one typed `HttpApi`, flattens inputs, runs the embedded SDK through the real router, separates prompt admission from execution and live from durable events, and scopes plugins. ([migration](https://v2.opencode.ai/migrate-v1.md), [client](https://v2.opencode.ai/build/client.md), [SDK](https://v2.opencode.ai/build/sdk.md), [plugins](https://v2.opencode.ai/build/plugins.md))
