@@ -78,6 +78,3 @@ Danish dog-identity and documentation service.
 
 - `/home/tobias/code/CanineArchive`, <https://github.com/Amkjaer9187/CanineArchive>
 - Start with root `AGENTS.md` and `README.md`; project verification and review skills live in `.agents/skills`.
-- No CI budget: GitHub Actions runs only the manual deploy workflow. All checks run locally through one `pnpm gate` (fast tier pre-commit, full tier pre-push and deploy). Budget heavy local runs; several agents share the machine.
-- `main` can lag far behind open stacked PRs (2026-10: #6 → #7 → #8, 70+ commits ahead). Audit and branch from the stack tip, not `main`, or findings go stale.
-- Tobias's hardening work lives in one long-running PR, branch `feature/tobias-refactors`, stacked on the open PR stack.
