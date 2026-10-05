@@ -19,7 +19,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 
 - Fast experimentation, then deliberate simplification. Speed must not become permanent disorder; clean-code ideals must not delay learning.
 - A prototype answers one explicit question and is then thrown away. Keep persistence and hardening out unless they are the question. Re-implement the validated decision properly.
-- Choose the simplest resulting system, not the smallest diff. Local patches are fine when they keep one source of truth, clear ownership, and reliable verification. Duplicated rules, scattered changes, hidden effects, or lying abstractions call for redesign at that boundary, not unrelated cleanup.
+- Choose the simplest resulting system, not the smallest diff. When a local patch is sound and when to repair the boundary instead: [patch accretion](../agents/agent-native-codebases.md#patch-accretion-is-the-main-failure).
 - For hard features, suggest seemingly insane solutions. Treat the request and architecture as hypotheses: compare simplifying or removing the feature, a local implementation, and a coherent redesign. Favor redesign when it is cheap and reversible.
 - Small cohesive modules, explicit contracts, clear state ownership, direct domain models, simple data flow, behavioral tests. No speculative abstractions, inheritance hierarchies, or patterns without a concrete problem. Delete obsolete complexity.
 - Deep modules: hide substantial behavior behind a small interface. Deletion test: removing the module should make complexity reappear across callers, not just remove indirection.

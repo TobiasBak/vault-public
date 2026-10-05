@@ -46,7 +46,7 @@ Built-in Pi codemode looked useful for latency and cost, without improving fully
 - Codemode was used in all enabled runs. Shared host/account contention and five visible-validation failures limit the comparison. Coordinator delays were excluded from agent latency.
 - Evidence: `/home/tobias/code/swe-benchmarking/setup/results/sol61-harness-20261003/REPORT.md` and `operator-analysis.json`.
 
-## Model-specific behavior
+## Model and host specifics
 
 - **Sol:** tool calling needs Responses (Chat Completions works without tools). 1.05M context, US and EU residency, no Fast mode with EU residency. Supports the beta Responses [multi-agent orchestration](https://developers.openai.com/api/docs/guides/responses-multi-agent), which is separate from Codex host tools.
 - **Opus 5.5:** use the effort setting rather than "think harder" prompts. A progress report can end the turn mid-work, so judge completion against evidence. Adaptive thinking is always on, and between-tool updates arrive in thinking blocks that clients must request and render. Thinking depends on prior turns, so change instructions and tools append-only. ([API notes](https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5))
@@ -55,15 +55,14 @@ Built-in Pi codemode looked useful for latency and cost, without improving fully
 ### Astra specifics
 
 - Per OpenAI's [guidance](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices), Astra follows instructions closely and is sensitive to conflicting skills and AGENTS.md. It tends toward extra clarification, heavy formatting, and over-testing small changes. Remove conflicting coaching before adding more. Feed it original evidence, not cheaper-model summaries.
-- **Codex context management:** `features.context_management.experimental_mode` is off by default and needs a ChatGPT sign-in on Plus, Pro, or Pro Lite. It doesn't work with API keys, custom providers, or temporary structured threads ([config](https://learn.chatgpt.com/docs/config-file/config-reference), [changelog](https://learn.chatgpt.com/docs/changelog)). Local CLI 0.153.4 showed it disabled on 2026-09-05. Native cross-session memories are a separate feature, disabled in this vault's `.codex/config.toml`.
 - **API:** tool calling requires Responses. No `none`/`minimal` effort, `temperature`, `top_p`, or `logprobs`. [`configuration_update`](https://developers.openai.com/api/docs/guides/reasoning#change-reasoning-mid-conversation) changes effort mid-conversation while preserving the cache. [Async tool calls](https://developers.openai.com/api/docs/guides/async-tool-calling) and WebSocket [steering](https://developers.openai.com/api/docs/guides/steering) need host support; steering doesn't cancel tools already started.
 - **Interruptions:** provider [misalignment monitoring](https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring) can flag legitimate work. `misalignment_policy_violation` is not a transient error to retry, and AGENTS.md edits can't remove it.
-- **Codex subagents** ([docs](https://learn.chatgpt.com/docs/agent-configuration/subagents)): built-in default, worker, and explorer agents inherit the parent's model and effort unless custom agent files override them.
 
-### Codex CLI backend
+### Codex specifics
 
-- A managed app-server daemon has its own installed package. Updating the CLI does not update that pinned backend; a newer CLI can still show the old backend's model picker. Compare both with `codex app-server daemon version`, not just `codex --version`.
-- To align the backend with the installed CLI, use `codex app-server daemon update --from-cli --yes`. This pins the CLI package and restarts the daemon, potentially interrupting its sessions. `codex app-server daemon update` returns to production updates. Dotfiles owns installation policy.
+- **Context management:** `features.context_management.experimental_mode` is off by default and needs a ChatGPT sign-in on Plus, Pro, or Pro Lite. It doesn't work with API keys, custom providers, or temporary structured threads ([config](https://learn.chatgpt.com/docs/config-file/config-reference), [changelog](https://learn.chatgpt.com/docs/changelog)). Local CLI 0.153.4 showed it disabled on 2026-09-05. Native cross-session memories are a separate feature, disabled in this vault's `.codex/config.toml`.
+- **Subagents** ([docs](https://learn.chatgpt.com/docs/agent-configuration/subagents)): built-in default, worker, and explorer agents inherit the parent's model and effort unless custom agent files override them.
+- **CLI backend:** a managed app-server daemon has its own installed package. Updating the CLI does not update that pinned backend; a newer CLI can still show the old backend's model picker. Compare both with `codex app-server daemon version`, not just `codex --version`. To align the backend with the installed CLI, use `codex app-server daemon update --from-cli --yes`. This pins the CLI package and restarts the daemon, potentially interrupting its sessions. `codex app-server daemon update` returns to production updates. Dotfiles owns installation policy.
 
 ### Pi specifics
 
