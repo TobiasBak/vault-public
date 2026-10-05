@@ -39,6 +39,15 @@ Tobias's daily interactive coding-agent environment: Claude Opus 5.5 orchestrate
 - Direction (confirmed 2026-07-30): provider-native agents are engines. T3 owns the collaborative workspace around them (shared task state, policy, evidence, provider integration), not a generic agent loop. See [AI-era durability](software/ai-era-durability.md).
 - Live provider registration: `~/.t3/userdata/settings.json`.
 
+## StepKit
+
+Deterministic manufacturing-fact extraction from STEP models, plus an owned Rust geometry engine meant to replace its OpenCascade dependency.
+
+- `/home/tobias/code/stepkit`, <https://github.com/TobiasBak/stepkit>, branch `main`: Python extraction library and CLI on OCCT. Owns the output contract, recognition, unfolding, and the private corpus under `data/step-files/` (never commit it elsewhere).
+- `/home/tobias/code/stepkit-geometry`, <https://github.com/TobiasBak/stepkit-geometry> (private), branch `main`: Rust/PyO3 engine. Not yet wired into StepKit. `docs/implementation-status.md` is the status of record; private evidence and receipts live in ignored `.local/`, which has no backup.
+- Trim policy (decided 2026-10-05): replace the narrow proof-carrying face profiles with one general tolerance-based trim reconstruction (project 3D boundary curves into UV within the file's declared uncertainty, adaptive integration with error estimates), deleting profiles where the general path agrees. Parity bar: whole-payload area and volume within 1e-6 relative of OCCT or of the fixture's independent answer, while staying far faster than OCCT.
+- On the engine's analytic fixtures, OCCT re-import is the side that disagrees with the dimension-derived answers; treat OCCT as a comparison, not truth.
+
 ## System Canvas
 
 Browser workspace for discussing software systems with a coding agent on a shared Excalidraw canvas.
