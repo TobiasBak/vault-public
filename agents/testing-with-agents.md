@@ -53,6 +53,18 @@ Normalisation pitfalls, from order-integration M9:
 - Evidence ZIP byte counts change with path lengths. Compare the unpacked, normalised JSON, not the size.
 - Renamed test nodes must be mapped, or their records look like additions and removals.
 
+### CSS migration proof
+
+Retain the original production bundle before edits. If initial capture missed a state, serve that bundle against the same disposable fixture state, capture it, then restore the candidate; don't mock the page into looking equivalent.
+
+CSS Modules migrations need checks beyond screenshots: runtime class queries can stop matching, custom tables can lose shared alignment rules, and removing an ancestor changes specificity in dirty/focused states. Audit styles-object references too: permissive module typings can accept nonexistent exports.
+
+Explain tiny pixel differences with evidence, not a blanket threshold. Repeat the unchanged baseline to test rasterization noise; inspect computed styles and geometry at the differing element. Wait for actual drawing content, not merely a default-sized canvas. A lazy render can otherwise look like a large CSS regression.
+
+Finish shared frontend builds before registering and driving a fixture that fingerprints their assets. A valid readiness record becomes stale when another launcher rebuilds those assets. Compare recorded and current hashes before blaming a missing fingerprint or an ignored archive path; then build and launch serially with a fresh doctor-qualified record, never patch the registry to pass.
+
+Identical protobuf map bytes can decode into different iteration orders in separate SDK processes. Trace transport and selection semantics before treating reordered lists as a refactor regression. For an equivalent visual state, filter and explicitly select the same named item through real UI controls; retain the original differing pair rather than adding product sorting for screenshots.
+
 ## Team adoption
 
 For a team adopting AI in development, shorten the time from a change to trustworthy feedback. Measure confirmed defects found, defects missed, false alarms, investigation time, and maintenance cost, not generated code or test counts. The durable investments are representative cases, clear expectations, easy startup, isolated data, and inspectable results. A sensible first pilot runs an agent alongside the existing process on one troublesome workflow and compares findings and effort. Cheap judgment models like [Jev](jev.md) could later cluster failures or classify environment-vs-app issues, but they should never gate releases.

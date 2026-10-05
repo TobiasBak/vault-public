@@ -25,6 +25,10 @@ Types are erased. Treat HTTP, DB, file, env, queue, user, and model data as untr
 - **State:** separate server-state caching from local client state.
 - **Quality:** tests, browser tests, static analysis, and formatting stay distinct. One formatter, one package manager, one lockfile.
 
+## Account-scoped server-state caches
+
+Retire the cache owner when an employee changes, not just its contents. TanStack Query's mutation-cache `clear()` leaves running mutations and their callbacks alive. Swapping a provider's client without remounting can also retarget pending mutation observers to the new client's callbacks. Use a keyed employee-provider lifetime, with stable authentication state outside it. Test delayed success and rejection after logout and another employee's login. Both traps were reproduced in [OIP #305](https://github.com/JoergenDahl/order-integration-platform/pull/305).
+
 ## Defaults
 
 `strict`, `unknown` at untrusted boundaries, discriminated unions for states and expected errors, exhaustive handling, local inference with explicit exported contracts. Match `module` and `moduleResolution` to the real runtime or bundler. Treat `skipLibCheck` as a measured tradeoff.
