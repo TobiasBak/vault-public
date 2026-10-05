@@ -51,7 +51,7 @@ This is the method he is growing toward, not a description of current habit:
 - **Data:** SQLite by default, including for JSON. Plain JSON files for tiny data. PostgreSQL with `jsonb` when a bigger database is warranted.
 - **APIs:** no fixed style. Choose from consumers and interoperability; Python services often fit REST with OpenAPI.
 - **Frontend:** no framework preference. Astro for content, React, Vue, or Svelte for apps, Angular for standardized enterprise. On a tie, pick fast setup, strong agent familiarity, and tight feedback. Protect quality with browser tests, accessibility, types, and rendered inspection.
-- **Cloud:** most experience with GCP, whose free tier suits experiments. Tailscale to personal servers works well and is often simpler than cloud infrastructure. Containers are the deployment unit; Kubernetes only when orchestration is justified. Infrastructure as code and declarative config, hence NixOS.
+- **Cloud:** most experience with GCP, whose free tier suits experiments. Tailscale to personal servers works well and is often simpler than cloud infrastructure. Containers are the deployment unit; Kubernetes only when orchestration is justified. Infrastructure as code and declarative config, hence NixOS. Provisioning and deploys must run entirely from a CLI; dashboards and browser steps are only for one-time account and token bootstrap.
 - Security and production controls are low priority for disposable experiments and material for work and production systems.
 
 ## Testing and debugging
