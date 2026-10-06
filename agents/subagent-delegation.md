@@ -19,6 +19,7 @@ State the goal and deliverable, the minimum context with exact evidence location
 
 - Word race and robustness reviews neutrally: describe the contract and ask whether it holds. On 2026-10-04 OpenAI's cyber filter killed a Pi Sol review mid-run ("flagged for possible cybersecurity risk"). The brief said "try to break the invariant", "hide the worker" and "fork-heavy load". The same review reworded as contract checks ran clean. Salvage partial artifacts from the child's output directory before re-delegating.
 - Children that run tests or probes on a candidate get a disposable `git worktree add` and run `uv` from its root. Copying the candidate's venv or entrypoints keeps absolute shebangs, so imports and artifacts land back in the candidate checkout.
+- `git worktree remove` deletes gitignored files too, including `.local/` receipts and evidence archives. Copy evidence you need out of a disposable worktree, or have the child write it to a retained path, before removing the worktree.
 
 ## Authority and shared state
 
