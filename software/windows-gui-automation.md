@@ -32,6 +32,9 @@ Image matching, OCR, shortcuts, and coordinate input are fallbacks for opaque re
 - Windows OpenSSH runs outside the interactive desktop. Launch GUI workers as the existing console user with an interactive, elevated task principal; verify the desktop inside the worker.
 - Administrative SSH access can still fail Windows Update Agent COM with `80070005`. A bounded local SYSTEM scheduled task worked on Windows Server 2025. Keep servicing separate from the interactive GUI worker.
 - `Start-ScheduledTask` can return before execution starts. Wait for `LastRunTime` to change and for a terminal state/result. Treat `Queued` and `Running` as active, including during cleanup and evidence export. Otherwise a queued worker can be unregistered before it starts.
+- Mapped drive letters show as unavailable in OpenSSH sessions; use UNC paths (`net use` lists the mapping).
+- Run PowerShell over SSH as `powershell -NoProfile -EncodedCommand <base64 of UTF-16LE script>` (`iconv -f utf-8 -t utf-16le | base64 -w0`). Inline quoting breaks, and `-Command -` from stdin can print nothing. Progress arrives as CLIXML on stderr; filter it.
+- Desktop UI automation (for example AX client promotion) cannot run from an SSH session; it needs the interactive console user.
 
 ## Keeping the desktop alive after RDP
 
