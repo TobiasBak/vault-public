@@ -13,3 +13,7 @@ Manage tokens in Terraform/OpenTofu only when the project already manages Cloudf
 
 - Creating a token needs another token that can create tokens, so IaC moves the bootstrap up one level instead of removing it.
 - `cloudflare_account_token` stores the token value in state, which makes the state file a secret.
+
+## Access
+
+- An Access application whose `destinations` are Workers must have no `domain`; Cloudflare rejects one with error 12130. Drift checks on such apps compare name, type, destinations and policies, never `domain`.

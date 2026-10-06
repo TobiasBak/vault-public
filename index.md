@@ -38,7 +38,8 @@ Not exhaustive. Search with `rg`.
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime
 - [software/browser-derived-clients.md](software/browser-derived-clients.md): turning browser traces into HTTP clients; Danish supermarket offers
-- [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats
+- [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats, Access with Worker destinations
+- [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, free-plan pausing and restore
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
 
 ## Global skills (`skills/`)
