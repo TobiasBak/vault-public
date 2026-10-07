@@ -9,6 +9,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 - Prefer using applications in the browser when practical. A local background companion service is fine; use a native app as the fallback when browser support falls short.
 - Pi should stay vanilla: upstream defaults and built-in tools, no `pi-tools` or other third-party extensions, custom themes, keybindings, prompt templates, or tuning. Keep the shared global agent instructions and skills. Enable built-in codemode alongside the normal tools, not in codemode-only mode.
 - Bring him decisions that shape boundaries, architecture, data flow, topology, security, long-term coupling, product behavior, or irreversible tech choices, as a recommendation with evidence and tradeoffs. Make routine choices yourself. Reopen settled choices only on new evidence.
+- Progress updates contain decisions, blockers, and measured numbers. Put hashes, cgroup proofs, ownership maps, and other verification detail in artifact receipts, not chat. Cut ceremony and get to the first trustworthy result quickly.
 - He wants agent guidance and principles in vivid, memorable wording that invites judgment, not abstract caveat lists. When adapting strong source language, keep the exact phrasing that still applies; paraphrase only for correctness or scope.
 
 ## Design taste
@@ -61,6 +62,7 @@ This is the method he is growing toward, not a description of current habit:
 - **Flaky bug:** raise and measure the reproduction rate through repetition, stress, narrowed timing windows, or pinned environment variables. Don't wait for full determinism.
 - **Integration-heavy systems:** run the real app against realistic local black-box service doubles. Record requests and assert visible requests, state, and behavior instead of mocking internals.
 - **Secondary platforms gate promotion, not every PR.** When the dev platform catches nearly everything, PRs merge on dev-platform evidence; the other platform (e.g., the order-integration Windows VM) qualifies only the release promotion (main→staging), and issues found there get fixed there. Decided 2026-10-04 after Windows runs on typing and docs PRs dominated the queue.
+- **Order-integration native apps stay on Nuitka.** Tobias chose it over PyInstaller because it is safer (2026-10-07). Cut its ~40-minute Windows cold build with caching and artifact reuse, not by proposing another packager.
 - **Numeric limits are tripwires.** Measure before choosing a limit and keep the basis next to its definition. Remeasure when conditions change. A limit developers can hit is a limit they must see: every budget failure names the budget, the limit, and the ask. A silent budget is worse than no budget.
 
 ## Interests
