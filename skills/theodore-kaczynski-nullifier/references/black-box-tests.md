@@ -90,6 +90,9 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 - One canonicalizer owns normalization: sorted keys, scrubbed IDs and timestamps. Cases never normalize.
 - The canonical form covers every value the interface returns: errors, non-finite and signed-zero floats, bytes. A gap is fixed in the canonicalizer, never worked around in a case.
 - Expected files hold bare values. The case tolerance applies to every number. A matcher marks an exception only, never the default.
+- Matchers are a small closed set owned by the canonicalizer: tolerance override, range, any, absent, pattern, unordered, and the canonical forms. No arithmetic, references, paths, or quantifiers. An expected file that computes is test code.
+- A consistency property between outputs (parts sum to the total, a reversed input gives the same answer) is a named relation in the runner, declared by the case. Where an independent value exists, write the value instead.
+- Adding a matcher or relation is a design change, never a fix for one case.
 - Agents read expected files on every failure. Their size is cost.
 - Format changes go through one mechanical rewrite script over every expected file. Any diff the script doesn't explain is a behavior change.
 

@@ -24,6 +24,7 @@ State the goal and deliverable, the minimum context with exact evidence location
 ## Authority and shared state
 
 - The orchestrator owns requirements, decomposition, open decisions, integration, and acceptance. Children escalate any unapproved product, architecture, or scope choice.
+- Never grant a child standing authority to extend a vocabulary, schema, or format "as needed". Sol uses it on every obstacle: a 2026-10-09 corpus conversion told to "add the minimal matcher without stopping" grew 19 matchers, including arithmetic and JSON-pointer references, and turned expected-output files into an assertion language. Give the closed set, and make an extension a stop.
 - One writer per shared state. Multiple writers need isolated state plus an explicit merge and validation.
 - Inspect diffs and artifacts, not just reports.
 - Before declaring delegated work stalled, check file mtimes recursively (`git status` paths, not directory mtimes) and live `pi` processes (`pgrep -x pi`). A Pi parent's own subagents run in-process and never appear as T3 children. On 2026-10-04 a triage pass misread two live writers as stalled from T3 thread status and top-level directory mtimes, and its "resume" spawned colliding writers.
