@@ -39,16 +39,58 @@ A test is an input at the published interface and a specified output. Nothing el
 corpus/<area>/<scenario>/
   input...      request and starting environment
   expected...   canonical output and effects
-  case.toml     covers, oracle, tolerance, budget, tags
+  case.toml     covers, oracle, tolerance, budget
 ```
 
-- `covers` lists the behavior and entry-point pairs the case protects. The map and the coverage check read it.
-- The oracle is the spec section, the oracle system and version, or the hand derivation.
+- `covers` lists `<area>.<outcome>@<entry>` pairs. The outcome names what the user observes, never a test, function, or fixture.
+- The oracle is the derivation itself, a spec section, or an oracle system and version. Never a path in this repository.
+- No other fields.
+
+A finished case:
+
+```
+corpus/pricing/discounts-and-rounding/
+  payloads/order.xml
+  requests.json
+  expected.json
+  case.toml
+```
+
+```toml
+kind = "example"
+covers = [
+  "pricing.volume-discount@quote",
+  "pricing.volume-discount@invoice",
+  "pricing.half-even-rounding@quote",
+  "pricing.unknown-sku-refused@quote",
+]
+budget_ms = 300
+budget_basis = "warm in-process run 40 ms; 300 ms caps affected-case feedback"
+tolerance = { rel = 1e-12 }
+oracle = """
+Price list 4.2: 10% off at qty >= 100. 120 x 2.50 = 300.00, less 10% = 270.00.
+Price list 4.5: half-even to cents. 0.125 -> 0.12.
+Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
+"""
+```
+
+```json
+[
+  {"total": 270.0, "lines": [{"sku": "A1", "qty": 120, "net": 270.0}]},
+  {"total": 270.0, "invoice": {"status": "issued", "total": 270.0}},
+  {"total": 0.12},
+  {"raised": {"code": "UNKNOWN_SKU", "entity": "Z9"}}
+]
+```
 
 ## Expected output
 
 - From an independent source only: the system being replaced, a reference tool, a spec, or a recorded hand derivation.
-- One canonicalizer owns normalization: sorted keys, scrubbed IDs and timestamps, declared float tolerance. Cases never normalize.
+- The corpus is committed data. No script writes expected output. A payload builder may exist; it never computes expected values.
+- One canonicalizer owns normalization: sorted keys, scrubbed IDs and timestamps. Cases never normalize.
+- The canonical form covers every value the interface returns: errors, non-finite and signed-zero floats, bytes. A gap is fixed in the canonicalizer, never worked around in a case.
+- Expected files hold bare values. The case tolerance applies to every number. A matcher marks an exception only, never the default.
+- Agents read expected files on every failure. Their size is cost.
 - Format changes go through one mechanical rewrite script over every expected file. Any diff the script doesn't explain is a behavior change.
 
 ## Runner
@@ -95,7 +137,11 @@ Mutation testing on a schedule. Each surviving mutant extends a case until it di
 
 ## Migrating an existing suite
 
-1. Mutation-test the old suite, then the corpus alone.
-2. Every mutant only the old suite kills extends a case, or its code is deleted as dead.
-3. Delete the old suite.
-4. Turn on the ban.
+Read the old suite as a list of behaviors. Never port tests one to one: names, grouping, and fixtures of the old suite leave no trace in the corpus.
+
+1. Freeze the old suite and its fixture builders. No edits except deletion.
+2. Write fat cases in the [finished shape](#case-layout) for the behaviors.
+3. Mutation-test the old suite, then the corpus alone.
+4. Every mutant only the old suite kills extends a case, or its code is deleted as dead.
+5. Delete the old suite, its fixtures, and every script that produced them.
+6. Turn on the ban.
