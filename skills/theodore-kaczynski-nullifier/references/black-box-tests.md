@@ -44,7 +44,7 @@ corpus/<area>/<scenario>/
 
 - `covers` lists `<area>.<outcome>@<entry>` pairs. The outcome names what the user observes, never a test, function, or fixture.
 - The oracle is the derivation itself, a spec section, or an oracle system and version. Never a path in this repository.
-- No other fields.
+- Fields: `kind`, `covers`, `oracle`, `tolerance`, `budget_ms`, `budget_basis`, and `relations` for relation cases. No others.
 
 A finished case:
 
