@@ -19,7 +19,7 @@ Correctness, safety, and integrity are hard gates applied before optimization. K
 
 ## Tobias's implementation
 
-[Skills Autoresearch](../projects.md#skills-autoresearch) owns the live policy (`program.md`), and [SWE Benchmarking](../projects.md#swe-benchmarking) is its protected evaluator. Read current policy before running anything. The transferable design:
+Skills Autoresearch owns the live policy (`program.md`), and SWE Benchmarking is its protected evaluator. Read current policy before running anything. The transferable design:
 
 - **Structure:** campaigns (a research direction), families (related representations), epochs (fixed comparison conditions), and immutable trials.
 - **Funnel:** *scout* (one case, fresh champion/candidate pair, yields promising, not-promising, or inconclusive, and can't promote), then *screen* (paired runs on a broader set, can't promote), then *confirm* (a larger fresh replicated matrix and the only promotion evidence, with separate gates for score, duration, cost, failure rate, and validity).

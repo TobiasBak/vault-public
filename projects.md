@@ -2,22 +2,6 @@
 
 Routes to repositories. Each repository owns its implementation detail; read its `AGENTS.md` before acting. A nearby copy, generated file, nested checkout, or evaluation patch is not authoritative; follow the owning repository.
 
-## SWE Benchmarking
-
-Custom evaluator for realistic application-development tasks that compares Pi and Codex configurations. It is not a SWE-bench runner.
-
-- `/home/tobias/code/swe-benchmarking`, <https://github.com/TobiasBak/swe-benchmarking>, branch `main`
-- Start with `setup/README.md`; `setup/AGENTS.md` owns isolation and comparison rules.
-- Owns cases, isolation, hidden checks, judgment, and result provenance. It resists tampering but is not a sandbox: tested agents keep host capabilities, so untrusted models need a container or VM.
-
-## Skills Autoresearch
-
-The improvement loop for Agent Skills described in [autoresearch](agents/autoresearch.md).
-
-- `/home/tobias/code/skills-autoresearch`, <https://github.com/TobiasBak/skills-autoresearch>, branch `main`
-- Start with `README.md`, then `program.md` for research policy. Verify the docs against current controller behavior before expensive runs.
-- Owns candidate policy, immutable evidence, and promotion. It treats SWE Benchmarking as a pinned, read-only evaluator outside the candidate surface.
-
 ## Dotfiles
 
 Machine and dev-environment config for Windows, NixOS WSL, NixOS servers, and Arch.
@@ -40,29 +24,3 @@ Tobias's daily interactive coding-agent environment: Claude Opus 5.5 orchestrate
 - Direction (confirmed 2026-07-30): provider-native agents are engines. T3 owns the collaborative workspace around them (shared task state, policy, evidence, provider integration), not a generic agent loop. See [AI-era durability](software/ai-era-durability.md).
 - Live provider registration: `~/.t3/userdata/settings.json`.
 - Cross-project notifications: thread MCP calls are project-scoped. When Tobias explicitly asks to notify another project's existing thread, use the normal web UI if MCP rejects it. The installed runtime's `t3 pair --ttl=2m --label=...` supplies a short-lived pairing link for a fresh Playwright session; keep the link's origin throughout, never expose its token, and revoke only that temporary labeled session with `t3 auth session revoke` afterward. Verify the message appeared in the intended thread. Do not create a new conversation just to relay it.
-
-## StepKit
-
-STEP model extraction library and its Rust geometry engine.
-
-- `/home/tobias/code/stepkit`, <https://github.com/TobiasBak/stepkit>, branch `main`
-- `/home/tobias/code/stepkit-geometry`, <https://github.com/TobiasBak/stepkit-geometry> (private), branch `main`
-- Start with each repository's `AGENTS.md`.
-
-## System Canvas
-
-Browser workspace for discussing software systems with a coding agent on a shared Excalidraw canvas.
-
-- `/home/tobias/code/system-canvas`, <https://github.com/TobiasBak/system-canvas>, branch `main`
-- Start with `README.md`, then `PROJECT.md` for the product model and `docs/sessions-and-storage.md` for persistence.
-
-## Poly Executor
-
-Polymarket research system.
-
-- `/home/tobias/code/poly-executor` owns capture, replay, policy, risk, and execution.
-- `/home/tobias/code/poly-llm` owns offline model work: model bundles and evaluation requests. It may read manifest-selected finalized cycles from the active capture SQLite; all other exchange goes through immutable manifests. It must never import executor source or connect to a running executor.
-- Both use branch `main`. For cross-repo contract changes, read both repos' guidance and owning definitions.
-- Data root `~/data` lives on `/mnt/data-2tb/poly-data`, as does the legacy `~/poly-executor-snapshots`.
-- The v3 database was deleted 2026-07-31 after verified migration. Archive branches hold code only, so reproducing v3 exactly needs a separately retained snapshot.
-- Capture, paper, shadow, dev, and tests never submit real orders, touch wallets, or use trading credentials. Production trading only runs on an explicit request to run the production engine.

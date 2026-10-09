@@ -42,7 +42,7 @@ Checked 2026-10-08: for the same supported model, Codex Fast consumes included s
 
 Built-in Pi codemode looked useful for latency and cost, without improving fully correct task count. This single pass does not establish a harness ranking or change the daily-provider choice.
 
-- [SWE Benchmarking](../projects.md#swe-benchmarking): eight tasks, one run per Codex/Pi/Pi-codemode arm, all GPT-6.1 Sol medium Standard; GPT-6.1 Sol high judge. Pi used the established seven-tool benchmark suite, not its four-tool upstream default. Codex CLI 0.160.0; Pi 1.0.0.
+- SWE Benchmarking: eight tasks, one run per Codex/Pi/Pi-codemode arm, all GPT-6.1 Sol medium Standard; GPT-6.1 Sol high judge. Pi used the established seven-tool benchmark suite, not its four-tool upstream default. Codex CLI 0.160.0; Pi 1.0.0.
 - All arms fully passed 3/7 hidden-check tasks. Five cases were scored in every arm; mean quality was Codex 106.6, Pi 110.0, codemode 114.8 out of 125.
 - On the three tasks correct in all arms, median paired elapsed ratios were Pi/Codex 1.284, codemode/Codex 0.841, codemode/Pi 0.787. Agent API-equivalent costs across all eight attempts were $2.5239/$2.4874/$1.6263, respectively.
 - Codemode was used in all enabled runs. Shared host/account contention and five visible-validation failures limit the comparison. Coordinator delays were excluded from agent latency.

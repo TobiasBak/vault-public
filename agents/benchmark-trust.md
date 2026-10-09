@@ -20,7 +20,7 @@ Don't lump these together as "poisoning":
 ## Evidence ranking
 
 1. Private or freshly authored hidden tasks.
-2. Repo-specific held-out tasks with behavioral checks, isolated worktrees, sealed network and history, and reviewed graders. [SWE Benchmarking](../projects.md#swe-benchmarking) is the local version.
+2. Repo-specific held-out tasks with behavioral checks, isolated worktrees, sealed network and history, and reviewed graders. SWE Benchmarking is the local version.
 3. External original tasks with purpose-built verifiers and audited environments.
 4. Public historical benchmarks, after leakage and grading review.
 5. Leaderboards and vendor summaries, for discovery only.
