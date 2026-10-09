@@ -58,6 +58,7 @@ This is the method he is growing toward, not a description of current habit:
 ## Testing and debugging
 
 - Match testing to consequence, lifetime, and risk. No elaborate test infrastructure for prototypes or low-risk Pi extensions. Test observable behavior, with expectations derived independently, never by repeating the implementation.
+- **Only black-box tests (2026-10-09):** a given input to the system must produce a specific output. No unit tests: agents get stuck on them and grow legacy and fallback paths to keep them passing. Static checks, linters and formatters are the only other verification. Make black-box tests fast rather than adding faster unit tests.
 - **Hard bug:** build the fastest repeatable signal for the exact symptom. Trace to the first incorrect state and the invariant owner. Minimize, change one variable at a time, keep the minimized case as a regression test at the real seam, and rerun the original scenario.
 - **Flaky bug:** raise and measure the reproduction rate through repetition, stress, narrowed timing windows, or pinned environment variables. Don't wait for full determinism.
 - **Integration-heavy systems:** run the real app against realistic local black-box service doubles. Record requests and assert visible requests, state, and behavior instead of mocking internals.

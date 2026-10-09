@@ -30,6 +30,12 @@ Make domain semantics explicit and transport mechanics incidental. Pick the prot
 - **Explicit clears:** preserving employee edits requires distinguishing an absent field from a marked `null`. Read the validated draft directly instead of remigrating it through sparse extraction payloads. Numeric-only lifecycle checks can miss this: a real review command preserved an edited price but changed an explicitly cleared price to zero because serialization discarded the null.
 - **Executable intent:** updating a mutable draft does not revise an immutable execution plan. A decision command must return the plan for its final protected facts and invalidate approval of the old reference. Lifecycle checks should inspect the immediate plan response and reject the old reference, not rely on a later browser reload or automatic planning request to repair it.
 
+## Privileged completion after authorization
+
+Enforce content-integrity invariants at the final write, not only the permission probe. Upload authorization can finish in one transaction while a privileged worker commits bytes later. Signed upload tokens also outlive the state that authorized them. Test a token issued before review and redeemed afterward, then compare downloaded bytes and review state.
+
+Supabase Storage v1.70.3 uses privileged upload completion that bypasses authenticated RLS. A pre-issued signed upsert token replaced a file after review; a write-once Storage version trigger closed it.
+
 ## Transports and extensions
 
 - An embedded SDK should route through the real server router in memory, preserving routes, middleware, auth, errors, and codecs, not reimplement them. Keep genuinely transport-specific features (WebSocket terminal, SSE) explicit.

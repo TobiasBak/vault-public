@@ -25,6 +25,25 @@ An idiomatic, correct data model can dominate a hot path's cost. Rich records an
 6. **Validate correctness** against an independent expectation and remeasure.
 7. **Record the trigger** for revisiting: changes in frequency, cardinality, consumers, payload, or hardware.
 
+## Input-bounded dense IDs
+
+An authored ID is not an allocation budget. Accelerate common small IDs with a
+dense table bounded by input bytes, while retaining sparse entries for large
+IDs. This preserves the accepted ID range without allocating through the maximum
+ID. Keep result order in the source-record vector, never in hash iteration.
+
+## Filesystem fingerprints
+
+When a metadata fingerprint excludes child directories, keep parent-directory
+identity structural: relative path and kind. Parent mtime changes when excluded
+children such as `__pycache__` appear, and directory size varies by filesystem;
+including either defeats the exclusion and churns cache keys. File size, mtime
+and executable bits can replace expensive content reads only when the cache's
+explicit trust contract permits metadata-preserving edits to go undetected.
+A toolchain-cache fix
+reproduced excluded-bytecode churn at artifact reuse before removing directory
+metadata from the fingerprint.
+
 Vet every reported number with the [benchmark checklist](../skills/benchmark-checklist/SKILL.md). Keep a representative benchmark or measured tripwire next to the behavioral tests when performance is a contract, but don't make noisy timings hard gates.
 
 **With agents:** give them hot paths, scale, hardware, and benchmark routes before they design data structures. Without that, optimizing for clarity is correct. Never ban rich objects globally; redesign hot paths from evidence, not folklore. [Gigatoken](gigatoken.md) is an example.

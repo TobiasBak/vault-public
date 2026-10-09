@@ -15,6 +15,12 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 - For shared identity rules, check every supported input shape, not just value variations. The same entity may keep facts under a wrapper at the top level and directly on a nested row. A test for placement or numeric noise alone can miss a false split between those representations.
 - Cite exact paths. Missing evidence is not a negative, and no findings does not clear unexamined areas. Stop when the requested concerns are covered.
 
+## Validation and review identity
+
+- The writer runs compilation and focused behavioral tests before requesting review of a Rust slice. Fix compiler and test failures first; give the reviewer the final tested source and receipts.
+- A clear review plus passing tests on byte-identical source counts as clear. Do not repeat review merely because previously unexecuted tests now pass.
+- Request another review only when source changed since the last clear review of that scope. Track the reviewed and tested source identities so this decision is mechanical.
+
 ## Reviewers
 
 A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Independent review pays off when failure is consequential, validation is weak, or fresh eyes can challenge assumptions. Start with one general reviewer and add specialists only for distinct risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.

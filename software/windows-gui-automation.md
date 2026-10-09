@@ -36,6 +36,10 @@ Image matching, OCR, shortcuts, and coordinate input are fallbacks for opaque re
 - Run PowerShell over SSH as `powershell -NoProfile -EncodedCommand <base64 of UTF-16LE script>` (`iconv -f utf-8 -t utf-16le | base64 -w0`). Inline quoting breaks, and `-Command -` from stdin can print nothing. Progress arrives as CLIXML on stderr; filter it.
 - Desktop UI automation (for example AX client promotion) cannot run from an SSH session; it needs the interactive console user.
 
+## Retained lab clones and servicing
+
+Prefer a settled, frozen base and observational admission over repairing retained-clone drift. `NoAutoUpdate=1` alone did not keep update services stopped: a 2026-10-05 proof saw running services and later CBS pending state, which a restart/refreeze workaround papered over. Settling servicing, then disabling UsoSvc and update triggers, held the frozen configuration through two managed boots and a native/desktop driver run without repair. Check the product repository's committed recipe and sealed-base identity before assuming which lifecycle is supported.
+
 ## Keeping the desktop alive after RDP
 
 Closing an RDP client locks the session. Instead, move the session to the console with `tscon`: the desktop stays unlocked and processes keep running. Reconnecting via RDP pulls it back, so repeat the move after every maintenance connection.

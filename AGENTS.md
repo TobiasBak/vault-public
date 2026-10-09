@@ -10,6 +10,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 - Save what would change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures. Skip routine activity, generic advice, and anything cheap to look up again.
 - One idea, one home. Search first, edit the owning note, and link instead of restating.
+- Never record project work in the vault: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository. [projects.md](projects.md) holds only routes: path, remote, branch and where to start. Update it only when a route changes.
 - Lead with the conclusion. Prefer rules and short bullets to narrative. Drop hedges and "X does not mean Y" unless the misreading is likely and costly.
 - Date only volatile facts such as versions, prices, and availability. Keep sources only where authority or exact numbers matter. For optimizations, keep baseline, change, effect, and conditions.
 - Use kebab-case filenames, relative Markdown links, and no frontmatter. Keep [index.md](index.md) in sync when adding, moving, or removing notes.
@@ -26,4 +27,4 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 ## Public repository
 
-Keep secrets, credentials, private correspondence, other people's personal data, and nonpublic employer or customer details out of commits. Tobias's own preferences and project notes are meant to be public. Raw session histories and local runtime state stay out of Git.
+Keep secrets, credentials, private correspondence, other people's personal data, and nonpublic employer or customer details out of commits. For private repositories, keep operational detail out too: credential locations, hosted project IDs, infrastructure state and checkout quirks belong in that repository, not here. Tobias's own preferences and project notes are meant to be public. Raw session histories and local runtime state stay out of Git.

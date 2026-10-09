@@ -42,6 +42,7 @@ Reserve absolutes for invariants and give criteria for judgment calls. If a requ
 - Parallelize independent reads and checks; serialize dependent work and shared mutations. Keep working while a tool or question is pending, but block dependent actions on it.
 - Empty or suspiciously narrow results don't prove absence. Try a few meaningful alternative searches.
 - Long-running tools should return short progress, actionable failures, and a final result naming inputs and checks. Keep logs out of context and link them. Hold one process handle and use native waits, never duplicate polling.
+- Under a systemd service, use `setsid --wait` when wrapping a command. A service process can already lead its process group: plain `setsid` forks and returns success before the child finishes, then systemd can kill the child. Require actual validation output as well as the supervisor's exit code; an empty log and implausibly short run are not a pass.
 - Missing evidence is not a negative. Separate fact from inference and surface conflicting sources.
 - Choose verification by artifact and risk: focused tests, types, build, smoke test, real use, rendered inspection. Reuse passing evidence while inputs are unchanged, and rerun after invalidating changes.
 - Judge cost per successful task, counting retries and delegated work, not tool-call counts.

@@ -29,6 +29,8 @@ Per million tokens (Standard, ≤272K input), Sol is $2 input / $0.10 cached / $
 
 Compare model-plus-effort configurations, not model names. Credit rates don't determine subscription limits.
 
+Checked 2026-10-08: for the same supported model, Codex Fast consumes included subscription allowance at **2.5x** Standard, but purchased credits and Enterprise pay-as-you-go at **2x**. API-key billing follows API tier pricing instead. Hold reasoning effort fixed when comparing speed tiers; these are billing multipliers, not speedups. Sources: [speed](https://developers.openai.com/codex/agent-configuration/speed), [pricing](https://learn.chatgpt.com/docs/pricing).
+
 ## Choosing a setup
 
 - Compare model, effort, instructions, tools, and host together. An API capability doesn't establish support in T3, Codex, Claude Code, or Pi.
@@ -60,8 +62,10 @@ Built-in Pi codemode looked useful for latency and cost, without improving fully
 
 ### Codex specifics
 
+- **Usage comparison:** the [TypeScript SDK](https://github.com/openai/codex/blob/main/sdk/typescript/src/events.ts) exposes token counts on `turn.completed`, not a billed dollar amount. [App-server](https://learn.chatgpt.com/docs/app-server) adds `thread/tokenUsage/updated`, account-wide quota snapshots via `account/rateLimits/read`, and aggregate token activity via `account/usage/read`. Record model, effort, requested speed tier, and usage per turn yourself; account snapshots cannot attribute consumption among concurrent clients. Subscription quota is not reconstructible from API-equivalent cost. Checked 2026-10-08: app-server's [`RateLimitWindow`](https://github.com/openai/codex/blob/main/codex-rs/app-server-protocol/src/protocol/v2/account.rs) rounds core floating-point `used_percent` to an integer, so before/after quota deltas have nearly ±1 percentage point of rounding uncertainty, even before delayed updates or concurrent usage. It is only useful for sufficiently large aggregate comparisons, not exact per-turn charges. Protocol fields vary by installed version.
 - **Context management:** `features.context_management.experimental_mode` is off by default and needs a ChatGPT sign-in on Plus, Pro, or Pro Lite. It doesn't work with API keys, custom providers, or temporary structured threads ([config](https://learn.chatgpt.com/docs/config-file/config-reference), [changelog](https://learn.chatgpt.com/docs/changelog)). Local CLI 0.153.4 showed it disabled on 2026-09-05. Native cross-session memories are a separate feature, disabled in this vault's `.codex/config.toml`.
 - **Subagents** ([docs](https://learn.chatgpt.com/docs/agent-configuration/subagents)): built-in default, worker, and explorer agents inherit the parent's model and effort unless custom agent files override them.
+- **pnpm updates:** `pnpm add -g <package>@latest` can silently keep the previous version because of pnpm 11's release-age gate. Compare with `pnpm view <package> dist-tags.latest` and verify the executable afterward. An explicit version request installs that release and, unless strict gating is enabled, pnpm records a version-scoped `minimumReleaseAgeExclude` in its global workspace. Preserve each tool's install-script policy from dotfiles.
 - **CLI backend:** a managed app-server daemon has its own installed package. Updating the CLI does not update that pinned backend; a newer CLI can still show the old backend's model picker. Compare both with `codex app-server daemon version`, not just `codex --version`. To align the backend with the installed CLI, use `codex app-server daemon update --from-cli --yes`. This pins the CLI package and restarts the daemon, potentially interrupting its sessions. `codex app-server daemon update` returns to production updates. Dotfiles owns installation policy.
 
 ### Pi specifics
@@ -72,6 +76,16 @@ Verified in installed Pi 1.0.0, 2026-10-03. Dotfiles owns `configs/pi/settings.j
 - **Thinking display:** `hideThinkingBlock` hides reasoning from the terminal transcript, not from execution or billing. Keep response verbosity separate from reasoning effort.
 - **Tool coordination:** built-in [codemode](orchestration.md#programmatic-tool-calling) filters intermediate tool results before they enter context. Keep direct tools available alongside it.
 - **T3 usage gap:** nightly `0.0.46-nightly.20261003.2610` runs Pi but its Usage scanner/contract/charts omit Pi. Pi's OpenAI-backed work does not enter Codex CLI transcript totals. Pi JSONL sessions under `~/.pi/agent/sessions/` retain assistant `message.usage` token categories and `cost.total`; these can be summed per session and across delegated children. Costs are estimates, not a verified bill. Native Pi `/session` shows per-session usage/cost. See [T3 Usage](https://github.com/pingdotgg/t3code/blob/8ed276c246b6/docs/user/usage.md) and [Pi terminal usage](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/usage.md).
+
+#### Measuring Pi throughput
+
+Tibo's [2026-10-05 announcement](https://x.com/thsottiaux/status/2107158998495748264), posted 19:20 CEST, claims ~50% faster **default subscription** speed for GPT-6 Astra and GPT-6.1 Sol across Sign in With ChatGPT products and partners, explicitly including Pi and OpenCode. It says no changes are needed and users should feel it within two hours. His [follow-up](https://x.com/thsottiaux/status/2107159119107146237) says "Reaching 50 TPS instead of 30TPS". This is not a paid API or Fast-toggle claim; the posts do not define the TPS measurement method or percentile. Compare local subscription requests, not API benchmark figures, when checking it.
+
+Pi JSONL can measure **effective request TPS**, not pure decode TPS: divide `message.usage.output` by the seconds between `message.timestamp` and the enclosing entry's `timestamp`. Verified in Pi 1.0.0 and 1.0.3: the adapter stamps the message before sending; the session stamps the entry on `message_end`. This includes queue/prefill, reasoning, transport retries, and generation, but excludes preceding tool execution. `usage.output` already includes `usage.reasoning`; never add it again. Total input is `input + cacheRead + cacheWrite`. First-token times and explicit backend service tiers are absent from these sessions; estimated cost can suggest a tier but cannot prove it.
+
+On 2026-10-05, 16,270 successful Sol requests from October 3–5 showed a new 40–50.6 effective TPS upper tail across 15 sessions starting around 18:00 UTC. Earlier requests topped out near 33. This is consistent with the reported 50% faster rollout reaching some requests, not proof of its cause or a universal speedup. Evidence and scripts stay outside Git at `~/.local/state/sol-tps/2026-10-05/`.
+
+On 2026-10-06 through 18:19 CEST, 6,017 successful Sol requests across 160 local Pi sessions had median effective TPS 26.52, p10–p90 13.55–38.97, and max 64.77. Fourteen errors and three aborts were excluded. No explicit service tiers were recorded, so these logs cannot separate Fast from Standard. The local Codex, Claude, and OpenCode stores contained no additional Sol usage records that day. Frozen metadata, source spotchecks, and the interactive chart are at `~/.local/state/sol-tps/2026-10-06/`; workload differences prevent a causal speedup claim.
 
 ### Claude Code specifics
 

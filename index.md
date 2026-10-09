@@ -3,7 +3,7 @@
 Not exhaustive. Search with `rg`.
 
 - [AGENTS.md](AGENTS.md): how to use and maintain this vault
-- [projects.md](projects.md): repository routes and ownership (SWE Benchmarking, Skills Autoresearch, Dotfiles, T3 Code, StepKit, System Canvas, Poly Executor)
+- [projects.md](projects.md): repository routes and ownership (SWE Benchmarking, Skills Autoresearch, Dotfiles, T3 Code, StepKit, System Canvas, Poly Executor, CanineArchive)
 
 ## Tobias
 
@@ -46,6 +46,7 @@ Not exhaustive. Search with `rg`.
 
 All model-invoked; agents select relevant skills automatically:
 - `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
+- `theodore-kaczynski-nullifier`: shape repos so agent feedback outruns agent thinking; black-box-only tests, cached verdicts, always-on watchers
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
 - `unslop`: concise, natural prose
 - `domain-modeling` (Matt Pocock): glossary and ADRs

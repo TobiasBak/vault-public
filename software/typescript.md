@@ -27,7 +27,7 @@ Types are erased. Treat HTTP, DB, file, env, queue, user, and model data as untr
 
 ## Account-scoped server-state caches
 
-Retire the cache owner when an employee changes, not just its contents. TanStack Query's mutation-cache `clear()` leaves running mutations and their callbacks alive. Swapping a provider's client without remounting can also retarget pending mutation observers to the new client's callbacks. Use a keyed employee-provider lifetime, with stable authentication state outside it. Test delayed success and rejection after logout and another employee's login. Both traps were reproduced in [OIP #305](https://github.com/JoergenDahl/order-integration-platform/pull/305).
+Retire the cache owner when an employee changes, not just its contents. TanStack Query's mutation-cache `clear()` leaves running mutations and their callbacks alive. Swapping a provider's client without remounting can also retarget pending mutation observers to the new client's callbacks. Use a keyed employee-provider lifetime, with stable authentication state outside it. Test delayed success and rejection after logout and another employee's login.
 
 ## Defaults
 
