@@ -94,6 +94,7 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 - Matchers are a small closed set owned by the canonicalizer: tolerance override, range, one-of, any, absent, pattern, unordered, and the canonical forms. One-of is for outputs the spec leaves open, never for hiding a nondeterministic one. No arithmetic, references, paths, or quantifiers. An expected file that computes is test code.
 - A consistency property between outputs (parts sum to the total, a reversed input gives the same answer) is a named relation in the runner, declared by the case. Where an independent value exists, write the value instead.
 - Adding a matcher or relation is a design change, never a fix for one case.
+- Where the spec leaves a value to the implementation (an adaptive partition, a sampling start), never copy it from output. Assert the contract it must meet through a relation that calls the public interface: samples lie within the reported deflection; reported parameters evaluate to the reported point.
 - Agents read expected files on every failure. Their size is cost. The canonical writer emits one line per request.
 - Tolerance lives on the case. A tolerance computed per value is normalization; hoist it.
 - Format changes go through one mechanical rewrite script over every expected file. Any diff the script doesn't explain is a behavior change.
