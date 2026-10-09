@@ -13,6 +13,7 @@ Every rule in this skill is a program that exits nonzero, or a CLI behavior that
 | Case shape | A `covers` entry off `<area>.<outcome>@<entry>` or naming a test; an oracle naming a path in this repository; a field outside the [finished shape](black-box-tests.md#case-layout) | The finished shape |
 | Every case has an oracle | A case record without one | The spec, oracle system, or hand derivation |
 | Bare expected values | A matcher outside the closed set; a matcher that restates the case tolerance or default normalization | A bare value, or a named relation |
+| Compact cases | An expected file not in the canonical writer's one-line-per-request form; two requests with the same payload and operation where the interface takes a list | `<cli> accept`; merge the requests |
 | One input set | A changed path no job claims | The owning job's inputs, or the explicit ignore set |
 | Zero comments | Any comment in source | Names, types, checks |
 | Prose only where allowed | Prose outside `AGENTS.md` and case records; any README | A check, or one `AGENTS.md` line |

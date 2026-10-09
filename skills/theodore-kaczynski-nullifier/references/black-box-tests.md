@@ -19,6 +19,7 @@ A test is an input at the published interface and a specified output. Nothing el
 ## Fat cases
 
 - A case is a scenario, not an assertion. It covers every behavior one input can reach.
+- One request per payload and operation when the interface accepts a list. Repeating a call per subject is the one-assert-per-test habit at request level.
 - Extend an existing case before adding one. A new case needs an input no existing case can absorb: a conflicting starting state, a different case kind, or a budget overrun.
 - Each behavior and entry-point pair is covered by exactly one case.
 - Every published entry point to a behavior is covered. Coverage through another entry point doesn't count.
@@ -93,7 +94,8 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 - Matchers are a small closed set owned by the canonicalizer: tolerance override, range, one-of, any, absent, pattern, unordered, and the canonical forms. One-of is for outputs the spec leaves open, never for hiding a nondeterministic one. No arithmetic, references, paths, or quantifiers. An expected file that computes is test code.
 - A consistency property between outputs (parts sum to the total, a reversed input gives the same answer) is a named relation in the runner, declared by the case. Where an independent value exists, write the value instead.
 - Adding a matcher or relation is a design change, never a fix for one case.
-- Agents read expected files on every failure. Their size is cost.
+- Agents read expected files on every failure. Their size is cost. The canonical writer emits one line per request.
+- Tolerance lives on the case. A tolerance computed per value is normalization; hoist it.
 - Format changes go through one mechanical rewrite script over every expected file. Any diff the script doesn't explain is a behavior change.
 
 ## Runner
