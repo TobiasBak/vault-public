@@ -44,3 +44,5 @@ AGENTS.md lists the names. `--help` is the documentation.
 ## Proof
 
 Run every command once against the real repo: pass, forced failure, blocked prerequisite, cache hit, cleanup.
+
+Every one of those states is reachable through the CLI's flags or the environment. A proof that needs scratch code reaching into the CLI's internals means a switch is missing; add the switch, not the probe.
