@@ -19,9 +19,10 @@ There's no mandatory inventory of commit rules, test reminders, or engineering m
 | Reusable method that needs judgment | Narrowly triggered skill |
 | Mechanical invariant or repeatable operation | Types, checks, tools |
 
+- **Global instructions stand alone (Tobias, 2026-10-10).** They never mention the vault: Tobias starts agents in the vault repo when its knowledge matters, so a preference every agent needs belongs inline. They guide by model and effort ("Haiku 5.5 at `high`"), not by naming tools or call payloads.
 - **Retrieval must be triggered.** "Search before creating a note" does not cause retrieval before giving advice. Say when to retrieve.
 - **Skills can load too late.** Moving rules into a skill risks them loading after they're needed. Check the earliest action that needs the rule, including resumed tasks and replies to user answers. Firstmate's [extraction](https://github.com/kunchenguid/firstmate/pull/5872) regressed this way and restored rules inline.
-- **Reading isn't using.** File reads and wording checks don't show that an agent uses knowledge. Run a representative fresh-session task. Example (2026-10-02): cutting the global instruction file from 1,079 to ~430 words (vault pointers replacing copied preferences) kept 6/6 vault-specific answers correct in fresh Claude Code and Codex sessions, at equal or lower cost. Harness gotcha: `claude -p` and `codex exec` read stdin, so in a shell loop they swallow the rest of the task file, expected answers included. Redirect `< /dev/null`.
+- **Reading isn't using.** File reads and wording checks don't show that an agent uses knowledge. Run a representative fresh-session task. Example (2026-10-02): cutting the global instruction file from 1,079 to ~430 words (vault pointers replacing copied preferences; the pointers were removed 2026-10-10) kept 6/6 vault-specific answers correct in fresh Claude Code and Codex sessions, at equal or lower cost. Harness gotcha: `claude -p` and `codex exec` read stdin, so in a shell loop they swallow the rest of the task file, expected answers included. Redirect `< /dev/null`.
 - **Phrase authorization as a condition** ("invoke the live workflow only when Tobias asks"). A clear request satisfies it, with no reconfirmation. Reserve "never" for constraints Tobias genuinely can't override.
 
 ## Task contract
