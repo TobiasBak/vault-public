@@ -23,6 +23,7 @@ Smell: `sleep 540; tail log`.
 Smell: rerunning a suite already passed on the same tree.
 
 - Key: build inputs the case exercises (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version. Inputs, not output bytes.
+- The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. The cache key, the watcher, and the `Behavior-Change:` guard read the same set.
 - Value: verdict, actual-output hash, duration, producer.
 - Content-addressed, outside every worktree and build directory, shared by all agents. Nothing a cleanup can delete.
 - Nondeterminism is a bug in the case or the system.
@@ -34,7 +35,7 @@ Smell: every edit followed by build, test, read.
 
 - One watcher per worktree. On change: debounce, build, run affected cases, store the verdict for the tree hash.
 - `<cli> status` returns the verdict for the current tree hash, blocks while a run is in progress, never returns another tree's verdict.
-- Starts on the first CLI call, exits with the worktree or when idle. Low priority; takes a slot (§11).
+- Starts on the first feedback command (`status`, `test`, `build`); read-only commands such as `doctor` never start it. Exits with the worktree or when idle. Low priority; takes a slot (§11).
 - Agents never call the build tool directly.
 
 ## 5. Never pay for a cold start twice
@@ -64,7 +65,7 @@ Smell: a docs change triggers the full matrix.
 
 Smell: full CI after every edit.
 
-- In the loop: static checks and affected cases. Full corpus once, on the final head. The CLI picks the scope.
+- In the loop: static checks and affected cases. Full corpus once, on the final head, through the verdict cache. The CLI picks the scope.
 
 ## 9. Budgets are visible
 

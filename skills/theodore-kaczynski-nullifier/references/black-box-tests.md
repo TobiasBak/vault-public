@@ -20,7 +20,7 @@ A test is an input at the published interface and a specified output. Nothing el
 ## Fat cases
 
 - A case is a scenario, not an assertion. It covers every behavior one input can reach.
-- One request per payload and operation when the interface accepts a list. Repeating a call per subject is the one-assert-per-test habit at request level.
+- One request per payload, operation, and call-level arguments when the interface takes a list of subjects. Repeating a call per subject is the one-assert-per-test habit at request level. Different call-level arguments and separate rejection scenarios are separate requests.
 - Extend an existing case before adding one. A new case needs an input no existing case can absorb: a conflicting starting state, a different case kind, or a budget overrun.
 - Each behavior and entry-point pair is covered by exactly one case.
 - Every published entry point to a behavior is covered. Coverage through another entry point doesn't count.
@@ -30,7 +30,7 @@ A test is an input at the published interface and a specified output. Nothing el
 ## Forbidden
 
 - Unit tests, tests of internal modules, private access, assertions on call sequences or internal data.
-- Expected values produced by running the code under test.
+- Expected values whose only source is the code under test.
 - Assertions on diagnostic stage dumps.
 - Splitting a scenario into cases that share a starting state.
 - Mass-blessing.
@@ -88,12 +88,12 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 ## Expected output
 
 - From an independent source only: the system being replaced, a reference tool, a spec, or a recorded hand derivation.
-- The corpus is committed data. No script writes expected output.
-- Committed inputs are authored or exported and small enough to read. Built input (deep nesting, long chains, repeated noise, fuzz) is never committed: the request names a builder, a small committed base, and parameters; the runner builds it. The cache key covers the builder's source, the base, and the parameters, so a cache hit builds nothing. Builders are a closed set owned by the runner and never compute expected values.
-- One canonicalizer owns normalization: sorted keys, scrubbed IDs and timestamps. Cases never normalize.
+- The corpus is committed data. No script generates expected values; `accept` records output the agent has checked against the named source.
+- Committed inputs are authored or exported and small enough to read. Built input (deep nesting, long chains, repeated noise, refined grids, fuzz) is never committed: the request names a builder, a small committed base, and parameters; the runner builds it. The cache key covers the builder's source, the base, and the parameters, so a cache hit builds nothing. Builders are a closed set owned by the runner and never compute expected values.
+- One canonicalizer owns normalization: sorted keys, scrubbed nondeterministic IDs and timestamps. Cases never normalize. Identifiers the interface hands back to callers are output, never scrubbed.
 - The canonical form covers every value the interface returns: errors, non-finite and signed-zero floats, bytes. A gap is fixed in the canonicalizer, never worked around in a case.
-- Expected files hold bare values. The case tolerance applies to every number. A matcher marks an exception only, never the default.
-- Matchers are a small closed set owned by the canonicalizer: tolerance override, range, one-of, any, absent, pattern, unordered, and the canonical forms. One-of is for outputs the spec leaves open, never for hiding a nondeterministic one. No arithmetic, references, paths, or quantifiers. An expected file that computes is test code.
+- Expected files hold bare values. Objects match closed: a returned key the expected object omits is a divergence. The case tolerance applies to every number. A matcher marks an exception only, never the default.
+- Matchers are a small closed set owned by the canonicalizer: tolerance override, range, one-of, any, absent, pattern, unordered, enclosure (the true value lies within a bound the same output reports), and the canonical forms. One-of is for outputs the spec leaves open, never for hiding a nondeterministic one. No other arithmetic, references, paths, or quantifiers. An expected file that computes is test code.
 - A consistency property between outputs (parts sum to the total, a reversed input gives the same answer) is a named relation in the runner, declared by the case. Where an independent value exists, write the value instead.
 - Adding a matcher or relation is a design change, never a fix for one case.
 - Where the spec leaves a value to the implementation (an adaptive partition, a sampling start), never copy it from output. Assert the contract it must meet through a relation that calls the public interface: samples lie within the reported deflection; reported parameters evaluate to the reported point.
@@ -105,10 +105,10 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 
 - Calls the real entrypoint in-process: same arguments, same `main`. A subprocess only when the process is the contract.
 - One build, one warm environment, the whole selection.
-- Parallel and hermetic: per-case temp dir, port, and fake state.
+- Hermetic: per-case temp dir, port, and fake state, so cases can run in parallel. Parallelize when the selection overruns its budget.
 - Clock and randomness injected. No real sleeps. Seeds printed on failure.
-- Runs the cases affected by the diff; the full corpus once on the final head.
-- Reports every case over budget.
+- Runs the cases affected by the diff; the full corpus once on the final head. When the full corpus fits the affected-case budget, every run is full; don't build dependency selection.
+- Reports every case over budget. A hung case is killed at its budget and reported as that case's failure, with the request it was in.
 - Writes to the verdict cache and serves the watcher.
 
 ## Failure output

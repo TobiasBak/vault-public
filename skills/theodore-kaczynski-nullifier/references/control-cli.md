@@ -4,15 +4,15 @@ One entrypoint owns building, checking, testing, waiting, and inspecting. Agents
 
 ## Commands
 
-Names may change; the set may not.
+Names may change; the set may not. `env` exists only where cases need managed external state.
 
 | Command | Does |
 |---|---|
 | `status` | Verdict for the current tree, from cache or watcher. Blocks while a run for this tree is in progress. |
 | `wait <job>` | Blocks until the job's verdict exists, then returns it. |
-| `why <case>` | First divergence, minimal diff, `.actual` path, stage-dump command, repro command. |
+| `why <case>` | First divergence, minimal diff, `.actual` path, the `emit` command for the failing request, repro command. |
 | `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
-| `check` | Format, lint, types, enforcement rules. |
+| `check` | Format, lint, types, enforcement rules. Never runs cases. |
 | `test [<case>...]` | Affected cases by default; `--full` for the final head. |
 | `accept <case> --source "<truth>"` | Writes expected output and its oracle. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
@@ -26,9 +26,9 @@ AGENTS.md lists the names. `--help` is the documentation.
 
 ## Output
 
-- First line: `pass`, `fail`, or `blocked`, with tree hash and duration.
+- First line of every command, `--json` included: `pass`, `fail`, or `blocked`, with tree hash and duration.
 - Exit 0 pass, 1 fail, 2 blocked or incomplete. Blocked is never a pass; a skipped step is never verified.
-- Silent on success. Logs go to artifacts.
+- No passing-step chatter: the first line, the run receipt, and the answer the command exists to give. Logs go to artifacts.
 - Every run prints its run ID and artifact directory. Evidence survives cleanup.
 - Overruns print `budget 60s, took 158s`.
 - `--json` returns the same result.
@@ -44,6 +44,7 @@ AGENTS.md lists the names. `--help` is the documentation.
 - Compilation units follow the module dependency graph. When an edit costs the same rebuild wherever it lands, the unit is a monolith: split it along the graph, keeping cycles whole. Lowering optimization is not the fix when the corpus is compute-bound; it moves the cost into the run.
 - Mutants are compiled once, every one behind a runtime switch, and tested in a single pass per case. The case runs unmutated. At each mutation site it reaches, every live mutant there is evaluated; a mutant whose value equals the original stays live in the parent, and one whose value differs forks a child that runs to the verdict. A mutant no case reaches survives without a run. Reach prunes runs and is never reported as coverage.
 - Forks need a single-threaded process at the fork point and a kill timeout scaled from the unmutated case time. Where a process cannot fork, flip one switch at a time and run only the cases that reach it. Rebuild only mutants a switch cannot express, in one warm checkout per job, and report their count. Default scope is files changed against main.
+- A mutant that fails to build is unviable: counted and reported, never a kill. An infrastructure failure blocks the run; it never kills a mutant.
 
 ## Proof
 
