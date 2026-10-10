@@ -11,10 +11,10 @@ Since 2026-10-04, Tobias talks to **Claude Opus 5.5** in T3 Code as the orchestr
 | [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Daily driver; near-Astra on coding, computer use, and professional work at lower cost | `medium`–`xhigh` (see [effort range](#choosing-a-setup)). API default `medium`; no `none`/`minimal` |
 | [GPT-6 Astra](https://developers.openai.com/api/docs/guides/latest-model) | Hardest coding, investigation, multi-tool research | No `none` |
 | [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) | Complex coding at a different cost and latency | Default `medium` |
-| [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Judge whole-task cost, including retries |
+| [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Below `xhigh` it silently drops work ([local test](#haiku-55-specifics)); judge whole-task cost, including retries |
 | [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding and knowledge work, long repo tasks | Start `medium`; `high`/`xhigh` only on demonstrated gains |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) | Demanding reasoning, long agent runs | Start at `high` default |
-| Claude Haiku 5.5 | Cheap reading and lookup worker: call sites, config inventories, log triage, doc Q&A | `medium`; see [Haiku specifics](#haiku-55-specifics) |
+| Claude Haiku 5.5 | Cheap worker for bounded reading, analysis, and mechanical edits; beat Luna locally | `high`; see [Haiku specifics](#haiku-55-specifics) |
 
 ## Sol vs Astra cost
 
@@ -62,11 +62,42 @@ Built-in Pi codemode looked useful for latency and cost, without improving fully
 
 Checked 2026-10-10 on Claude Code 2.1.296. ([AA review](https://artificialanalysis.ai/articles/claude-haiku-5-5), [100K rule](https://dev.to/akaranjkar08/claude-haiku-55-pricing-the-100k-token-rule-for-agents-cgi))
 
-- **Price tier:** $0.10 input / $0.50 output per MTok when a request's prompt is ≤100K tokens, $0.50 / $2.50 above. The tier applies to the whole request, cache reads included; cached input stays 0.1x the tier's rate. Sol is $2 / $10, so tier-1 Haiku is 20x cheaper per token.
+- **Price tier:** $0.10 input / $0.50 output per MTok when a request's prompt is ≤100K tokens, $0.50 / $2.50 above. The tier applies to the whole request, cache reads included; cached input stays 0.1x the tier's rate. Sol is $2 / $10, so tier-1 Haiku is 20x cheaper per token. GPT-6 Luna has the same short rates up to 272K input, then $0.20 / $0.02 / $0.75 ([OpenAI pricing](https://developers.openai.com/api/docs/pricing)).
 - **No harness enforces the 100K tier.** Claude Code checks `modelSettings.<model>.autoCompactWindow` (min 100000) between turns, so one turn of parallel reads still jumps past it, and the compaction call itself sends the full pre-compaction context. Local test: Haiku `medium` reading four large files went 23K→130K in one step. A 100K window cut over-100K requests from 2 to 1 but added a compaction and cost more ($0.21 vs $0.18). Keep briefs to targeted search and ranged reads instead. `CLAUDE_CODE_AUTO_COMPACT_WINDOW` overrides every model, so don't set it globally.
-- **Local effort test (2026-10-10):** 5 read-only tasks on the t3code repo (call-site census with a distractor, env-var inventory, concept search without the name, synthetic 5.5K-line CI log triage, doc Q&A), 2 reps each at `low`/`medium`/`high`/`xhigh`, `claude -p` with edit tools disabled. All 40 runs scored perfect; peak prompt 23–61K, so all stayed in the low tier. Per run, `medium` cost $0.001–0.009 and took 4–19s; `xhigh` cost 1.5–2x, produced 2–3x the output, and was up to 3x slower (log triage 46–50s vs 13–19s). The tasks didn't separate levels: `medium` suffices for this class and `xhigh` is pure cost. Multi-file tracing and ambiguous questions remain untested.
+- **Local test, 2026-10-10.** Two task sets on the t3code repo:
+  - Easy: a call-site census with a distractor, an env-var inventory, a concept search without the name, triage of a synthetic 5.5K-line CI log, and doc Q&A.
+  - Hard, with seeded truth kept outside the model's reach:
+    - locating a bug from a symptom report, with the bug two call hops below the symptom;
+    - reviewing a 183-line diff with 3 seeded defects;
+    - the transitive importers of a module (24 files);
+    - a null-handling and format audit across 9 call sites;
+    - adding a parameter at 9 call sites, where each site needs its own in-scope value.
+
+  Haiku ran in `claude -p`; Luna and Sol ran in `pi -p`. Hard-set results (3 reps; Sol 2 reps); costs are API-rate means per run, and the averages are over the 5 tasks:
+
+  | Arm | Runs fully correct | Mean cost | Mean wall time |
+  |---|---|---|---|
+  | Haiku `medium` | 14/15 | $0.009 | 34s |
+  | Haiku `high` | 15/15 | $0.011 | 45s |
+  | Haiku `xhigh` | 15/15 | $0.018 | 73s |
+  | Luna `medium` | 11/15 | $0.004 | 27s |
+  | Luna `high` | 12/15 | $0.005 | 46s |
+  | Luna `xhigh` | 15/15 | $0.008 | 86s |
+  | Sol 6.1 `medium` | 10/10 | $0.081 | 46s |
+
+  - **Easy set:** every arm was perfect. Haiku ran at `low` through `xhigh`, Luna at `medium`.
+  - **Haiku's one miss:** at `medium`, it updated 7 of 9 call sites and claimed "all seven".
+  - **Luna's misses below `xhigh`:**
+    - It stopped the import closure at 3–5 of 24 files.
+    - It returned an empty review.
+    - It put a bug line 6 lines off.
+    - It broke the required output format twice.
+  - **Prompt sizes:** no request passed 100K. Haiku's prompts ran larger (up to 97K at `xhigh`) because Claude Code's base prompt is about 23K, against roughly 6K for pi.
+  - **Small samples:** 3 reps per cell. Trust the direction, not the decimals.
+- **When to use it as a subagent:** use Haiku `high` for bounded work with a checkable answer: call-site and dependency census, cross-site audits, log triage, doc Q&A, first-pass diff review, locating a bug from a symptom report, and mechanical multi-file edits from an exact spec. Keep design, ambiguous debugging, and open-ended implementation with Sol. Require file:line lists and have the parent check counts, because the observed failure mode is confident claims of completeness. Over Luna it bought reliability at `high` and half Luna `xhigh`'s latency, for 1.4x Luna `xhigh`'s cost. Luna's 272K tier is more forgiving, but no task here came close.
+- **Keep the base prompt far below 100K.** A T3/OpenCode setup with a 100K Haiku cap and a ~163K base prompt compacted on every step and never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts about 30% more tokens than 4.5's. Anthropic positions it as a subagent for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API behavior:** adaptive thinking only, effort `low`–`max`, default `medium`. Anthropic notes early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, and occasional empty replies at `xhigh`. Claude Code's harness prompt is about 17–25K tokens before the task.
-- **Routing in T3:** Pi has no Haiku. Use `delegate_task` with `{"providerInstanceId": "claudeAgent", "model": "claude-haiku-5-5", "options": {"effort": "medium"}}`.
+- **Routing in T3:** Pi has no Haiku. Use `delegate_task` with `{"providerInstanceId": "claudeAgent", "model": "claude-haiku-5-5", "options": {"effort": "high"}}`.
 
 ### Astra specifics
 
