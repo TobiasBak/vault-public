@@ -147,7 +147,7 @@ Read the old suite as a list of behaviors. Never port tests one to one: names, g
 
 1. Freeze the old suite and its fixture builders. No edits except deletion.
 2. Write fat cases in the [finished shape](#case-layout) for the behaviors.
-3. Mutation-test the old suite, then the corpus alone.
+3. Mutation-test the corpus, then run the old suite only on mutants the corpus missed. Sample enough to estimate the old-only rate, at least a thousand mutants; a hundred decides nothing.
 4. Every mutant only the old suite kills extends a case, or its code is deleted as dead.
 5. Delete the old suite, its fixtures, and every script that produced them.
 6. Turn on the ban.
