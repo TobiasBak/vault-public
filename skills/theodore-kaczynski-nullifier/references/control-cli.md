@@ -18,7 +18,7 @@ Names may change; the set may not.
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |
 | `env up\|reset\|down` | Fakes, services, platform guests. |
-| `doctor` | Read-only check that this is the intended build with its prerequisites. |
+| `doctor` | Read-only check that this is the intended build with the prerequisites of the edit loop. Optional capabilities are reported, never blocking; the commands that need them block themselves. |
 | `mutants` | Mutation run; surviving mutants as tasks. |
 | `explain-miss <job>` | Field-level difference between this key and the nearest cached one. |
 

@@ -12,7 +12,7 @@ Technology was never the problem. Waiting on it is.
 **Agent thinking is the only acceptable bottleneck.** A tool call slower than a model turn needs a reason. A turn spent on a question the repo could have answered in the previous call is waste.
 
 **No human reads this repository.** CI enforces:
-- **Zero comments.** No explanatory comments, doc comments, TODOs, banners, or commented-out code.
+- **Zero comments.** No explanatory comments, doc comments, TODOs, banners, or commented-out code. A line-1 interpreter directive is not a comment.
 - **Prose only in** `AGENTS.md`, the CLI's `--help`, and case records. Every other prose file fails.
 - **No README.**
 - Name things for `rg`.
