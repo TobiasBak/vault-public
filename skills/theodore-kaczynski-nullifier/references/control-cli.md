@@ -41,7 +41,7 @@ AGENTS.md lists the names. `--help` is the documentation.
 - Anything longer than a few minutes runs in the background and returns a job ID for `wait`.
 - Verify what "dry-run" and "test" modes actually write or contact.
 - Feedback builds use their own fast incremental profile. Whole-program optimization and single-unit codegen are for shipping and performance measurement only; in the edit loop they turn a one-line change into a full rebuild. The cache key includes the profile.
-- A mutant costs one incremental build plus the suite. Each job keeps one warm checkout and build directory, applies and reverts the mutant there, and never copies build state per mutant. Default scope is files changed against main.
+- Compile once with every mutant behind a runtime switch; never rebuild per mutant. One baseline run records which mutation sites each case reaches. A mutant no case reaches survives without a run; every other mutant runs only the cases that reach it, one switch at a time. Reach prunes runs and is never reported as coverage. Rebuild only mutants a switch cannot express, in one warm checkout per job, and report their count. Default scope is files changed against main.
 
 ## Proof
 
