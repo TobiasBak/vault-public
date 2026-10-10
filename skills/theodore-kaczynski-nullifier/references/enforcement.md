@@ -21,7 +21,7 @@ Every rule in this skill is a program that exits nonzero, or a CLI behavior that
 | Agent context shape | Root `AGENTS.md` over 80 lines, off its sections, or with unranked values or more than five; any other `AGENTS.md`; a named path or command that doesn't exist; a host instruction file that isn't a symlink | The [shape](agent-context.md) |
 | Budgets | A full corpus over budget | Make it faster, or raise the budget with its basis |
 
-One implementation per check: the control CLI's `check`. The gate is the commit hooks calling it: pre-commit runs every check that needs no build against the staged snapshot, never the working tree; pre-push runs the full check and the full corpus on the pushed head, from cache when green. Hosted CI only where the repository already has one. Never add hosted CI as part of this.
+One implementation per check: the control CLI's `check`. The gate is the commit hooks calling it: pre-commit runs every check that needs no build against the staged snapshot, never the working tree; pre-push runs the full check and the full corpus on the pushed head, from cache when green, and the trailer guard over the pushed commits only. A guard never re-judges commits already on the remote under rules they predate. Hosted CI only where the repository already has one. Never add hosted CI as part of this.
 
 ## Approved paths
 
