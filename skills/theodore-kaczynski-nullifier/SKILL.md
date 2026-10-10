@@ -49,4 +49,5 @@ The result:
 - A before-and-after ledger for the targeted cost on a representative task.
 - CI rejecting a unit test, a comment, and an unexplained expected-output change through the real entrypoints.
 - A repeated `status` on an unchanged tree returning from cache without building.
+- A one-line source edit reaching its verdict, rebuild included, faster than a model turn. Cache hits prove nothing about the edit loop.
 - A fresh agent given a real bug report locates, reproduces, and proves the fix. Count its turns before and after.
