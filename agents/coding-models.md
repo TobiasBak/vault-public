@@ -8,12 +8,13 @@ Since 2026-10-04, Tobias talks to **Claude Opus 5.5** in T3 Code as the orchestr
 
 | Model | Role | Effort |
 |---|---|---|
-| [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Daily driver; near-Astra on coding, computer use, and professional work at lower cost | Keep the chosen setting. API default `medium`; `low`–`max`, no `none`/`minimal` |
+| [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Daily driver; near-Astra on coding, computer use, and professional work at lower cost | `medium`–`xhigh` (see [effort range](#choosing-a-setup)). API default `medium`; no `none`/`minimal` |
 | [GPT-6 Astra](https://developers.openai.com/api/docs/guides/latest-model) | Hardest coding, investigation, multi-tool research | No `none` |
 | [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) | Complex coding at a different cost and latency | Default `medium` |
 | [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Judge whole-task cost, including retries |
-| [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding and knowledge work, long repo tasks | Start `medium`; `xhigh`/`max` only on demonstrated gains |
+| [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding and knowledge work, long repo tasks | Start `medium`; `high`/`xhigh` only on demonstrated gains |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) | Demanding reasoning, long agent runs | Start at `high` default |
+| Claude Haiku 5.5 | Cheap reading and lookup worker: call sites, config inventories, log triage, doc Q&A | `medium`; see [Haiku specifics](#haiku-55-specifics) |
 
 ## Sol vs Astra cost
 
@@ -27,6 +28,8 @@ Per million tokens (Standard, ≤272K input), Sol is $2 input / $0.10 cached / $
 | both `max` | $3.258 / 52.7 | $0.724 / 51.8 | 4.5x |
 | Astra `max`, Sol `low` | $3.258 / 52.7 | $0.131 / 42.1 | 24.9x, lower capability |
 
+Index scores are public-benchmark evidence: trust the price ratios, not the capability gaps ([benchmark trust](benchmark-trust.md)).
+
 Compare model-plus-effort configurations, not model names. Credit rates don't determine subscription limits.
 
 Checked 2026-10-08: for the same supported model, Codex Fast consumes included subscription allowance at **2.5x** Standard, but purchased credits and Enterprise pay-as-you-go at **2x**. API-key billing follows API tier pricing instead. Hold reasoning effort fixed when comparing speed tiers; these are billing multipliers, not speedups. Sources: [speed](https://developers.openai.com/codex/agent-configuration/speed), [pricing](https://learn.chatgpt.com/docs/pricing).
@@ -35,6 +38,7 @@ Checked 2026-10-08: for the same supported model, Codex Fast consumes included s
 
 - Compare model, effort, instructions, tools, and host together. An API capability doesn't establish support in T3, Codex, Claude Code, or Pi.
 - Measure correctness, architectural fit, corrective turns, time, and cost per successful task. See [benchmark trust](benchmark-trust.md).
+- **Effort range (Tobias, 2026-10-10): never `low` or `max`, on any model.** `low` skips searches, checks, and work; `max` costs far more than `xhigh` for little gain. Anthropic models do worst with thinking off or at `low`, so their floor is `medium`. Run `medium` for clear work and `high`–`xhigh` when it pays.
 - Effort labels aren't equivalent across models. Task length isn't difficulty: a big mechanical edit and a short open design question need different effort.
 - Verbosity is visible detail, not reasoning depth. A short answer that drops a consequential qualifier is a failure.
 
@@ -53,6 +57,16 @@ Built-in Pi codemode looked useful for latency and cost, without improving fully
 - **Sol:** tool calling needs Responses (Chat Completions works without tools). 1.05M context, US and EU residency, no Fast mode with EU residency. Supports the beta Responses [multi-agent orchestration](https://developers.openai.com/api/docs/guides/responses-multi-agent), which is separate from Codex host tools.
 - **Opus 5.5:** use the effort setting rather than "think harder" prompts. A progress report can end the turn mid-work, so judge completion against evidence. Adaptive thinking is always on, and between-tool updates arrive in thinking blocks that clients must request and render. Thinking depends on prior turns, so change instructions and tools append-only. ([API notes](https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5))
 - **Fable 5.1:** at low effort it searches less, so make retrieval explicit when answers depend on current facts.
+
+### Haiku 5.5 specifics
+
+Checked 2026-10-10 on Claude Code 2.1.296. ([AA review](https://artificialanalysis.ai/articles/claude-haiku-5-5), [100K rule](https://dev.to/akaranjkar08/claude-haiku-55-pricing-the-100k-token-rule-for-agents-cgi))
+
+- **Price tier:** $0.10 input / $0.50 output per MTok when a request's prompt is ≤100K tokens, $0.50 / $2.50 above. The tier applies to the whole request, cache reads included; cached input stays 0.1x the tier's rate. Sol is $2 / $10, so tier-1 Haiku is 20x cheaper per token.
+- **No harness enforces the 100K tier.** Claude Code checks `modelSettings.<model>.autoCompactWindow` (min 100000) between turns, so one turn of parallel reads still jumps past it, and the compaction call itself sends the full pre-compaction context. Local test: Haiku `medium` reading four large files went 23K→130K in one step. A 100K window cut over-100K requests from 2 to 1 but added a compaction and cost more ($0.21 vs $0.18). Keep briefs to targeted search and ranged reads instead. `CLAUDE_CODE_AUTO_COMPACT_WINDOW` overrides every model, so don't set it globally.
+- **Local effort test (2026-10-10):** 5 read-only tasks on the t3code repo (call-site census with a distractor, env-var inventory, concept search without the name, synthetic 5.5K-line CI log triage, doc Q&A), 2 reps each at `low`/`medium`/`high`/`xhigh`, `claude -p` with edit tools disabled. All 40 runs scored perfect; peak prompt 23–61K, so all stayed in the low tier. Per run, `medium` cost $0.001–0.009 and took 4–19s; `xhigh` cost 1.5–2x, produced 2–3x the output, and was up to 3x slower (log triage 46–50s vs 13–19s). The tasks didn't separate levels: `medium` suffices for this class and `xhigh` is pure cost. Multi-file tracing and ambiguous questions remain untested.
+- **API behavior:** adaptive thinking only, effort `low`–`max`, default `medium`. Anthropic notes early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, and occasional empty replies at `xhigh`. Claude Code's harness prompt is about 17–25K tokens before the task.
+- **Routing in T3:** Pi has no Haiku. Use `delegate_task` with `{"providerInstanceId": "claudeAgent", "model": "claude-haiku-5-5", "options": {"effort": "medium"}}`.
 
 ### Astra specifics
 
