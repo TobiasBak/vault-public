@@ -15,6 +15,7 @@ Every rule in this skill is a program that exits nonzero, or a CLI behavior that
 | Bare expected values | A matcher outside the closed set; a matcher that restates the case tolerance or default normalization | A bare value, or a named relation |
 | Compact cases | An expected file not in the canonical writer's one-line-per-request form; two requests with the same payload and operation where the interface takes a list | `<cli> accept`; merge the requests |
 | One input set | A changed path no job claims | The owning job's inputs, or the explicit ignore set |
+| Committed inputs are readable | A corpus input far larger and more compressible than the repository's real inputs; the failure prints both and the limit | A builder call |
 | Zero comments | Any comment in source | Names, types, checks |
 | Prose only where allowed | Prose outside `AGENTS.md` and case records; any README | A check, or one `AGENTS.md` line |
 | Agent context shape | Root `AGENTS.md` over 80 lines, off its sections, or with unranked values or more than five; any other `AGENTS.md`; a named path or command that doesn't exist; a host instruction file that isn't a symlink | The [shape](agent-context.md) |
