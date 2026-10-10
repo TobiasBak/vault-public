@@ -89,7 +89,7 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 
 - From an independent source only: the system being replaced, a reference tool, a spec, or a recorded hand derivation.
 - The corpus is committed data. No script writes expected output.
-- Committed inputs are authored or exported and small enough to read. Built input (deep nesting, long chains, repeated noise, fuzz) is never committed: the request names a builder, a small committed base, and parameters; the runner builds it, and the cache key includes the built bytes. Builders are a closed set owned by the runner and never compute expected values.
+- Committed inputs are authored or exported and small enough to read. Built input (deep nesting, long chains, repeated noise, fuzz) is never committed: the request names a builder, a small committed base, and parameters; the runner builds it. The cache key covers the builder's source, the base, and the parameters, so a cache hit builds nothing. Builders are a closed set owned by the runner and never compute expected values.
 - One canonicalizer owns normalization: sorted keys, scrubbed IDs and timestamps. Cases never normalize.
 - The canonical form covers every value the interface returns: errors, non-finite and signed-zero floats, bytes. A gap is fixed in the canonicalizer, never worked around in a case.
 - Expected files hold bare values. The case tolerance applies to every number. A matcher marks an exception only, never the default.
