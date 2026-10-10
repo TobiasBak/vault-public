@@ -20,7 +20,7 @@ Every rule in this skill is a program that exits nonzero, or a CLI behavior that
 | Agent context shape | Root `AGENTS.md` over 80 lines, off its sections, or with unranked values or more than five; any other `AGENTS.md`; a named path or command that doesn't exist; a host instruction file that isn't a symlink | The [shape](agent-context.md) |
 | Budgets | A full corpus over budget | Make it faster, or raise the budget with its basis |
 
-One implementation per check, run by pre-commit and CI.
+One implementation per check: the control CLI's `check`. The gate is the commit hooks calling it, plus hosted CI only where the repository already has one. Never add hosted CI as part of this.
 
 ## Approved paths
 
@@ -34,7 +34,7 @@ Extend the corpus/parser/ case that covers this behavior, or add one with input,
 ## Rollout
 
 1. The check covers the whole repo, existing violations included.
-2. Pre-commit and CI fail on it. Its failures are the repair inventory.
+2. The gate fails on it. Its failures are the repair inventory.
 3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Unit tests go through the [migration](black-box-tests.md#migrating-an-existing-suite).
 4. Merge gate and repair together.
 
@@ -42,4 +42,4 @@ No baselines, suppressions, warning modes, or narrowed scope. Fix a wrong check 
 
 ## Proof
 
-Each check rejects the forbidden pattern and accepts the approved one through the real pre-commit and CI entrypoints.
+Each check rejects the forbidden pattern and accepts the approved one through the real gate entrypoints.

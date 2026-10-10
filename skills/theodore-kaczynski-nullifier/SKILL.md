@@ -11,7 +11,7 @@ Technology was never the problem. Waiting on it is.
 
 **Agent thinking is the only acceptable bottleneck.** A tool call slower than a model turn needs a reason. A turn spent on a question the repo could have answered in the previous call is waste.
 
-**No human reads this repository.** CI enforces:
+**No human reads this repository.** The gate enforces:
 - **Zero comments.** No explanatory comments, doc comments, TODOs, banners, or commented-out code. A line-1 interpreter directive is not a comment.
 - **Prose only in** `AGENTS.md`, the CLI's `--help`, and case records. Every other prose file fails.
 - **No README.**
@@ -41,13 +41,13 @@ The result:
 - An always-on watcher, so the verdict for the current tree exists before anyone asks.
 - `wait`, never `sleep`.
 - A visible time budget on every tier.
-- Every rule a CI check with an approved path.
+- Every rule a gate check with an approved path.
 - A root `AGENTS.md` in the [fixed shape](references/agent-context.md#root-agentsmd), and nothing else that instructs.
 
 ## Verification
 
 - A before-and-after ledger for the targeted cost on a representative task.
-- CI rejecting a unit test, a comment, and an unexplained expected-output change through the real entrypoints.
+- The gate rejecting a unit test, a comment, and an unexplained expected-output change through the real entrypoints.
 - A repeated `status` on an unchanged tree returning from cache without building.
 - A one-line source edit reaching its verdict, rebuild included, faster than a model turn. Cache hits prove nothing about the edit loop.
 - A fresh agent given a real bug report locates, reproduces, and proves the fix. Count its turns before and after.
