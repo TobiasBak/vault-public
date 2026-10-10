@@ -8,6 +8,7 @@ A test is an input at the published interface and a specified output. Nothing el
 - **Input:** the request plus the environment's starting state: files, fake external services, clock, seeds.
 - **Output:** the response plus effects observed in the environment: files written, messages in a fake mailbox, rows in a fake external system.
 - Fakes replace external systems only. Never the repository's own code.
+- An external command is faked by a stub first on `PATH` that records its arguments and stdin. The record is the effect.
 
 ## Allowed case kinds
 

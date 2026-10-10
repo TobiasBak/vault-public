@@ -13,6 +13,7 @@ Every line in the tree's context files is read by every agent on every task. Con
 | Invariants | Checks, whose failures name the fix |
 | Ownership and structure | Directory and symbol names |
 | Plans, status, progress, handoffs | The task tracker and PRs. Never the tree. |
+| Why a change was made | Its commit body, only when the diff doesn't already say it. Never `AGENTS.md`. |
 
 One owner per fact. Every other place links or says nothing.
 
