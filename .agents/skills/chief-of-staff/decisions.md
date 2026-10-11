@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Make GPUI Linux-host-only build criterion explicit and keep Windows runtime verification separate · Tobias clarified no compilation on Windows; native Windows upstream support isn't a passing cross-build result · —
+
 - 2026-10-11 · decided · Hold published stock-vs-earlier-checkpoint proposal for top-level Opus design after confirmed quota recovery; authorize neither readiness implementation nor trial yet · material context boundary/correctness controls unqualified, no immediate v3/prototype rerun or Opus child · —
 
 - 2026-10-11 · corrected by Tobias · Stop blocking tiny GPUI compile on cache-accounting/replay paperwork while host shows20GiBavailable; run one conservatively bounded job under unchangedglobalcaps · my safety abstraction replaced the actual proof; lowered perjob6GiB/twojobs and requested real command-startreceipt · Tobias: get it together, test should run.

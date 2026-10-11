@@ -14,7 +14,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ### GPUI pure-Rust Linux/Windows compile proof
 
-[Team](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf), orderready. Tobias wants actual Linux and Windows binaries, not an API/Tokio bridge or Orderready integration/rewrite plan.
+[Team](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf), orderready. Tobias wants BOTH builds on Linux: native Linux ELF and cross-compiled Windows PE, no Windows-host compilation/CI/VM-build fallback. No API/Tokio bridge or Orderready integration/rewrite plan. A Windows .exe is compile proof, not Windows runtime proof; runtime checks remain Tobias's staging responsibility.
 
 - **Cargo actually started 2026-10-11 17:52:44 CEST**, PID2592465, independent immutable unit `gpui-dual-linux-debug-20261011T175244060243.service`. Native Linux `cargo build --locked --target x86_64-unknown-linux-gnu --jobs2`; Windows PE follows within remaining budget. Command start is NOT compile success.
 - One shared slot held; MemoryMax6GiB, CPUQuota200%, two jobs, total admitted budget1h, global caps unchanged. Source/lock/toolchain/receipts: `~/.cache/gpui-dual-compile-20261011/primary/`; current run/artifact suffix `linux-debug-20261011T175244060243`.
