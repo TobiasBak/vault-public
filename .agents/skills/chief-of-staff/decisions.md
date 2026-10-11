@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Reserve one next naturally-freed P2 heavy-job slot for the prepared GPUI compile proof and resume explicit capacity handshake · corrected test never started, worker completed meant memory-blocked; bounded reversible priority change, no interrupted work/cap increase/floor waiver · —
+
 - 2026-10-11 · decided · Deliver clarified no-Opus-subagent rule into current active team contexts while global/vault ownership edits proceed; close completed v3 receipt verification · persisted rules alone don't update already-loaded leader prompts; no runtime restart needed · —
 
 - 2026-10-11 · decided · Make Opus top-level-only and explicit Sol delegate targeting unambiguous at global/vault owners, preserving bounded Haiku and temporary quota recovery · Tobias asked whether rules prohibit all Opus subagents; previous split lacked that explicit boundary · Tobias: Opus leader/designer never subagents, Sol executor/implementor.
