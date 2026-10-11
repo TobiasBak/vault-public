@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Close reported global Opus-top-level/Sol-explicit policy milestone pending bounded receipt alignment; reconcile proven Sonnet/hook-owner vault drift · owning instruction links/hook/default receipts exist, no quota test/restart or new code review needed · —
+
 - 2026-10-11 · decided · Correct my GPUI raw-headroom brief with conservative cache-aware ancestor/physical-memory admission, requiring recorded-case checks and independent review before existing bounded build · snapshot establishes inactive-file dominated charge and no sufficient natural process release; no limit/reserve increase or cache clearing, safety still hypothesis · —
 
 - 2026-10-11 · decided · Diagnose actual GPUI memory ownership/admission accounting read-only before any cap/floor change · reserved slot doesn't free required4GiB; suspect my resource brief/reclaimable-cache treatment first, no job kill or unproven bypass · —
