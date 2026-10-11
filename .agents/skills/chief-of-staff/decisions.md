@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · corrected by Tobias · Stop blocking tiny GPUI compile on cache-accounting/replay paperwork while host shows20GiBavailable; run one conservatively bounded job under unchangedglobalcaps · my safety abstraction replaced the actual proof; lowered perjob6GiB/twojobs and requested real command-startreceipt · Tobias: get it together, test should run.
+
 - 2026-10-11 · decided · Close reported global Opus-top-level/Sol-explicit policy milestone pending bounded receipt alignment; reconcile proven Sonnet/hook-owner vault drift · owning instruction links/hook/default receipts exist, no quota test/restart or new code review needed · —
 
 - 2026-10-11 · decided · Correct my GPUI raw-headroom brief with conservative cache-aware ancestor/physical-memory admission, requiring recorded-case checks and independent review before existing bounded build · snapshot establishes inactive-file dominated charge and no sufficient natural process release; no limit/reserve increase or cache clearing, safety still hypothesis · —
