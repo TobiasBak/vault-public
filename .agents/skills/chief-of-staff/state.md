@@ -55,7 +55,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
-- Reboot the host so the docker group applies; `win-vm` wraps itself in `newgrp` until then.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
