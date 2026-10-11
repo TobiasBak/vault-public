@@ -29,7 +29,7 @@ Claude quota exhausted. CoS runs on Pi Sol; all six existing project teams now t
 ## Hypotheses
 
 - Completed workflow audit: leader routing implicitly inherited Opus while most coding children used Sol; CoS launch JSONL line 94 spot-checked, and leader models verified in census. Quota contribution awaits accounting. Explicit leader selection prevents inheritance surprises; routine-leader model policy remains undecided beyond temporary recovery.
-- Audit reports live compaction deployment drift before original sessions; dotfiles team owns managed-settings drift check. Loaded-session behavior/cache effect not proven. Recurring Sol broad-read truncation wastes onboarding, not direct Claude quota; scoped briefs need fresh-review validation.
+- Audit reports live compaction deployment drift before original sessions. Dotfiles confirms existing `./dot` managed-key check covers autoCompactEnabled, Opus 433000/Haiku 100000 and Sonnet cleanup; no new tooling/thresholds. Final head verification pending; loaded-session behavior/cache effect unproven, no fresh Claude test while quota exhausted. Recurring Sol broad-read truncation wastes onboarding, not direct Claude quota; scoped briefs need fresh-review validation.
 - My `auto` message (settle rule, ~13:05Z) started a new turn in the idle workspace-view thread, and T3 stopped the old session's scope, killing its detached benchmark. If confirmed, don't start turns in idle teams that have detached work running; long jobs use `systemd-run --user` (vault rule landed in 62e74f5).
 
 ## Watch
