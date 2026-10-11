@@ -59,6 +59,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Watch and hypotheses
 
+- ~10% of the Claude 5h window gone minutes after switching four long leader threads to Opus. Hypothesis: provider switch seeds each new Claude session with full history (one-time cache write). Sol diagnosis `cos-b826-quota-burn-1` → `~/.cache/claude-usage-20261011/opus-switch-burn.md`.
+
 - Don't resurrect admission theory before this isolated GPUI compile. General cache-aware scheduling safety remains unproven. Three historical OOM counters don't establish three separate new incidents; another confirmed OOM needs machine-level scheduling diagnosis.
 - Geometry team is settled at `d114b6f`; PR42 parked. Approved source-faithful StepKit B still lacks generic material-validity proof and atomic extraction. Future qualification needs a new brief from repo contract/ADR0005 and `~/.cache/sg-b-qualification/qualification.md`; no native adapter/boundary authorized.
 - T3 nightly timer updates service, not desktop AUR package. Desktop updates through dotfiles bootstrap with app/agents stopped or working Omarchy update; tell Tobias when app lags. No restart during live work.

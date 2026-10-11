@@ -156,3 +156,4 @@ Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the v
 - 2026-10-11 · decided · Interrupt/archive the Pi CoS, reconfigure four team leaders to Opus 5.5 high, route Sol 6.1 high default/Haiku 5.5 high exploration through dotfiles team and a vault writer · Tobias asked on quota recovery · —
 - 2026-10-11 · decided · Approve GPUI's one extra background pkexec 7zip install · ordinary stock tool needed to open the approved SDK ISO; same owner/route as Wine · —
 - 2026-10-11 · decided · Lift pi-workspace-view HOLD: Opus owner designs, readiness + bounded ≤20-execution subscription trial authorized within reviewed proposal · hold condition (Opus design after quota recovery) met; no paid API/v3/global install · —
+- 2026-10-11 · decided · Delegate read-only Sol diagnosis of ~10% Claude 5h-window burn after switching four long leaders to Opus · suspect cold-start history seeding; measure before changing routing · —
