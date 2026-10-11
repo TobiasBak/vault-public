@@ -14,6 +14,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
+- Run `sudo pacman -S --needed nasm libfaketime` (nasm 3.02 for the Windows cross-build; libfaketime for the corpus clock). It blocks Orderready's Nix-port gate. Waiting: Orderready team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
@@ -27,3 +28,4 @@ None open. Missing merge authority was resolved by a standing rule (2026-10-11).
 - The T3 update timer updates the service, not the desktop app. The app (AUR `t3code-nightly-bin`) needs `yay -S aur/t3code-nightly-bin` or a bootstrap rerun; tell Tobias when the app lags the service by a nightly.
 - No isolated-profile `chromium` wrapper on Omarchy: an agent running bare `chromium` uses Tobias's real profile. playwright-cli is safe. Fix through dotfiles if an agent ever touches it.
 - Expected crashes from agent test runs trigger systemd-coredump desktop notifications (rmut mutant SIGABRT, 2026-10-11; rmut is setting LimitCORE=1 on its units; 0 still journals a "no coredump" entry that omarchy-crash-watch toasts on, while 1 makes the kernel skip the pipe helper). If a second test tool causes one, fix it once for the T3 agent slice in dotfiles with LimitCORE=1 on agent scopes, rather than per tool.
+- T3 slice contention: Orderready's full-gate subagent was OOM-killed (2026-10-11) while the workspace-view benchmark and rmut runs shared the ~16.8 GiB slice. Teams check headroom and cap parallelism. A second OOM means designing machine-level scheduling for heavy jobs (the NixOS `pc-workload` had none on Omarchy).
