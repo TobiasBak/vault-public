@@ -17,3 +17,4 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Approve the ~$2.30, 45-min live benchmark for the context-view experiment · small cost, and only a live run answers whether v3 wins.
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
+- 2026-10-11 · decided · Omarchy: run a read-only survey first and keep the work CoS-owned until the design exists; no team gets disk or installer access yet · the install is irreversible, and teams use the 2 TB disk · —
