@@ -48,7 +48,9 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Git fixtures inside hooks
 
-Clear Git's repository-local environment before running a gate that creates temporary Git fixtures. Use `git rev-parse --local-env-vars` to identify the variables, including `GIT_DIR`, `GIT_WORK_TREE` and `GIT_INDEX_FILE`. Changing a child command's working directory does not override them. Without this, a pre-commit test wrote fixture commits onto the real branch and replaced its index. Verify the real commit/push entrypoints, not just standalone test commands.
+- Tools and tests that spawn Git for fixture repositories, worktrees or clones must remove every variable listed by `git rev-parse --local-env-vars` from the child environment, including children that launch Git indirectly.
+- Hooks export `GIT_DIR` and other repository-local variables; changing the working directory does not override them, so a hook-run gate can modify the real repository instead of its fixtures. One such pre-push gate committed and pushed deletion of the codebase.
+- Prove isolation with a black-box check that runs the real tool with `GIT_DIR` set to a disposable outer repository and verifies that repository's HEAD, index, configuration and worktree registrations stay unchanged. Verify the real commit/push entrypoints too.
 
 ## Where agent verification time goes
 
