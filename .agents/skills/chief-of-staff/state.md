@@ -16,7 +16,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- T3 memory cap: raise the slice MemoryMax from 55% (16.8 GiB) to ~70% (~21 GiB) once TMPDIR is on disk? Orderready says memory is its bottleneck (2 Rust rounds in parallel instead of 4–5; P2 takes ~3–4 days instead of ~2). Tradeoff: less headroom for the desktop. Recommend yes. Waiting: Orderready.
+- T3 memory cap, now measured: an uncached Orderready full gate peaks at 6.16 GiB and a mutation pilot at 1.64 GiB (outside the slice until rmut's slice fix lands). With the 55% cap (16.7 GiB), Orderready runs 2 build slots; GPUI builds and the benchmark share it too. Raise MemoryMax to 70% (~21 GiB) and MemoryHigh to 55%? That allows a third slot and headroom for GPUI. It applies live via drop-in + daemon-reload, with no T3 restart. Recommend yes. Waiting: Orderready, GPUI team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
