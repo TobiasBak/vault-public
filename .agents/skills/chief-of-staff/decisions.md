@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Independently verify completed live-overhaul receipts and process placement; combine with ongoing team census before requesting restart authority · live completion doesn't prove global restart safety; no restart or duplicate census · —
+
 - 2026-10-11 · decided · Take over CoS on Pi Sol in the new user-created thread, retain existing teams/plans, retire old CoS, rebind weekly trigger and delegate transcript/census/report redirects · Tobias explicitly requested quota recovery; no duplicate work or permanent model-policy change · —
 - 2026-10-11 · decided · Resume the existing dotfiles team's reviewed remaining live apply and freerdp polkit step, still prohibit T3 restart pending cross-team safety · recovered Tobias's unanswered return-to-PC/continue messages in old CoS positions965/970 · —
 
