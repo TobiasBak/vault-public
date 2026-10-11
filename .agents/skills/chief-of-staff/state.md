@@ -16,7 +16,6 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- T3 memory cap, now measured: an uncached Orderready full gate peaks at 6.16 GiB and a mutation pilot at 1.64 GiB (outside the slice until rmut's slice fix lands). With the 55% cap (16.7 GiB), Orderready runs 2 build slots; GPUI builds and the benchmark share it too. Raise MemoryMax to 70% (~21 GiB) and MemoryHigh to 55%? That allows a third slot and headroom for GPUI. It applies live via drop-in + daemon-reload, with no T3 restart. Recommend yes. Waiting: Orderready, GPUI team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
@@ -33,3 +32,4 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 - T3 slice contention: Orderready's full-gate subagent was OOM-killed (2026-10-11) while the workspace-view benchmark and rmut runs shared the ~16.8 GiB slice. Teams check headroom and cap parallelism. A second OOM means designing machine-level scheduling for heavy jobs (the NixOS `pc-workload` had none on Omarchy).
 - /tmp is a 16G RAM tmpfs with a per-user quota. Dotfiles 2070c1e/40f3bee moved agent TMPDIR to `~/.cache/agent-tmp` (loads at the next T3 restart) and set the pnpm store on disk in bootstrap. After the benchmark round ends: apply it live (`PATH="$HOME/.local/share/pnpm/bin:$PATH" mise exec pnpm -- pnpm config set --global store-dir "$HOME/.local/share/pnpm/store"`), then `rm -rf /tmp/.pnpm-store` once no /tmp workspaces remain. Handed to the workspace-view team for its post-round cleanup. swe-benchmarking `6349ddb` puts workspaces on disk; /tmp is at 2.4G.
 - A T3 restart loads the askpass env and the disk TMPDIR. Best after the benchmark round; bundle it with the memory-cap decision (waiting on Orderready's RSS measurement). Otherwise the next nightly restart applies it. AUR-only packages can't go through pkexec (makepkg refuses root), so they still need Tobias's terminal.
+- T3 slice cap raised to MemoryHigh 55% / MemoryMax 70% (Tobias, 2026-10-11); child `cos-slice-cap-70-1` is applying it live. Afterwards, tell Orderready (3 build slots possible) and the dotfiles overhaul team (rebase).
