@@ -8,6 +8,9 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Separate numbered Your decisions from informational Decided by me, with recommendation/waiting owner per question · Tobias couldn't distinguish pending choices from my calls amid reports · Tobias: requested this formatting.
+- 2026-10-11 · decided · Settle geometry after artifact verification; keep GPUI failed study/source retained pending closeout check; request existing workspace review/gate pointers without new runs · completion and approval are separate; no unsupported platform/regression claims · —
+
 - 2026-10-11 · asked · Retire workspace-view v3 beyond literal automatic-revert authority; recommend yes, pending artifact spot-check · reviewed experiment shows no demonstrated benefit and prototype operational kill; n4/confounded history isn't a general regression claim · pending Tobias; standing owner keeps v3 installed.
 
 - 2026-10-11 · decided · Notify all six leaders directly, answer missed reports and archive former CoS; treat takeover routing as an immediate exception to idle housekeeping deferral · Tobias saw reports landing in the dead thread and explicitly asked · —
