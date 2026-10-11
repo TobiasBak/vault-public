@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · asked · Approve build-only Wine plus authentic official SDK FXC/native DLL route, conditional license review before acceptance/execution; recommend yes · preserves GPUI shader format while all compilation stays Linux; payload/license/version not established, no assumed xwin authority · pending Tobias.
+
 - 2026-10-11 · asked · Pursue minimal local/upstreamable GPUI Windows-release cross-build fix on Linux; recommend yes before runtime staging · actual Linux/debugWindows binaries compile but unmodified release shader step host-gated, debugPE source-path dependent; no productionrewrite/fork/pipeline authorized · Tobias: sure. Minimal local/upstreamable dependency build/shader fix authorized; existing team resumed, no permanent fork/pipeline/rewrite or upstream contact.
 
 - 2026-10-11 · decided · Authorize INF to honor each governing ancestor's remaining headroom using its own current; retain raw cache/caps/reserves and exact-head requalification · nearest-finite-high ignores tighter outer constraint; kernel safety bugfix, not new resource-policy tradeoff or GPUI exemption · —
