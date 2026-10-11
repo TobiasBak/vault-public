@@ -8,17 +8,19 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Route approved v3 disable to dotfiles-owned managed/live settings, retain workspace standing research and retarget Monday checkpoint; incorporate Tobias's cache priority in matched long-run whole-task measurements · one settings owner prevents re-enable/races; hit rate alone isn't task-cost/quality evidence · —
+
 - 2026-10-11 · decided · Settle GPUI as a blocked study after report/terminal-receipt verification, preserve staged source/worktree/index, retain current stack · source syntax failure isn't platform impossibility; no settlement cleanup scripts or new study run authorized · —
 
 - 2026-10-11 · decided · Separate numbered Your decisions from informational Decided by me, with recommendation/waiting owner per question · Tobias couldn't distinguish pending choices from my calls amid reports · Tobias: requested this formatting.
 - 2026-10-11 · decided · Settle geometry after artifact verification; keep GPUI failed study/source retained pending closeout check; request existing workspace review/gate pointers without new runs · completion and approval are separate; no unsupported platform/regression claims · —
 
-- 2026-10-11 · asked · Retire workspace-view v3 beyond literal automatic-revert authority; recommend yes, pending artifact spot-check · reviewed experiment shows no demonstrated benefit and prototype operational kill; n4/confounded history isn't a general regression claim · pending Tobias; standing owner keeps v3 installed.
+- 2026-10-11 · asked · Retire workspace-view v3 beyond literal automatic-revert authority; recommend yes, pending artifact spot-check · reviewed experiment shows no demonstrated benefit and prototype operational kill; n4/confounded history isn't a general regression claim · Tobias: yes, disable v3 and keep experimenting/proposing how agent context should be built. Disable dispatched, standing research preserved.
 
 - 2026-10-11 · decided · Notify all six leaders directly, answer missed reports and archive former CoS; treat takeover routing as an immediate exception to idle housekeeping deferral · Tobias saw reports landing in the dead thread and explicitly asked · —
 - 2026-10-11 · decided · Accept corroborated live-overhaul completion, keep restart blocked on hosted-job checkpoints/explicit authority, and delegate bounded geometry closeout spot-check · artifact-level evidence supports completion but not quiescence; no duplicate gates or reviews · —
 
-- 2026-10-11 · asked · Allow five mechanical required-environment edits in otherwise frozen AUTH test constructors/wire sites; recommend yes with all business assertions and migration obligations retained · existing deletion-only freeze blocks approved propagation, and broader contracts lack full public supersession · pending Tobias; P2 AUTH parked.
+- 2026-10-11 · asked · Allow five mechanical required-environment edits in otherwise frozen AUTH test constructors/wire sites; recommend yes with all business assertions and migration obligations retained · existing deletion-only freeze blocks approved propagation, and broader contracts lack full public supersession · Tobias: sure. Five-site mechanical exception authorized and dispatched to existing P2 owner; all business assertions/migration obligations retained.
 - 2026-10-11 · decided · Adopt bounded full-transcript handover, settle consumed census/historical diagnostic and classify old CoS failure as context-handoff guard · direct activity971 confirms it, no Pi restart/package fix warranted · —
 
 - 2026-10-11 · decided · Independently verify completed live-overhaul receipts and process placement; combine with ongoing team census before requesting restart authority · live completion doesn't prove global restart safety; no restart or duplicate census · —
