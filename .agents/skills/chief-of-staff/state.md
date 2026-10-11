@@ -18,7 +18,7 @@ Census 2026-10-11: every unsettled top-level thread.
 
 ## Needs Tobias
 
-- Tailnet name: keep `tb-omarchy` or rename to `pc` (the old NixOS node gets removed)? Recommendation: rename to `pc` so the T3 URL stays stable. It waits on the bootstrap, not before it.
+- None open.
 
 ## Hypotheses
 
