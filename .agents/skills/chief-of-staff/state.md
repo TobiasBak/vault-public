@@ -15,6 +15,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 ## Needs Tobias
 
 - Were real AX SQL credentials uploaded to Firestore (`servers/{id}.axOrderImport.sql`) under AX-11's cutover instructions? If yes, delete them from production once Orderready's file-based change lands; agents won't touch production. Waiting: Orderready team.
+- Decision log review: 47 unreviewed entries in `decisions.md`, over the 40 threshold. Waiting: me, to distill the lessons.
 
 ## Hypotheses
 
