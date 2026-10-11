@@ -21,5 +21,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Move the hand-made T3 slice drop-in into Nix rather than delete it · it carries live limits the repo must own, and the Omarchy work reuses the module · —
 - 2026-10-11 · decided · Recreate the data filesystem with the old UUID; TPM2 auto-unlock, falling back to no LUKS; NixOS stays the boot default until cut-over; census unpushed work before the wipe despite "nothing important" · no rebuild needed, it meets his unattended-boot requirement, and the teams' worktrees live there · —
 - 2026-10-11 · decided · Omarchy: shrink instead of wipe, delete the disposable bulk first, no NAS backup, drop the --wipe mode · same end state as Tobias's call, but Orderready's 22 worktrees survive and nothing needs copying anywhere · —
+- 2026-10-11 · decided · Omarchy gets 1T and data keeps ~0.86T, not the whole disk · Tobias offered 1T or the whole disk; the whole disk would destroy the Orderready worktrees again, and the NixOS NVMe can become bulk/games storage after cut-over · —
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
