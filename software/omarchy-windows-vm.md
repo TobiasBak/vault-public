@@ -35,7 +35,7 @@ win-vm run --ephemeral -- ./lane.sh           # disposable baseline clone; exits
 - `exec` runs in the SSH session, which has no desktop. Anything visual goes through `gui`, `uia` and `screenshot`, which run as one-shot scheduled tasks in tb's interactive session.
 - tb logs on automatically at boot. If tb's session is disconnected (after an RDP client closes), `win-vm` moves it to the console with a SYSTEM `tscon`, so the desktop stays unlocked. An active RDP session is used as is and never taken over.
 - `uia` passes its arguments to `winapp ui` (WinApp CLI 0.7.1) verbatim. For selectors and state capture, see [windows-gui-automation](windows-gui-automation.md). WinApp telemetry is opted out machine-wide.
-- `status` prints JSON: container state, IP, SSH reachability, tb's session, `started_by_win_vm`, `mode` (`persistent` or `ephemeral`), the `lease` holder, the pinned `baseline` and `residue`.
+- `status` prints JSON: container state, IP, SSH reachability, tb's session, `started_by_win_vm`, `mode` (`persistent` or `ephemeral`), the `lease` holder and the pinned `baseline`.
 
 ## Disposable runs: `run --ephemeral`
 
@@ -45,7 +45,7 @@ For work whose guest state must not persist (installs, users, hosts-file edits, 
 - **Each run** reflink-copies the baseline into `~/.local/state/win-vm/ephemeral/` and boots it through a compose override that replaces both `/storage` and `/shared`. The persistent disk and `~/Windows` are never mounted, so the persistent disk stays byte-identical. At the end the container and the copy are deleted, discarding every guest write. Runs need no polkit dialog, even after a reboot. Boot to ready takes about 20–30 s.
 - **Lease.** The run holds an exclusive lease for its whole duration. Every other `win-vm` command fails fast and names the holder (pid, command, start time); nothing queues. The host command and its children get `WIN_VM_LEASE`, so their `win-vm` calls reach the clone. They can't start, stop or nest runs, and they refuse to act if the clone is gone rather than touch the persistent VM.
 - **Persistent VM running.** The run refuses with exit 1 and `win-vm: persistent VM is running; refusing ephemeral run (holder: …)`. It never stops a VM that may be someone else's session.
-- **Exit and kills.** `run` exits with the host command's code (128+N if signal N killed it). A guardian in its own systemd scope (`win-vm-ephemeral-*.scope`) tears down when the run exits for any reason, including `kill -9` or the caller's cgroup being killed. A host command orphaned by such a kill keeps running; its `win-vm` calls are refused. If both die (host reboot), the next `win-vm` command cleans up the residue first.
+- **Exit and kills.** `run` exits with the host command's code (128+N if signal N killed it). A guardian in its own systemd scope (`win-vm-ephemeral-*.scope`) tears down when the run exits for any reason, including `kill -9` or the caller's cgroup being killed. A host command orphaned by such a kill keeps running; its `win-vm` calls are refused. If both die (host reboot), the next `win-vm` command, `status` included, first removes the leftover clone and its container. It never boots a stale clone. If that cleanup fails, every command exits 1 naming the by-hand cleanup (`docker rm -f omarchy-windows; rm -rf ~/.local/state/win-vm/ephemeral`), and the next command after the fix recovers.
 - SSH goes to the container IP on port 22: dockur forwards every port except 5900, 8006, 139 and 445 to the guest. Nothing is exposed beyond the host-only Docker bridge.
 
 ## Guest setup
