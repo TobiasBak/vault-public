@@ -15,7 +15,6 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- Run `omarchy pkg add xorg-server-xvfb` (Tobias said yes; agents can't sudo). Then tell Orderready to run the `tools/or dev` smoke. Dotfiles is adding it to bootstrap.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses

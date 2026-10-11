@@ -90,4 +90,4 @@ Maintained by the chief of staff. Budget: 30 bullets.
 - When Tobias drops a tool or approach, the drop covers every scope. Never offer it back as a narrower option, such as "Nix only for dev shells" (Tobias, 2026-10-11).
 - Who can read credentials, and through which path, is Tobias's call, even when the change is reversible (Orderready AX SQL, 2026-10-11).
 - An option Tobias picked or a name he chose is decided. Don't substitute a safer alternative, and default to keeping it rather than asking (disk size, hostname; 2026-10-11).
-- System changes on Omarchy follow the `omarchy` skill. Packages go through `omarchy pkg add` (AUR: `omarchy pkg aur add`), never raw pacman/yay, and that's the command I hand Tobias when sudo is needed (Tobias, 2026-10-11).
+- System changes on Omarchy follow the `omarchy` skill. Packages go through `omarchy pkg add` (AUR: `omarchy pkg aur add`), never raw pacman/yay. When sudo is needed, run `pkexec /usr/share/omarchy/bin/omarchy-pkg-add <pkgs>` in the background: Tobias approves the polkit dialog on his desktop. Never hand him a command to paste (Tobias, 2026-10-11).
