@@ -18,5 +18,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Omarchy: run a read-only survey first and keep the work CoS-owned until the design exists; no team gets disk or installer access yet · the install is irreversible, and teams use the 2 TB disk · —
 - 2026-10-11 · decided · Omarchy design: free-space install with the ext4 data partition shared by both OSes; Home Manager standalone on Omarchy, reusing the NixOS home modules; prove it in a VM first; launched a dotfiles team on a worktree · no data has to move, one source of truth for config, and the VM proof is reversible · —
 - 2026-10-11 · asked · Omarchy partition size, deleting 132G of cleanup leftovers, LUKS, and the downtime window · irreversible or his preference · —
+- 2026-10-11 · decided · Move the hand-made T3 slice drop-in into Nix rather than delete it · it carries live limits the repo must own, and the Omarchy work reuses the module · —
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
