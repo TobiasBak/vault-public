@@ -11,7 +11,6 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`, T3 0.0.46-nightly.202
 - [Workspace view standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931) (pi-workspace-view): never settle it. Setup OK (v3 active for `tb`). Fix review and replay check running; the 18 runs (≤$10) wait on `uv`/`vp`. Kill rule: revert v3 via a change sent to the dotfiles team. Installing the prototype is Tobias's call. Schedule `cos-workspace-view-weekly-1` (Mon 09:00, bound here) wakes me for the weekly audit.
 - [rmut command-cases mode](t3-thread://v1/mcp:45897a0c-83cb-48aa-8781-99cb87131a2e) (rust-mutants, worktree `feature/command-cases`): a general rmut mode so Orderready can delete `mutants_harness.py`. Orderready sends the requirement; rmut owns the design.
 
-- Vault child `cos-vault-no-nix-1` (Pi Sol): record the no-Nix preference and fix Nix-steering notes. Spot-check its diff.
 
 ## Needs Tobias
 
