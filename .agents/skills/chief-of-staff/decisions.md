@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Make Opus top-level-only and explicit Sol delegate targeting unambiguous at global/vault owners, preserving bounded Haiku and temporary quota recovery · Tobias asked whether rules prohibit all Opus subagents; previous split lacked that explicit boundary · Tobias: Opus leader/designer never subagents, Sol executor/implementor.
+
 - 2026-10-11 · decided · Close v3 disable at managed-config and fresh SDK behavior boundaries; keep offline proof separate from cache/performance evidence and leave existing sessions running · independent owners supplied idempotence/settings and unmodified native/nested-context receipts; research continues · —
 
 - 2026-10-11 · decided · Accept reported v3 config/persistence milestone pending bounded receipt spot-check, leave fresh-session runtime proof with standing workspace owner · reviewed/gated merged PR7 and actual idempotent apply exist; no global restart or duplicate behavioral probe · —
