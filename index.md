@@ -17,14 +17,14 @@ Not exhaustive. Search with `rg`.
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image
-- [agents/subagent-delegation.md](agents/subagent-delegation.md): when and how to split work, handoffs, one writer
+- [agents/subagent-delegation.md](agents/subagent-delegation.md): model routing and effort, when and how to split work, handoffs, one writer
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, refactor equivalence, test pruning, team adoption
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
-- [agents/coding-models.md](agents/coding-models.md): Opus-orchestrates-Sol setup, model roles and effort, Sol vs Astra cost, model specifics, Codex/Pi/Claude Code/OpenCode host specifics
+- [agents/coding-models.md](agents/coding-models.md): provider guidance, Sol vs Astra cost, model specifics, Codex/Pi/Claude Code/OpenCode host specifics
 - [agents/pi-throughput.md](agents/pi-throughput.md): effective-TPS measurement, subscription rollout claims, local observations
 - [agents/ui-design-convergence.md](agents/ui-design-convergence.md): generic AI UI style and the restrained-design fix
 - [agents/jev.md](agents/jev.md): TypeSafe's Jev decision model, limits, and where it fits

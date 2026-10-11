@@ -1,12 +1,12 @@
 # Subagent delegation
 
-Delegate bounded, independently useful outcomes when parallelism, context isolation, independent verification, or a cheaper worker model outweighs startup and coordination cost. Keep small, obvious, tightly coupled work with the orchestrator. In Tobias's Opus-orchestrates-Sol setup the cheaper worker tilts the choice toward delegating, but it's still a judgment call (see [compute routing](#compute-routing)). Specialize by responsibility and context, not by reasoning step. Tobias's interactive Codex setup uses native tooling; model roles follow the same routing policy.
+Delegate bounded, independently useful outcomes when parallelism, context isolation, independent verification, or a cheaper worker model outweighs startup and coordination cost. Keep coordination and context-heavy judgment with the orchestrator, and tightly coupled execution with one worker. Specialize by responsibility and context, not by reasoning step. Follow [compute routing](#compute-routing) for model roles and effort.
 
 ## When and how to split
 
 Route by task shape, not prompt length. The relevant dimensions are localization uncertainty, dependency breadth, unresolved tradeoffs, blast radius, verification strength, parallel separability, and how much context exploration would burn.
 
-- Known local work with focused validation: do it directly.
+- Known local work with focused validation: one executor, no further splitting.
 - A bounded subsystem change: one handoff may pay off.
 - Cross-cutting or high-risk work: read-only mapping in parallel, then synthesis, one writer, and fresh validation.
 - Broad migrations: serial validated milestones, never fan-out writers.
@@ -38,17 +38,19 @@ State the goal and deliverable, the minimum context with exact evidence location
 
 ## Compute routing
 
-Keep the execution contract (permissions, tools, limits, output) separate from the model and effort choice. Use the cheapest profile that reliably passes the quality gate, counting retries. Escalating cheap-first saves cost but adds latency. Judge delegation against direct execution on correctness, latency, cost per success, duplication, and recovery from failed children.
+Keep the execution contract (permissions, tools, limits, output) separate from model routing. Within the approved roles below, judge delegation by correctness, latency, cost per success including retries, duplication, and recovery from failed children.
 
 T3 Code's `delegate_task` inherits the parent's provider unless the call selects `target.providerInstanceId` or `target.driverKind`. Keeping the provider and model unchanged also preserves model options. This describes host behavior, not permission to inherit Opus for delegated work. Explicitly select the worker provider and model under Tobias's policy below. Explain unexpected routing from the recorded call's target and the parent's provider at call time, not just the current thread config or a model-name prefix.
 
-Tobias's explicit model-role clarification is the source of this preference:
+Tobias's model-routing decision, 2026-10-11:
 
-- Opus 5.5 leads and designs top-level teams only. Never delegate to an Opus subagent, including for design or research. The top-level Claude lead owns requirements, architecture, decisions, integration, and acceptance. Sol top-level leads are temporary Claude-quota recovery, not the permanent default.
-- The lead prefers handing off sizable bounded reading, implementation slices, test runs, and audits, but keeps simple exploration, small edits, and context-heavy judgment. Brief workers with a concrete design, not a menu of architectural choices. Children may split execution further; design questions go back to the top-level lead.
-- GPT-6.1 Sol owns delegated execution, implementation, and code review, including hard reviews. From Claude and Pi parents alike, explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"medium"}}`; use `high` for ambiguous debugging, intricate or design-sensitive implementation, and reviews. Never rely on inheritance from Opus. Native Codex subagents remain usable when explicitly configured for Sol.
-- Haiku 5.5 at `high` remains the exception for narrowly bounded, checkable non-coding research: call-site/dependency censuses, bounded doc/log audits, log triage, and doc questions. It never leads teams, designs, implements code, or reviews code. See [Haiku 5.5 specifics](coding-models.md#haiku-55-specifics). Other worker models require Tobias's request or a missing Sol capability, with the reason stated; this does not permit Opus children. The shared global instructions in dotfiles own enforcement.
-- A prose-only rule wasn't enough: Claude parents in T3 kept using the native `Agent` tool, because T3's injected guidance prefers native tools for same-provider work. [Dotfiles](../projects.md#dotfiles) owns the Claude routing hook and shared instructions. In T3, the hook denies `Agent` and fills missing or partial `delegate_task` targets with explicit Pi/Sol `medium` defaults, preserving requested thinking. Complete explicit targets remain untouched except Sol's missing thinking default; instructions own the full model-role policy. Outside T3 the hook leaves `Agent` allowed; the policy still applies. Historical verification, 2026-10-04, Claude Code 2.1.289: a fresh session was blocked, and a Pi Sol child completed.
+- **Claude Opus 5.5, effort `high`:** leads top-level teams, owning design, decisions, coordination, integration, and acceptance. Never a delegated child, including design or research subagents. Sol top-level leads are temporary Claude-quota recovery, not the permanent default.
+- **Pi GPT-6.1 Sol, thinking `high`:** default executor for all delegated execution, implementation, test runs, and code review. Explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}` from every parent. No medium/high difficulty split, no Codex CLI, and no inheritance from an Opus leader.
+- **Claude Haiku 5.5, effort `high`:** bounded research and exploration with checkable answers: call-site/dependency censuses, locating code, read-only exploration, doc/log audits, triage, and doc questions. Explicitly target `{"providerInstanceId":"claudeAgent","model":"claude-haiku-5-5","options":{"effort":"high"}}`. It never leads teams, designs, implements, or reviews code. Require file:line lists and check counts; it overclaims completeness. See [Haiku specifics](coding-models.md#haiku-55-specifics) for cost and context limits.
+
+Brief workers with a concrete design, not a menu of architectural choices. Children may split execution further; design questions go back to the top-level lead.
+
+Routing can need enforcement: Claude parents in T3 followed the host's native-tool preference over prose and selected `Agent`. [Dotfiles](../projects.md#dotfiles) owns the shared global instructions and Claude routing hook; keep enforcement aligned with this policy.
 
 ## T3 Code feedback
 

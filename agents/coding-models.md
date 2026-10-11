@@ -4,17 +4,19 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider gui
 
 ## Current choice
 
-Since 2026-10-04, Tobias uses Opus 5.5 top-level teams and Sol 6.1 Pi workers ([routing](subagent-delegation.md#compute-routing)). Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. No measurement shows this split beats plain Sol on cost per finished task; include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config and effort.
+Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. No measurement shows the current team split beats plain Sol on cost per finished task; include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
-| Model | Role | Effort |
+## Provider guidance
+
+| Model | Provider positioning | Provider effort guidance |
 |---|---|---|
-| [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Daily driver; near-Astra coding, computer use, professional work for less | `medium`–`xhigh` ([policy](#choosing-a-setup)); API default `medium`, no `none`/`minimal` |
+| [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Near-Astra coding, computer use, professional work for less | `medium`–`xhigh`; API default `medium`, no `none`/`minimal` |
 | [GPT-6 Astra](https://developers.openai.com/api/docs/guides/latest-model) | Hardest coding, investigation, multi-tool research | No `none` |
 | [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) | Complex coding, different cost and latency | Default `medium` |
 | [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Below `xhigh`, silently drops work ([local test](#haiku-55-specifics)); judge whole-task cost, including retries |
-| [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding, knowledge work, long repo tasks | Start `medium`; `high`/`xhigh` only for demonstrated gains |
+| [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding, knowledge work, long repo tasks | Provider recommends `medium` first, `high`/`xhigh` for demonstrated gains |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) | Demanding reasoning, long agent runs | Start at `high` default |
-| Claude Haiku 5.5 | Cheap bounded reading and analysis; beat Luna locally | `high` ([specifics](#haiku-55-specifics)) |
+| Claude Haiku 5.5 | Summaries, compactions, database queries | API default `medium`; see [local findings](#haiku-55-specifics) |
 
 ## Sol vs Astra cost
 
@@ -35,7 +37,7 @@ Checked 2026-10-08: on the same supported model, Codex Fast consumes included su
 ## Choosing a setup
 
 - Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [benchmark trust](benchmark-trust.md). Measure correctness, architectural fit, corrective turns, time, and cost per successful task.
-- **Tobias, 2026-10-10: never `low` or `max`, on any model.** `low` skips searches, checks, work; `max` costs far more than `xhigh` for little gain. Anthropic does worst with thinking off or `low`; its floor is `medium`. Use `medium` for clear work, `high`–`xhigh` when it pays.
+- Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). The [current routing policy](subagent-delegation.md#compute-routing) owns effort choices, not provider defaults or benchmark arms.
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
 
@@ -80,10 +82,10 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - Easy set: all perfect; Haiku `low` through `xhigh`, Luna `medium`.
 - Haiku's `medium` miss: changed 7/9 sites, claimed "all seven". Luna below `xhigh`: import closure stopped at 3–5/24 files, empty review, bug line 6 lines off, required format broken twice.
 - No request exceeded 100K. Haiku prompts reached 97K at `xhigh`; Claude Code base prompt ~23K vs Pi ~6K. Small samples, 3 reps/cell: trust direction, not decimals.
-- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark's code edits and reviews are not approved Haiku roles; follow Tobias's [delegation routing](subagent-delegation.md#compute-routing). Require file:line lists and parent count checks for bounded research: it overclaims completeness. Luna's 272K tier is more forgiving; no tested task approached it.
+- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark arms are experiments, not approved delegation roles; follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing). Luna's 272K tier is more forgiving; no tested task approached it.
 - **Base prompts must be far below 100K.** A T3/OpenCode setup's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts ~30% more tokens than 4.5's. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API:** adaptive thinking only; effort `low`–`max`, default `medium`. Anthropic warns of early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, occasional empty replies at `xhigh`. Claude Code harness prompt is ~17–25K before the task.
-- **T3 routing:** Pi has no Haiku. Use `delegate_task` target `{"providerInstanceId":"claudeAgent","model":"claude-haiku-5-5","options":{"effort":"high"}}`.
+- **T3 host:** Pi has no Haiku. Its provider target lives in the [team-routing policy](subagent-delegation.md#compute-routing).
 
 ### Astra specifics
 
@@ -117,8 +119,8 @@ Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings
 
 - **Response length:** `verbose`/`viewMode` affect transcript tool output only. No `model_verbosity`; built-in `Concise` output style shortens responses without reducing work.
 - **Attribution:** default commit `Co-Authored-By` and PR footer; `attribution: false` (2.1.281+) removes both.
-- **Effort:** Opus 5.5 defaults `medium`, ignores top-level user `effortLevel`; set per-model `modelSettings` or `/effort`.
-- **Context:** Tobias, 2026-10-11: advertise native 1M context to avoid premature wrap-up, but bound compaction per model to cap spend. Dotfiles sets `modelSettings.<model>.autoCompactWindow` by canonical name, matching dated and `[1m]` spellings: Haiku 5.5 100K minimum, triggering ~67–74K; Opus 5.5 433K, triggering ~400K. Sonnet has no override. Set windows ~33K above the intended trigger: 20K output reserve plus ~13K buffer. Haiku compacted mid-turn too. `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` caps all Claude models and larger compaction windows at 200K; dotfiles removed it, but an existing T3 service retains it until restart. Uncapped Opus, Sonnet, and Haiku 5.5 report `contextWindow: 1000000`; the context selector merely toggles `[1m]`. Native children resolve their own model settings; T3 children read the same user settings in separate sessions. These host mechanics do not authorize Opus children. Verified 2.1.296, 2026-10-11. ([context](https://code.claude.com/docs/en/model-config#extended-context), [subagent compaction](https://code.claude.com/docs/en/sub-agents#auto-compaction))
+- **Effort:** Opus 5.5's host default is `medium`, not Tobias's routing choice. It ignores top-level user `effortLevel`; set per-model `modelSettings` or `/effort` according to the [team-routing policy](subagent-delegation.md#compute-routing).
+- **Context:** Tobias, 2026-10-11: advertise native 1M context to avoid premature wrap-up, but bound compaction per model to cap spend. Dotfiles sets `modelSettings.<model>.autoCompactWindow` by canonical name, matching dated and `[1m]` spellings: Haiku 5.5 100K minimum, triggering ~67–74K; Opus 5.5 433K, triggering ~400K. Sonnet has no override. Set windows ~33K above the intended trigger: 20K output reserve plus ~13K buffer. Haiku compacted mid-turn too. `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` caps all Claude models and larger compaction windows at 200K; dotfiles removed it, but an existing T3 service retains it until restart. Uncapped Opus, Sonnet, and Haiku 5.5 report `contextWindow: 1000000`; the context selector merely toggles `[1m]`. Native children resolve their own model settings; T3 children read the same user settings in separate sessions. Approved roles come from the [team-routing policy](subagent-delegation.md#compute-routing), not these host mechanics. Verified 2.1.296, 2026-10-11. ([context](https://code.claude.com/docs/en/model-config#extended-context), [subagent compaction](https://code.claude.com/docs/en/sub-agents#auto-compaction))
 - **Discovery:** reads `~/.claude/CLAUDE.md`, `~/.claude/skills`, not `~/.agents/skills`; project AGENTS.md only without CLAUDE.md. T3 loads user/project/local settings.
 - **Auto memory:** defaults on, creates unreviewed `~/.claude/projects` store; disabled to keep vault the sole knowledge store.
 
