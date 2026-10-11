@@ -76,4 +76,5 @@ Edit the working section when a conversation with Tobias shows a better way to o
 Maintained by the chief of staff. Budget: 30 bullets.
 
 - `t3_thread_list` with a `projectId` reads other projects' threads, subagents included (verified 2026-10-11, T3 `0.0.46-nightly.20261010.2922`).
+- Tobias's open work is every unsettled thread (`settled: false`), whatever its status. A `completed` unsettled thread is an agent waiting on him; a status filter that excludes `completed` misses it (first census, 2026-10-11).
 - Earlier T3 builds rejected cross-project `t3_thread_send` ([projects](../../../projects.md#t3-code)). Unverified on the current build, as is whether `mode: "queue"` starts an idle thread. Test both on the first team brief and replace this bullet with the result.
