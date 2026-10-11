@@ -27,8 +27,9 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 [Owner](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579). Owns the `tools/or` gate, the corpus runner, the test shape and the theodore rules. Local `tools/or test --full` is the gate; there is no hosted CI. Nothing is deployed.
 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
+- Blocked on dotfiles' `win-vm run --ephemeral`: the release-gating nightly Windows lanes (they used the uninstalled `oip-windows-vm`). Then port the lanes, delete the clone code, and build the corpus guest runner (that one also waits for the GPUI Driver PR).
+- Running: the corpus race fix (`p2/corpus-race-fix`, which unblocks GPUI's Draft model PR), B4.
 - Queued, in order of the owner's choosing:
-  - `windows-run corpus` with the runner inside the guest;
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
 - Parked: the rmut command-case consumer (`3a5fff12`) waits for rmut `--cpus`; C3 r3d and C4B r2 wait for the consumer.
 - Later: pairing approval inside the Import GUI.
@@ -44,13 +45,12 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Team](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5). Works on main.
 
-- Now: drop `win-vm forward`, add `win-vm gui --wait`, and prove it with a real-VM receipt.
-- Next:
+- Now: verify the restic backup of `~/.local/share/orderready/{fixtures,corpus}` (snapshot ID plus a sha256 restore), then commit the port.
+- Next: `win-vm run --ephemeral` (CoS-approved contract in decisions.md; it gates Orderready's Windows release lanes).
+- Then:
   - stage the declarative serv01 key (deploying it needs Tobias's go);
   - restore the restic password from the cold disk;
-  - fix the README restore text;
-  - restic backup to serv01 of `~/.local/share/orderready/{fixtures,corpus}`;
-  - the global AGENTS.md retro rules (desktop capture, customer data, measurements, event-driven waits).
+  - fix the README restore text.
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
