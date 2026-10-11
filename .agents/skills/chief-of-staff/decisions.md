@@ -45,3 +45,7 @@ Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the v
 - 2026-10-11 · decided · Answer Orderready handoff questions: delete dead `domain` helpers if no caller; a corpus case covers OpenAPI mutants; park xtask mutation; file the cutting-rates 500 as an orderready-platform issue · reversible, and they follow backward-compat-opt-in and black-box testing · —
 - 2026-10-11 · decided · Route subagents to Codex `gpt-6.1-sol` until the dotfiles team enables Pi in T3 · Pi is disabled in the fresh T3 settings and off the service PATH · —
 - 2026-10-11 · asked · Orderready Q3 (rmut command-cases mode) and Q5 (AX SQL credential location) · cross-repo architecture and secrets handling · pending
+- 2026-10-11 · asked · Orderready AX SQL credential location (Q5) · secrets handling · Tobias: a local file on the PC, as before; Firestore also acceptable
+- 2026-10-11 · asked · rmut command-cases mode (Q3) · cross-repo architecture · Tobias: go ahead; launched a rust-mutants team with rmut owning the design
+- 2026-10-11 · decided · uv and vite-plus go into the dotfiles mise config, not installed ad hoc by the workspace-view team · the machine config has one owner · —
+- 2026-10-11 · asked · Orderready builds need Nix on a Nix-free Omarchy: pacman Nix for dev shells only, or port the toolchain to mise · Tobias said Omarchy doesn't use Nix; the repo depends on it · pending
