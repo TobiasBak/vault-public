@@ -24,5 +24,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Omarchy gets 1T and data keeps ~0.86T, not the whole disk · Tobias offered 1T or the whole disk; the whole disk would destroy the Orderready worktrees again, and the NixOS NVMe can become bulk/games storage after cut-over · —
 - 2026-10-11 · decided · The delete list keeps all of orderready/ and deletes all Poly data, including the 604G capture DB, with no re-ask; I show Tobias the list and he can veto before the window · he called the Poly campaign disposable when I named it, and the census adds no new owner · Tobias: "sounds good"; running now rather than after the VM proof
 - 2026-10-11 · decided · Make workspace-view v3 the default Pi extension (via dotfiles), with a rollback check in a week; no more synthetic rounds · reversible, neutral or better on 12 live runs, and real sessions are the real test · —
+- 2026-10-11 · decided · Push the 12 swe-benchmarking commits after a secrets scan, and park the half-done work in PARKED.md rather than giving it a team · standing merge authority; no workstream owns the leftovers yet · —
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
