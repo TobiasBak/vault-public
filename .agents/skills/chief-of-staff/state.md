@@ -15,7 +15,6 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- Are any Orderready mailbox machine tokens live in production? If yes, they need reissuing when environment binding (a) deploys; deploy stays with Tobias. Waiting: Orderready team.
 - Optional: `omarchy pkg add xorg-server-xvfb`, so Orderready can run its Linux shell smoke (`tools/or dev`) headless. Not blocking. Recommend yes.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
