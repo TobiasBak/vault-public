@@ -4,6 +4,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Teams
 
+- [GPUI Linux/Windows pure-Rust compile proof](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf) (orderready): Tobias corrected goal explicitly: can GPUI compile a pure-Rust GUI for Linux AND Windows? Existing team resumed; NO API/Tokio bridge, Orderready integration/table/parity/rewrite work. Minimal isolated native hello-window probe outside frozen project inputs, exact framework/package/revision/features; actual Linux ELF and Windows PE with build/toolchain/hash receipts, independent artifact check. Distinguish Windows native support from Linux-host cross-build support; no pretend source-only success. One admitted compile at a time/bounded1h admitted budget, P2 priority, immutable independent user-unit execution. Windows VM still Tobias-owned; agents never provision/run it. New shader patch/framework fork/pipeline choice comes to Tobias. No T3 restart/deploy. Prior staged study source/index must remain preserved.
+
 Current CoS: [Take Over Chief of Staff](t3-thread://v1/4d49b702-82f7-4931-a5f2-4e785676067d), temporarily Pi Sol during Claude quota exhaustion. Former CoS `ccd17c32-b147-491a-bb29-189a3b19af51` superseded and ARCHIVED after recovering missed reports. Existing teams/plans retained. Weekly agent-context research schedule bound here, next 2026-10-12 09:00 CEST. Full transcript/census recovered in `~/.cache/cos-takeover-20261011/handover.md`; no live old-CoS children. Census and consumed historical diagnostic settled. All six leaders directly notified at Tobias's explicit request: P2/workspace steered, dotfiles/geometry/GPUI/completed upstream started bounded routing turns. Closed work must not reopen; all future reports target this thread. Missed workspace/geometry reports answered.
 
 On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). git@ GitHub URLs are rewritten to HTTPS. The NixOS disk is cold storage.
@@ -19,7 +21,6 @@ Claude quota exhausted. CoS runs on Pi Sol; all six existing project teams now t
 
 ## Needs Tobias
 
-- GPUI: authorize one further bounded proof on the retained spike (fix JSON macro, compile/run existing API/table-edit slice)? Recommend yes before deciding worth; no rewrite, parity concession, shader/pipeline change or VM operation. Study remains closed until answer; P2 admission takes priority.
 
 - T3 env restart after remaining apply/readiness checks. Agents+CLI applied; running service still predates TMPDIR/askpass env. It interrupts every hosted turn; don't announce safe until teams' long-job placement checked. Waiting: overhaul team.
 - SSH key authorization on serv01 and restic password restore remain dot check items. Use private secret-entry tool if credentials are needed, never chat. Desktop/package approval is complete. NAS mount and T3 backup restoration remain dotfiles-owned follow-ups after these prerequisites.
@@ -43,7 +44,7 @@ Claude quota exhausted. CoS runs on Pi Sol; all six existing project teams now t
 ## Watch
 
 
-- GPUI study closed and independently corroborated at `151e8b3`, not a qualified spike or platform-impossibility finding. Keep `/home/tb/.t3/worktrees/orderready/spike-gpui-import-gui` AND its Git index: eleven added files, including executable source/Cargo.lock, remain staged/uncommitted under accepted static gate. Preserve `~/.local/share/orderready/gpui-spike/` receipts/snapshot. Team/verifier settled; no settle cleanup scripts. Current stack retained, no further study run/redesign authorized.
+- GPUI study closed and independently corroborated at `151e8b3`, not a qualified spike or platform-impossibility finding. Keep `/home/tb/.t3/worktrees/orderready/spike-gpui-import-gui` AND its Git index: eleven added files, including executable source/Cargo.lock, remain staged/uncommitted under accepted static gate. Preserve `~/.local/share/orderready/gpui-spike/` receipts/snapshot. Prior study/verifier settled; no settle cleanup scripts. Team now resumed ONLY for Tobias's corrected dual-platform pure-Rust compile proof; current production stack unchanged and no redesign authorized.
 - Geometry stock-take/tooling workstream verified complete and team settled at `d114b6f`. PR42 stays parked. Approved StepKit source-faithful B still lacks generic valid-material proof and atomic source-backed extraction; future qualification needs a new brief starting at repo contract/ADR0005 and `~/.cache/sg-b-qualification/qualification.md`, no native boundary/adapter yet authorized.
 
 - Former CoS run84 and later report turns reject provider handoff with insufficient context allowance (activity971/973), not a demonstrated Pi-start defect. Fresh bounded handover is the remedy already used; no restart/package fix justified. Prior isolated Pi-start failure remains isolated.
