@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Authorize INF to honor each governing ancestor's remaining headroom using its own current; retain raw cache/caps/reserves and exact-head requalification · nearest-finite-high ignores tighter outer constraint; kernel safety bugfix, not new resource-policy tradeoff or GPUI exemption · —
+
 - 2026-10-11 · decided · Make GPUI Linux-host-only build criterion explicit and keep Windows runtime verification separate · Tobias clarified no compilation on Windows; native Windows upstream support isn't a passing cross-build result · —
 
 - 2026-10-11 · decided · Hold published stock-vs-earlier-checkpoint proposal for top-level Opus design after confirmed quota recovery; authorize neither readiness implementation nor trial yet · material context boundary/correctness controls unqualified, no immediate v3/prototype rerun or Opus child · —
