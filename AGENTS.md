@@ -29,4 +29,4 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 Keep secrets, credentials, private correspondence, other people's personal data, and nonpublic employer or customer details out of commits. For private repositories, keep operational detail out too: credential locations, hosted project IDs, infrastructure state and checkout quirks belong in that repository, not here. Tobias's own preferences and project notes are meant to be public. Raw session histories and local runtime state stay out of Git.
 
-Commit and push vault changes without asking, after checking them against these rules.
+After checking vault changes against these rules, commit directly to `main` and push without asking, with no PRs or branches.
