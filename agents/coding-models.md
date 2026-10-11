@@ -4,14 +4,14 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. Roles reflect provider guidance
 
 ## Current choice
 
-Since 2026-10-04, Tobias talks to Claude Opus 5.5 in T3 Code, delegating to GPT-6.1 Sol children in Pi ([routing](subagent-delegation.md#compute-routing)). Sol beat Astra on capability per task cost in the 2026-09-29 choice. No measurement shows Opus-orchestrates-Sol beats plain Sol on cost per finished task. Compare Opus parent usage with [Pi child costs](#pi-specifics). Preferences don't change installed config or effort; [dotfiles](../projects.md#dotfiles) owns those.
+Since 2026-10-04, Tobias talks to Claude Opus 5.5 in T3 Code, delegating to GPT-6.1 Sol children in Pi ([routing](subagent-delegation.md#compute-routing)). Sol was chosen over Astra on 2026-09-29 for capability per task cost. No measurement shows Opus-orchestrates-Sol beats plain Sol on cost per finished task. Compare Opus parent usage with [Pi child costs](#pi-specifics). Preferences don't change installed config or effort; [dotfiles](../projects.md#dotfiles) owns those.
 
 | Model | Role | Effort |
 |---|---|---|
 | [GPT-6.1 Sol](https://developers.openai.com/api/docs/models/gpt-6.1-sol) | Daily driver; near-Astra coding, computer use, professional work for less | `medium`–`xhigh` ([policy](#choosing-a-setup)); API default `medium`, no `none`/`minimal` |
 | [GPT-6 Astra](https://developers.openai.com/api/docs/guides/latest-model) | Hardest coding, investigation, multi-tool research | No `none` |
 | [GPT-6 Sol](https://developers.openai.com/api/docs/models/gpt-6-sol) | Complex coding, different cost and latency | Default `medium` |
-| [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Below `xhigh`, silently drops work ([local test](#haiku-55-specifics)); count retries |
+| [GPT-6 Luna](https://developers.openai.com/api/docs/guides/latest-model) | Efficient work at scale | Below `xhigh`, silently drops work ([local test](#haiku-55-specifics)); judge whole-task cost, including retries |
 | [Claude Opus 5.5](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-opus-5-5) | Coding, knowledge work, long repo tasks | Start `medium`; `high`/`xhigh` only for demonstrated gains |
 | [Claude Fable 5.1](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1) | Demanding reasoning, long agent runs | Start at `high` default |
 | Claude Haiku 5.5 | Cheap bounded reading, analysis, mechanical edits; beat Luna locally | `high` ([specifics](#haiku-55-specifics)) |
@@ -34,14 +34,14 @@ Checked 2026-10-08: on the same supported model, Codex Fast consumes included su
 
 ## Choosing a setup
 
-- Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [measurement criteria](benchmark-trust.md).
+- Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [benchmark trust](benchmark-trust.md). Measure correctness, architectural fit, corrective turns, time, and cost per successful task.
 - **Tobias, 2026-10-10: never `low` or `max`, on any model.** `low` skips searches, checks, work; `max` costs far more than `xhigh` for little gain. Anthropic does worst with thinking off or `low`; its floor is `medium`. Use `medium` for clear work, `high`–`xhigh` when it pays.
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
 
 ## Local harness comparison, 2026-10-03
 
-Pi codemode looked useful for latency and cost, not fully correct task count. One pass establishes neither harness ranking nor a new daily provider.
+Built-in Pi codemode looked useful for latency and cost, not fully correct task count. One pass establishes neither harness ranking nor a new daily provider.
 
 - SWE Benchmarking: eight tasks, one run per Codex/Pi/Pi-codemode arm; GPT-6.1 Sol medium Standard, Sol high judge. Pi used the established seven-tool suite, not its four-tool upstream default. Codex CLI 0.160.0; Pi 1.0.0.
 - All arms fully passed 3/7 hidden-check tasks. Five cases scored in every arm: mean quality 106.6/110.0/114.8 out of 125, respectively.
@@ -63,7 +63,7 @@ Checked 2026-10-10, Claude Code 2.1.296. ([AA review](https://artificialanalysis
 - **No harness enforces 100K.** Claude Code checks `modelSettings.<model>.autoCompactWindow` (minimum 100000) between turns; parallel reads can exceed it, and compaction sends full pre-compaction context. Haiku `medium` reading four large files jumped 23K→130K. A 100K window reduced over-100K requests 2→1 but added compaction and cost $0.21 vs $0.18. Use targeted searches/ranged reads. Don't globally set `CLAUDE_CODE_AUTO_COMPACT_WINDOW`: it overrides every model.
 - **Local test, 2026-10-10, t3code repo:**
   - Easy: call-site census with distractor, env-var inventory, unnamed-concept search, synthetic 5.5K-line CI-log triage, doc Q&A.
-  - Hard, truth hidden from models: symptom bug two call hops down; 183-line diff with 3 defects; transitive importers (24 files); null/format audit at 9 sites; parameter addition at 9 sites requiring distinct in-scope values.
+  - Hard, truth hidden from models: symptom bug two call hops down; 183-line diff with 3 defects; transitive importers (24 files); null/format audit at 9 sites; parameter addition at 9 sites requiring site-specific in-scope values.
 
 Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean cost/run and mean wall time over 5 tasks.
 
@@ -80,15 +80,15 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - Easy set: all perfect; Haiku `low` through `xhigh`, Luna `medium`.
 - Haiku's `medium` miss: changed 7/9 sites, claimed "all seven". Luna below `xhigh`: import closure stopped at 3–5/24 files, empty review, bug line 6 lines off, required format broken twice.
 - No request exceeded 100K. Haiku prompts reached 97K at `xhigh`; Claude Code base prompt ~23K vs Pi ~6K. Small samples, 3 reps/cell: trust direction, not decimals.
-- **Use Haiku `high`** for checkable call-site/dependency census, cross-site audits, log triage, doc Q&A, first-pass diff review, symptom-to-bug location, exact-spec multi-file edits. Require file:line lists and parent count checks: it overclaims completeness. See [design/implementation ownership](subagent-delegation.md#compute-routing). Haiku `high` bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. Luna's 272K tier is more forgiving; no tested task approached it.
-- **Base prompts must be far below 100K.** T3/OpenCode's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5 counts ~30% more tokens than 4.5. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
+- **Use Haiku `high`** for checkable call-site/dependency census, cross-site audits, log triage, doc Q&A, first-pass diff review, symptom-to-bug location, exact-spec multi-file edits. Keep design, ambiguous debugging, and open-ended implementation with Sol. Require file:line lists and parent count checks: it overclaims completeness. See [delegation routing](subagent-delegation.md#compute-routing). Haiku `high` bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. Luna's 272K tier is more forgiving; no tested task approached it.
+- **Base prompts must be far below 100K.** A T3/OpenCode setup's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts ~30% more tokens than 4.5's. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API:** adaptive thinking only; effort `low`–`max`, default `medium`. Anthropic warns of early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, occasional empty replies at `xhigh`. Claude Code harness prompt is ~17–25K before the task.
 - **T3 routing:** Pi has no Haiku. Use `delegate_task` target `{"providerInstanceId":"claudeAgent","model":"claude-haiku-5-5","options":{"effort":"high"}}`.
 
 ### Astra specifics
 
 - [OpenAI guidance](https://developers.openai.com/api/docs/guides/latest-model#prompting-best-practices): follows instructions closely, sensitive to conflicting skills/AGENTS.md. Tends toward extra clarification, heavy formatting, over-testing small changes. Remove conflicting coaching before adding more; give original evidence, not cheaper-model summaries.
-- **API:** tools require Responses. No `none`/`minimal`, `temperature`, `top_p`, `logprobs`. [`configuration_update`](https://developers.openai.com/api/docs/guides/reasoning#change-reasoning-mid-conversation) changes effort while preserving cache. [Async tools](https://developers.openai.com/api/docs/guides/async-tool-calling)/WebSocket [steering](https://developers.openai.com/api/docs/guides/steering) require host support; steering doesn't cancel started tools.
+- **API:** tools require Responses. No `none`/`minimal` effort, `temperature`, `top_p`, `logprobs`. [`configuration_update`](https://developers.openai.com/api/docs/guides/reasoning#change-reasoning-mid-conversation) changes effort while preserving cache. [Async tools](https://developers.openai.com/api/docs/guides/async-tool-calling)/WebSocket [steering](https://developers.openai.com/api/docs/guides/steering) require host support; steering doesn't cancel started tools.
 - **Interruptions:** [misalignment monitoring](https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring) can flag legitimate work. Don't retry `misalignment_policy_violation` as transient; AGENTS.md edits cannot remove it.
 
 ## Host specifics
@@ -109,21 +109,16 @@ Verified Pi 1.0.0, 2026-10-03. Config files: `configs/pi/settings.json`, shared 
 - [Codemode coordination](orchestration.md#programmatic-tool-calling).
 - **T3 usage gap:** nightly `0.0.46-nightly.20261003.2610` runs Pi but Usage scanner/contract/charts omit it; OpenAI-backed Pi work isn't Codex CLI transcript usage. Sum assistant `message.usage` categories and `cost.total` in `~/.pi/agent/sessions/` JSONL per session/across children. Costs are estimates, not verified bills. Native `/session` shows session usage/cost. ([T3 Usage](https://github.com/pingdotgg/t3code/blob/8ed276c246b6/docs/user/usage.md), [Pi usage](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/usage.md))
 
-#### Measuring Pi throughput
-
-- Tibo's [2026-10-05 announcement](https://x.com/thsottiaux/status/2107158998495748264), 19:20 CEST: ~50% faster default subscription GPT-6 Astra/GPT-6.1 Sol across Sign in With ChatGPT products/partners, including Pi/OpenCode; no changes needed, rollout within two hours. [Follow-up](https://x.com/thsottiaux/status/2107159119107146237): "Reaching 50 TPS instead of 30TPS". Not paid API/Fast-toggle claims; TPS method/percentile unspecified. Compare local subscription requests, not API benchmarks.
-- **Effective request TPS, not pure decode:** `message.usage.output` / seconds from `message.timestamp` to enclosing entry `timestamp`. Pi 1.0.0/1.0.3 stamp messages before sending, entries on `message_end`. Includes queue/prefill, reasoning, transport retries, generation; excludes preceding tools. Output already includes reasoning; don't add twice. Input = `input + cacheRead + cacheWrite`. No first-token times/explicit backend tiers; estimated cost suggests but cannot prove tiers.
-- **2026-10-05:** 16,270 successful Sol requests, October 3–5: new 40–50.6 effective-TPS upper tail in 15 sessions from ~18:00 UTC; earlier ceiling ~33. Consistent with partial ~50% rollout, not causal/universal proof. Evidence/scripts outside Git: `~/.local/state/sol-tps/2026-10-05/`.
-- **2026-10-06 through 18:19 CEST:** 6,017 successful Sol requests, 160 Pi sessions; median 26.52, p10–p90 13.55–38.97, max 64.77 effective TPS. Excluded 14 errors/3 aborts. No tiers to separate Fast/Standard; Codex/Claude/OpenCode stores had no additional Sol records that day. Workload differences prevent causal claims. Frozen metadata, source spotchecks, interactive chart: `~/.local/state/sol-tps/2026-10-06/`.
+- [Pi throughput](pi-throughput.md): effective-TPS measurement, subscription rollout claims, local observations.
 
 ### Claude Code specifics
 
-Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings-reference)). Shared instructions/skills follow [Tobias's preference](../tobias/preferences.md#working-with-agents) and [dotfiles ownership](../projects.md#dotfiles).
+Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings-reference)). [Dotfiles](../projects.md#dotfiles) shares global AGENTS.md and `~/.agents/skills` across Claude, Codex, and Pi.
 
 - **Response length:** `verbose`/`viewMode` affect transcript tool output only. No `model_verbosity`; built-in `Concise` output style shortens responses without reducing work.
 - **Attribution:** default commit `Co-Authored-By` and PR footer; `attribution: false` (2.1.281+) removes both.
 - **Effort:** Opus 5.5 defaults `medium`, ignores top-level user `effortLevel`; set per-model `modelSettings` or `/effort`.
-- **Context:** Tobias wants parents/children at 200K in Claude Code/T3 with native compaction/default thresholds. `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` caps all Claude models; dotfiles sets it with `autoCompactEnabled: true` in Claude settings and T3 service environment. T3 live `claudeAgent` environment also caps it. Context selector merely adds/removes `[1m]`, insufficient for native-1M models. Real parent/child run, 2.1.288 on 2026-10-03: both 200K, even explicit `[1m]` child. ([context](https://code.claude.com/docs/en/model-config#extended-context), [subagent compaction](https://code.claude.com/docs/en/sub-agents#auto-compaction))
+- **Context:** Tobias wants parents/children at 200K in Claude Code/T3 with native compaction/default thresholds. `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` caps all Claude models; dotfiles sets it in Claude settings alongside `autoCompactEnabled: true`, and in T3's service environment. T3 live `claudeAgent` environment also caps it. Context selector merely adds/removes `[1m]`, insufficient for native-1M models. Real parent/child run, 2.1.288 on 2026-10-03: both 200K, even explicit `[1m]` child. ([context](https://code.claude.com/docs/en/model-config#extended-context), [subagent compaction](https://code.claude.com/docs/en/sub-agents#auto-compaction))
 - **Discovery:** reads `~/.claude/CLAUDE.md`, `~/.claude/skills`, not `~/.agents/skills`; project AGENTS.md only without CLAUDE.md. T3 loads user/project/local settings.
 - **Auto memory:** defaults on, creates unreviewed `~/.claude/projects` store; disabled to keep vault the sole knowledge store.
 
@@ -132,7 +127,7 @@ Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings
 Tobias wants v2 in T3, not v1. Verified 2026-10-03: nightly `0.0.46-nightly.20261003.2610` supports [2.0.18+](https://github.com/pingdotgg/t3code/releases/tag/v0.0.46-nightly.20261003.2610).
 
 - **Binary:** T3 `opencode` uses `~/.local/share/pnpm/bin/opencode`, `@opencode/cli` 2.0.22; dotfiles bootstrap owns installs/updates. Removed separate `~/.local/share/t3code-opencode` v1; don't recreate.
-- **Updater failure:** T3 installed v2 without required postinstall: `opencode --version` exited "postinstall script was not run". Repair with [pnpm build permission](https://opencode.ai/v2/docs). On pnpm 11.13.1, persist `allowBuilds: {"@opencode/cli": true}` in `~/.local/share/pnpm/global/v11/pnpm-workspace.yaml`, not global `config.yaml`; verified normal global installs run postinstall without extra flag. Refresh T3 provider afterward: live snapshots cache repaired failures.
+- **Updater failure:** T3 installed v2 without required postinstall: `opencode --version` exited "postinstall script was not run". Repair with [pnpm build permission](https://opencode.ai/v2/docs). On pnpm 11.13.1, persist `allowBuilds: {"@opencode/cli": true}` in `~/.local/share/pnpm/global/v11/pnpm-workspace.yaml`, not global `config.yaml`; verified normal global installs run postinstall without extra flag. Refresh T3 provider afterward: the live snapshot caches failures even after executable repair.
 - **Migration:** v1/v2 share database; never run side by side. Snapshot before first v2 startup; credentials/supported config carry over. ([guide](https://opencode.ai/v2/docs/migrate-v1/))
 
 ## Retired DeepSeek Codex experiment
