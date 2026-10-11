@@ -38,6 +38,7 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 - Start benchmarks, long test or mutation runs, and servers in their own unit: `systemd-run --user --unit=<name> --slice=app-t3code-agents.slice <cmd>`. First verify the slice with `systemctl --user list-units --type=slice | grep t3code`; if its name differs, use the real one.
 - Keep the unit in that slice so it stays under T3's memory cap rather than risking a desktop OOM. On Tobias's Omarchy PC, 2026-10-11, `app-t3code-agents.slice` sits inside `app-t3code.slice`, capped at `MemoryHigh=40%` / `MemoryMax=55%` (about 12.2 / 16.8 GiB). Omitting `--slice` escapes that cap. Follow the job with `systemctl --user status <name>` and `journalctl --user -u <name>`.
+- Use a service unit (`--unit`), never `systemd-run --scope`. A scope keeps the job in the caller's process tree. In a T3 restart on 2026-10-11, a scope job died 2s after its Pi parent while a sibling scope survived, so survival is luck.
 - Don't rely on `setsid`, `nohup` or `&` for survival. T3 nightly, running as a systemd user service, stops each agent session's scope when the session ends or restarts, including when a new message starts a turn in an idle thread. It kills every process in the scope, even detached jobs.
 
 ## Expected crashes on Omarchy
