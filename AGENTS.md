@@ -1,6 +1,6 @@
 # Vault
 
-Tobias's public knowledge bank. It exists for agents: they retrieve from it and maintain it. Tobias does not read it.
+Tobias's public knowledge bank. It exists for agents: they retrieve from it and maintain it. Tobias does not read it. The [chief of staff](.agents/skills/chief-of-staff/SKILL.md) owns its quality.
 
 ## Find
 
@@ -10,7 +10,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 - Save what would change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures. Skip routine activity, generic advice, and anything cheap to look up again.
 - One idea, one home. Search first, edit the owning note, and link instead of restating.
-- Never record project work in the vault: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository. [projects.md](projects.md) holds only routes to public repositories: path, remote, branch and where to start. Private repositories are never listed. Update it only when a route changes.
+- Never record project work in the vault: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository. The one exception is the chief of staff's operational state in [`.agents/skills/chief-of-staff/state.md`](.agents/skills/chief-of-staff/state.md). [projects.md](projects.md) holds only routes to public repositories: path, remote, branch and where to start. Private repositories are never listed. Update it only when a route changes.
 - Lead with the conclusion. Prefer rules and short bullets to narrative. Drop hedges and "X does not mean Y" unless the misreading is likely and costly.
 - Date only volatile facts such as versions, prices, and availability. Keep sources only where authority or exact numbers matter. For optimizations, keep baseline, change, effect, and conditions.
 - Use kebab-case filenames, relative Markdown links, and no frontmatter. Keep [index.md](index.md) in sync when adding, moving, or removing notes.
@@ -19,7 +19,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 ## Skills
 
-`skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
+`skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `.claude/skills` links to `.agents/skills` so Claude Code sees the vault-only ones too. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
 
 - Every global skill has `SKILL.md` and `agents/openai.yaml`. All global skills are model-invoked: omit `disable-model-invocation` and `policy.allow_implicit_invocation`. Tobias wants agents to discover relevant skills without him remembering their names. Descriptions must say when the skill applies.
 - Skills that guide code changes end with a `Verification` section naming the behavioral check expected.
