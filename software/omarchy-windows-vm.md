@@ -19,6 +19,7 @@ Agents may use Tobias's Omarchy Windows VM for staging checks (Tobias, 2026-10-1
 win-vm up                                    # start if needed; wait for SSH and tb's desktop; prints JSON
 win-vm put ./app.exe 'C:/Users/tb/AppData/Local/myapp/app.exe'
 win-vm gui 'C:\Users\tb\AppData\Local\myapp\app.exe'      # prints {"pid": N}
+win-vm gui --timeout 3600 --wait 'C:\...\runner.exe' --flag  # blocks; exits with the process's code
 win-vm uia inspect -a <pid> --depth 8 --json > state.uia.json
 win-vm screenshot --app <pid> state.png       # omit --app for the whole guest desktop
 win-vm exec 'Get-Process myapp'               # one PowerShell script over SSH
@@ -29,6 +30,7 @@ win-vm down                                   # stops the VM only if this up sta
 - **Ownership.** When `up` starts the VM, it records the container's start time in `~/.cache/win-vm/started-by-win-vm`. Plain `down` stops only that instance, so a VM someone else started (Tobias, another agent) stays up. `down --force` stops it unconditionally; use it only when you know the VM is free. Concurrent `up`s are serialized; if `up` finds the VM already running or can't prove it started it, it leaves the VM unowned.
 - **One polkit dialog per host boot.** Omarchy's bind mounts for the VM disk vanish at reboot, and only its privileged helper recreates them. The first `up` after a reboot asks Tobias to approve one polkit dialog; later `up`s in the same boot need nothing.
 - `up` and `down` take Omarchy's own VM lock (`/run/lock/omarchy-windows-vm`), so they can't race an Omarchy install, removal or launch.
+- **`gui --wait`** blocks until the started process exits, prints `{"pid": N, "exit_code": M}` and exits with M. Codes outside 0–255 (NTSTATUS crashes) exit 255; the JSON keeps the exact code. Waiting polls the scheduled task over short SSH calls, so no SSH session is held. `--timeout` (default 120 s) bounds the wait: past it, `win-vm` kills the process tree and fails. Each `gui`, `uia` or `screenshot` call costs about 15–20 s of fixed overhead.
 - `exec` runs in the SSH session, which has no desktop. Anything visual goes through `gui`, `uia` and `screenshot`, which run as one-shot scheduled tasks in tb's interactive session.
 - tb logs on automatically at boot. If tb's session is disconnected (after an RDP client closes), `win-vm` moves it to the console with a SYSTEM `tscon`, so the desktop stays unlocked. An active RDP session is used as is and never taken over.
 - `uia` passes its arguments to `winapp ui` (WinApp CLI 0.7.1) verbatim. For selectors and state capture, see [windows-gui-automation](windows-gui-automation.md). WinApp telemetry is opted out machine-wide.
