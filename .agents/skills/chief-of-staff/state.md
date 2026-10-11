@@ -7,7 +7,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 Census 2026-10-11: every unsettled top-level thread.
 
 - [Optimize Agent Workflows for Orderready](t3-thread://v1/7a790d6e-5034-4970-ba3c-56be1bc8e3a9) (orderready): runner fixes merged; five backend cases running across two agents.
-- [Developer-Focused Conversation Context](t3-thread://v1/0035fcfe-aea0-4c3e-a978-cc7d54ca50d7) (vault): context-layout experiment; snapshot variant lost (+33% cost, +20% time); pulling tool-mix data.
+- [Developer-Focused Conversation Context](t3-thread://v1/0035fcfe-aea0-4c3e-a978-cc7d54ca50d7) (pi-workspace-view): v3 snapshot view merged (30ae786), replay +1.8% input cost over native. Told to run the 12-run live benchmark (~$2.30, ~45 min) and report whether v3 cuts rereads and cost.
 
 - [Commit orphaned dotfiles changes](t3-thread://v1/mcp:0f4d0fd5-f94c-4d4a-a748-216f0a333353) (dotfiles): 12 uncommitted files from 2026-10-04 to 2026-10-11, including the live global instructions. Committing them in coherent groups, applying nothing, parking anything half-done.
 

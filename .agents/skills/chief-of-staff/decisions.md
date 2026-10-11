@@ -14,5 +14,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Retry a Pi child after one start failure and treat it as isolated · Pi was healthy in capabilities.
 - 2026-10-11 · decided · Agree that rust-mutants picks up no follow-ups, and keep the budget-kill flake on watch rather than raising it · there was no consumer or measured pain.
 - 2026-10-11 · decided · Settle the rust-mutants thread after the merge was verified · the work was done.
+- 2026-10-11 · decided · Approve the ~$2.30, 45-min live benchmark for the context-view experiment · small cost, and only a live run answers whether v3 wins.
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
