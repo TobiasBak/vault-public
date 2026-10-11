@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · asked · Allow shared P2 admission to count conservatively clean inactive file cache as reclaimable, keeping each governing ancestor's own stats/limits, host availability, reserves/caps/slots; recommend yes · unchanged raw floor blocked actual INF qualification with all slots free and 21.03GiB available; fix shared boundary, not another GPUI-only exception · pending Tobias.
+
 - 2026-10-11 · decided · Plain extra/wine via Omarchy helper, not gaming/VM route; existing approved official SDK acquisition proceeds with complete private distribution and payload-specific license/provenance check before execution · stock audit verified scope, public build-use grants don't expressly restrict host; Wine unsupported, no tool redistribution or assumed xwin permission · —
 
 - 2026-10-11 · decided · Re-read Omarchy skill and audit stock Wine/Windows tooling before installing approved build-only runner · Tobias explicitly asked to use existing Omarchy approach; SDK terms audit remains separate, no duplicate downloads/dialogs/VM · —
