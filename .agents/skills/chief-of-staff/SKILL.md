@@ -78,4 +78,5 @@ Maintained by the chief of staff. Budget: 30 bullets.
 - `t3_thread_list` with a `projectId` reads other projects' threads, subagents included (verified 2026-10-11, T3 `0.0.46-nightly.20261010.2922`).
 - Tobias's open work is every unsettled thread (`settled: false`), whatever its status. A `completed` unsettled thread is an agent waiting on him; a status filter that excludes `completed` misses it (first census, 2026-10-11).
 - Delegated vault writers share this checkout. Commit state and skill edits by path (`git commit -- <paths>`), never `git add -A`: on 2026-10-11 that swept a writer's half-done note into a pushed state commit.
-- Earlier T3 builds rejected cross-project `t3_thread_send` ([projects](../../../projects.md#t3-code)). Unverified on the current build, as is whether `mode: "queue"` starts an idle thread. Test both on the first team brief and replace this bullet with the result.
+- Cross-project `t3_thread_send` works: `mode: "auto"` started an idle team in another project (2026-10-11). Whether a team's `mode: "queue"` report starts this thread when idle is still unverified; check on the first report.
+- Decide straightforward, reversible calls yourself and tell Tobias afterwards. A green PR whose downside is small is one, and so are its changed defaults. Raise only real tradeoffs (Tobias, 2026-10-11, on stepkit-geometry PR #39).
