@@ -13,12 +13,12 @@ Census 2026-10-11: every unsettled top-level thread.
   1. Done: Orderready (paused) pushed all 18 worktrees clean and wrote its handoff, `docs/p2-omarchy-handoff-report.md` (e60b8ab7). Its 6 open questions for Tobias are in that file; bring them to him after the move. Done: pi-workspace-view now has a private remote, TobiasBak/pi-workspace-view (main e5fcd2a with HANDOFF.md). The codemode prototype needs its review fixes reviewed and the v3 replay check before the 18 runs; $0 spent. swe-benchmarking is pushed. Leftover: the rust-mutants local `twin` branch.
   2. Done: the park passed checksum verification: `~/orderready-park` (38G) on the NixOS disk. Dotfiles main is at 8544801: `migrate-home.sh` deleted, the git-first first-boot runbook, a cold-storage section, and the review fixes. The confirmation run with only the committed filter passed too.
   3. Done: the git sweep pushed 26 of Tobias's repos (66 checkouts): 163 refs, 37 dirty snapshots and 3 stashes under `wip/omarchy/*`. It created 5 private repos: deep-swe-harness, graph-engineering, graph-engineering-testbed, ternary-sparsity-lab, and vault-omarchy-continuity (a backup of the archived TobiasBak/vault worktree). The recovery manifest is in vault-omarchy-continuity. The secret scan was clean. Skipped: other owners, t3code, CanineArchive, csbetting, /tmp. OIP is also done: 22 refs pushed (21 under `wip/tobias-omarchy/*`, which I verified on the remote), with customer data and noise excluded. The backups are filtered WIP, not release-ready.
-  4. The ISO is on Tobias's Ventoy stick (sda, verified). Every gate is green and the reboot is handed to Tobias (2026-10-11): he reboots, boots the stick, picks `omarchy-4.0.4.iso`, checks the disk serial ends in 9170A9, and chooses Full disk.
+  4. Done: Omarchy is installed and running (2026-10-11), but as user `tb` on host `tb-omarchy`, not `tobias`/`pc`. Tailscale is up as tb-omarchy, gh is logged in, and pi, claude and t3 are installed. Nix isn't installed and the bootstrap hasn't run. A background Claude agent in this session is making dotfiles work for user `tb` (keeping NixOS `pc` unchanged, de-pathing the voxtype input) and will push to main. Then Tobias runs `bootstrap.sh` (it needs sudo), which is the first real test of HM activation.
   - **Restart on Omarchy:** relaunch Orderready from its handoff; workspace-view (its experiment is interrupted by the reboot, so it reruns from the repo, and the Monday schedule needs re-creating); recreate the `cos-workspace-view-weekly-1` schedule. Then apply the bundled restart items: the askpass env (`SSH_ASKPASS_REQUIRE=never`) and the T3 env without DISABLE_1M, both via dotfiles.
 
 ## Needs Tobias
 
-- None open.
+- Tailnet name: keep `tb-omarchy` or rename to `pc` (the old NixOS node gets removed)? Recommendation: rename to `pc` so the T3 URL stays stable. It waits on the bootstrap, not before it.
 
 ## Hypotheses
 

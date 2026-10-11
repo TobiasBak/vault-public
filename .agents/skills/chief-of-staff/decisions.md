@@ -36,3 +36,4 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · The git sweep found TobiasBak/vault archived, so it pushed a backup to a new private `vault-omarchy-continuity` repo instead of unarchiving, and it bypassed pre-push hooks (rust-mutants, stepkit-geometry) that demand the pushed commit be checked out · both are reversible and leave the working trees untouched · accepted
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
+- 2026-10-11 · decided · Omarchy was installed as user `tb`/host `tb-omarchy`: parameterize the dotfiles for it (NixOS `pc` defaults unchanged) rather than reinstall as `tobias`; agent may push to main after static review, since nix isn't installed to build · reinstalling costs hours, parameterizing is reversible, and Tobias's bootstrap run is the real test · —
