@@ -26,5 +26,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Make workspace-view v3 the default Pi extension (via dotfiles), with a rollback check in a week; no more synthetic rounds · reversible, neutral or better on 12 live runs, and real sessions are the real test · —
 - 2026-10-11 · decided · Push the 12 swe-benchmarking commits after a secrets scan, and park the half-done work in PARKED.md rather than giving it a team · standing merge authority; no workstream owns the leftovers yet · —
 - 2026-10-11 · decided · Standing workspace-view team: reuse the existing thread (it has the experiment context); a weekly Monday schedule pings the CoS, which dispatches; the team may self-revert past the threshold; $10 per benchmark round without asking · Tobias asked for a standing audit team; this keeps one owner and one trigger · —
+- 2026-10-11 · decided · Claude context: advertise 1M and compact at 200K, not 400K, with no A/B test · Tobias skipped the test and is token-limited; 400K raises per-turn cost, while the anxiety fix alone costs nothing · —
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
