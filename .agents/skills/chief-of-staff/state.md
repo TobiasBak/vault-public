@@ -6,7 +6,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. Former `4d49b702` (Pi Sol) interrupted and archived; its pending GPUI 7zip request answered GO. All four live leaders (P2, GPUI, workspace owner, dotfiles) told the new report target.
 - Teams own workers, reviews, gates, commits and integration. Report only completed workstreams/agreed milestones, unowned cross-team/authority blockers and material Tobias decisions. Questions use numbered **Your decisions**; informational calls use **Decided by me**.
-- Claude quota is back (Tobias, 2026-10-11 ~18:45). Leaders P2, GPUI, workspace owner and dotfiles reconfigured to Opus 5.5 high. Routing: Opus 5.5 high top-level leaders only, never children; Pi Sol 6.1 thinking HIGH for all delegated execution/implementation/review (no medium default); Haiku 5.5 high for bounded research/exploration. Dotfiles team updating global instructions/hook defaults; vault writer `cos-b826-vault-routing-1` aligning skills/notes. Both pending.
+- Claude quota is back (Tobias, 2026-10-11 ~18:45). Leaders P2, GPUI, workspace owner and dotfiles reconfigured to Opus 5.5 high. Routing: Opus 5.5 high top-level leaders only, never children; Pi Sol 6.1 thinking HIGH for all delegated execution/implementation/review (no medium default); Haiku 5.5 high for bounded research/exploration. Dotfiles PR9 `ae489c8` merged/live-verified (policy in `agents/AGENTS.md`, route hook defaults Sol high, Pi `defaultThinkingLevel: high`). Vault writer `cos-b826-vault-routing-1` aligning skills/notes, pending.
 - Omarchy is the only workstation, Nix-free; serv01 remains NixOS. Old disk is cold storage. Windows VM is Tobias's staging tool: agents never provision/start/run it. No production deployments or T3 restart authorized.
 
 ## Teams
@@ -48,7 +48,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 [Team](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5). Overhaul, v3 disable and model-policy tasks complete with independently aligned receipts. Desktop/freerdp/Stremio/Taildrop applied; serv01 source unchanged. No broad task active.
 
 - Completion indices under `~/.cache/agent-tmp/`: `overhaul-completed-receipt.json`, `pi-v3-disable-receipt.json`, `opus-top-level-receipt.json`. Source/gates/live facts checked; not cryptographic execution attestations.
-- Active: global model-routing update (Sol high default, Haiku high exploration), merge + live verification, report to CoS.
 - Remaining: T3 environment adoption, serv01 SSH authorization, restic restoration; then NAS mount/T3 backup restoration. Resume existing owner only for a necessary authorized step. No duplicate dialogs or secrets in chat.
 
 ## Needs Tobias
