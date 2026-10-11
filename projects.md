@@ -5,7 +5,7 @@ Routes to public repositories. Read the owning repository's `AGENTS.md` before a
 ## Dotfiles
 
 - `/home/tb/code/dotfiles`, <https://github.com/TobiasBak/dotfiles>, branch `main`
-- Start with root `AGENTS.md`; for the current Omarchy machine, `omarchy/README.md`.
+- Covers the Omarchy PC and the NixOS server serv01. Start with root `AGENTS.md`; for the Omarchy machine, `omarchy/README.md`; for serv01, `nixos/README.md`.
 
 ## T3 Code
 
