@@ -30,8 +30,15 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Queued, in order of the owner's choosing:
   - `windows-run corpus` with the runner inside the guest;
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
-- Still running: the consumer paired proof, C3 r3d and C4B r2; the mutation work waits for the consumer.
+- Parked: the rmut command-case consumer (`3a5fff12`) waits for rmut `--cpus`; C3 r3d and C4B r2 wait for the consumer.
 - Later: pairing approval inside the Import GUI.
+
+### rmut
+
+[Owner](t3-thread://v1/mcp:45897a0c-83cb-48aa-8781-99cb87131a2e), Pi-led. It missed the CoS handover; I sent it the live route on 2026-10-11.
+
+- Now: `--cpus <n>` (CoS approved), then a repo handoff.
+- Next: move leadership to a fresh Opus thread from that handoff.
 
 ### Dotfiles
 
