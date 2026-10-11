@@ -25,6 +25,7 @@ win-vm screenshot --app <pid> state.png       # omit --app for the whole guest d
 win-vm exec 'Get-Process myapp'               # one PowerShell script over SSH
 win-vm get 'C:/Users/tb/AppData/Local/myapp/log.txt' ./log.txt
 win-vm down                                   # stops the VM only if this up started it
+win-vm run --ephemeral -- ./lane.sh           # disposable baseline clone; exits with lane.sh's code
 ```
 
 - **Ownership.** When `up` starts the VM, it records the container's start time in `~/.cache/win-vm/started-by-win-vm`. Plain `down` stops only that instance, so a VM someone else started (Tobias, another agent) stays up. `down --force` stops it unconditionally; use it only when you know the VM is free. Concurrent `up`s are serialized; if `up` finds the VM already running or can't prove it started it, it leaves the VM unowned.
@@ -34,7 +35,17 @@ win-vm down                                   # stops the VM only if this up sta
 - `exec` runs in the SSH session, which has no desktop. Anything visual goes through `gui`, `uia` and `screenshot`, which run as one-shot scheduled tasks in tb's interactive session.
 - tb logs on automatically at boot. If tb's session is disconnected (after an RDP client closes), `win-vm` moves it to the console with a SYSTEM `tscon`, so the desktop stays unlocked. An active RDP session is used as is and never taken over.
 - `uia` passes its arguments to `winapp ui` (WinApp CLI 0.7.1) verbatim. For selectors and state capture, see [windows-gui-automation](windows-gui-automation.md). WinApp telemetry is opted out machine-wide.
-- `status` prints JSON: container state, IP, SSH reachability, tb's session and `started_by_win_vm`.
+- `status` prints JSON: container state, IP, SSH reachability, tb's session, `started_by_win_vm`, `mode` (`persistent` or `ephemeral`), the `lease` holder, the pinned `baseline` and `residue`.
+
+## Disposable runs: `run --ephemeral`
+
+For work whose guest state must not persist (installs, users, hosts-file edits, trusted CAs, SYSTEM tasks), such as Orderready's nightly Windows lanes.
+
+- **Baseline.** `win-vm baseline` pins reflinked, read-only copies of the stopped guest's files from `~/.windows` into `~/.local/state/win-vm/baseline/`. Its `baseline.json` records `captured_at` and each file's sha256. The current baseline was captured 2026-10-11 from the post-bootstrap disk; `data.img` sha256 `84685c2a5f8e…`. Re-pin only deliberately: every later run starts from it.
+- **Each run** reflink-copies the baseline into `~/.local/state/win-vm/ephemeral/` and boots it through a compose override that replaces both `/storage` and `/shared`. The persistent disk and `~/Windows` are never mounted, so the persistent disk stays byte-identical. At the end the container and the copy are deleted, discarding every guest write. Runs need no polkit dialog, even after a reboot. Boot to ready takes about 20–30 s.
+- **Lease.** The run holds an exclusive lease for its whole duration. Every other `win-vm` command fails fast and names the holder (pid, command, start time); nothing queues. The host command and its children get `WIN_VM_LEASE`, so their `win-vm` calls reach the clone. They can't start, stop or nest runs, and they refuse to act if the clone is gone rather than touch the persistent VM.
+- **Persistent VM running.** The run refuses with exit 1 and `win-vm: persistent VM is running; refusing ephemeral run (holder: …)`. It never stops a VM that may be someone else's session.
+- **Exit and kills.** `run` exits with the host command's code (128+N if signal N killed it). A guardian in its own systemd scope (`win-vm-ephemeral-*.scope`) tears down when the run exits for any reason, including `kill -9` or the caller's cgroup being killed. A host command orphaned by such a kill keeps running; its `win-vm` calls are refused. If both die (host reboot), the next `win-vm` command cleans up the residue first.
 - SSH goes to the container IP on port 22: dockur forwards every port except 5900, 8006, 139 and 445 to the guest. Nothing is exposed beyond the host-only Docker bridge.
 
 ## Guest setup
@@ -45,6 +56,8 @@ Done once on 2026-10-11; repeat only for a reinstalled guest. `win-vm bootstrap`
 - installs the VC++ x64 runtime and WinApp CLI (`C:\Program Files\winapp`, on the machine PATH);
 - keeps tb's autologon without a logon-count limit, and disables sleep, the lock on resume and the screen saver;
 - hands tb's session to the console, which closes the RDP window.
+
+Afterwards, stop the VM (`win-vm down`) and pin the result with `win-vm baseline`.
 
 Lessons from the first run:
 
