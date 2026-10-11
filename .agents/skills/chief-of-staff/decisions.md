@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Diagnose actual GPUI memory ownership/admission accounting read-only before any cap/floor change · reserved slot doesn't free required4GiB; suspect my resource brief/reclaimable-cache treatment first, no job kill or unproven bypass · —
+
 - 2026-10-11 · decided · Reserve one next naturally-freed P2 heavy-job slot for the prepared GPUI compile proof and resume explicit capacity handshake · corrected test never started, worker completed meant memory-blocked; bounded reversible priority change, no interrupted work/cap increase/floor waiver · —
 
 - 2026-10-11 · decided · Deliver clarified no-Opus-subagent rule into current active team contexts while global/vault ownership edits proceed; close completed v3 receipt verification · persisted rules alone don't update already-loaded leader prompts; no runtime restart needed · —
