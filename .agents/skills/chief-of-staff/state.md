@@ -27,7 +27,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 [Owner](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579). Owns the `tools/or` gate, the corpus runner, the test shape and the theodore rules. Local `tools/or test --full` is the gate; there is no hosted CI. Nothing is deployed.
 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
-- Blocked on dotfiles' `win-vm run --ephemeral`: the release-gating nightly Windows lanes (they used the uninstalled `oip-windows-vm`). Then port the lanes, delete the clone code, and build the corpus guest runner (that one also waits for the GPUI Driver PR).
+- Unblocked by `win-vm run --ephemeral` (`564ec00`): the release-gating nightly Windows lanes. Port the lanes, delete the clone code, and build the corpus guest runner (that one also waits for the GPUI Driver PR).
 - Running: the corpus race fix (`p2/corpus-race-fix`, which unblocks GPUI's Draft model PR), B4.
 - Queued, in order of the owner's choosing:
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
@@ -43,7 +43,8 @@ Settled at `37be8a2` (`--cpus` merged in PR #4; the qualified binary is pinned i
 [Team](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5). Works on main.
 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
-- Now: `win-vm run --ephemeral` (a Sol worker is building it; it refuses to start while the persistent VM is running).
+- Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
+- Now: a test for what a host reboot mid-run leaves behind (leftover clone, `mode: ephemeral`, dead guardian), so unattended lanes can't wedge.
 - Then: restore the restic password from the cold disk.
 - Later: NAS mount and the T3 backup.
 
