@@ -8,6 +8,9 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Notify all six leaders directly, answer missed reports and archive former CoS; treat takeover routing as an immediate exception to idle housekeeping deferral · Tobias saw reports landing in the dead thread and explicitly asked · —
+- 2026-10-11 · decided · Accept corroborated live-overhaul completion, keep restart blocked on hosted-job checkpoints/explicit authority, and delegate bounded geometry closeout spot-check · artifact-level evidence supports completion but not quiescence; no duplicate gates or reviews · —
+
 - 2026-10-11 · asked · Allow five mechanical required-environment edits in otherwise frozen AUTH test constructors/wire sites; recommend yes with all business assertions and migration obligations retained · existing deletion-only freeze blocks approved propagation, and broader contracts lack full public supersession · pending Tobias; P2 AUTH parked.
 - 2026-10-11 · decided · Adopt bounded full-transcript handover, settle consumed census/historical diagnostic and classify old CoS failure as context-handoff guard · direct activity971 confirms it, no Pi restart/package fix warranted · —
 
