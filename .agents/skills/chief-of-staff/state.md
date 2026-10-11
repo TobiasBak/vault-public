@@ -9,7 +9,13 @@ Census 2026-10-11: every unsettled top-level thread.
 - [Optimize Agent Workflows for Orderready](t3-thread://v1/7a790d6e-5034-4970-ba3c-56be1bc8e3a9) (orderready): runner fixes merged; five backend cases running across two agents.
 - [Developer-Focused Conversation Context](t3-thread://v1/0035fcfe-aea0-4c3e-a978-cc7d54ca50d7) (pi-workspace-view): the standing owner, per Tobias 2026-10-11. Never settle this thread. A Monday 09:00 schedule (`cos-workspace-view-weekly-1`) wakes me to send the audit request. Audit 1 had too little data for a rollback verdict (7 of 20 sessions). It found that v3 sees only 40 of 925 real file reads, because codemode hides the rest, so the benchmark's −15% doesn't carry over to real use. I approved the NEXT.md experiment: an uninstalled codemode-aware prototype, 18 Luna runs, capped at $10. If it gets killed and v3 is also within 5% of baseline, the team reverts 7973c61 itself. Installing the prototype is Tobias's call, after the numbers.
 
-- [Omarchy support: reproduce the setup, proven in a VM](t3-thread://v1/mcp:5cc035fb-ec59-4838-91b4-2f4bf1ade1e1) (dotfiles, worktree `omarchy-support`). Tobias 2026-10-11: Omarchy takes the whole 2 TB disk (nvme1n1, …9170A9) in the installer's Full disk mode, with unattended boot to a reachable T3 (LUKS + TPM2, falling back to no LUKS); downtime approved. Done on the branch: `prepare-disk.sh` deleted, the pc `/mnt/data-2tb` mount removed. VM-proven: installer, Limine boot, HM build, pc/wsl closures unchanged. Next: bootstrap, a fresh Full disk proof (disk A checksummed, NVRAM entry intact), TPM2 cold boot, `migrate-home.sh`, the Tailscale identity, the runbook. Orderready parking: 61G without build artifacts (327G with them). Before the pc rebuild, copy it through a bind mount of `/` to `/mnt/data-2tb/orderready` on the NixOS root, so the path survives a NixOS rollback; then migrate it to the same path on Omarchy. First, Orderready pushes its local-only branches and WIP (CoS coordinates) and pauses.
+- [Omarchy support](t3-thread://v1/mcp:5cc035fb-ec59-4838-91b4-2f4bf1ade1e1) (dotfiles, worktree `omarchy-support`). Tobias 2026-10-11: Omarchy takes the whole 2 TB disk (nvme1n1, …9170A9) in the installer's Full disk mode. **The VM proof was stopped for a live install:** NixOS stays as the fallback, and on Omarchy Tobias runs the Pi CLI to fix whatever breaks until T3 is up. The team is wrapping up: what works goes to dotfiles main, untested steps get marked, and it writes the `omarchy/README.md` runbook and a ready-made Pi prompt. VM-proven: installer, Limine boot, HM build, pc/wsl closures unchanged. Window order:
+  1. Orderready pushes local-only branches; I sent that ask, and its answer on non-rebuildable excluded paths is pending.
+  2. "Pause for Omarchy".
+  3. Park `orderready/` (61G with excludes) at the same path on the NixOS root.
+  4. pc rebuild.
+  5. Tobias installs.
+  6. Restore to the same path on Omarchy.
 
 ## Needs Tobias
 
