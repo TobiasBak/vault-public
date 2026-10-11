@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Settle GPUI as a blocked study after report/terminal-receipt verification, preserve staged source/worktree/index, retain current stack · source syntax failure isn't platform impossibility; no settlement cleanup scripts or new study run authorized · —
+
 - 2026-10-11 · decided · Separate numbered Your decisions from informational Decided by me, with recommendation/waiting owner per question · Tobias couldn't distinguish pending choices from my calls amid reports · Tobias: requested this formatting.
 - 2026-10-11 · decided · Settle geometry after artifact verification; keep GPUI failed study/source retained pending closeout check; request existing workspace review/gate pointers without new runs · completion and approval are separate; no unsupported platform/regression claims · —
 
