@@ -19,7 +19,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Hypotheses
 
-- My `auto` message (settle rule, ~13:05Z) started a new turn in the idle workspace-view thread, and T3 stopped the old session's scope, killing its detached benchmark. If confirmed, don't start turns in idle teams that have detached work running; long jobs use `systemd-run --user` (vault writer `cos-vault-systemd-run-1`).
+- My `auto` message (settle rule, ~13:05Z) started a new turn in the idle workspace-view thread, and T3 stopped the old session's scope, killing its detached benchmark. If confirmed, don't start turns in idle teams that have detached work running; long jobs use `systemd-run --user` (vault rule landed in 62e74f5).
 
 ## Watch
 
