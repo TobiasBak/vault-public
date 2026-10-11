@@ -34,6 +34,12 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 - Read `memory.events.local` for the owning limit. Hierarchical events include independently enforced child OOMs and can falsely fail a successful enclosing test suite.
 - Make cleanup verification part of the pass decision at both the execution and gate-result boundaries. Fail unverified cleanup locally. The only sound exception is an ephemeral CI runner VM, recorded and logged as the containment; execution failures still fail. The regression tests exercise the real gate consumer, not just the policy helper.
 
+## Jobs that must survive an agent turn
+
+- Start benchmarks, long test or mutation runs, and servers in their own unit: `systemd-run --user --unit=<name> --slice=app-t3code-agents.slice <cmd>`. First verify the slice with `systemctl --user list-units --type=slice | grep t3code`; if its name differs, use the real one.
+- Keep the unit in that slice so it stays under T3's memory cap rather than risking a desktop OOM. On Tobias's Omarchy PC, 2026-10-11, `app-t3code-agents.slice` sits inside `app-t3code.slice`, capped at `MemoryHigh=40%` / `MemoryMax=55%` (about 12.2 / 16.8 GiB). Omitting `--slice` escapes that cap. Follow the job with `systemctl --user status <name>` and `journalctl --user -u <name>`.
+- Don't rely on `setsid`, `nohup` or `&` for survival. T3 nightly, running as a systemd user service, stops each agent session's scope when the session ends or restarts, including when a new message starts a turn in an idle thread. It kills every process in the scope, even detached jobs.
+
 ## Expected crashes on Omarchy
 
 - For mutation testing, fuzzing and abort tests, set `LimitCORE=1` on the transient systemd unit to cover descendants, or set `RLIMIT_CORE` to 1 before exec.
