@@ -20,6 +20,5 @@ None open. Missing merge authority was resolved by a standing rule (2026-10-11).
 
 ## Watch
 
-- `coding-models.md` compressed to 1,936 words (f907b4c); throughput split into `agents/pi-throughput.md`. Haiku is reviewing it for lost facts and fixing a design-routing contradiction.
 - Pi failed to start a turn once (2026-10-11); a second failure triggers a diagnosis.
 - Sol is adding the standing merge-authority rule to the global instructions (dotfiles) and to `agents/subagent-delegation.md`.
