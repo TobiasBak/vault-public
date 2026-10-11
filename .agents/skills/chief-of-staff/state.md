@@ -31,15 +31,12 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Running: the corpus race fix (`p2/corpus-race-fix`, which unblocks GPUI's Draft model PR), B4.
 - Queued, in order of the owner's choosing:
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
-- Parked: the rmut command-case consumer (`3a5fff12`) waits for rmut `--cpus`; C3 r3d and C4B r2 wait for the consumer.
+- Unparked: rmut `--cpus` merged (`37be8a2`), so the command-case consumer (`3a5fff12`) resumes, then C3 r3d and C4B r2.
 - Later: pairing approval inside the Import GUI.
 
 ### rmut
 
-[Owner](t3-thread://v1/mcp:45897a0c-83cb-48aa-8781-99cb87131a2e), Pi-led. It missed the CoS handover; I sent it the live route on 2026-10-11.
-
-- Now: `--cpus <n>` (CoS approved), then a repo handoff.
-- Next: move leadership to a fresh Opus thread from that handoff.
+Settled at `37be8a2` (`--cpus` merged in PR #4; the qualified binary is pinned in `~/.cache/rmut/qualified/e7f0730…/`). No lead is running. Any new rmut work starts a fresh Opus lead from `~/code/rust-mutants/.git/agent-handoffs/lead-handoff.md`. Consumer parity and integration belong to P2.
 
 ### Dotfiles
 
