@@ -18,17 +18,19 @@ Claude quota exhausted. CoS runs on Pi Sol; all six existing project teams now t
 
 ## Needs Tobias
 
+- Make Pi Sol the permanent default for routine project leaders, reserving Claude for design/hard reviews? Recommend yes based on usage audit; temporary recovery already uses Sol. Existing compaction choices unchanged. Waiting: CoS; teams not blocked.
 - Lift rmut's explicit AGENTS.md public-push ban for reviewed, gate-green project work? Recommend yes, secrets/private data still excluded. Team finishes local integration/consumer validation but cannot publish. Waiting: rmut team.
 - One `systemctl --user restart t3code.service` after the dotfiles overhaul applies. It loads the disk TMPDIR and askpass env (the running PID 57451 predates them) and interrupts every agent turn. I'll ping Tobias when the overhaul is applied and teams have long jobs in systemd units. Waiting: overhaul team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Diagnostics in flight
 
-- Claude usage accounting, read-only Pi Sol high: task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-claude-usage-accounting-1`. Expected: ranked session/model token attribution, cache metrics, coverage and subscription-quota limits of inference.
+- Claude accounting complete, independent verification pending. Primary task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-claude-usage-accounting-1`; artifacts `~/.cache/claude-usage-20261011/{report.md,accounting.json,rates.md}`. Report: Opus 1,381 requests, Haiku 289; prompt means P2 281K/rmut 240K/CoS 203K/workspace 173K, 98.63% input-side cache reads. Dominant observed use is long-lived Opus coordinators; no subscription weighting available. Five-hour error reset recorded as 18:40 CEST 2026-10-11; not weekly exhaustion. Costs API-equivalent only, not charged.
+- Independent accounting review, read-only Pi Sol high: task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-claude-accounting-review-1`. Recompute calls/tokens/means, dedup/native-child boundaries and error/reset; return verdict/corrections. Settle primary and reviewer after verification.
 
 ## Hypotheses
 
-- Completed workflow audit: leader routing implicitly inherited Opus while most coding children used Sol; CoS launch JSONL line 94 spot-checked, and leader models verified in census. Quota contribution awaits accounting. Explicit leader selection prevents inheritance surprises; routine-leader model policy remains undecided beyond temporary recovery.
+- Completed workflow audit: leader routing implicitly inherited Opus while most coding children used Sol; CoS launch JSONL line 94 spot-checked, and leader models verified in census. Accounting corroborates Opus request/context volume; subscription-quota percentage remains unknowable from these logs. Explicit leader selection prevents inheritance surprises; routine-leader model policy remains undecided beyond temporary recovery.
 - Audit reports live compaction deployment drift before original sessions. Dotfiles confirms existing `./dot` managed-key check covers autoCompactEnabled, Opus 433000/Haiku 100000 and Sonnet cleanup; no new tooling/thresholds. Final head verification pending; loaded-session behavior/cache effect unproven, no fresh Claude test while quota exhausted. Recurring Sol broad-read truncation wastes onboarding, not direct Claude quota; scoped briefs need fresh-review validation.
 - My `auto` message (settle rule, ~13:05Z) started a new turn in the idle workspace-view thread, and T3 stopped the old session's scope, killing its detached benchmark. If confirmed, don't start turns in idle teams that have detached work running; long jobs use `systemd-run --user` (vault rule landed in 62e74f5).
 
