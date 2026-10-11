@@ -8,6 +8,9 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Take over CoS on Pi Sol in the new user-created thread, retain existing teams/plans, retire old CoS, rebind weekly trigger and delegate transcript/census/report redirects · Tobias explicitly requested quota recovery; no duplicate work or permanent model-policy change · —
+- 2026-10-11 · decided · Resume the existing dotfiles team's reviewed remaining live apply and freerdp polkit step, still prohibit T3 restart pending cross-team safety · recovered Tobias's unanswered return-to-PC/continue messages in old CoS positions965/970 · —
+
 - 2026-10-11 · asked · Standing merge authority in Tobias's own repos · a global policy change · Tobias: yes, production stays behind staging and production branches.
 - **[review]** 2026-10-11 · asked · Settle the idle AX thread · it was his open thread, and the reason it was open was unknown · Tobias: yes, he had been waiting for emails.
 - 2026-10-11 · decided · Compress `agents/coding-models.md` (2,915 → 1,936 words), splitting out `pi-throughput.md` · it was over the 2,000-word budget · Haiku review found nothing lost.
