@@ -34,8 +34,6 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 - Read `memory.events.local` for the owning limit. Hierarchical events include independently enforced child OOMs and can falsely fail a successful enclosing test suite.
 - Make cleanup verification part of the pass decision at both the execution and gate-result boundaries. Fail unverified cleanup locally. The only sound exception is an ephemeral CI runner VM, recorded and logged as the containment; execution failures still fail. The regression tests exercise the real gate consumer, not just the policy helper.
 
-Host budgets and launcher policy remain owned by dotfiles' `nixos/hosts/pc/workloads.md`.
-
 ## Git fixtures inside hooks
 
 Clear Git's repository-local environment before running a gate that creates temporary Git fixtures. Use `git rev-parse --local-env-vars` to identify the variables, including `GIT_DIR`, `GIT_WORK_TREE` and `GIT_INDEX_FILE`. Changing a child command's working directory does not override them. Without this, a pre-commit test wrote fixture commits onto the real branch and replaced its index. Verify the real commit/push entrypoints, not just standalone test commands.

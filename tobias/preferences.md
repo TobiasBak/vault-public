@@ -47,12 +47,14 @@ This is the method he is growing toward, not a description of current habit:
 
 ## Stack
 
+- **Machine and tooling (2026-10-11):** the PC runs Omarchy (Arch). Keep infrastructure as code and declarative config; machine config lives in dotfiles. Install tools through mise (npm packages through pnpm) or pacman/AUR. Project toolchains belong in the repo's `mise.toml`. Never use or propose Nix, NixOS or Home Manager, including Nix flakes or `nix develop` for dev shells.
+
 - **Python:** always [uv](https://docs.astral.sh/uv/) for versions, environments, dependencies, tools, and builds. Never pip, Poetry, Conda, or hand-made venvs in a uv project.
 - **TypeScript:** [TypeScript 7](../software/typescript.md). Prototypes may adopt prerelease tech aggressively; long-lived systems need compatibility checks and rollback.
 - **Data:** SQLite by default, including for JSON. Plain JSON files for tiny data. PostgreSQL with `jsonb` when a bigger database is warranted.
 - **APIs:** no fixed style. Choose from consumers and interoperability; Python services often fit REST with OpenAPI.
 - **Frontend:** no framework preference. Astro for content, React, Vue, or Svelte for apps, Angular for standardized enterprise. On a tie, pick fast setup, strong agent familiarity, and tight feedback. Protect quality with browser tests, accessibility, types, and rendered inspection.
-- **Cloud:** most experience with GCP, whose free tier suits experiments. Tailscale to personal servers works well and is often simpler than cloud infrastructure. Containers are the deployment unit; Kubernetes only when orchestration is justified. Infrastructure as code and declarative config, hence NixOS. Provisioning and deploys must run entirely from a CLI; dashboards and browser steps are only for one-time account and token bootstrap.
+- **Cloud:** most experience with GCP, whose free tier suits experiments. Tailscale to personal servers works well and is often simpler than cloud infrastructure. Containers are the deployment unit; Kubernetes only when orchestration is justified. Provisioning and deploys must run entirely from a CLI; dashboards and browser steps are only for one-time account and token bootstrap.
 - Security and production controls are low priority for disposable experiments and material for work and production systems.
 
 ## Testing and debugging
