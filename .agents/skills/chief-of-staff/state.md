@@ -13,6 +13,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ### GPUI pure-Rust Linux/Windows compile proof
 
+- **REWRITE STARTED (Tobias, 2026-10-11 late):** GPUI lead owns the design; awaiting the slice plan. First PR: ADR superseding 0003. Remaining gates are rewrite acceptance criteria. Fleet (no-GPU mandatory?) open until Windows G0.
+
 [Team](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf), orderready. Tobias wants BOTH builds on Linux: native Linux ELF and cross-compiled Windows PE, no Windows-host compilation/CI/VM-build fallback. No API/Tokio bridge or Orderready integration/rewrite plan. A Windows .exe is compile proof, not Windows runtime proof; runtime checks remain Tobias's staging responsibility.
 
 - FINAL independently reviewed proof COMPLETE for unmodified Longbridge gpui-pre/platform0.3.8: ALL builds on Linux, actual nativeLinuxELF and cross-compiledWindowsDEBUGPE, both cleanCargo0. WindowsRELEASEcrossbuild FAILS actualCargo101: Windows-host-gated FXC shader generation leaves missing shaders_bytes.rs/emptyOUT_DIR. DebugPE depends on source shaderpaths, NOTportable/distributable/runtime-qualified. No Windowsnativefallback/CI/VM/fork/patch/pipelinechange. Receipts/reviews/binaries `~/.cache/gpui-dual-compile-20261011/{result.md,review/round2-terminal-release-report.md}`, owningMarkdown `04ba2d4` in `/home/tb/.local/share/orderready/wt/gpui-dual-compile-proof/docs/gpui-dual-compile-proof.md`. CoS final artifact verification COMPLETE: ELF/PE bytes rehashed/headerschecked, clean input/package/command provenance and0/0/101 exits/budget/terminalunits align. No mismatch blocks closure; team/verifier settled. Original buildproof complete, no Windowsrelease/runtime claim.
