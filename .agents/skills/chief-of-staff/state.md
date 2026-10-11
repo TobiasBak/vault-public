@@ -42,12 +42,9 @@ Settled at `37be8a2` (`--cpus` merged in PR #4; the qualified binary is pinned i
 
 [Team](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5). Works on main.
 
-- Now: verify the restic backup of `~/.local/share/orderready/{fixtures,corpus}` (snapshot ID plus a sha256 restore), then commit the port.
-- Next: `win-vm run --ephemeral` (CoS-approved contract in decisions.md; it gates Orderready's Windows release lanes).
-- Then:
-  - stage the declarative serv01 key (deploying it needs Tobias's go);
-  - restore the restic password from the cold disk;
-  - fix the README restore text.
+- Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
+- Now: `win-vm run --ephemeral` (a Sol worker is building it; it refuses to start while the persistent VM is running).
+- Then: restore the restic password from the cold disk.
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
@@ -60,6 +57,8 @@ Settled at `37be8a2` (`--cpus` merged in PR #4; the qualified binary is pinned i
 ## Needs Tobias
 
 - Decision-log review: entries marked **[review]**.
+- Deploy `300dc11` to serv01? It authorizes the Omarchy SSH key declaratively.
+- The four old `/home/tobias` restic snapshots on serv01 (22 GiB, never pruned): keep them or delete them?
 
 ## Watch and hypotheses
 
