@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Close v3 disable at managed-config and fresh SDK behavior boundaries; keep offline proof separate from cache/performance evidence and leave existing sessions running · independent owners supplied idempotence/settings and unmodified native/nested-context receipts; research continues · —
+
 - 2026-10-11 · decided · Accept reported v3 config/persistence milestone pending bounded receipt spot-check, leave fresh-session runtime proof with standing workspace owner · reviewed/gated merged PR7 and actual idempotent apply exist; no global restart or duplicate behavioral probe · —
 
 - 2026-10-11 · corrected by Tobias · Replace my API/table-bridge framing with a minimal pure-Rust GPUI Linux+Windows compile proof on the existing team · I answered integration architecture before his actual framework capability question · Tobias: wants actual dual-platform compile feasibility; no bridge.
