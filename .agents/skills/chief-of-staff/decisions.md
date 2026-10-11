@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Get a bounded read-only fresh progress/GPUI evidence snapshot instead of waking teams or treating failed spike syntax as platform impossibility · Tobias asked status and whether GPUI is worthwhile/possible; no new study round authorized · —
+
 - 2026-10-11 · decided · Route approved v3 disable to dotfiles-owned managed/live settings, retain workspace standing research and retarget Monday checkpoint; incorporate Tobias's cache priority in matched long-run whole-task measurements · one settings owner prevents re-enable/races; hit rate alone isn't task-cost/quality evidence · —
 
 - 2026-10-11 · decided · Settle GPUI as a blocked study after report/terminal-receipt verification, preserve staged source/worktree/index, retain current stack · source syntax failure isn't platform impossibility; no settlement cleanup scripts or new study run authorized · —

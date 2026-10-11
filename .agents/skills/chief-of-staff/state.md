@@ -40,6 +40,8 @@ Claude quota exhausted. CoS runs on Pi Sol; all six existing project teams now t
 
 ## Watch
 
+- Tobias requested fresh cross-workstream progress and GPUI worth/feasibility assessment; read-only snapshot active (`cos-progress-gpui-status-20261011-r1`), no team wakes or new spike run. Return aggregated milestones/blockers and source-grounded smallest missing GPUI proof, not worker chatter.
+
 - GPUI study closed and independently corroborated at `151e8b3`, not a qualified spike or platform-impossibility finding. Keep `/home/tb/.t3/worktrees/orderready/spike-gpui-import-gui` AND its Git index: eleven added files, including executable source/Cargo.lock, remain staged/uncommitted under accepted static gate. Preserve `~/.local/share/orderready/gpui-spike/` receipts/snapshot. Team/verifier settled; no settle cleanup scripts. Current stack retained, no further study run/redesign authorized.
 - Geometry stock-take/tooling workstream verified complete and team settled at `d114b6f`. PR42 stays parked. Approved StepKit source-faithful B still lacks generic valid-material proof and atomic source-backed extraction; future qualification needs a new brief starting at repo contract/ADR0005 and `~/.cache/sg-b-qualification/qualification.md`, no native boundary/adapter yet authorized.
 
