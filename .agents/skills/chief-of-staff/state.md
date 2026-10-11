@@ -66,7 +66,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Watch and hypotheses
 
-- **2026-10-12:** delegate the before/after comparison for 200K Opus compaction (live since dotfiles PR10, baseline `~/.cache/claude-usage-20261011/compact-200k-baseline.md`), split by process start. Revert if rework eats the savings.
+- **Delegated 2026-10-12 (Pi task `cos-20261012-compact200k-compare`, output `~/.cache/claude-usage-20261012/`):** the before/after comparison for 200K Opus compaction (live since dotfiles PR10, baseline `~/.cache/claude-usage-20261011/compact-200k-baseline.md`), split by process start. Revert if rework eats the savings.
 - Retro 2026-10-11 (`~/.cache/cos-retro-20261011/`):
   - Admission false blocks and blind polling cost more than RAM did.
   - RAM versus serv01 is inconclusive.
