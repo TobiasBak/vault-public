@@ -19,7 +19,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 ## Skills
 
-`skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `.claude/skills` links to `.agents/skills` so Claude Code sees the vault-only ones too. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
+`skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `.claude/skills` links to `.agents/skills` so Claude Code sees the vault-only ones too. `chief-of-staff` is the one skill only Tobias invokes; keep it that way. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
 
 - Every global skill has `SKILL.md` and `agents/openai.yaml`. All global skills are model-invoked: omit `disable-model-invocation` and `policy.allow_implicit_invocation`. Tobias wants agents to discover relevant skills without him remembering their names. Descriptions must say when the skill applies.
 - Skills that guide code changes end with a `Verification` section naming the behavioral check expected.

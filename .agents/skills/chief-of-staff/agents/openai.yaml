@@ -2,3 +2,5 @@ interface:
   display_name: "Chief of Staff"
   short_description: "Be Tobias's single point of contact: delegate, raise, diagnose, keep the vault"
   default_prompt: "Use $chief-of-staff to act as Tobias's chief of staff for this session."
+policy:
+  allow_implicit_invocation: false

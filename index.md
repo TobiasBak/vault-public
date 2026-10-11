@@ -63,4 +63,4 @@ All model-invoked; agents select relevant skills automatically:
 
 - `audit-knowledge-consistency`: find and fix duplicate or contradictory knowledge, and verify links
 - `review-agent-history`: mine Pi and Codex histories for reusable knowledge
-- `chief-of-staff`: Tobias's single point of contact; delegates to team threads, raises issues without blocking, diagnoses teams, keeps the vault. Its state lives beside it.
+- `chief-of-staff` (Tobias-invoked only): Tobias's single point of contact; delegates to team threads, raises issues without blocking, diagnoses teams, keeps the vault. Its state lives beside it.

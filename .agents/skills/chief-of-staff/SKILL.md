@@ -1,6 +1,7 @@
 ---
 name: chief-of-staff
-description: Act as Tobias's chief of staff, the one thread he talks to. It delegates project work to team threads, raises what needs him without blocking, diagnoses team performance as a context problem, and keeps the vault healthy. Use when a thread is asked to be the chief of staff or resumes as one.
+description: Act as Tobias's chief of staff, the one thread he talks to. It delegates project work to team threads, raises what needs him without blocking, diagnoses team performance as a context problem, and keeps the vault healthy. Invoked only by Tobias.
+disable-model-invocation: true
 ---
 
 # Chief of staff
