@@ -9,13 +9,12 @@ Census 2026-10-11: every unsettled top-level thread.
 - [Optimize Agent Workflows for Orderready](t3-thread://v1/7a790d6e-5034-4970-ba3c-56be1bc8e3a9) (orderready): runner fixes merged; five backend cases running across two agents.
 - [Developer-Focused Conversation Context](t3-thread://v1/0035fcfe-aea0-4c3e-a978-cc7d54ca50d7) (pi-workspace-view): the standing owner, per Tobias 2026-10-11. Never settle this thread. A Monday 09:00 schedule (`cos-workspace-view-weekly-1`) wakes me to send the audit request. Audit 1 had too little data for a rollback verdict (7 of 20 sessions). It found that v3 sees only 40 of 925 real file reads, because codemode hides the rest, so the benchmark's −15% doesn't carry over to real use. I approved the NEXT.md experiment: an uninstalled codemode-aware prototype, 18 Luna runs, capped at $10. If it gets killed and v3 is also within 5% of baseline, the team reverts 7973c61 itself. Installing the prototype is Tobias's call, after the numbers.
 
-- [Omarchy support](t3-thread://v1/mcp:5cc035fb-ec59-4838-91b4-2f4bf1ade1e1) (dotfiles). Tobias 2026-10-11: Omarchy takes the whole 2 TB disk (nvme1n1, …9170A9) in Full disk mode, installed live, with the Pi CLI on Omarchy fixing breakage and NixOS as the fallback. Wrap-up is on dotfiles main at 870df05: `omarchy/README.md` runbook, `bootstrap.sh`, `migrate-home.sh`, `orderready.rsync-filter`, and the pc mount drop. Builds pass; nothing has been activated on the host. Untested: HM activation onward, TPM2 (`--tpm2`), `migrate-home.sh`. A Sol-high data-loss review is running (task `cos-omarchy-runbook-review-1`); the window waits for it to come back clean. The park and rebuild steps need Tobias's sudo. Window order:
-  1. Orderready pushed its 17 local-only branches. The 4 unpushed `orderready-platform` worktrees are backed up only by the copy, so it must be verified.
-  2. "Pause for Omarchy".
-  3. Park `orderready/` (~71G) at the same path on the NixOS root. Excludes are rebuildable build output, except `wt/*/target/or/artifacts/`, which is kept. `migrate-home.sh` carries `~/code` with `.git` intact plus `~/.cache/orderready/`.
-  4. pc rebuild.
-  5. Tobias installs.
-  6. Restore to the same path on Omarchy.
+- [Omarchy support](t3-thread://v1/mcp:5cc035fb-ec59-4838-91b4-2f4bf1ade1e1) (dotfiles). Tobias 2026-10-11: Omarchy takes the whole 2 TB disk (nvme1n1, …9170A9) in Full disk mode, installed live, with the Pi CLI on Omarchy fixing breakage and NixOS as the fallback. Wrap-up is on dotfiles main at 870df05: `omarchy/README.md` runbook, `bootstrap.sh`, `migrate-home.sh`, `orderready.rsync-filter`, and the pc mount drop. Builds pass; nothing has been activated on the host. Untested: HM activation onward, TPM2 (`--tpm2`), `migrate-home.sh`. A Sol-high data-loss review is running (task `cos-omarchy-runbook-review-1`); the window waits for it to come back clean. **Window started 2026-10-11** (Tobias: "you do stuff, tell me when to reboot"). Agents have no sudo, so Orderready parks at `/home/tobias/orderready-park/` with no root, and the pre-window pc rebuild is dropped (the mount is `nofail`). Order:
+  1. Orderready "pause for Omarchy" sent; waiting for "quiet".
+  2. Omarchy team adapts `migrate-home.sh` and the runbook, and copies the ISO to `~/Downloads`.
+  3. On "quiet", I send "go: quiet"; the team parks and verifies.
+  4. Review clean.
+  5. Tobias plugs in a USB stick and runs `sudo dd`, his one root step, then reboots into the installer.
 
 ## Needs Tobias
 
