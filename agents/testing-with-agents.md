@@ -34,6 +34,12 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 - Read `memory.events.local` for the owning limit. Hierarchical events include independently enforced child OOMs and can falsely fail a successful enclosing test suite.
 - Make cleanup verification part of the pass decision at both the execution and gate-result boundaries. Fail unverified cleanup locally. The only sound exception is an ephemeral CI runner VM, recorded and logged as the containment; execution failures still fail. The regression tests exercise the real gate consumer, not just the policy helper.
 
+## Expected crashes on Omarchy
+
+- For mutation testing, fuzzing and abort tests, set `LimitCORE=1` on the transient systemd unit to cover descendants, or set `RLIMIT_CORE` to 1 before exec.
+- Omarchy's `omarchy-crash-watch` shows a "Process crashed" toast for every systemd-coredump journal entry with the coredump `MESSAGE_ID` (`fc2e22bc…`), sending Tobias investigating expected crashes. Verified with a probe binary on his PC, 2026-10-11.
+- `RLIMIT_CORE=0` (`ulimit -c 0`, `LimitCORE=0`) still journals "terminated abnormally without generating a coredump" under that ID. With a pipe `core_pattern`, 1 makes the kernel skip the helper entirely, so there is no entry or toast. This is the [documented kernel special case](https://man7.org/linux/man-pages/man5/core.5.html).
+
 ## Git fixtures inside hooks
 
 Clear Git's repository-local environment before running a gate that creates temporary Git fixtures. Use `git rev-parse --local-env-vars` to identify the variables, including `GIT_DIR`, `GIT_WORK_TREE` and `GIT_INDEX_FILE`. Changing a child command's working directory does not override them. Without this, a pre-commit test wrote fixture commits onto the real branch and replaced its index. Verify the real commit/push entrypoints, not just standalone test commands.
