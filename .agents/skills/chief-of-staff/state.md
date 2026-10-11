@@ -23,6 +23,7 @@ Claude quota exhausted. CoS now runs on Pi Sol; the four failed teams (dotfiles,
 
 ## Diagnostics in flight
 
+- Bounded recovery/blocker census, read-only Pi Sol high: task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-recovery-census-1`. Expected: team/child status, Orderready background versus stranded work, dotfiles restart readiness, safe next actions. No team mutations or duplicate usage audit.
 - Claude usage accounting, read-only Pi Sol high: task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-claude-usage-accounting-1`. Expected: ranked session/model token attribution, cache metrics, coverage and subscription-quota limits of inference.
 - Claude orchestration/context audit, read-only Pi Sol high: task `node:delegated-task:command%3Amcp%3Ac2593a42-913c-4575-811e-00760ed662d7%3Adelegate-task%3Acos-claude-workflow-audit-1`. Expected: evidence of waste, context owner, smallest fix and a proving check. Inspect CoS briefs first.
 
