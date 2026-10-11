@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Plain extra/wine via Omarchy helper, not gaming/VM route; existing approved official SDK acquisition proceeds with complete private distribution and payload-specific license/provenance check before execution · stock audit verified scope, public build-use grants don't expressly restrict host; Wine unsupported, no tool redistribution or assumed xwin permission · —
+
 - 2026-10-11 · decided · Re-read Omarchy skill and audit stock Wine/Windows tooling before installing approved build-only runner · Tobias explicitly asked to use existing Omarchy approach; SDK terms audit remains separate, no duplicate downloads/dialogs/VM · —
 
 - 2026-10-11 · asked · Approve build-only Wine plus authentic official SDK FXC/native DLL route, conditional license review before acceptance/execution; recommend yes · preserves GPUI shader format while all compilation stays Linux; payload/license/version not established, no assumed xwin authority · Tobias: sure, check stock Omarchy tooling/best route first. Approval conditional on SDK license review before acceptance/execution; no VM/Windows-host fallback.
