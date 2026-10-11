@@ -31,5 +31,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · decided · Compaction offset: raise Opus to 433K (real ~400K); keep Haiku at 100K (real ~70K) and Sonnet at 200K (real ~167K) · Claude Code compacts ~33K below the setting; Tobias asked for ~400K on Opus, and Haiku must stay under its ≤100K price tier · pending
 - 2026-10-11 · decided · workspace-view v4: run the codemode-aware experiment (18 Luna runs, ≤$10); reject full re-render; park the compaction handoff · cheap, reversible, nothing installed; re-rendering costs ~2× per call at cache prices; install stays with Tobias · Tobias: agreed
 - 2026-10-11 · asked · Omarchy: stop the VM proof and install live, with Pi on Omarchy to fix breakage · Tobias proposed it; NixOS stays as the fallback, so VM iterations cost more time than they save · Tobias: yes (his idea)
+- 2026-10-11 · corrected by Tobias · Omarchy move: git first (WIP branches, repo handoffs, fresh clones and threads) instead of a same-path copy of worktrees, ~/.t3 and agent state · I optimized for keeping old T3 threads alive; cross-machine moves belong in git · Tobias: "this was the wrong approach"
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
