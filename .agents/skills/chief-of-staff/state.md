@@ -8,7 +8,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 - [Omarchy settle-in](t3-thread://v1/mcp:28a26fdb-7dbe-4a04-aacc-b21727653dff) (dotfiles): done (4f4e90b, 1ef2a79). Idle; reuse it for dotfiles work. GitHub goes over HTTPS through git insteadOf plus gh credentials (there is no SSH key). uv, vite-plus 1.1.0, go and playwright-cli come through mise. The T3 slice matches NixOS. The askpass env loads at the next service restart.
 - [P2 test-suite migration (resume)](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579) (orderready): running. The Nix port (`p2/off-nix`, mise.toml + mise.lock) lands off-nix → p2/integrate → main. No hosted CI: the gate is `tools/or test --full` plus the Windows nightly. Q5 closed: AX SQL credentials stay in Firestore, served to employees (the AX-11 design), per Tobias. Cutting-rates 500 filed as orderready-platform#1. The `domain` census is running. Five P2 rounds are parked until the port lands. The Windows VM is parked until a release candidate; its Omarchy setup goes to dotfiles. orderready-platform gets the Nix port after. Mailbox auth (Tobias): keep machine tokens; environment binding and audit approved for after the port; the AX SQL password is customer-side and can't be rotated. Pairing enrollment approved (an Import GUI admin approves a code from `enroll`; `machine create` is deleted), queued after env binding and audit.
-- [Workspace view standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931) (pi-workspace-view): never settle it. The 18 runs (≤$10) have run since 12:41Z on prototype `4858015` (fixes reviewed; v3 replay byte-identical). The vp version doesn't matter: 004 pins vite-plus 0.2.2 locally. Next: the numbers. Kill rule: revert v3 through a change sent to dotfiles (pre-approved). Installing the prototype is Tobias's call. Schedule `cos-workspace-view-weekly-1` (Mon 09:00, bound here) wakes me for the weekly audit.
+- [Workspace view standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931) (pi-workspace-view): never settle it. Round 1 was killed at ~13:05Z when its session restarted ($0.98 lost). The rerun is `systemd-run --user --unit=pwv-bench-r2` from 13:06Z, ~$7.3, total ~$8.3 of the $10 cap. Next: the numbers. Kill rule: revert v3 through a change sent to dotfiles (pre-approved). Installing the prototype is Tobias's call. Schedule `cos-workspace-view-weekly-1` (Mon 09:00, bound here) wakes me for the weekly audit.
 - [rmut command-cases mode](t3-thread://v1/mcp:45897a0c-83cb-48aa-8781-99cb87131a2e) (rust-mutants, `feature/command-cases`): design approved (third mode: process per case with env vars; exit 0/1/2/3; deadline timeouts get a solo rerun). My change: pure JSON on stdout, header to stderr, stepkit consumers updated if they parse it. Merges on its own check; Orderready confirms after its Nix port.
 
 
@@ -19,7 +19,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Hypotheses
 
-None open. Missing merge authority was resolved by a standing rule (2026-10-11).
+- My `auto` message (settle rule, ~13:05Z) started a new turn in the idle workspace-view thread, and T3 stopped the old session's scope, killing its detached benchmark. If confirmed, don't start turns in idle teams that have detached work running; long jobs use `systemd-run --user` (vault writer `cos-vault-systemd-run-1`).
 
 ## Watch
 
