@@ -16,6 +16,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
+- One `systemctl --user restart t3code.service` after the dotfiles overhaul applies. It loads the disk TMPDIR and askpass env (the running PID 57451 predates them) and interrupts every agent turn. I'll ping Tobias when the overhaul is applied and teams have long jobs in systemd units. Waiting: overhaul team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
@@ -31,6 +32,5 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 - Expected crashes from agent test runs trigger systemd-coredump desktop notifications (rmut mutant SIGABRT, 2026-10-11; rmut is setting LimitCORE=1 on its units; 0 still journals a "no coredump" entry that omarchy-crash-watch toasts on, while 1 makes the kernel skip the pipe helper). If a second test tool causes one, fix it once for the T3 agent slice in dotfiles with LimitCORE=1 on agent scopes, rather than per tool.
 - T3 slice contention: Orderready's full-gate subagent was OOM-killed (2026-10-11) while the workspace-view benchmark and rmut runs shared the ~16.8 GiB slice. Teams check headroom and cap parallelism. A second OOM means designing machine-level scheduling for heavy jobs (the NixOS `pc-workload` had none on Omarchy).
 - /tmp is a 16G RAM tmpfs with a per-user quota. Dotfiles 2070c1e/40f3bee moved agent TMPDIR to `~/.cache/agent-tmp` (loads at the next T3 restart) and set the pnpm store on disk in bootstrap. After the benchmark round ends: apply it live (`PATH="$HOME/.local/share/pnpm/bin:$PATH" mise exec pnpm -- pnpm config set --global store-dir "$HOME/.local/share/pnpm/store"`), then `rm -rf /tmp/.pnpm-store` once no /tmp workspaces remain. Handed to the workspace-view team for its post-round cleanup. swe-benchmarking `6349ddb` puts workspaces on disk; /tmp is at 2.4G.
-- A T3 restart loads the askpass env and the disk TMPDIR. Best after the benchmark round; bundle it with the memory-cap decision (waiting on Orderready's RSS measurement). Otherwise the next nightly restart applies it. AUR-only packages can't go through pkexec (makepkg refuses root), so they still need Tobias's terminal.
 - T3 slice is live at MemoryHigh 55% / MemoryMax 70% (dotfiles fe62408, 2026-10-11). Orderready and the overhaul team are told.
 - Claude auto-compaction is live in `~/.claude/settings.json` (2026-10-11): Opus 433K setting (~400K real), Sonnet 200K, Haiku 100K (~70K real, inside its ≤100K price tier). Applies to new sessions; this thread started before it.
