@@ -58,7 +58,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Watch and hypotheses
 
-- Opus switch burn diagnosed: no hidden subagents (native Agent denied by hook), no Haiku. Cause: resumed expired Claude sessions (133K–285K first prompts, P2 compacted 457K) plus steady large-context cache reads (~2.5M tokens/min from P2+dotfiles at 16:53). Open lever: Opus auto-compact threshold 433K keeps every leader request huge; decision with Tobias.
+- Opus switch burn diagnosed: no hidden subagents (native Agent denied by hook), no Haiku. Cause: resumed expired Claude sessions plus steady large-context cache reads. Tobias approved Opus auto-compact 433K→200K; dotfiles team changing it with a baseline at `~/.cache/claude-usage-20261011/compact-200k-baseline.md`. **2026-10-12: delegate the before/after comparison (tokens per request and per milestone, post-compaction rework) and report to Tobias; revert if rework eats the savings.**
 
 - Don't resurrect admission theory before this isolated GPUI compile. General cache-aware scheduling safety remains unproven. Three historical OOM counters don't establish three separate new incidents; another confirmed OOM needs machine-level scheduling diagnosis.
 - Geometry team is settled at `d114b6f`; PR42 parked. Approved source-faithful StepKit B still lacks generic material-validity proof and atomic extraction. Future qualification needs a new brief from repo contract/ADR0005 and `~/.cache/sg-b-qualification/qualification.md`; no native adapter/boundary authorized.
