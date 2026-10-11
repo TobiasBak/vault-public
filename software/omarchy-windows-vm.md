@@ -8,7 +8,7 @@ Agents may use Tobias's Omarchy Windows VM for staging checks (Tobias, 2026-10-1
 - It is the dockur/windows image in the Docker container `omarchy-windows`. RDP listens on `127.0.0.1:3389` and the noVNC web viewer on `127.0.0.1:8006`, both localhost-only.
 - Credentials: `~/.keys/windows-vm.env` (`WINDOWS_VM_USERNAME`, `WINDOWS_VM_PASSWORD`). Agent SSH key: `~/.keys/windows-vm-agent`, with its pinned host key in `~/.keys/windows-vm-known_hosts`. Never copy them anywhere else.
 - No GPU. Windows renders with WARP, its software rasterizer, so look and correctness are real but smoothness and memory are not representative.
-- `tb` is in the `docker` group (sudoless Docker, 2026-10-11). Sessions started before the next host reboot lack the group: `win-vm` re-executes itself under `newgrp docker`; for raw Docker use `printf '%s\n' '<command>' | newgrp docker`.
+- `tb` is in the `docker` group (sudoless Docker, 2026-10-11).
 - Don't use `omarchy-windows-vm launch` for agent work. It always opens RDP and stops the VM when that window closes.
 
 ## Driving it: `win-vm`
