@@ -26,7 +26,7 @@ None open. Missing merge authority was resolved by a standing rule (2026-10-11).
 
 ## Watch
 
-- Tobias wants a message from me when T3 is on the newest nightly (2026-10-11). Check that the service's `t3 --version` and the desktop app both match `pnpm view t3 dist-tags.nightly`. That happens after the dotfiles agent lands pnpm and the nightly timer and Tobias swaps to AUR `t3code-nightly-bin` and runs bootstrap. The PC uses pnpm, never npm.
+- Tobias wants a message from me when T3 is on the newest nightly (2026-10-11). Check that the service's `t3 --version` and the desktop app both match `pnpm view t3 dist-tags.nightly`. That happens after the dotfiles agent lands pnpm and the nightly timer and Tobias swaps to AUR `t3code-nightly-bin` and runs bootstrap. The PC uses mise for tools, and mise uses pnpm for npm packages; never npm.
 
 - Claude per-model compaction is done (dotfiles 76f82b2, vault a4f6956). T3 still runs with the old env (`CLAUDE_CODE_DISABLE_1M_CONTEXT=1`), which caps Opus at 200K. It clears at the T3 restart bundled with the Omarchy switch-over: `systemctl --user daemon-reload && systemctl --user restart t3code.service`.
 - A GUI ssh password prompt (x11-ssh-askpass) popped on Tobias's desktop from the Omarchy team's VM ssh (2026-10-11). Candidate fix at the owner: `SSH_ASKPASS_REQUIRE=never` in the T3 service environment (dotfiles `service.conf`). It takes effect on the next T3 restart; bundle it with the Omarchy window.
