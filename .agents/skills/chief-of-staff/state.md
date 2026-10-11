@@ -16,10 +16,10 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Team](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf), orderready. Tobias wants BOTH builds on Linux: native Linux ELF and cross-compiled Windows PE, no Windows-host compilation/CI/VM-build fallback. No API/Tokio bridge or Orderready integration/rewrite plan. A Windows .exe is compile proof, not Windows runtime proof; runtime checks remain Tobias's staging responsibility.
 
-- **Cargo actually started 2026-10-11 17:52:44 CEST**, PID2592465, independent immutable unit `gpui-dual-linux-debug-20261011T175244060243.service`. Native Linux `cargo build --locked --target x86_64-unknown-linux-gnu --jobs2`; Windows PE follows within remaining budget. Command start is NOT compile success.
-- One shared slot held; MemoryMax6GiB, CPUQuota200%, two jobs, total admitted budget1h, global caps unchanged. Source/lock/toolchain/receipts: `~/.cache/gpui-dual-compile-20261011/primary/`; current run/artifact suffix `linux-debug-20261011T175244060243`.
+- FINAL independently reviewed proof COMPLETE for unmodified Longbridge gpui-pre/platform0.3.8: ALL builds on Linux, actual nativeLinuxELF and cross-compiledWindowsDEBUGPE, both cleanCargo0. WindowsRELEASEcrossbuild FAILS actualCargo101: Windows-host-gated FXC shader generation leaves missing shaders_bytes.rs/emptyOUT_DIR. DebugPE depends on source shaderpaths, NOTportable/distributable/runtime-qualified. No Windowsnativefallback/CI/VM/fork/patch/pipelinechange. Receipts/reviews/binaries `~/.cache/gpui-dual-compile-20261011/{result.md,review/round2-terminal-release-report.md}`, owningMarkdown `04ba2d4` in `/home/tb/.local/share/orderready/wt/gpui-dual-compile-proof/docs/gpui-dual-compile-proof.md`. CoS bounded final artifact spot-check active (`cos-gpui-final-artifact-closeout-20261011-r1`); settle team after alignment.
+- All compileunits terminal/emptyControlGroup; solecompileowner/two independentSol-high reviews completed/noqueuedwork. Budget298.928367/3600sadmitted; one-slot/6GiB/CPUQuota200%/twojobs/globalcaps preserved. No more build/runtimeround authorized.
 - Previous raw ancestor `MemoryHigh - MemoryCurrent` guard blocked on inactive file cache despite available host RAM. CoS overengineered admission; superseded replay prerequisite with real host availability and one bounded job. No generic admission framework, cache clearing, cap increase or killing other work. Diagnosis: `~/.cache/cos-gpui-memory-20261011.md`.
-- Next: actual Linux ELF/Windows PE, exact framework/revision/toolchain/hash receipts, independent target/artifact check. Distinguish native Windows support from Linux-host cross-build limitations. A shader patch/fork/pipeline choice comes to Tobias; source findings never count as a built binary.
+- Next material choice: pursue a local/upstreamable shader/build fix for Linux-to-Windows RELEASE? Recommend yes if continuing GPUI evaluation; no permanentfork/pipeline/Orderreadyrewrite approved. Actual debugbinaryproof doesn't prove deployableWindowsapp.
 - Preserve `/home/tb/.t3/worktrees/orderready/spike-gpui-import-gui` AND its Git index: eleven original source/lock files remain staged/uncommitted under accepted static blockage. Original report `151e8b3` is an unqualified study, not platform-impossibility proof. Preserve `~/.local/share/orderready/gpui-spike/` receipts. No VM operation, production rewrite or deployment.
 
 ### Orderready P2 migration
@@ -32,7 +32,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Historical C3 `9f670af` remains unqualified: old37-file argv unrecoverable, 58 routed executable obligations retained. Approved NEW source-grounded scope includes successful adapter/dependency owners; fresh exact-head inventory/control/final counts, no fabricated replay/dead-code waivers or higher budgets. Eleven positives split times/catalogue; current73-path preparation is not qualification.
 - Immutable upstream command bundle delivered and consumer hash verified; consumer parity/integration is pending behind INF. Keep old harness until proof passes. Private bundle details remain in owning handoffs.
 - Approved follow-on: pairing approval inside Import GUI, replacing operator `machine create` after shipping. Windows VM remains out of scope.
-- Shared three-slot admission remains; GPUI owns one reserved slot/current compile. P2 supplied checkpoint `evidence/p2-capacity/checkpoint.md`:1819716/9fbe0cfd belongs oldGPUIOrderreadywatch;2028624/4bb9473c Stepkittoolswatch;2298200C4Bwatch;2038653gone/nohistoricalcheckpoint recovered. Verifier now finds only2298200stilllive/C4Bconfirmed;1819716/2028624gone, their mappings historical;2038653stillgone/nohistoricproof. Revalidate PIDs at actualrestart, notglobalclearance; no kills or newproof inferred.
+- Shared three-slot admission remains; GPUI compileunits are terminal, its temporary priorityreservation may release after ownercoordination. P2 supplied checkpoint `evidence/p2-capacity/checkpoint.md`:1819716/9fbe0cfd belongs oldGPUIOrderreadywatch;2028624/4bb9473c Stepkittoolswatch;2298200C4Bwatch;2038653gone/nohistoricalcheckpoint recovered. Verifier now finds only2298200stilllive/C4Bconfirmed;1819716/2028624gone, their mappings historical;2038653stillgone/nohistoricproof. Revalidate PIDs at actualrestart, notglobalclearance; no kills or newproof inferred.
 
 ### Agent-context research
 
@@ -53,7 +53,9 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
-- T3 restart authorization AFTER CoS establishes cross-team checkpoint/readiness. Service still predates TMPDIR/askpass environment; completion of dotfiles alone isn't safety. Current GPUI job is independent, other hosted work still needs ownership/recovery confirmation.
+- GPUI: pursue a minimal local/upstreamable fix for Windows RELEASE cross-build from Linux? Recommend yes before Windows staging; current debugPE isn't portable and releaseFXCstep is Windows-host-gated. Original compileproof done; no newfork/pipeline/rewrite work authorized.
+
+- T3 restart authorization AFTER CoS establishes cross-team checkpoint/readiness. Service still predates TMPDIR/askpass environment; completion of dotfiles alone isn't safety. GPUI compileunits are now terminal; other hosted work still needs ownership/recovery confirmation.
 - Serv01 SSH authorization and private restic password restoration. Use private secret-entry tools, never chat. NAS/T3 backup restoration waits on these prerequisites.
 - Decision-log review: seven entries marked **[review]**; unmarked entries clear as right calls unless Tobias objects. Distill lessons and delete reviewed entries.
 
