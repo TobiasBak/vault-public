@@ -14,7 +14,6 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- Run `sudo pacman -S --needed nasm libfaketime` (nasm 3.02 for the Windows cross-build; libfaketime for the corpus clock). It blocks Orderready's Nix-port gate. Waiting: Orderready team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
