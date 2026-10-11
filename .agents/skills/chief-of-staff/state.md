@@ -14,7 +14,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- Decision log review: 47 unreviewed entries in `decisions.md`, over the 40 threshold. Waiting: me, to distill the lessons.
+- Decision log review: 10 entries marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
 
