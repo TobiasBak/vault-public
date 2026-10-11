@@ -8,6 +8,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
+- 2026-10-11 · decided · Accept reported v3 config/persistence milestone pending bounded receipt spot-check, leave fresh-session runtime proof with standing workspace owner · reviewed/gated merged PR7 and actual idempotent apply exist; no global restart or duplicate behavioral probe · —
+
 - 2026-10-11 · corrected by Tobias · Replace my API/table-bridge framing with a minimal pure-Rust GPUI Linux+Windows compile proof on the existing team · I answered integration architecture before his actual framework capability question · Tobias: wants actual dual-platform compile feasibility; no bridge.
 
 - 2026-10-11 · asked · Authorize one further bounded GPUI proof fixing the retained spike macro then compiling/exercising the API/table-edit slice; recommend yes, P2 admission first · current source-only study neither proves impossible nor measures value; no rewrite/VM/shader-pipeline authority implied · Tobias corrected the goal: no bridge; prove a pure-Rust GPUI GUI compiles for Linux and Windows. Replaced by the explicitly scoped compile proof.
