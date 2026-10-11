@@ -8,7 +8,9 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
-- 2026-10-11 · asked · Allow shared P2 admission to count conservatively clean inactive file cache as reclaimable, keeping each governing ancestor's own stats/limits, host availability, reserves/caps/slots; recommend yes · unchanged raw floor blocked actual INF qualification with all slots free and 21.03GiB available; fix shared boundary, not another GPUI-only exception · pending Tobias.
+- 2026-10-11 · decided · Correct shared P2 admission now, preserving every ancestor's genuine budget and host reserve/caps/slots; no new memory approval question · Tobias repeated 20GiB-free correction; my explicit raw-charge restriction contradicted existing cache lesson, so fix engineering boundary and run real qualification · —
+
+- 2026-10-11 · asked · Allow shared P2 admission to count conservatively clean inactive file cache as reclaimable, keeping each governing ancestor's own stats/limits, host availability, reserves/caps/slots; recommend yes · unchanged raw floor blocked actual INF qualification with all slots free and 21.03GiB available · Tobias: 'Wtf are we talking about memory again? I have 20gigs free?' CoS withdrew question, authorized correctness fix with unchanged caps/reserves/slots; repeated approval was CoS error.
 
 - 2026-10-11 · decided · Plain extra/wine via Omarchy helper, not gaming/VM route; existing approved official SDK acquisition proceeds with complete private distribution and payload-specific license/provenance check before execution · stock audit verified scope, public build-use grants don't expressly restrict host; Wine unsupported, no tool redistribution or assumed xwin permission · —
 
