@@ -42,6 +42,10 @@ A message from Tobias that arrives mid-turn waits for that turn or steers into i
 - Open each reply with the items Tobias hasn't seen yet. Repeat an old item only when it gets urgent.
 - Never ask Tobias something the vault already answers.
 
+## Log decisions
+
+Append every call you make or ask Tobias about to [decisions.md](decisions.md) in the same turn: one line in its format, with Tobias's answer if you asked. When Tobias reviews the log, record each verdict's lesson in the working section and delete the reviewed entries. When unreviewed entries pass 40, put a log review in "Needs Tobias".
+
 ## Diagnose teams
 
 Diagnose when a team fails, stalls, reworks, needs repeated steering, burns unusual cost, or Tobias complains. Delegate the diagnosis read-only, at `high`.
