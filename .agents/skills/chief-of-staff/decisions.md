@@ -33,5 +33,6 @@ Format: `date · asked|decided · the call · why · verdict`. Tobias gives the 
 - 2026-10-11 · asked · Omarchy: stop the VM proof and install live, with Pi on Omarchy to fix breakage · Tobias proposed it; NixOS stays as the fallback, so VM iterations cost more time than they save · Tobias: yes (his idea)
 - 2026-10-11 · corrected by Tobias · Omarchy move: git first (WIP branches, repo handoffs, fresh clones and threads) instead of a same-path copy of worktrees, ~/.t3 and agent state · I optimized for keeping old T3 threads alive; cross-machine moves belong in git · Tobias: "this was the wrong approach"
 - 2026-10-11 · asked · Push OIP (someone else's repo) local work before Omarchy? · it's a shared repo, so that call is Tobias's · Tobias: yes, push to branches. Namespaced `wip/tobias-omarchy/*`, noise and customer data skipped
+- 2026-10-11 · decided · The git sweep found TobiasBak/vault archived, so it pushed a backup to a new private `vault-omarchy-continuity` repo instead of unarchiving, and it bypassed pre-push hooks (rust-mutants, stepkit-geometry) that demand the pushed commit be checked out · both are reversible and leave the working trees untouched · accepted
 
 Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the verdict was "should have decided" (see the working section).
