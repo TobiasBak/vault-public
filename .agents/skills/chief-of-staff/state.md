@@ -57,7 +57,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
-- Serv01 SSH authorization and private restic password restoration. Use private secret-entry tools, never chat. NAS/T3 backup restoration waits on these prerequisites.
+- Serv01 SSH: DONE 2026-10-11 (new `~/.ssh/id_ed25519` via ssh-copy-id; password in `~/.keys/serv01.env`); dotfiles staging declarative key + copying restic password from the cold disk. NAS/T3 backup restoration follows.
 - Decision-log review: seven entries marked **[review]**; unmarked entries clear as right calls unless Tobias objects. Distill lessons and delete reviewed entries.
 
 ## Watch and hypotheses
