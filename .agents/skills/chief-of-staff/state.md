@@ -14,7 +14,8 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
-- Decision log review: 10 entries marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
+- Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
+- Mailbox automation auth to orderready-platform (no interactive Microsoft login): Tobias is unsure. The Orderready team is writing a brief (current machine token, weaknesses, recommendation). Waiting: me, to bring it to Tobias.
 
 ## Hypotheses
 
