@@ -8,7 +8,9 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
-- 2026-10-11 · asked · Approve build-only Wine plus authentic official SDK FXC/native DLL route, conditional license review before acceptance/execution; recommend yes · preserves GPUI shader format while all compilation stays Linux; payload/license/version not established, no assumed xwin authority · pending Tobias.
+- 2026-10-11 · decided · Re-read Omarchy skill and audit stock Wine/Windows tooling before installing approved build-only runner · Tobias explicitly asked to use existing Omarchy approach; SDK terms audit remains separate, no duplicate downloads/dialogs/VM · —
+
+- 2026-10-11 · asked · Approve build-only Wine plus authentic official SDK FXC/native DLL route, conditional license review before acceptance/execution; recommend yes · preserves GPUI shader format while all compilation stays Linux; payload/license/version not established, no assumed xwin authority · Tobias: sure, check stock Omarchy tooling/best route first. Approval conditional on SDK license review before acceptance/execution; no VM/Windows-host fallback.
 
 - 2026-10-11 · asked · Pursue minimal local/upstreamable GPUI Windows-release cross-build fix on Linux; recommend yes before runtime staging · actual Linux/debugWindows binaries compile but unmodified release shader step host-gated, debugPE source-path dependent; no productionrewrite/fork/pipeline authorized · Tobias: sure. Minimal local/upstreamable dependency build/shader fix authorized; existing team resumed, no permanent fork/pipeline/rewrite or upstream contact.
 
