@@ -13,7 +13,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ### GPUI pure-Rust Linux/Windows compile proof
 
-- **REWRITE STARTED (Tobias, 2026-10-11 late):** GPUI lead owns the design; awaiting the slice plan. First PR: ADR superseding 0003. Remaining gates are rewrite acceptance criteria. Fleet (no-GPU mandatory?) open until Windows G0.
+- **REWRITE STARTED (Tobias, 2026-10-11 late):** GPUI lead owns the design; awaiting the slice plan. First PR: ADR superseding 0003. Remaining gates are rewrite acceptance criteria. ADR items decided by Tobias (SQLite ok on merits, local patches, parity, GPU-less must work but perf irrelevant).
 
 [Team](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf), orderready. Tobias wants BOTH builds on Linux: native Linux ELF and cross-compiled Windows PE, no Windows-host compilation/CI/VM-build fallback. No API/Tokio bridge or Orderready integration/rewrite plan. A Windows .exe is compile proof, not Windows runtime proof; runtime checks remain Tobias's staging responsibility.
 
