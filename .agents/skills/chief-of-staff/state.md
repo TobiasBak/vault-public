@@ -10,6 +10,7 @@ Census 2026-10-11: every unsettled top-level thread.
 - [Developer-Focused Conversation Context](t3-thread://v1/0035fcfe-aea0-4c3e-a978-cc7d54ca50d7) (pi-workspace-view): v3 snapshot view merged (30ae786), replay +1.8% input cost over native. Told to run the 12-run live benchmark (~$2.30, ~45 min) and report whether v3 cuts rereads and cost.
 
 - [Commit orphaned dotfiles changes](t3-thread://v1/mcp:0f4d0fd5-f94c-4d4a-a748-216f0a333353) (dotfiles): 12 uncommitted files from 2026-10-04 to 2026-10-11, including the live global instructions. Committing them in coherent groups, applying nothing, parking anything half-done.
+- Omarchy on the 2 TB disk (CoS-owned until designed): read-only survey running of the disk, its current users, dotfiles Arch support, and Omarchy install paths. Constraint: no reboot or disruption to running teams until Tobias moves; config and T3 server must be ready first. Nothing destructive without Tobias's explicit go on the exact disk and data plan.
 
 ## Needs Tobias
 
