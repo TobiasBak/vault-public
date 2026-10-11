@@ -42,7 +42,7 @@ Not exhaustive. Search with `rg`.
 - [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats, Access with Worker destinations
 - [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, free-plan pausing and restore
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
-- [software/omarchy-windows-vm.md](software/omarchy-windows-vm.md): agent use of Tobias's local Windows VM, credentials location, getting files in, RDP from agents
+- [software/omarchy-windows-vm.md](software/omarchy-windows-vm.md): agent use of Tobias's local Windows VM: the `win-vm` CLI (SSH, in-session GUI, UIA, screenshots), lifecycle ownership, guest bootstrap, getting files in
 
 ## Global skills (`skills/`)
 
