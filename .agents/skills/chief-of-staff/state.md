@@ -23,4 +23,5 @@ Census 2026-10-11: every unsettled top-level thread.
 
 ## Watch
 
-- Sol compressing `agents/coding-models.md` (2,915 words) under budget; retry after Pi failed to start once on 2026-10-11. A second Pi start failure triggers a diagnosis.
+- `coding-models.md` compressed to 1,936 words (f907b4c); throughput split into `agents/pi-throughput.md`. Haiku is reviewing it for lost facts and fixing a design-routing contradiction.
+- Pi failed to start a turn once (2026-10-11); a second failure triggers a diagnosis.
