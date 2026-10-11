@@ -3,7 +3,7 @@
 Not exhaustive. Search with `rg`.
 
 - [AGENTS.md](AGENTS.md): how to use and maintain this vault
-- [projects.md](projects.md): repository routes and ownership (Dotfiles, T3 Code)
+- [projects.md](projects.md): public repository routes (Dotfiles, T3 Code)
 
 ## Tobias
 

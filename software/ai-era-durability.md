@@ -52,4 +52,4 @@ Independent coding products earn their place through:
 - integrations with issues, CI, and production systems
 - provider choice where it creates real leverage
 
-Multi-provider support alone is easy to copy. This is T3 Code's direction (see [projects](../projects.md#t3-code)).
+Multi-provider support alone is easy to copy. T3 Code's direction is a collaborative workspace around provider-native agents: shared task state, policy, evidence, and provider integration (see [repository route](../projects.md#t3-code)).

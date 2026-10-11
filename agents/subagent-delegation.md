@@ -51,6 +51,7 @@ Tobias's split:
 
 ## T3 Code feedback
 
+- Restarting or updating the T3 service can terminate running agents. Finish or stop hosted work before a restart; [dotfiles](../projects.md#dotfiles) owns service operations.
 - In Orchestrator V2, separate deliberate progress messages from automatic completion delivery. Children can call `t3_thread_send` with `mode: "steer"` to feed findings into an active parent; `auto` also steers when the parent is ready. The parent can use the same tool to update child contracts. These exchanges are model-chosen, not a fixed T3 worker pipeline. See the [V2 MCP contract](https://github.com/pingdotgg/t3code/blob/8ed276c246b6/docs/orchestration-v2/orchestrator-mcp-server.md#t3_thread_send).
 - A parent's plain-text reply to a child's relayed progress message reaches nobody: the child never sees it. Coordinate running children with `t3_thread_send` (`mode: "steer"`) to their `childThreadId`. On 2026-10-07 an overnight run lost several coordination replies this way before switching to steer.
 - Parallel PRs from many children, where force-push is banned: have one integration child stack them in a fixed order. It merges each parent branch into the next with a merge commit, gates every layer, and retargets with `gh pr edit --base`. Give it a written conflict brief with per-file "keep both intents" notes. CSS dead-rule deletions proven against `main` must be re-proven against the integrated stack, because the stacked TSX can revive a class.
