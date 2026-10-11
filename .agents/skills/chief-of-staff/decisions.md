@@ -8,7 +8,7 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 ## Unreviewed
 
-- 2026-10-11 · asked · Pursue minimal local/upstreamable GPUI Windows-release cross-build fix on Linux; recommend yes before runtime staging · actual Linux/debugWindows binaries compile but unmodified release shader step host-gated, debugPE source-path dependent; no productionrewrite/fork/pipeline authorized · pending Tobias.
+- 2026-10-11 · asked · Pursue minimal local/upstreamable GPUI Windows-release cross-build fix on Linux; recommend yes before runtime staging · actual Linux/debugWindows binaries compile but unmodified release shader step host-gated, debugPE source-path dependent; no productionrewrite/fork/pipeline authorized · Tobias: sure. Minimal local/upstreamable dependency build/shader fix authorized; existing team resumed, no permanent fork/pipeline/rewrite or upstream contact.
 
 - 2026-10-11 · decided · Authorize INF to honor each governing ancestor's remaining headroom using its own current; retain raw cache/caps/reserves and exact-head requalification · nearest-finite-high ignores tighter outer constraint; kernel safety bugfix, not new resource-policy tradeoff or GPUI exemption · —
 
