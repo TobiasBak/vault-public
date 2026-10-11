@@ -16,6 +16,7 @@ On Omarchy since 2026-10-11 (user `tb`, host `tb-omarchy`). Nix-free (Tobias). g
 
 ## Needs Tobias
 
+- Dotfiles overhaul phase 1 proposal: OK the layout (`./dot apply/check`, `agents/`, `desktop/` deltas only, `nixos/` serv01-only, ~131→35 files)? Plus two questions: delete `oip-windows-vm` (the VM isn't run on this PC), and which of gcloud, terraform, vesktop, RDP client and whisper transcribe he still uses. My calls: keep packages with consumer notes, drop cargo-mutants if unused, drop the duplicate Stremio autostart; make the Claude/Codex configs live (attribution off, subagent-routing hook); port taildrop now and nas-mount/restic after secrets; no Nix on the workstation even for the lock (keep serv01 inputs and lock untouched). Waiting: overhaul team.
 - Decision log review: 7 entries still marked **[review]** in `decisions.md`; the unmarked ones get cleared as right calls. Waiting: me, to distill the lessons.
 
 ## Hypotheses
