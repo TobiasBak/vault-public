@@ -18,6 +18,7 @@ Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in
 - [dotfiles#13 OpenCode v2](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869): the team installed 1.19.0 (`opencode-ai`), but v2 is `@opencode/cli`. It backs up the OpenCode DB, swaps the package, checks the login, gets T3 to re-probe, runs a smoke test, and closes #13.
 - [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): it measures the gate, the inner loop and the review loop, posts a baseline, files lever issues and ships safe speedups. It reports at the baseline and at close.
 - [dotfiles#14 OpenCode free-model tracker](t3-thread://v1/mcp:2b618522-f96d-43ea-b5fd-c769d36a40ac): it snapshots the free OpenCode models, joins them with Artificial Analysis scores, and on a change sends a desktop notification and updates an `opencode-free` issue. It may need Tobias's AA key at a `~/.keys/` path.
+- pi-workspace-view (agent-context research; HANDOFF.md holds the procedure and limits, run cap ≤8 concurrent across teams): [#8 confirm epoch pruning](t3-thread://v1/mcp:ce6d25bf-9fa9-4853-9782-e872f9e73f86) (CoS go, ≤4 runs), [#5 native-compaction precheck](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6 long-session case](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3 output caps](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4 compaction](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b) (≤2 runs each). An adopt verdict comes back as a `needs-tobias` issue.
 
 ### Winding down (convert open work to issues, then end)
 
@@ -25,8 +26,7 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 
 - [P2](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579) (orderready, 364 runs). Open work to file: case wall-clock implementation, B4 mailbox, backend-response gate, archive entry digest, notes-tip scrub, the rmut consumer, closing PR #37, pairing approval. The nightly's 06:00 thread check becomes a GitHub issue opened on failure.
 - [GPUI](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf) (orderready, 317 runs). Workbench PR at review round 6: apply the review rule (merge if no correctness blocker; the rest becomes issues). Remaining `docs/rewrite-plan.md` slices become issues with dependencies. The standing rules move into repo docs: spike worktree and receipts preserved, no `--no-verify` without a CoS go, black-box tests, stdio-only driver.
-- [Agent-context research](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931) (pi-workspace-view): finishes the scout batch in flight; each untried mechanism becomes an issue; then it ends. Fast-loop rule and scout limits: subscription only, at most 4 concurrent, no global Pi config changes, a 12-run confirm needs a CoS go.
-- Dotfiles and rmut: done and settled. Dotfiles' backlog is issues #11 (NAS mount) and #12 (T3 restic restore proof; the unit peaks at its 1G MemoryMax).
+- Dotfiles, rmut and the agent-context owner: done and settled. Dotfiles' backlog is issues #11 (NAS mount) and #12 (T3 restic restore proof; the unit peaks at its 1G MemoryMax).
 
 ### Repo-wide standing rules (until each repo documents them)
 
@@ -46,5 +46,5 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
   - The dotfiles VM receipt predates the final concurrency fixes and didn't exercise a fresh bootstrap or a disconnected-session handoff.
 - Starting an idle turn may kill detached work from an earlier agent scope, so keep long jobs in independent user units. This is still a single-incident hypothesis.
 - StepKit geometry team is settled at `d114b6f`, with PR42 parked. Any future qualification needs a new brief.
-- Weekly task `cos-agent-context-weekly-1` (Mondays 09:00) predates the issue model; retire or retarget it once agent-context research runs from issues.
+- The weekly pi-workspace-view audit (Mondays 09:00) now launches a fresh thread per run and reports to CoS.
 - The T3 nightly timer updates the service, not the desktop package. Don't restart T3 during live work.
