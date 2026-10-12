@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Lead](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf). Rewriting the Import GUI from Tauri/React to pure-Rust GPUI (Tobias, 2026-10-11). The design is the lead's: ADR 0011, `docs/gui-testing.md` and `docs/rewrite-plan.md`, merged in PR #7 `7cebf236`.
 
-- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Blocked on P2's contention fixes (in-process HTTP, then `p2/case-pressure`): Draft model (`f904aa9a`, review clean), Drawing viewer (`a5457f73`, 374 of 374 pages pass, review running), backend OCCT RUNPATH (`730ddec8`). Driver: `vulkan-swrast` is installed (GUI cases render on lavapipe); it waits for the RUNPATH PR.
+- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Draft model (PR #21 `49c1762d`). Open: OCCT RUNPATH (PR #22, gate green, review running); Drawing viewer (`a5457f73`), to be re-gated on P2's throughput fixes. Driver: `vulkan-swrast` is installed (GUI cases render on lavapipe); it waits for the RUNPATH PR.
 - Tobias's ADR calls: SQLite wherever it's the better store, vendored patches stay local, exact user-visible parity, machines without a GPU must work but their performance doesn't matter.
 - Clean rewrite (Tobias): Tauri/React frozen, no Tauri adaptations; parity is an end gate against the frozen build.
 - Tests are black-box only (theodore). The driver speaks stdio only. The Windows corpus runner runs inside the guest; there is no `--listen` and no `win-vm forward`.
@@ -49,7 +49,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- Now: deploy `300dc11` to serv01 (Tobias's go, 2026-10-12). The old snapshots are kept on purpose.
+- serv01 deploy is held: main also carries the Samba LAN allow-list fix, which needs Tobias's answer. Hermes gets re-pinned to the live `8f271272` first (CoS). The old snapshots are kept and documented (`6acb92c`).
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
@@ -61,6 +61,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
+- Samba LAN fix on serv01 (allow-list `192.168.86.0/24` → `192.168.1.0/24`, ships with the key deploy): ship it or hold it?
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
