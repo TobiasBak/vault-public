@@ -45,8 +45,8 @@ T3 Code's `delegate_task` inherits the parent's provider unless the call selects
 Tobias's model-routing decision, 2026-10-11:
 
 - **Claude Opus 5.5, effort `high`:** leads top-level teams, owning design, decisions, coordination, integration, and acceptance. Never a delegated child, including design or research subagents. Sol top-level leads are temporary Claude-quota recovery, not the permanent default.
-- **Pi GPT-6.1 Sol, thinking `high`:** default executor for all delegated execution, implementation, test runs, and code review. Explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}` from every parent. No medium/high difficulty split, no Codex CLI, and no inheritance from an Opus leader.
-- **Claude Haiku 5.5, effort `high`:** bounded research and exploration with checkable answers: call-site/dependency censuses, locating code, read-only exploration, doc/log audits, triage, and doc questions. Explicitly target `{"providerInstanceId":"claudeAgent","model":"claude-haiku-5-5","options":{"effort":"high"}}`. It never leads teams, designs, implements, or reviews code. Require file:line lists and check counts; it overclaims completeness. See [Haiku specifics](coding-models.md#haiku-55-specifics) for cost and context limits.
+- **Pi GPT-6.1 Sol, thinking `high`:** default executor for all delegated work: execution, implementation, research and exploration, test runs, and code review. Explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}` from every parent. No medium/high difficulty split, no Codex CLI, and no inheritance from an Opus leader.
+- **Claude Haiku 5.5:** retired (Tobias, 2026-10-12). Research and exploration go to Sol; the dotfiles routing hook denies Haiku targets.
 
 Brief workers with a concrete design, not a menu of architectural choices. Children may split execution further; design questions go back to the top-level lead.
 

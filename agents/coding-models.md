@@ -85,7 +85,7 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark arms are experiments, not approved delegation roles; follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing). Luna's 272K tier is more forgiving; no tested task approached it.
 - **Base prompts must be far below 100K.** A T3/OpenCode setup's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts ~30% more tokens than 4.5's. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API:** adaptive thinking only; effort `low`–`max`, default `medium`. Anthropic warns of early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, occasional empty replies at `xhigh`. Claude Code harness prompt is ~17–25K before the task.
-- **T3 host:** Pi has no Haiku. Its provider target lives in the [team-routing policy](subagent-delegation.md#compute-routing).
+- **Routing:** retired from delegation (Tobias, 2026-10-12); see the [team-routing policy](subagent-delegation.md#compute-routing).
 
 ### Astra specifics
 

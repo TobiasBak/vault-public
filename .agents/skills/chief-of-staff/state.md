@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Leaders run on Opus 5.5 high. Delegated execution and review run on Pi Sol 6.1 at thinking high; bounded research runs on Haiku 5.5 high. Policy lives in dotfiles `agents/AGENTS.md`.
+- Leaders run on Opus 5.5 high. Delegated execution and review run on Pi Sol 6.1 at thinking high, including research; Haiku is retired (hook-enforced). Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
