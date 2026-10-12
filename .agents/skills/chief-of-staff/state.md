@@ -49,7 +49,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- serv01 deploy is held: main also carries the Samba LAN allow-list fix, which needs Tobias's answer. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
+- serv01 deploy approved (Tobias): the key, the Samba LAN fix, and Hermes removed; nothing else. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
@@ -61,7 +61,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
-- Samba LAN fix on serv01 (allow-list `192.168.86.0/24` → `192.168.1.0/24`, ships with the key deploy): ship it or hold it?
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
