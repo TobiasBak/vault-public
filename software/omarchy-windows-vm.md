@@ -50,12 +50,15 @@ For work whose guest state must not persist (installs, users, hosts-file edits, 
 
 ## Guest setup
 
-Done once on 2026-10-11; repeat only for a reinstalled guest. `win-vm bootstrap` stages pinned, hash-checked installers in `~/.cache/win-vm/bootstrap` and opens RDP with that folder redirected. Tobias double-clicks `\\tsclient\winvm\bootstrap.bat` and accepts UAC. The script is idempotent and logs to `C:\ProgramData\win-vm\bootstrap.log` and to the host stage folder. It:
+For a first-time or reinstalled guest, `win-vm bootstrap` stages pinned, hash-checked installers in `~/.cache/win-vm/bootstrap` and opens RDP with that folder redirected. Tobias double-clicks `\\tsclient\winvm\bootstrap.bat` and accepts UAC. The script is idempotent and logs to `C:\ProgramData\win-vm\bootstrap.log` and its stage folder. It:
 
 - installs OpenSSH Server (public-key only, the agent key in `administrators_authorized_keys`, firewall open on TCP 22 only);
 - installs the VC++ x64 runtime and WinApp CLI (`C:\Program Files\winapp`, on the machine PATH);
 - keeps tb's autologon without a logon-count limit, and disables sleep, the lock on resume and the screen saver;
-- hands tb's session to the console, which closes the RDP window.
+- turns live NumLock, CapsLock and ScrollLock off before pinning their saved state to off;
+- pins Danish `00000406` as tb's sole keyboard layout while preserving the display language;
+- sets `Romance Standard Time` to match the VM's Copenhagen localtime RTC;
+- hands tb's session to the console, which closes the RDP window, or skips the handoff if already on the console.
 
 Afterwards, stop the VM (`win-vm down`) and pin the result with `win-vm baseline`.
 
@@ -64,6 +67,44 @@ Lessons from the first run:
 - Windows Installer refuses to install from an RDP session or a `\\tsclient` path (exit 1645). Copy installers locally and run them as SYSTEM from a one-shot scheduled task.
 - The OpenSSH MSI's stock `Subsystem sftp sftp-server.exe` is relative, and the MSI doesn't put its folder on PATH, so `scp` and `sftp` close right after authentication. Use the quoted absolute path to `sftp-server.exe`.
 - `query session` exits 1 even when it succeeds.
+
+### Re-bootstrap an existing guest
+
+Start with the persistent guest stopped and free. Existing SSH access and tb autologon let agents run the elevated bootstrap in tb's console session without RDP or UAC:
+
+```bash
+(
+  set -e
+  win-vm bootstrap --stage-only
+  win-vm up
+  win-vm exec 'New-Item -ItemType Directory -Force -Path C:\ProgramData\win-vm\stage | Out-Null'
+  for file in ~/.cache/win-vm/bootstrap/*; do
+    win-vm put "$file" "C:/ProgramData/win-vm/stage/${file##*/}"
+  done
+  win-vm gui --wait --timeout 1800 powershell.exe -NoProfile -ExecutionPolicy Bypass -File 'C:\ProgramData\win-vm\stage\bootstrap.ps1'
+  win-vm down
+)
+```
+
+Stop if the block fails or `down` does not report `stopped: true`. Otherwise, boot again and compare guest UTC with host UTC:
+
+```bash
+win-vm up && win-vm exec '[DateTime]::UtcNow.ToString("o")' && date -u
+```
+
+Continue only if these commands succeed and the clocks agree within seconds:
+
+```bash
+win-vm down
+```
+
+Only after `down` succeeds and reports `stopped: true`, pin the result:
+
+```bash
+win-vm baseline
+```
+
+Logs are in `C:\ProgramData\win-vm\bootstrap.log` and `C:\ProgramData\win-vm\stage\bootstrap.log`.
 
 ## Getting files in
 
