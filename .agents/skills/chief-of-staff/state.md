@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Lead](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf). Rewriting the Import GUI from Tauri/React to pure-Rust GPUI (Tobias, 2026-10-11). The design is the lead's: ADR 0011, `docs/gui-testing.md` and `docs/rewrite-plan.md`, merged in PR #7 `7cebf236`.
 
-- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Blocked on P2's contention fixes (in-process HTTP, then `p2/case-pressure`): Draft model (`f904aa9a`, review clean), Drawing viewer (`a5457f73`, 374 of 374 pages pass, review running), backend OCCT RUNPATH (`730ddec8`). Driver: waiting for Tobias's polkit approval of `vulkan-swrast` (GUI cases render on lavapipe because libfaketime deadlocks inside NVIDIA's Vulkan driver) and for the RUNPATH PR.
+- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Blocked on P2's contention fixes (in-process HTTP, then `p2/case-pressure`): Draft model (`f904aa9a`, review clean), Drawing viewer (`a5457f73`, 374 of 374 pages pass, review running), backend OCCT RUNPATH (`730ddec8`). Driver: `vulkan-swrast` is installed (GUI cases render on lavapipe); it waits for the RUNPATH PR.
 - Tobias's ADR calls: SQLite wherever it's the better store, vendored patches stay local, exact user-visible parity, machines without a GPU must work but their performance doesn't matter.
 - Clean rewrite (Tobias): Tauri/React frozen, no Tauri adaptations; parity is an end gate against the frozen build.
 - Tests are black-box only (theodore). The driver speaks stdio only. The Windows corpus runner runs inside the guest; there is no `--listen` and no `win-vm forward`.
@@ -61,7 +61,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
-- Approve the pending polkit dialog: `omarchy-pkg-add vulkan-swrast` (it blocks the GPUI Driver).
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
