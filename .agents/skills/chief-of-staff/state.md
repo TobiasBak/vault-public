@@ -49,7 +49,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- serv01 deploy approved (Tobias): the key, the Samba LAN fix, and Hermes removed; nothing else. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
+- serv01 is on generation 33 (`fb31679`): declarative Omarchy key only, Samba allows the LAN, Hermes and SearXNG are gone; failed units, restic and the LAN check are all clean. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
@@ -61,6 +61,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Needs Tobias
 
+- Delete Hermes's leftover data on serv01? That's `/var/lib/hermes` (1.2G) and the stopped `hermes-agent` container (553 MB).
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
