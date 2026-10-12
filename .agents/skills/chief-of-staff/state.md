@@ -29,7 +29,7 @@ Dead and superseded team threads are settled; a cleanup child settles finished s
 
 ### Winding down (convert open work to issues, then end; both failed on the session limit mid wind-down)
 
-Relaunched 2026-10-12 as Sol wind-down teams behind plan gates: [P2 wind-down](t3-thread://v1/mcp:f9cca1af-7fdf-4d01-a5b4-d6dc94522b64), [GPUI wind-down](t3-thread://v1/mcp:925be72c-4cb7-4c3a-ba3d-2490ed919a16). They settle the dead leads and their queued children.
+Relaunched 2026-10-12 as Sol wind-down teams behind plan gates: [P2 wind-down](t3-thread://v1/mcp:f9cca1af-7fdf-4d01-a5b4-d6dc94522b64), [GPUI wind-down](t3-thread://v1/mcp:925be72c-4cb7-4c3a-ba3d-2490ed919a16). Both have go. They settle the dead leads and their queued children. orderready#86 (standing rules) merged by CoS as 516ccd09. The workbench never reached a PR: its head is pushed to `gpui/workbench-lifecycle-final` and is waiting on the 35s-vs-15s qualification budget decision. Backend-response-gate and archive-digest PRs come to the CoS.
 
 Each long-lived lead files `ready` issues for all its open and next work (in-flight branches linked), moves any standing rule it holds into repo docs, finishes only a PR already merge-ready, settles its children, reports, and ends. I then dispatch fresh per-issue teams.
 
