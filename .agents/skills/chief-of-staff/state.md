@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Delegated work runs on Sol 6.1 high; Space Bunny (free OpenCode) is a trial worker in public repos only. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
+- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Delegated work runs on Sol 6.1 high; Space Bunny (free OpenCode) is a trial worker in any repo; never send it secrets. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
@@ -18,9 +18,9 @@ Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in
 Restart order: dotfiles and pi-workspace-view first, then orderready#44 once the first plans and diffs look sound, then the P2/GPUI wind-downs, orderready product work last. Read each plan and diff; log Space Bunny usage from the `space_bunny:` metrics lines. Design-heavy issues wait.
 
 Running:
-- [dotfiles#12 restic restore](t3-thread://v1/mcp:e4035b7a-460e-4d4f-9d7f-b4eaef4f3818): Space Bunny on code slices; restore drill Sol-only.
-- [dotfiles#11 NAS mount + #13 close](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): first Space Bunny delegate_task is #13's T3 provider smoke; applying the mount needs Tobias.
-- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): resumes from dead thread mcp:ce6d25bf; Sol only (private).
+- [dotfiles#12 restic restore](t3-thread://v1/mcp:e4035b7a-460e-4d4f-9d7f-b4eaef4f3818): go given: one real backup in a transient unit with MemoryHigh=1G/MemoryMax=3G, restore drill with scratch deleted after; no live apply before merge.
+- [dotfiles#11 NAS mount + #13 close](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): go given; #13 closed (Space Bunny smoke via T3 passed, 46 s); applying the mount is a manual root restore that needs Tobias.
+- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): resumes from dead thread mcp:ce6d25bf; go given (driver scripts committed before launch; Space Bunny on the counting audit).
 
 Not restarted (failed on the Claude session limit; resume fresh from the issue, reading the dead thread first):
 - [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): baseline not posted.
@@ -42,7 +42,6 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 ## Needs Tobias
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
-- Space Bunny on private repos: currently public only because its free tier keeps prompts. Raised 2026-10-12.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
