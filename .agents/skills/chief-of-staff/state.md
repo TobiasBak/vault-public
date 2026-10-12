@@ -15,9 +15,9 @@ Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in
 
 ### Hold (Tobias, 2026-10-12)
 
-Start no team until non-Opus leaders are ready (Sol 6.1 or an OpenCode Go open model as lead, free OpenCode models as workers, stricter guardrails and CoS monitoring). Every Opus-led team below failed mid-turn on the Claude session limit (16:52–17:23); none is running. Resume each as a fresh non-Opus team from its issue once the setup is approved, not by re-prompting the dead thread.
+Start no team until non-Opus leaders are ready: Sol 6.1 leads, free OpenCode Zen models work, with stricter guardrails and CoS monitoring. Never use paid OpenCode models (Go or paid Zen). A free-model bake-off (Sol child, public repos only) picks the workers. Every Opus-led team below failed mid-turn on the Claude session limit (16:52–17:23); none is running. Resume each as a fresh non-Opus team from its issue once the setup is approved, not by re-prompting the dead thread.
 
-- [dotfiles#13 OpenCode v2](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869): `@opencode/cli` 2.0.27 is installed, but `opencode auth list` shows no login, so only the free Zen models are reachable; Go needs the device login. Remaining: login, Go smoke, close #13.
+- [dotfiles#13 OpenCode v2](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869): `@opencode/cli` 2.0.27 is installed, but `opencode auth list` shows no login, so only the free Zen models are reachable; Go is off the table (paid). Remaining: free-model smoke, close #13.
 - [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): baseline not posted.
 - pi-workspace-view (HANDOFF.md holds procedure and limits, run cap ≤8 concurrent): [#8 confirm epoch pruning](t3-thread://v1/mcp:ce6d25bf-9fa9-4853-9782-e872f9e73f86) (CoS go, ≤4 runs), [#5](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b). Read each thread's last state before rebriefing.
 
@@ -36,7 +36,6 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 ## Needs Tobias
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
-- OpenCode device login: a terminal running `opencode auth login opencode --method device` is open on his desktop.
 - Approve the non-Opus leader setup before any team starts.
 - Decision-log review: entries marked **[review]**.
 
