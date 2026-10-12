@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Delegated work runs on Sol 6.1 high; Space Bunny (free OpenCode) is a trial worker in any repo; never send it secrets. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
+- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Subagents default to Space Bunny (free OpenCode) everywhere (Tobias 2026-10-12); Sol 6.1 high does independent review, locking/cleanup/ownership work, and takes over after limit errors (rerun on first, team switches on second). Never send Space Bunny secrets. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
