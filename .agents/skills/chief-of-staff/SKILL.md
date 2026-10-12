@@ -40,7 +40,7 @@ Teams are disposable (Tobias, 2026-10-12: P2 and GPUI leads ran 300+ runs in rev
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - A team brief names the issue and adds only what the issue and repo can't carry:
   - Gates (Sol leads, Tobias 2026-10-12): post the plan and wait for the chief of staff's go before code. Never merge: hand over the merge-ready PR (gate green on the head, review clean); the chief of staff reads the diff and gate output, then merges. At most 3 concurrent children. Stop and report on a child that weakens or deletes an existing test, or drops a check of a real requirement (a worker fixing its own new, invalid assertion is fine; report it), an out-of-scope edit, the same failure twice, or an unbacked claim.
-  - Workers: Sol by default; push bounded implementation, test and counting-audit slices through Space Bunny and report its usage (see Track performance).
+  - Workers: Space Bunny by default; Sol for independent review, locking/cleanup/ownership work, and as fallback after limit errors; report usage (see Track performance).
   - Scope discipline: anything out of scope becomes a new issue, not more work.
   - Review rule: one independent review, which blocks only on correctness, security, data loss or a broken contract. Everything else becomes a follow-up issue. At most two rounds; then the lead decides and records why in the PR.
   - Finish: close the issue with a comment giving the outcome and a metrics block (see Track performance). Settle each subagent thread once its result is used.

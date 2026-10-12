@@ -4,7 +4,7 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider gui
 
 ## Current choice
 
-Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. No measurement shows the current team split beats plain Sol on cost per finished task; include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
+Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost, and made Space Bunny the default subagent on 2026-10-12. No measurement shows the current team split beats plain Sol on cost per finished task; include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
 ## Provider guidance
 
