@@ -34,6 +34,7 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 
 ## Needs Tobias
 
+- Artificial Analysis API key (free account at artificialanalysis.ai/insights): store the raw key at `~/.keys/artificial-analysis`, mode 0600. dotfiles#14 waits for scores; the rest is being built.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
