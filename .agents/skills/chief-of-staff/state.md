@@ -39,7 +39,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Lead](t3-thread://v1/mcp:2cc5f9ae-2f26-4443-9fc2-7617e9ce3e4b), Opus, started 2026-10-12 from `~/code/rust-mutants/.git/agent-handoffs/lead-handoff.md`. The temporary Pi lead `mcp:45897a0c` is retired.
 
-- Now: nested-cgroup teardown (rmut owns its subtree; see decisions.md), a SIGKILL nested-child test, and a new qualified pin. This gates P2's rmut command consumer and, through it, C3/C4B.
+- Done: nested-cgroup teardown (PR #5 `bc588fa`). The qualified pin `~/.cache/rmut/qualified/7ef780a…/` supersedes `e7f0730`, and P2 has it. The lead is settled until P2's consumer turns up a producer bug.
 
 ### Dotfiles
 
