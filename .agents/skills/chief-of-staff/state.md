@@ -49,7 +49,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- serv01 deploy is held: main also carries the Samba LAN allow-list fix, which needs Tobias's answer. Hermes gets re-pinned to the live `8f271272` first (CoS). The old snapshots are kept and documented (`6acb92c`).
+- serv01 deploy is held: main also carries the Samba LAN allow-list fix, which needs Tobias's answer. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
