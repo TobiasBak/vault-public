@@ -29,7 +29,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
 - Unblocked by `win-vm run --ephemeral` (`564ec00`): the release-gating nightly Windows lanes. Port the lanes, delete the clone code, and build the corpus guest runner (that one also waits for the GPUI Driver PR).
 - Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
-- Critical path: the chunks await-bound PR, then corpus throughput (the mailbox and first-order fixes). That throughput work unblocks the fixtures, the rmut consumer and B4.
+- Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
+- Running: case pressure, the rmut consumer on pin `7ef780a`, the fixtures (merge to main plus 7 held rows), and the Windows lanes PR on `win-vm run --ephemeral`.
 - Queued, in order of the owner's choosing:
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
 - rmut `--cpus` is merged (`37be8a2`). The command-case consumer (`3a5fff12`) waits for corpus throughput; C3 r3d and C4B r2 follow it.
