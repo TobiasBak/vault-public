@@ -55,7 +55,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931), pi-workspace-view. Never settle it.
 
-- Pi workspace-view v3 is disabled (dotfiles PR7). Checkpoint trial: case 004 never reached 128k (`f21bcb1`). The census (`69c0806`) shows 38% of Pi sessions cross 128k and 46% of Pi spend falls at or above it. CoS approved a new case drawn from history whose stock runs cross 128k, within the remaining 18 of the 20 executions in `f1b384c`. Judge by cost per passing task, not by cache hit rate.
+- Pi workspace-view v3 is disabled (dotfiles PR7). Checkpoint trial: case 004 never reached 128k (`f21bcb1`). The census (`69c0806`) shows 38% of Pi sessions cross 128k and 46% of Pi spend falls at or above it. No case in history crosses 128k on Sol medium (`c514c09`). CoS approved screening cases 002 and 003, 2 runs each, after the harness is generalised per case and reviewed. If neither crosses in both runs, stop for good with the verdict "not exercised". Otherwise run the trial on the qualifying case. All within the remaining 18 executions of `f1b384c`. Judge by cost per passing task, not by cache hit rate.
 - Weekly task `cos-agent-context-weekly-1` runs Mondays at 09:00; the next run is 2026-10-12.
 
 ## Needs Tobias
