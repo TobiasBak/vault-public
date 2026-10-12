@@ -52,6 +52,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
 - serv01 is on generation 33 (`fb31679`): declarative Omarchy key only, Samba allows the LAN, Hermes and SearXNG are gone, with Hermes's leftover state deleted (about 1.8 GB, Tobias); failed units, restic and the LAN check are all clean. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
+- In flight: OpenCode as a T3 provider (Tobias). Enable it via dotfiles T3 settings, Tobias logs in through a browser prompt, then report his subscription's models and a smoke result.
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
