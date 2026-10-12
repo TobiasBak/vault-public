@@ -217,3 +217,4 @@ Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the v
 - 2026-10-12 · decided by CoS · merged orderready#86 (standing rules), pwv#10 (#5 precheck), dotfiles#19 (#12 restic MemoryHigh 1G/MemoryMax 3G); authorized #12's daemon-reload-only apply
 - 2026-10-12 · decided by CoS · launching and waiting on subject runs is process-ownership work: Sol or the lead, never Space Bunny · pwv#6 Bunny worker self-woke into a 429-attempt launch loop
 - 2026-10-12 · decided by CoS · pwv#3 closed for case 004 with zero runs (worst-case ceiling 5.2% against the 10% bar); #1 gets no runs
+- 2026-10-12 · decided by CoS · orderready P2 census: dropped the stale server_id ban (live code uses it); workcenter key-table consolidation becomes an ordinary `ready` issue, not needs-tobias; #81 history purge now depends on triaging 362 deny-stem candidate matches in the current tree (repo is private, so this blocks publication, not a live leak)
