@@ -11,60 +11,25 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Teams
 
-### GPUI rewrite (orderready)
+Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in parallel worktrees, ended at merge; GitHub issues are the backlog and handoff. See SKILL.md Delegate and Track performance.
 
-[Lead](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf). Rewriting the Import GUI from Tauri/React to pure-Rust GPUI (Tobias, 2026-10-11). The design is the lead's: ADR 0011, `docs/gui-testing.md` and `docs/rewrite-plan.md`, merged in PR #7 `7cebf236`.
+### Running
 
-- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Draft model (PR #21 `49c1762d`). OCCT RUNPATH (PR #22 `4f670c7b`). Optional `--frontend-dir` (PR #24 `d158b8d1`; `docs/parity-record.md` holds the frozen hashes and the post-freeze api table). Drawing viewer (PR #26 `c761baf0`, with an out-of-process PDF worker capped at 4 GiB). Backend client (PR #27 `fc3268a2`; the `ports` wire types are completed, OpenAPI unchanged). Running: the workbench lifecycle, then the draft editor and plan/review in parallel. Driver (PR #29 `3b642043`; Windows runtime typing and date cases wait for the guest re-bootstrap). Driver tree-churn restarts (PR #30 `8199708b`) and pointer-float decode (PR #31 `f0034f00`). In review: the workbench lifecycle (`dd538a3a`). Merged: host cases (PR #38), the attach-stall fix (PR #41 `57f0498d`, a local `accesskit_unix` patch; 100/100 normal, 30/30 TRACE). Next: the fake file-chooser portal.
-- Lead handover: the thread is at 316 runs. At the next clean boundary (the workbench PR merged, with children settled), the lead writes a repo handoff and CoS starts a fresh Opus lead from it.
-- Tobias's ADR calls: SQLite wherever it's the better store, vendored patches stay local, exact user-visible parity, machines without a GPU must work but their performance doesn't matter.
-- Clean rewrite (Tobias): Tauri/React frozen, no Tauri adaptations; parity is an end gate against the frozen build.
-- Tests are black-box only (theodore). The driver speaks stdio only. The Windows corpus runner runs inside the guest; there is no `--listen` and no `win-vm forward`.
-- No binary fixtures or evidence in Git; drawings are referenced by hash from P2's fixture store. Further `--no-verify` commits need a CoS go.
-- Preserve the spike worktree `/home/tb/.t3/worktrees/orderready/spike-gpui-import-gui` and its index, plus the receipts under `~/.local/share/orderready/gpui-spike/`.
+- [OpenCode v2 fix](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869) (dotfiles): the team installed 1.19.0 (`opencode-ai`); v2 is `@opencode/cli`. It backs up the OpenCode DB, swaps the package, checks the login, gets T3 to re-probe, and runs a smoke test. It ends when it reports.
 
-### Orderready P2 migration
+### Winding down (convert open work to issues, then end)
 
-[Owner](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579). Owns the `tools/or` gate, the corpus runner, the test shape and the theodore rules. Local `tools/or test --full` is the gate; there is no hosted CI. Nothing is deployed.
+Each long-lived lead files `ready` issues for all its open and next work (in-flight branches linked), moves any standing rule it holds into repo docs, finishes only a PR already merge-ready, settles its children, reports, and ends. I then dispatch fresh per-issue teams.
 
-- Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
-- Merged: the Windows lanes on ephemeral win-vm (PR #23 `3880fd3c`), with the clone code and vm-slot lock deleted. Nightly live (PR #25 `cafd356a`): `orderready-nightly.timer` runs at 01:00, verdicts go to `$ORDERREADY_DATA/nightly/<stamp>/nightly.json`, and a 06:00 check in P2's thread reports failures. The first run failed on old Windows clippy errors; the fix in `p2/windows-clippy` adds Windows clippy to the `--full` gate.
-- Merged: the fixture migration (PR #40 `401acb2b`): 270 synthetic fixtures and 70 in the hashed store, with zero tracked binary fixtures guarded. Original names and blobs stay in history until the pre-publication purge (Tobias's go). Next: the notes-tip scrub, then B4 mailbox.
-- Merged: `tools/or test --repeat N <job>` (PR #35 `00630400`). Repeat proofs go through it; hand-editing the verdict cache is banned, and a later pass never supersedes a recorded fail.
-- Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
-- Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
-- Done: the Windows guest re-baseline (baseline `8015cb946fda`, captured 09:43Z): Copenhagen zone, Danish layout, indicators off, guest clock within 1.2 s of the host. The Tauri GUI lanes are deleted (PR #33 `be28940a`, ADR 0011); Cutover re-qualifies install/update. UTF-8 guest JSON reads merged (PR #43); tools cache inputs scoped to `tools/or` (PR #42); main `8e8095f7`.
-- Case-pressure clock decided (wall time plus an uncached `contention` outcome; see the decision log); implementation and qualification next, then corpus-wide budget re-derivation.
-- Running: the rmut consumer on pin `7ef780a`. PR #37 (CPU-time pressure probe, qualification FAIL) predates the wall-clock decision; P2 closes or reworks it.
-- rmut `--cpus` is merged (`37be8a2`). The command-case consumer (`3a5fff12`) waits for corpus throughput; C3 r3d and C4B r2 follow it.
-- Later: pairing approval inside the Import GUI.
+- [P2](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579) (orderready, 364 runs). Open work to file: case wall-clock implementation, B4 mailbox, backend-response gate, archive entry digest, notes-tip scrub, the rmut consumer, closing PR #37, pairing approval. The nightly's 06:00 thread check becomes a GitHub issue opened on failure.
+- [GPUI](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf) (orderready, 317 runs). Workbench PR at review round 6: apply the review rule (merge if no correctness blocker; the rest becomes issues). Remaining `docs/rewrite-plan.md` slices become issues with dependencies. The standing rules move into repo docs: spike worktree and receipts preserved, no `--no-verify` without a CoS go, black-box tests, stdio-only driver.
+- [Agent-context research](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931) (pi-workspace-view): finishes the scout batch in flight; each untried mechanism becomes an issue; then it ends. Fast-loop rule and scout limits: subscription only, at most 4 concurrent, no global Pi config changes, a 12-run confirm needs a CoS go.
+- [Dotfiles](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5): NAS mount, the T3 backup and Hermes removal from main become issues.
+- [rmut](t3-thread://v1/mcp:2cc5f9ae-2f26-4443-9fc2-7617e9ce3e4b): done. Future producer bugs become rust-mutants issues.
 
-### rmut
+### Repo-wide standing rules (until each repo documents them)
 
-[Lead](t3-thread://v1/mcp:2cc5f9ae-2f26-4443-9fc2-7617e9ce3e4b), Opus, started 2026-10-12 from `~/code/rust-mutants/.git/agent-handoffs/lead-handoff.md`. The temporary Pi lead `mcp:45897a0c` is retired.
-
-- Done: nested-cgroup teardown (PR #5 `bc588fa`). The qualified pin `~/.cache/rmut/qualified/7ef780a…/` supersedes `e7f0730`, and P2 has it. The lead is settled until P2's consumer turns up a producer bug.
-
-### Dotfiles
-
-[Team](t3-thread://v1/mcp:87e88c75-f093-4c7a-9817-97a135c52fe5). Works on main.
-
-- Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
-- Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
-- Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- serv01 is on generation 33 (`fb31679`): declarative Omarchy key only, Samba allows the LAN, Hermes and SearXNG are gone, with Hermes's leftover state deleted (about 1.8 GB, Tobias); failed units, restic and the LAN check are all clean. Hermes is being removed from main (Tobias), with its state on serv01 kept. The old snapshots are kept and documented (`6acb92c`).
-- Later: NAS mount and the T3 backup.
-
-### OpenCode provider
-
-[Team](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869), fresh, in dotfiles. It enables OpenCode in T3 (Tobias). Tobias logs in through a browser prompt, then the team reports his subscription's models, its limits and a smoke result. It may not restart T3.
-
-### Agent-context research
-
-[Standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931), pi-workspace-view. Never settle it.
-
-- Pi workspace-view v3 is disabled (dotfiles PR7). Checkpoint trial: case 004 never reached 128k (`f21bcb1`). The census (`69c0806`) shows 38% of Pi sessions cross 128k and 46% of Pi spend falls at or above it. No case in history crosses 128k on Sol medium (`c514c09`). **Fast-loop scouting (Tobias, 2026-10-12):** the team explores context-manipulation mechanisms in 1–2-run scouts, under the rule in `agents/autoresearch.md`. Scouts are pre-authorized: subscription only, at most 4 concurrent, no global Pi config changes. The old checkpoint line is halted (`feat/checkpoint-case-param` `db5d375` is parked, unmerged). A 12-run confirm needs a clearly good scout and a CoS go. The team reports one short message per scout batch.
-- Weekly task `cos-agent-context-weekly-1` runs Mondays at 09:00; the next run is 2026-10-12.
+- Orderready: `tools/or test --full` is the gate (local, no hosted CI); `tools/or test --repeat N` for repeat proofs; never hand-edit the verdict cache or `~/.cache/orderready/verdicts`; no binary fixtures in Git; the pre-publication `filter-repo` purge needs Tobias's go. Parity: exact React parity until cutover, quirks as rows in `docs/parity-record.md`.
 
 ## Needs Tobias
 
@@ -79,4 +44,5 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
   - The dotfiles VM receipt predates the final concurrency fixes and didn't exercise a fresh bootstrap or a disconnected-session handoff.
 - Starting an idle turn may kill detached work from an earlier agent scope, so keep long jobs in independent user units. This is still a single-incident hypothesis.
 - StepKit geometry team is settled at `d114b6f`, with PR42 parked. Any future qualification needs a new brief.
+- Weekly task `cos-agent-context-weekly-1` (Mondays 09:00) predates the issue model; retire or retarget it once agent-context research runs from issues.
 - The T3 nightly timer updates the service, not the desktop package. Don't restart T3 during live work.
