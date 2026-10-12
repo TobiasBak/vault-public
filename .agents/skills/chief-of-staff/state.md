@@ -17,7 +17,6 @@ Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in
 
 - [dotfiles#13 OpenCode v2](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869): the team installed 1.19.0 (`opencode-ai`), but v2 is `@opencode/cli`. It backs up the OpenCode DB, swaps the package, checks the login, gets T3 to re-probe, runs a smoke test, and closes #13.
 - [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): it measures the gate, the inner loop and the review loop, posts a baseline, files lever issues and ships safe speedups. It reports at the baseline and at close.
-- [dotfiles#14 OpenCode free-model tracker](t3-thread://v1/mcp:2b618522-f96d-43ea-b5fd-c769d36a40ac): it snapshots the free OpenCode models, joins them with Artificial Analysis scores, and on a change sends a desktop notification and updates an `opencode-free` issue. It may need Tobias's AA key at a `~/.keys/` path.
 - pi-workspace-view (agent-context research; HANDOFF.md holds the procedure and limits, run cap ≤8 concurrent across teams): [#8 confirm epoch pruning](t3-thread://v1/mcp:ce6d25bf-9fa9-4853-9782-e872f9e73f86) (CoS go, ≤4 runs), [#5 native-compaction precheck](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6 long-session case](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3 output caps](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4 compaction](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b) (≤2 runs each). An adopt verdict comes back as a `needs-tobias` issue.
 
 ### Winding down (convert open work to issues, then end)
@@ -34,7 +33,7 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 
 ## Needs Tobias
 
-- Artificial Analysis API key (free account at artificialanalysis.ai/insights): store the raw key at `~/.keys/artificial-analysis`, mode 0600. dotfiles#14 waits for scores; the rest is being built.
+- Artificial Analysis API key (free account at artificialanalysis.ai/insights): store the raw key at `~/.keys/artificial-analysis`, mode 0600. The tracker is live (dotfiles #15 holds the table); scores and the name-matching check (#16) wait on the key.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
