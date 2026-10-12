@@ -55,7 +55,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931), pi-workspace-view. Never settle it.
 
-- Pi workspace-view v3 is disabled (dotfiles PR7). The bounded checkpoint trial is authorized within the limits of proposal `f1b384c`. Judge it by cost per passing task, not by cache hit rate.
+- Pi workspace-view v3 is disabled (dotfiles PR7). The checkpoint trial is parked as not_activated (`f21bcb1`): on case 004, neither of 2 prefixes reached 128k. 18 of the 20 authorized executions remain (proposal `f1b384c`). Today's audit adds a 128k crossing census; a new case runs only on CoS's go. Judge by cost per passing task, not by cache hit rate.
 - Weekly task `cos-agent-context-weekly-1` runs Mondays at 09:00; the next run is 2026-10-12.
 
 ## Needs Tobias
