@@ -20,12 +20,12 @@ Restart order: dotfiles and pi-workspace-view first, then orderready#44 once the
 Running:
 - [dotfiles#12 restic restore](t3-thread://v1/mcp:e4035b7a-460e-4d4f-9d7f-b4eaef4f3818): go given: one real backup in a transient unit with MemoryHigh=1G/MemoryMax=3G, restore drill with scratch deleted after; no live apply before merge.
 - [dotfiles#11 NAS mount](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): PR #18 merged by CoS (2cd0b78); lead closes #11 with metrics. Applying needs Tobias (commands in omarchy/README.md § NAS mount). #13 closed.
-- [orderready#44 feedback loop](t3-thread://v1/mcp:f62510ba-20e4-4fd1-8aba-541c33547610): launched; baseline + plan gate first; Space Bunny allowed.
-- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): resumes from dead thread mcp:ce6d25bf; go given (driver scripts committed before launch; Space Bunny on the counting audit).
+- [orderready#44 feedback loop](t3-thread://v1/mcp:f62510ba-20e4-4fd1-8aba-541c33547610): was blocked by a hooks-test leak into the real repo (core.bare=true, test commits on main/p2/case-wall-clock, branch `side`). CoS restored from reflogs; bug filed as orderready#87. Told to hand off to worktree `issue-44-latency`, take a fresh cold baseline on 8e8095f7, then plan gate.
+- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): go given; 12-run confirm running (holds 4 of the 8 scout slots).
+- [pi-workspace-view#5 native compaction precheck](t3-thread://v1/mcp:f3847399-2950-426a-95c9-1dd99a496dc7): go given: 0 runs, docs-only PR; follow-up execution gets its own issue and gate.
+- [pi-workspace-view#6 long session](t3-thread://v1/mcp:516fe2e0-b4cc-446b-9747-0f062053c839), [#1+#3 output truncation](t3-thread://v1/mcp:d6ba12c8-7254-41ae-aaf6-2c2504186741), [#2+#4 compaction](t3-thread://v1/mcp:8e61b6dd-a5d2-4d60-8998-8adf9d526443): relaunched 2026-10-12 from the dead threads; plan gates pending; ≤1 run each while #8 holds 4 slots.
 
-Not restarted (failed on the Claude session limit; resume fresh from the issue, reading the dead thread first):
-- pi-workspace-view (HANDOFF.md holds procedure and limits, run cap ≤8 concurrent): [#5](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b).
-- Dead dotfiles#13 thread mcp:13512743 is superseded by the #11 team.
+Dead and superseded team threads are settled; a cleanup child settles finished subagent threads.
 
 ### Winding down (convert open work to issues, then end; both failed on the session limit mid wind-down)
 
