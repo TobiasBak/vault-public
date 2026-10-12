@@ -62,7 +62,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Needs Tobias
 
 - Delete Hermes's leftover data on serv01? That's `/var/lib/hermes` (1.2G) and the stopped `hermes-agent` container (553 MB).
-- Windows guest re-bootstrap for P2's pins (Danish layout, NumLock off; the UTC pin is being dropped): Tobias clicks polkit, `bootstrap.bat` and UAC in one sitting; P2 drives it and re-pins the baseline.
+- Windows guest re-bootstrap for P2's pins (Danish layout, NumLock off, Copenhagen time zone replacing UTC): Tobias clicks polkit, `bootstrap.bat` and UAC in one sitting; P2 drives it and re-pins the baseline.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
