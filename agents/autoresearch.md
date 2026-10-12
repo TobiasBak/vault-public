@@ -15,11 +15,12 @@ An agent forms hypotheses, runs bounded experiments, and keeps or rejects change
 
 ## Fast loops first (Tobias, 2026-10-12)
 
-Feedback speed beats rigor until an idea has shown a signal. The goal is a stream of ideas and large effects, not 5–10% gains: try many different mechanisms as cheap scouts, keep the ones that look good, and run a replicated 12-run confirm only on those.
+This covers every experiment and every hill-climbing loop: prompts, skills, context, performance, config. Feedback speed beats rigor until an idea has shown a signal. The goal is a stream of ideas and large effects, not 5–10% gains: try many different mechanisms as cheap scouts, keep the ones that look good, and run a replicated 12-run confirm only on those.
 
 - **Precheck the trigger without a model.** Before building anything, confirm from recorded runs or logs that the mechanism will fire on the chosen case. A checkpoint trial once ran on a case whose history never reached the trigger, so it couldn't produce a result.
 - **Scout with 1–2 runs per arm.** Reuse recorded baselines when the case, model and effort match. Use the existing harness as-is. Add no isolation hardening and no review rounds. Inspect the transcripts, not just the totals.
 - **Read scouts honestly.** One or two runs show whether the mechanism fired, what broke, and large effects. They can't resolve cost differences smaller than run-to-run noise, which was about ±15% on one case. Kill on mechanism failure or a clearly worse result; don't promote on a small gain.
+- **Hill climbing:** each step is a scout. Keep or revert on 1–2 runs, take many cheap steps, and replicate only the candidate you'd adopt.
 - **Pay for rigor only at confirm.** Use replicated arms, a hardened harness and independent review only when a scout shows an effect large enough to matter. Real-session measurement after a reversible settings change often confirms more cheaply than a benchmark.
 - The slow part is harness building and review rounds, not runs. The 12-run comparison finished quickly; the checkpoint trial's six hardening reviews did not.
 
