@@ -19,11 +19,11 @@ Restart order: dotfiles and pi-workspace-view first, then orderready#44 once the
 
 Running:
 - [dotfiles#12 restic restore](t3-thread://v1/mcp:e4035b7a-460e-4d4f-9d7f-b4eaef4f3818): go given: one real backup in a transient unit with MemoryHigh=1G/MemoryMax=3G, restore drill with scratch deleted after; no live apply before merge.
-- [dotfiles#11 NAS mount + #13 close](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): go given; #13 closed (Space Bunny smoke via T3 passed, 46 s); applying the mount is a manual root restore that needs Tobias.
+- [dotfiles#11 NAS mount](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): PR #18 merged by CoS (2cd0b78); lead closes #11 with metrics. Applying needs Tobias (commands in omarchy/README.md § NAS mount). #13 closed.
+- [orderready#44 feedback loop](t3-thread://v1/mcp:f62510ba-20e4-4fd1-8aba-541c33547610): launched; baseline + plan gate first; Space Bunny allowed.
 - [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): resumes from dead thread mcp:ce6d25bf; go given (driver scripts committed before launch; Space Bunny on the counting audit).
 
 Not restarted (failed on the Claude session limit; resume fresh from the issue, reading the dead thread first):
-- [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): baseline not posted.
 - pi-workspace-view (HANDOFF.md holds procedure and limits, run cap ≤8 concurrent): [#5](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b).
 - Dead dotfiles#13 thread mcp:13512743 is superseded by the #11 team.
 
@@ -40,6 +40,8 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 - Orderready: `tools/or test --full` is the gate (local, no hosted CI); `tools/or test --repeat N` for repeat proofs; never hand-edit the verdict cache or `~/.cache/orderready/verdicts`; no binary fixtures in Git; the pre-publication `filter-repo` purge needs Tobias's go. Parity: exact React parity until cutover, quirks as rows in `docs/parity-record.md`.
 
 ## Needs Tobias
+
+- dotfiles#11 NAS: apply the root units and restore `~/.config/samba/nas.credentials` (omarchy/README.md § NAS mount), then live-check reboot, read/write and outage.
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
 - Decision-log review: entries marked **[review]**.
