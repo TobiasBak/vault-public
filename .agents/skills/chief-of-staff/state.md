@@ -49,7 +49,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Done: the restic backup to serv01 (`cad8707`, nightly at 04:00, tags `t3`/`orderready`, restore verified).
 - Done: `win-vm run --ephemeral` (`564ec00`, receipt `~/.cache/win-vm/ephemeral-20261012/`); P2 has it.
 - Done: reboot-residue recovery (`9ff2c91`), and the restic password is in place.
-- Settled. Waiting for Tobias on the `300dc11` deploy and the old snapshots.
+- Now: deploy `300dc11` to serv01 (Tobias's go, 2026-10-12). The old snapshots are kept on purpose.
 - Later: NAS mount and the T3 backup.
 
 ### Agent-context research
@@ -63,8 +63,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 - Approve the pending polkit dialog: `omarchy-pkg-add vulkan-swrast` (it blocks the GPUI Driver).
 - Decision-log review: entries marked **[review]**.
-- Deploy `300dc11` to serv01? It authorizes the Omarchy SSH key declaratively.
-- The four old `/home/tobias` restic snapshots on serv01 (22 GiB, never pruned): keep them or delete them?
 
 ## Watch and hypotheses
 
