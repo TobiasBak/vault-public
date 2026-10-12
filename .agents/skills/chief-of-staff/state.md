@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Lead](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf). Rewriting the Import GUI from Tauri/React to pure-Rust GPUI (Tobias, 2026-10-11). The design is the lead's: ADR 0011, `docs/gui-testing.md` and `docs/rewrite-plan.md`, merged in PR #7 `7cebf236`.
 
-- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Draft model (PR #21 `49c1762d`). OCCT RUNPATH (PR #22 `4f670c7b`). Optional `--frontend-dir` (PR #24 `d158b8d1`; `docs/parity-record.md` holds the frozen hashes and the post-freeze api table). Drawing viewer (PR #26 `c761baf0`, with an out-of-process PDF worker capped at 4 GiB). Backend client (PR #27 `fc3268a2`; the `ports` wire types are completed, OpenAPI unchanged). Running: the workbench lifecycle, then the draft editor and plan/review in parallel. Driver: the matrix passes 30 of 30 on llvmpipe; an attach→snapshot race is being fixed, then the patch goes to P2.
+- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver), Grid (PR #17 `ad827689`). Draft model (PR #21 `49c1762d`). OCCT RUNPATH (PR #22 `4f670c7b`). Optional `--frontend-dir` (PR #24 `d158b8d1`; `docs/parity-record.md` holds the frozen hashes and the post-freeze api table). Drawing viewer (PR #26 `c761baf0`, with an out-of-process PDF worker capped at 4 GiB). Backend client (PR #27 `fc3268a2`; the `ports` wire types are completed, OpenAPI unchanged). Running: the workbench lifecycle, then the draft editor and plan/review in parallel. Driver (PR #29 `3b642043`; Windows runtime typing and date cases wait for the guest re-bootstrap). Next: the fake file-chooser portal.
 - Tobias's ADR calls: SQLite wherever it's the better store, vendored patches stay local, exact user-visible parity, machines without a GPU must work but their performance doesn't matter.
 - Clean rewrite (Tobias): Tauri/React frozen, no Tauri adaptations; parity is an end gate against the frozen build.
 - Tests are black-box only (theodore). The driver speaks stdio only. The Windows corpus runner runs inside the guest; there is no `--listen` and no `win-vm forward`.
@@ -62,6 +62,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Needs Tobias
 
 - Delete Hermes's leftover data on serv01? That's `/var/lib/hermes` (1.2G) and the stopped `hermes-agent` container (553 MB).
+- Windows guest re-bootstrap for P2's pins (Danish layout, indicators off, UTC): Tobias clicks polkit, `bootstrap.bat` and UAC in one sitting; P2 drives it and re-pins the baseline.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
