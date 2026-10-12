@@ -27,7 +27,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 [Owner](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579). Owns the `tools/or` gate, the corpus runner, the test shape and the theodore rules. Local `tools/or test --full` is the gate; there is no hosted CI. Nothing is deployed.
 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
-- Merged: the Windows lanes on ephemeral win-vm (PR #23 `3880fd3c`), with the clone code and vm-slot lock deleted. Now: a user-timer nightly (CoS go).
+- Merged: the Windows lanes on ephemeral win-vm (PR #23 `3880fd3c`), with the clone code and vm-slot lock deleted. Nightly live (PR #25 `cafd356a`): `orderready-nightly.timer` runs at 01:00, verdicts go to `$ORDERREADY_DATA/nightly/<stamp>/nightly.json`, and a 06:00 check in P2's thread reports failures. The first run failed on old Windows clippy errors; the fix in `p2/windows-clippy` adds Windows clippy to the `--full` gate.
 - Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
 - Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
 - Running: case pressure, the rmut consumer on pin `7ef780a`, the fixtures (merge to main plus 7 held rows), and the Windows lanes PR on `win-vm run --ephemeral`.
