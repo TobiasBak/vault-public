@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Chief of staff
 
-Read [state.md](state.md) at the start of every session and after every compaction. The thread is disposable; the state file and this skill are the memory.
+Read [state.md](state.md) at the start of every session and after every compaction. The thread is disposable; the state file and this skill are the memory. A SessionStart `compact` hook (`scripts/reload-after-compact.sh`) re-injects this skill, state.md and recent decisions.
 
 ## Charter
 
