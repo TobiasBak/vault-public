@@ -131,6 +131,16 @@ Tobias wants v2 in T3, not v1. Verified 2026-10-03: nightly `0.0.46-nightly.2026
 - **Binary:** T3 `opencode` uses `~/.local/share/pnpm/bin/opencode`, `@opencode/cli` 2.0.22; dotfiles bootstrap owns installs/updates. Removed separate `~/.local/share/t3code-opencode` v1; don't recreate.
 - **Updater failure:** T3 installed v2 without required postinstall: `opencode --version` exited "postinstall script was not run". Repair with [pnpm build permission](https://opencode.ai/v2/docs). On pnpm 11.13.1, persist `allowBuilds: {"@opencode/cli": true}` in `~/.local/share/pnpm/global/v11/pnpm-workspace.yaml`, not global `config.yaml`; verified normal global installs run postinstall without extra flag. Refresh T3 provider afterward: the live snapshot caches failures even after executable repair.
 - **Migration:** v1/v2 share database; never run side by side. Snapshot before first v2 startup; credentials/supported config carry over. ([guide](https://opencode.ai/v2/docs/migrate-v1/))
+- **Free models only (Tobias, 2026-10-12):** never paid Go/Zen models. Free models rotate weekly. Only LongCat and Step 5 previews promise no training on prompts, so the rest touch public repos only.
+
+#### Free-model bake-off, 2026-10-12
+
+One `opencode run` per model on two small public dotfiles fixes with a test check (mise options; retire a Pi extension), six concurrent, 20-minute cap; transcripts and diffs read against the merged fix. Artifacts: `~/.cache/free-bakeoff-20261012/`.
+
+- **Usable workers, under review:** Space Bunny (best investigation, honest report; 197/101 s), Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research).
+- **Avoid:** Nemotron 3.5 Lightning (failed both, littered debug files, claimed success), Nemotron 3 Ultra (hardcoded, timed out flailing), Step 5 Preview (passed, then spent 10 minutes repairing its own throwaway harness). Ling 3.1 Flash works but is slow and hit upstream 429s. Exo Free was already deprecated.
+- **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Free workers need a precise brief and an independent Sol review; never trust their done report alone.
+- `opencode run` can exit 1 after a clean finish (cancelled web search); judge by the check, not the exit code.
 
 ## Retired DeepSeek Codex experiment
 
