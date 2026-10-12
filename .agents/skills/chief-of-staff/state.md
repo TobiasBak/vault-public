@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Lead](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf). Rewriting the Import GUI from Tauri/React to pure-Rust GPUI (Tobias, 2026-10-11). The design is the lead's: ADR 0011, `docs/gui-testing.md` and `docs/rewrite-plan.md`, merged in PR #7 `7cebf236`.
 
-- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver). Running: Driver (runner namespace fixes agreed with P2), Draft model (review clean, waits for P2's stop-race fix), Grid (gpui-component =0.7.1).
+- Slices: Foundation, Wire types (`ports::wire`), Host, Driver, Draft model, Grid, Draft editor, Recovery (SQLite), Drawing viewer, Screens, Fleet (Windows VM), Cutover. At most three building workers. Merged: Host phase 1 (PR #10 `ce4afe18`), Foundation (PR #12 `c827167b`), Host (PR #14 `c4f16093`; its GUI cases follow the Driver). Running: Driver (runner namespace fixes agreed with P2), Draft model (review clean; P2's race fix has merged, so a fresh gate and merge are next), Grid (gpui-component =0.7.1).
 - Tobias's ADR calls: SQLite wherever it's the better store, vendored patches stay local, exact user-visible parity, machines without a GPU must work but their performance doesn't matter.
 - Clean rewrite (Tobias): Tauri/React frozen, no Tauri adaptations; parity is an end gate against the frozen build.
 - Tests are black-box only (theodore). The driver speaks stdio only. The Windows corpus runner runs inside the guest; there is no `--listen` and no `win-vm forward`.
@@ -28,10 +28,11 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
 - Unblocked by `win-vm run --ephemeral` (`564ec00`): the release-gating nightly Windows lanes. Port the lanes, delete the clone code, and build the corpus guest runner (that one also waits for the GPUI Driver PR).
-- Running: the corpus race fix (`p2/corpus-race-fix`, which unblocks GPUI's Draft model PR), B4.
+- Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
+- Critical path: the chunks await-bound PR, then corpus throughput (the mailbox and first-order fixes). That throughput work unblocks the fixtures, the rmut consumer and B4.
 - Queued, in order of the owner's choosing:
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
-- Unparked: rmut `--cpus` merged (`37be8a2`), so the command-case consumer (`3a5fff12`) resumes, then C3 r3d and C4B r2.
+- rmut `--cpus` is merged (`37be8a2`). The command-case consumer (`3a5fff12`) waits for corpus throughput; C3 r3d and C4B r2 follow it.
 - Later: pairing approval inside the Import GUI.
 
 ### rmut
