@@ -15,7 +15,7 @@ An agent forms hypotheses, runs bounded experiments, and keeps or rejects change
 
 ## Fast loops first (Tobias, 2026-10-12)
 
-Feedback speed beats rigor until an idea has shown a signal. Every agent experiment starts as a scout.
+Feedback speed beats rigor until an idea has shown a signal. The goal is a stream of ideas and large effects, not 5–10% gains: try many different mechanisms as cheap scouts, keep the ones that look good, and run a replicated 12-run confirm only on those.
 
 - **Precheck the trigger without a model.** Before building anything, confirm from recorded runs or logs that the mechanism will fire on the chosen case. A checkpoint trial once ran on a case whose history never reached the trigger, so it couldn't produce a result.
 - **Scout with 1–2 runs per arm.** Reuse recorded baselines when the case, model and effort match. Use the existing harness as-is. Add no isolation hardening and no review rounds. Inspect the transcripts, not just the totals.
