@@ -33,7 +33,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
 - Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
 - Done: the Windows guest re-baseline (baseline `8015cb946fda`, captured 09:43Z): Copenhagen zone, Danish layout, indicators off, guest clock within 1.2 s of the host. The Tauri GUI lanes fail by design since PR #24 and get deleted after the fixtures PR (ADR 0011); Cutover re-qualifies install/update. Next on Windows: the fixtures branch's Windows lane.
-- Running: case pressure, the rmut consumer on pin `7ef780a`, the fixtures (merge to main plus 7 held rows), and the Windows lanes PR on `win-vm run --ephemeral`.
+- Case-pressure clock decided (wall time plus an uncached `contention` outcome; see the decision log); implementation and qualification next, then corpus-wide budget re-derivation.
+- Running: the rmut consumer on pin `7ef780a`, the fixtures (merge to main plus 7 held rows), and the Windows lanes PR on `win-vm run --ephemeral`.
 - rmut `--cpus` is merged (`37be8a2`). The command-case consumer (`3a5fff12`) waits for corpus throughput; C3 r3d and C4B r2 follow it.
 - Later: pairing approval inside the Import GUI.
 
