@@ -28,6 +28,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 - Merged today: AUTH consumer (PR3), C4C workflows (PR2), cache-aware admission (PR4), Q1/Q2 (PR5), own-cgroup admission fix (PR6 `a3e61272`).
 - Merged: the Windows lanes on ephemeral win-vm (PR #23 `3880fd3c`), with the clone code and vm-slot lock deleted. Nightly live (PR #25 `cafd356a`): `orderready-nightly.timer` runs at 01:00, verdicts go to `$ORDERREADY_DATA/nightly/<stamp>/nightly.json`, and a 06:00 check in P2's thread reports failures. The first run failed on old Windows clippy errors; the fix in `p2/windows-clippy` adds Windows clippy to the `--full` gate.
+- Merged: `tools/or test --repeat N <job>` (PR #35 `00630400`). Repeat proofs go through it; hand-editing the verdict cache is banned, and a later pass never supersedes a recorded fail.
 - Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
 - Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
 - Done: the Windows guest re-baseline (baseline `8015cb946fda`, captured 09:43Z): Copenhagen zone, Danish layout, indicators off, guest clock within 1.2 s of the host. The Tauri GUI lanes fail by design since PR #24 and get deleted after the fixtures PR (ADR 0011); Cutover re-qualifies install/update. Next on Windows: the fixtures branch's Windows lane.
