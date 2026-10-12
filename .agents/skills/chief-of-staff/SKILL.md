@@ -29,7 +29,7 @@ A message from Tobias that arrives mid-turn waits for that turn or steers into i
 
 ## Delegate
 
-- Project work goes to a team: a top-level thread in that project (`t3_project_list`, then `t3_thread_launch` with an explicit `workspaceStrategy`). Before launching, check `t3_thread_list` for a team already on that workstream and send to it instead.
+- Project work goes to a team: a top-level thread in that project (`t3_project_list`, then `t3_thread_launch` with an explicit `workspaceStrategy`). A new workstream gets a fresh team with a compact brief. Send to an existing team only when the work continues that team's current workstream; owning the files isn't enough. A long thread carries its history, cost and unrelated context into every turn (Tobias, 2026-10-12, when I routed OpenCode setup to Dotfiles).
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - Brief completely: the goal, done criteria, merge authority with a readiness bar, decisions already made, and this report-back contract with this thread's ID filled in:
   > Report to the chief of staff with `t3_thread_send` (threadId `<id>`, mode `steer`; use `auto` if steer is rejected because the thread is idle) when the workstream or an agreed milestone is complete, when blocked on cross-team help or authority you lack, and when a material decision belongs to Tobias. Keep internal worker/review/gate/commit/fix updates in your repo; don't relay them here. Never wait for an answer: park the item that needs it and continue the rest.
