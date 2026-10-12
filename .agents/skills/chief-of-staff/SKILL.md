@@ -35,10 +35,12 @@ Teams are disposable (Tobias, 2026-10-12: P2 and GPUI leads ran 300+ runs in rev
 - One fresh team per issue, or per tightly coupled set of issues that ships as one PR: `t3_thread_launch` in its own worktree from `origin/main`, titled `<repo>#<N> <title>`. The team ends when its PR merges or its result is posted on the issue. Follow-up work becomes new issues and new teams. No standing owners and no long-lived leads.
 - New work from Tobias: file the issue, label it `ready`, launch a team. Run independent issues in parallel and record real dependencies in the issues. The limit is host and gate capacity, not team count.
 - Big or unclear work gets a design team first. Its output is repo docs plus `ready` issues, and then it ends.
+- Design-heavy issues wait until Tobias decides who leads them.
 - Labels: `ready`, `in-progress` (with a comment linking the team thread), `blocked`, `needs-tobias`.
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - A team brief names the issue and adds only what the issue and repo can't carry:
-  - Merge authority, with the bar: gate green on the head and review clean.
+  - Gates (Sol leads, Tobias 2026-10-12): post the plan and wait for the chief of staff's go before code. Never merge: hand over the merge-ready PR (gate green on the head, review clean); the chief of staff reads the diff and gate output, then merges. At most 3 concurrent children. Stop and report on a weakened or deleted test, an out-of-scope edit, the same failure twice, or an unbacked claim.
+  - Workers: Sol by default; in public repos push bounded implementation and test slices through Space Bunny and report its usage (see Track performance).
   - Scope discipline: anything out of scope becomes a new issue, not more work.
   - Review rule: one independent review, which blocks only on correctness, security, data loss or a broken contract. Everything else becomes a follow-up issue. At most two rounds; then the lead decides and records why in the PR.
   - Finish: close the issue with a comment giving the outcome and a metrics block (see Track performance). Settle each subagent thread once its result is used.
@@ -55,6 +57,7 @@ Feedback speed is the main lever: a small change shouldn't take hours (Tobias, 2
   ```
   metrics: wall=<start to merge> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
   ```
+  Teams that used Space Bunny add `space_bunny: tasks=<n> accepted=<n> reworked=<n> rejected=<n> rate_limited=<n> fallback_sol=<n> tokens=<total|unknown>`.
 - Read the block on each completion. Aggregate weekly from GitHub and T3 thread data (`scripts/team_metrics.py`, once it exists) into lead time per issue, review rounds, gate share of wall time, and lead runs per issue.
 - Slow feedback is a defect. When gate time, review rounds or tool latency dominate a repo's lead time, file a feedback-loop issue there and dispatch it ahead of feature work.
 
@@ -110,7 +113,7 @@ Maintained by the chief of staff. Budget: 30 bullets.
 - Brief the smallest observable proof of what Tobias asked first, under his constraints, before integration architecture. Correctable spike errors are repair work, not grounds to close the study (GPUI, 2026-10-11).
 - Put choices for Tobias under "Your decisions": numbered questions, each with a recommendation and who waits. Put calls already made under "Decided by me", as statements, not questions. Never mix pending approval, recommendations and completed actions in one paragraph (Tobias, 2026-10-11: he couldn't tell questions from delegated reports or my calls).
 - On a CoS takeover, notify every team leader of the new reporting thread immediately, including idle owners; recover and answer reports sent to the old thread, then archive it. Routing is essential handover, not deferred housekeeping (Tobias, 2026-10-11).
-- Route models per [team routing](../../../agents/subagent-delegation.md#compute-routing). Sol leaders are temporary Claude-quota recovery only; when quota returns, move leaders to Opus 5.5 high. Prefer a fresh Opus thread from a compact repo handoff over switching a long thread: T3 resumes the thread's old Claude session, so the first turn rewrites 130K–460K expired cache tokens (Tobias, 2026-10-11; `~/.cache/claude-usage-20261011/opus-switch-burn.md`).
+- Route models per [team routing](../../../agents/subagent-delegation.md#compute-routing).
 - Dotfiles and the vault work directly on `main`: no PRs or feature branches. Brief their teams and writers that way (Tobias, 2026-10-11).
 - Verify repository visibility through the host API before applying public-publication rules. A GitHub URL or authenticated ls-remote says nothing about visibility; never ask to lift a public-push ban just to push privately (Tobias, 2026-10-11).
 - Teams own their workers, reviews, gates, commits, fixes and ordinary integration. CoS briefs outcomes and coordinates between teams; don't re-run their leadership here. Reports mean workstream/agreed milestone completion, unowned cross-team/authority blockers, or Tobias decisions. No per-child or intermediate updates; don't acknowledge or commit state for routine chatter (Tobias, 2026-10-11).
