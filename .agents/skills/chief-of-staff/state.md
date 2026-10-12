@@ -30,6 +30,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Merged: the Windows lanes on ephemeral win-vm (PR #23 `3880fd3c`), with the clone code and vm-slot lock deleted. Nightly live (PR #25 `cafd356a`): `orderready-nightly.timer` runs at 01:00, verdicts go to `$ORDERREADY_DATA/nightly/<stamp>/nightly.json`, and a 06:00 check in P2's thread reports failures. The first run failed on old Windows clippy errors; the fix in `p2/windows-clippy` adds Windows clippy to the `--full` gate.
 - Merged: the corpus race fix (PR #15 `c2358ac8`), which unblocks GPUI's Grid and Draft model.
 - Critical path cleared on main `58b022b2`: the await bound (#18), the identity case fix (#19) and runner throughput (#20; mailbox/first-order solo median 6.99 s → 3.55 s).
+- Running: the Windows guest re-baseline, agent-run over SSH with no Tobias clicks (dotfiles `426554d`): Copenhagen zone, Danish layout, indicators off, then a clock check and the ephemeral proof; the old baseline is kept until the proof passes.
 - Running: case pressure, the rmut consumer on pin `7ef780a`, the fixtures (merge to main plus 7 held rows), and the Windows lanes PR on `win-vm run --ephemeral`.
 - Queued, in order of the owner's choosing:
   - the fixture migration: synthetic inputs by default, a hashed local store only for real files, zero tracked binaries, a rule in AGENTS.md.
@@ -62,7 +63,6 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Needs Tobias
 
 - Delete Hermes's leftover data on serv01? That's `/var/lib/hermes` (1.2G) and the stopped `hermes-agent` container (553 MB).
-- Windows guest re-bootstrap for P2's pins (Danish layout, NumLock off, Copenhagen time zone replacing UTC): Tobias clicks polkit, `bootstrap.bat` and UAC in one sitting; P2 drives it and re-pins the baseline.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
