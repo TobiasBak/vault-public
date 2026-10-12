@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Leaders run on Opus 5.5 high. Delegated execution and review run on Pi Sol 6.1 at thinking high, including research; Haiku is retired (hook-enforced). Policy lives in dotfiles `agents/AGENTS.md`.
+- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Delegated work runs on Sol 6.1 high; Space Bunny (free OpenCode) is a trial worker in public repos only. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
@@ -13,13 +13,19 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in parallel worktrees, ended at merge; GitHub issues are the backlog and handoff. See SKILL.md Delegate and Track performance.
 
-### Hold (Tobias, 2026-10-12)
+### Sol-lead trial (Tobias, 2026-10-12)
 
-Start no team until non-Opus leaders are ready: Sol 6.1 leads, free OpenCode Zen models work, with stricter guardrails and CoS monitoring. Never use paid OpenCode models (Go or paid Zen). A free-model bake-off (Sol child, public repos only) picks the workers. Every Opus-led team below failed mid-turn on the Claude session limit (16:52–17:23); none is running. Resume each as a fresh non-Opus team from its issue once the setup is approved, not by re-prompting the dead thread.
+Restart order: dotfiles and pi-workspace-view first, then orderready#44 once the first plans and diffs look sound, then the P2/GPUI wind-downs, orderready product work last. Read each plan and diff; log Space Bunny usage from the `space_bunny:` metrics lines. Design-heavy issues wait.
 
-- [dotfiles#13 OpenCode v2](t3-thread://v1/mcp:13512743-3f02-497b-9b17-78c6af701869): `@opencode/cli` 2.0.27 is installed, but `opencode auth list` shows no login, so only the free Zen models are reachable; Go is off the table (paid). Remaining: free-model smoke, close #13.
+Running:
+- [dotfiles#12 restic restore](t3-thread://v1/mcp:e4035b7a-460e-4d4f-9d7f-b4eaef4f3818): Space Bunny on code slices; restore drill Sol-only.
+- [dotfiles#11 NAS mount + #13 close](t3-thread://v1/mcp:d7830e61-2113-4825-8f92-7cd7193ec192): first Space Bunny delegate_task is #13's T3 provider smoke; applying the mount needs Tobias.
+- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): resumes from dead thread mcp:ce6d25bf; Sol only (private).
+
+Not restarted (failed on the Claude session limit; resume fresh from the issue, reading the dead thread first):
 - [orderready#44 Feedback loop latency](t3-thread://v1/mcp:037c1c5a-d62c-419f-ba92-329cc1eddd69): baseline not posted.
-- pi-workspace-view (HANDOFF.md holds procedure and limits, run cap ≤8 concurrent): [#8 confirm epoch pruning](t3-thread://v1/mcp:ce6d25bf-9fa9-4853-9782-e872f9e73f86) (CoS go, ≤4 runs), [#5](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b). Read each thread's last state before rebriefing.
+- pi-workspace-view (HANDOFF.md holds procedure and limits, run cap ≤8 concurrent): [#5](t3-thread://v1/mcp:9c0401fe-446e-4b10-99ba-007ac59a3260), [#6](t3-thread://v1/mcp:35973af9-1eb9-4520-94e6-3d16935925b1), [#1+#3](t3-thread://v1/mcp:05432cbf-a208-4f50-a48b-8aae78b6fafc), [#2+#4](t3-thread://v1/mcp:42c632c3-bdf2-4d59-b09e-8d883d24417b).
+- Dead dotfiles#13 thread mcp:13512743 is superseded by the #11 team.
 
 ### Winding down (convert open work to issues, then end; both failed on the session limit mid wind-down)
 
@@ -36,7 +42,7 @@ Each long-lived lead files `ready` issues for all its open and next work (in-fli
 ## Needs Tobias
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
-- Approve the non-Opus leader setup before any team starts.
+- Space Bunny on private repos: currently public only because its free tier keeps prompts. Raised 2026-10-12.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
