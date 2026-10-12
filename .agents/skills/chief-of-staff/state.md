@@ -64,6 +64,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 - Delete Hermes's leftover data on serv01? That's `/var/lib/hermes` (1.2G) and the stopped `hermes-agent` container (553 MB).
 - File the Omarchy upstream bug? `omarchy-windows-vm` breaks after a reboot when `~/Windows` has setgid (dockurr's `chmod 2777`); Dotfiles is drafting the report and dotfiles works around it.
+- GPUI grid: should Antal and the other number columns sort numerically after cutover (an explicit parity exception), or keep React's quirk where drafts of 10 rows or fewer sort as text ("10" before "2")? Lead and CoS recommend numeric after cutover; not blocking.
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
