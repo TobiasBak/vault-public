@@ -58,7 +58,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 [Standing owner](t3-thread://v1/mcp:d7502e10-2088-42ce-9c31-6ff118b57931), pi-workspace-view. Never settle it.
 
-- Pi workspace-view v3 is disabled (dotfiles PR7). Checkpoint trial: case 004 never reached 128k (`f21bcb1`). The census (`69c0806`) shows 38% of Pi sessions cross 128k and 46% of Pi spend falls at or above it. No case in history crosses 128k on Sol medium (`c514c09`). **Halted 2026-10-12 (Tobias challenged the line):** no screening and no trial runs, and the 18 remaining executions are suspended. The team awaits a new brief; any next step goes to Tobias as a proposal.
+- Pi workspace-view v3 is disabled (dotfiles PR7). Checkpoint trial: case 004 never reached 128k (`f21bcb1`). The census (`69c0806`) shows 38% of Pi sessions cross 128k and 46% of Pi spend falls at or above it. No case in history crosses 128k on Sol medium (`c514c09`). **Fast-loop scouting (Tobias, 2026-10-12):** the team explores context-manipulation mechanisms in 1–2-run scouts, under the rule in `agents/autoresearch.md`. Scouts are pre-authorized: subscription only, at most 4 concurrent, no global Pi config changes. The old checkpoint line is halted (`feat/checkpoint-case-param` `db5d375` is parked, unmerged). A 12-run confirm needs a clearly good scout and a CoS go. The team reports one short message per scout batch.
 - Weekly task `cos-agent-context-weekly-1` runs Mondays at 09:00; the next run is 2026-10-12.
 
 ## Needs Tobias
