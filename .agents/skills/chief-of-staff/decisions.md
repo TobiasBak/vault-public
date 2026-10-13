@@ -242,12 +242,4 @@ Reviewed and already distilled: merging stepkit-geometry PR #39 was asked; the v
 - 2026-10-13 dotfiles#21 merged (ac9ff31, head 973a823e) and activated: `~/code/dotfiles` fast-forwarded, and the global core.hooksPath points at the guard. Smoke test: a clean commit passes, and a synthetic random ghp_ token with a valid checksum is blocked with metadata only. Passthrough fast path: 26.2→2.0 ms per call; forced-refresh `git status` 36.5→12.1 ms. Rollback: revert, then pull.
 - 2026-10-13 · asked · StepKit cutover grade · Tobias: option 2. Add a separate agreement grade, "agrees with an independent engine on a cleanly imported, source-preserved model", for named facts, through an ADR 0005 amendment. Cutover stays manual: Tobias switches StepKit himself; agents never cut over. Target is close parity on dimensions and other derived facts. To catch overfitting, extend testing to public STEP files found online, beyond the models tested so far · —
 - 2026-10-13 · asked · #54 tolerance policy: a strict justified-bound policy (predicts about 0 A) or a fixed engineering band · Tobias: band, with CoS numbers. Lengths, diameters, thickness and tube length within max(0.001 mm, 1e-6 × model size); area and volume within 1e-5 relative; counts exact; D reports the actual delta. Tolerances are declared up front and never loosened against results. Mechanical clean import: no reader warnings or errors, healing off or reporting zero changes, OCP validity check passes, solid/face/edge counts match the source; failures are U · —
-
-## 2026-10-13: StepKit viewer (stepkit-studio)
-
-Tobias wants a Rust GUI to view and work with STEP models and to show off the engine. Decided:
-- It goes in a new private repo, stepkit-studio, not inside stepkit-geometry or stepkit.
-- The shell is egui/eframe and 3D is plain wgpu, with the renderer in its own crate so the shell can be swapped.
-- GPUI was rejected for now: upstream has no cross-platform 3D viewport, and support exists only in forks behind experimental flags.
-- The engine has no tessellation and never calls another kernel, so the engine itself gets tessellation plus a public Rust facade (stepkit-geometry#56).
-- Refused faces are shown in the viewer, not hidden.
+- 2026-10-13 · asked · StepKit viewer · Tobias: CoS recommendation. A new private repo, stepkit-studio. The shell is egui/eframe and 3D is plain wgpu, with the renderer in its own crate so the shell can be swapped. GPUI is rejected for now: upstream has no cross-platform 3D viewport, only forks behind experimental flags. The engine gets its own tessellation and a public Rust facade (stepkit-geometry#56), since it never calls another kernel. Refused faces are shown in the viewer, not hidden · —
