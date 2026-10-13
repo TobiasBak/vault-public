@@ -65,7 +65,11 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 - [dotfiles pr-merge](t3-thread://v1/mcp:2f15d818-7390-4a5e-8b38-10e0215e6466) (Tobias, 2026-10-13): `gate` and `review` status checks on the exact head, plus `.github/merge-gate.toml` protected and test globs; the `cos-approved` label waives the path checks. Sandbox proof, then an orderready adoption issue. Once one repo adopts, update the global rules and the skill so leads merge via `pr-merge`.
 
-- Reflection follow-ups (2026-10-13): a Sol child is researching local T3 workarounds (child wake, auto vs steer, typed report channel, wake without polling). Another Sol child is building `scripts/team_metrics.py`. Use its numbers to judge the gate narrowing and future loop changes.
+- Reflection follow-ups (2026-10-13): a Sol child is building `scripts/team_metrics.py`; use its numbers to judge the gate narrowing. The T3 research ran on 0.0.46-nightly.20261013.3042:
+  - Child completion does wake the parent (`completionWake: always`). The #113 claim in the SKILL census 'why' is wrong: the lead got its review at 15:19, ended its turn at 15:25 with 'merge-ready' as its final message, and never sent it. Correct that line once the metrics child commits SKILL.md.
+  - `auto` steers only when a provider turn is running; otherwise it queues behind the active run. Pattern: `steer`, and on `thread_not_sendable` use `auto`. Recover a queued copy with `t3_queue_promote_to_steer`, never by resending.
+  - No typed channel exists in T3. [Pi lead reporting extension](t3-thread://v1/mcp:3172afac-3836-4cbc-9031-d191b0d467a8) launched: `report_to_cos` with five kinds, a block on raw sends to the CoS, and an `agent_before_settle` hook. It is active only when the lead brief carries `CoS-thread: <id>`. Once it lands, add that marker to every lead brief and the skill's brief template.
+  - A WebSocket `orchestration.subscribeThread` relay could replace the census. Deferred until the metrics show the census still finds work after the extension lands.
 - #56 lead is idle waiting on its mesh child and hasn't received the gate-narrowing rule. Include it in the next message to that lead.
 - Census heartbeat: scheduled task `cos-census-heartbeat-1` posts into this thread every 30 min (2026-10-13). The census procedure is in SKILL.md. The Orderready nightly verdict check still runs on Opus; update_scheduled_task can't change its model, so recreate it from a Pi thread.
 
