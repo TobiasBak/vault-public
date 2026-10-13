@@ -32,6 +32,7 @@ Running:
   - [rust-mutants](t3-thread://v1/mcp:b906cffc-472b-46d3-8d8c-e15bf1d2f628)
   - stepkit-studio#1 builds in the skill from the start (no README, black-box only, control CLI).
   - Trigger (Tobias, 2026-10-13): once all four wave-1 teams are fully done (every PR merged or closed, threads settled), launch one Sol review team in vault-public to suggest changes to theodore-kaczynski-nullifier based on how the teams performed.
+  - Inputs for that review: the stop rule overfired on a trivial stepkit miscount; orderready read customer-derived labels twice (audit child, then lead) through direct host-manifest reads, and the fix is a redacting `tools/or` reader; leads ended turns instead of reporting plans.
     - Evidence: each team's thread, subagents, PRs and review rounds.
     - Look at where the skill's rules were misread, skipped or fought; which audit items paid off in measured before/after; plan revisions and CoS corrections (the skills ban, docs/ADR); rework and stop-rule hits; time split.
     - Use the `retro` and `review-agent-history` skills.
