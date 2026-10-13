@@ -29,7 +29,7 @@ Running:
   - [stepkit](t3-thread://v1/mcp:d81c2858-01da-4140-baeb-16c595f788bd) (new T3 project mcp:fc968f3e-089d-46dc-96c6-e00f8b6d2be0)
   - [stepkit-geometry](t3-thread://v1/mcp:6383f4e7-034e-4789-a193-e4707258a2c7), sequenced around #54, #55 and #56
   - [orderready](t3-thread://v1/mcp:096413ab-875a-4c8a-94f4-d24a078b9584), building on #107 and sequenced around #113
-  - [rust-mutants](t3-thread://v1/mcp:b906cffc-472b-46d3-8d8c-e15bf1d2f628)
+  - [rust-mutants](t3-thread://v1/mcp:b906cffc-472b-46d3-8d8c-e15bf1d2f628): PR1 (#8) merged as 43173e45 on 2026-10-13; next PR in progress.
   - stepkit-studio#1 builds in the skill from the start (no README, black-box only, control CLI).
   - Trigger (Tobias, 2026-10-13): once all four wave-1 teams are fully done (every PR merged or closed, threads settled), launch one Sol review team in vault-public to suggest changes to theodore-kaczynski-nullifier based on how the teams performed.
   - Inputs for that review: the stop rule overfired on a trivial stepkit miscount; orderready leads stopped three times on agents reading customer-derived strings from private source in local sessions. Ruled 2026-10-13 not an exposure: the boundary is public repos and notes, plus reports and PR text bound there. The redacting reader is hygiene, not a gate; a #57 review child repeated a check against an untrusted disposable `mise.toml` (exit 2 every time, baseline included), so briefs for disposable repos need the mise trust recipe; leads ended turns instead of reporting plans.
