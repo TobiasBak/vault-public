@@ -53,4 +53,5 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Starting an idle turn may kill detached work from an earlier agent scope, so keep long jobs in independent user units. This is still a single-incident hypothesis.
 - The weekly pi-workspace-view audit (Mondays 09:00) now launches a fresh thread per run and reports to CoS.
 - Pi 1.2.0 (Tobias: update when it makes sense): run `mise up pi` only when `pgrep -f "installs/pi/"` is empty and no pwv experiment is running, because live Sol RPC processes read assets through the `latest` symlink. The T3 extension's `before_agent_start` only touches systemPrompt, so it works on 1.2.0. Then spot-check one Sol child.
+- Orderready admission false block (2026-10-13): app-t3code.slice `memory.current` counts reclaimable file cache (15.5G file vs 1.6G anon), so the gate refused to start for lack of headroom. Workaround: `echo 8G > /sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/app.slice/app-t3code.slice/memory.reclaim`. The #109 lead is filing the fix as an issue.
 - The T3 nightly timer updates the service, not the desktop package. Don't restart T3 during live work.
