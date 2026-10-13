@@ -37,6 +37,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 - dotfiles#11 NAS: apply the root units and restore `~/.config/samba/nas.credentials` (omarchy/README.md § NAS mount), then live-check reboot, read/write and outage.
 
+- JHotDraw leaked GitHub PAT (2023, alert #1): Tobias revokes it at github.com/settings/tokens (it may have expired already), then closes the alert as revoked. After that, tell the secrets lead to add the fingerprints.
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
 - Decision-log review: entries marked **[review]**.
 
