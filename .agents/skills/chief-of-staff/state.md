@@ -58,6 +58,8 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
+- stepkit PR2: continue or stop? The lead wants an empirical OCCT envelope (abs 0.01) on 4 fields (issue #4 comment 6155038654). My recommendation: stop PR2, since OCCT values die at cutover (ADR 0005). HOLD sent; value facts pending.
+
 
 ## Watch and hypotheses
 
