@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. Subagents default to Space Bunny (free OpenCode) everywhere (Tobias 2026-10-12); Sol 6.1 high does independent review, locking/cleanup/ownership work, and takes over after limit errors (rerun on first, team switches on second). Never send Space Bunny secrets. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
+- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. All subagents run on Pi Sol 6.1 high; Space Bunny is retired (Tobias 2026-10-13; policy edit in flight, see below). Metrics use `subagents:` instead of `space_bunny:`. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
@@ -15,26 +15,22 @@ Operating model (Tobias, 2026-10-12): disposable teams, one per GitHub issue, in
 
 ### Sol-lead trial (Tobias, 2026-10-12)
 
-Restart order: dotfiles and pi-workspace-view first, then orderready#44 once the first plans and diffs look sound, then the P2/GPUI wind-downs, orderready product work last. Read each plan and diff; log Space Bunny usage from the `space_bunny:` metrics lines. Design-heavy issues wait.
+Read each plan and diff before go and merge. Orderready product work comes after #87 and #44. Design-heavy issues wait.
 
 Running:
-- [orderready#44 feedback loop](t3-thread://v1/mcp:f62510ba-20e4-4fd1-8aba-541c33547610): was blocked by a hooks-test leak into the real repo (core.bare=true, test commits on main/p2/case-wall-clock, branch `side`). CoS restored from reflogs; bug filed as orderready#87. Told to hand off to worktree `issue-44-latency`, take a fresh cold baseline on 8e8095f7, then plan gate.
+- [orderready#44 feedback loop](t3-thread://v1/mcp:f62510ba-20e4-4fd1-8aba-541c33547610) in worktree `issue-44-latency`: continuing with corrected evidence labels; closure counts redone on Sol (all 112 jobs / 30 cases). Fresh gate baseline waits on #87; ping it when #87 merges.
+- [orderready#87 hook-test GIT_* leak](t3-thread://v1/mcp:2f499bb5-7e26-468e-b69d-c54b01532d37): go given (isolation at xtask's process boundary in test builds, decoy-child regression that must fail on main). `--no-verify` push approved. Gates run inside git hooks stay unsafe until it merges.
+- [Secret-leak prevention](t3-thread://v1/mcp:b808f31b-b1b8-40a2-9d2e-652bbfd41461) (dotfiles root; 22 public repos): go given for the global core.hooksPath gitleaks guard (isolated bare repo with alternates, chains to repo hooks, incremental pre-push, fail closed), history audit of all 22, and GitHub push protection on every public repo. The CoS activates the global hooksPath after merge, because it hits every live team at once.
+- [pwv#2+#4 compaction](t3-thread://v1/mcp:8e61b6dd-a5d2-4d60-8998-8adf9d526443): finishing. Structured is dead, native-70k dead on cost, native-90k inconclusive; write-up, review round 2, then PRs to the CoS.
+- Space Bunny retirement: a Sol child is editing dotfiles `agents/AGENTS.md` (PR, separate worktree `~/code/dotfiles-wt-sol-default`) and vault references. The CoS merges it.
+- pwv done: #5 (PR #10), #6 (swe-benchmarking#1 871ed477 + pwv#14 54b790bb; case 011 peaks 220–255k), #8 DO NOT PROMOTE, #1 and #3 dead. Threads settled. #9 is parked with no go. Scout cap: 8 total; never bypass `launch.sh`; Sol or the lead launches subject runs.
 - dotfiles#12 restic: merged (0d58829d), applied with daemon-reload only, closed. dotfiles#11 NAS: merged; applying needs Tobias.
-- [pi-workspace-view#8 epoch-pruning confirm](t3-thread://v1/mcp:aeffffc6-06e6-4007-8a73-f2c9ea117703): go given; 12-run confirm running (holds 4 slots).
-- pi-workspace-view#5: done. PR #10 merged by CoS (3ab8cdd7); thread settled. Wall 9m, 1 review round, 0 runs, Space Bunny 1/1 accepted. Follow-up #9 (subscription protocol gate) is parked and has no go.
-- [pi-workspace-view#6 long session](t3-thread://v1/mcp:516fe2e0-b4cc-446b-9747-0f062053c839) (run 1 live since 19:32Z; its PR raises launch.sh/HANDOFF cap to 8), [#1+#3 output truncation](t3-thread://v1/mcp:d6ba12c8-7254-41ae-aaf6-2c2504186741) (zero runs; #3 dead for case 004; report-only PR coming), [#2+#4 compaction](t3-thread://v1/mcp:8e61b6dd-a5d2-4d60-8998-8adf9d526443) (re-verifying the recovered #4 commit's pytest claim, then one structured-50k run). Scout cap: 8 total, confirm ≤4, each scout team ≤2; never bypass `launch.sh`. Sol or the lead launches subject runs, never Space Bunny.
 
 Dead and superseded team threads are settled; a cleanup child settles finished subagent threads.
 
-### Winding down (convert open work to issues, then end; both failed on the session limit mid wind-down)
+### Wound down (2026-10-12)
 
-Relaunched 2026-10-12 as Sol wind-down teams behind plan gates: [P2 wind-down](t3-thread://v1/mcp:f9cca1af-7fdf-4d01-a5b4-d6dc94522b64), [GPUI wind-down](t3-thread://v1/mcp:925be72c-4cb7-4c3a-ba3d-2490ed919a16). Both have go. They settle the dead leads and their queued children. orderready#86 (standing rules) merged by CoS as 516ccd09. The workbench never reached a PR: its head is pushed to `gpui/workbench-lifecycle-final` and is waiting on the 35s-vs-15s qualification budget decision. Backend-response-gate and archive-digest PRs come to the CoS.
-
-Each long-lived lead files `ready` issues for all its open and next work (in-flight branches linked), moves any standing rule it holds into repo docs, finishes only a PR already merge-ready, settles its children, reports, and ends. I then dispatch fresh per-issue teams.
-
-- [P2](t3-thread://v1/mcp:99ab7733-ab01-4241-bfc9-7f7b5f33c579) (orderready, 364 runs). Open work to file: case wall-clock implementation, B4 mailbox, backend-response gate, archive entry digest, notes-tip scrub, the rmut consumer, closing PR #37, pairing approval. The nightly's 06:00 thread check becomes a GitHub issue opened on failure.
-- [GPUI](t3-thread://v1/mcp:58780b90-ecc1-4e53-9eaa-4156ab15afcf) (orderready, 317 runs). Workbench PR at review round 6: apply the review rule (merge if no correctness blocker; the rest becomes issues). Remaining `docs/rewrite-plan.md` slices become issues with dependencies. The standing rules move into repo docs: spike worktree and receipts preserved, no `--no-verify` without a CoS go, black-box tests, stdio-only driver.
-- Dotfiles, rmut and the agent-context owner: done and settled. Dotfiles' backlog is issues #11 (NAS mount) and #12 (T3 restic restore proof; the unit peaks at its 1G MemoryMax).
+The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2/case-wall-clock`. The B4 worktree `$ORDERREADY_DATA/wt/mailbox-corpus` holds an uncommitted mid-merge state; preserve it (#91). GPUI filed #92 and pushed `gpui/workbench-lifecycle-final` (53873a35), which waits on the 35s-vs-15s qualification budget decision. orderready#86/#94/#95 are merged. New per-issue teams start from these issues.
 
 ### Repo-wide standing rules (until each repo documents them)
 
