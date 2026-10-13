@@ -50,4 +50,5 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Starting an idle turn may kill detached work from an earlier agent scope, so keep long jobs in independent user units. This is still a single-incident hypothesis.
 - StepKit geometry team is settled at `d114b6f`, with PR42 parked. Any future qualification needs a new brief.
 - The weekly pi-workspace-view audit (Mondays 09:00) now launches a fresh thread per run and reports to CoS.
+- Pi 1.2.0 (Tobias: update when it makes sense): run `mise up pi` only when `pgrep -f "installs/pi/"` is empty and no pwv experiment is running, because live Sol RPC processes read assets through the `latest` symlink. The T3 extension's `before_agent_start` only touches systemPrompt, so it works on 1.2.0. Then spot-check one Sol child.
 - The T3 nightly timer updates the service, not the desktop package. Don't restart T3 during live work.
