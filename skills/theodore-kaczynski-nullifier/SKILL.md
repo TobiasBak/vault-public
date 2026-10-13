@@ -13,7 +13,7 @@ Technology was never the problem. Waiting on it is.
 
 **No human reads this repository.** The gate enforces:
 - **Zero comments.** No explanatory comments, doc comments, TODOs, banners, or commented-out code. A line-1 interpreter directive is not a comment.
-- **Prose only in** `AGENTS.md`, the CLI's `--help`, and case records. Every other prose file fails.
+- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), the CLI's `--help`, case records, and [approved published contracts](references/agent-context.md#what-stays-out). Every other prose file fails.
 - **No README.**
 - Name things for `rg`.
 
@@ -42,7 +42,8 @@ The result:
 - `wait`, never `sleep`.
 - A visible time budget on every tier.
 - Every rule a gate check with an approved path.
-- A root `AGENTS.md` in the [fixed shape](references/agent-context.md#root-agentsmd), and nothing else that instructs.
+- A root `AGENTS.md` in the [fixed shape](references/agent-context.md#root-agentsmd).
+- Nothing duplicates the CLI; skills add only task-specific instructions.
 
 ## Verification
 

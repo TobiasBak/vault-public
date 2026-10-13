@@ -2,6 +2,12 @@
 
 One entrypoint owns building, checking, testing, waiting, and inspecting. Agents never call the compiler, test runner, platform tooling, or package manager directly. Cache, watcher, slots, budgets, and scope selection live here.
 
+## One entrypoint
+
+Delete every script, Makefile or justfile target, `package.json` script, shell alias, and wrapper that duplicates a control-CLI command once the CLI covers it. Calling the CLI through a wrapper still duplicates its entrypoint.
+
+The gate keeps an exact allowlist of runnable paths (interpreter-invoked scripts included) and task-runner targets: CLI implementation, published product entrypoints, and required tool integrations such as hooks calling `<cli> check`. No convenience wrappers.
+
 ## Commands
 
 Names may change; the set may not. `env` exists only where cases need managed external state.

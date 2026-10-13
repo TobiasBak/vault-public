@@ -1,6 +1,6 @@
 # Agent context
 
-Every line in the tree's context files is read by every agent on every task. Context is the most expensive prose in the repo.
+Every agent reads root `AGENTS.md` on every task. Skills load only when relevant. Keep always-on context small.
 
 ## Owners
 
@@ -8,12 +8,13 @@ Every line in the tree's context files is read by every agent on every task. Con
 |---|---|
 | Purpose, values, orientation, loop, boundaries | Root `AGENTS.md` |
 | Commands and flags | The CLI's `--help` |
+| Task-specific procedures the CLI doesn't perform | Skills |
 | Behaviors and entry points | `<cli> map`, from case records |
 | Settled choices | A check, or one Boundaries line when no program can decide it |
 | Invariants | Checks, whose failures name the fix |
 | Ownership and structure | Directory and symbol names |
 | Plans, status, progress, handoffs | The task tracker and PRs. Never the tree. |
-| Why a change was made | Its commit body, only when the diff doesn't already say it. Never `AGENTS.md`. |
+| Decisions, rationale, ADRs | Issues and PRs. Never the tree. |
 
 One owner per fact. Every other place links or says nothing.
 
@@ -63,10 +64,21 @@ Exactly these sections, in this order:
 - Command documentation. `--help` owns it.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
+- Docs directories. Contracts become checks and black-box cases. Before deleting a contract doc, confirm no consumer outside the repo reads it. A consumed contract is the published interface: keep only the minimal machine-checked form that consumer needs, and record its exact approved path in the gate.
 
-## Host instruction files
+## Instruction surfaces
 
-The root `AGENTS.md` is the only instruction file. Hosts that require another filename get a symlink to it. No README.
+Root `AGENTS.md` owns always-on instructions; [skills](#skills) own progressive disclosure. Delete prompt files (including `.codex/` and `.pi/` prompts), command docs, and nested `AGENTS.md` files. First move their content to its [owner](#owners); an `AGENTS.md` line must pass [pruning](#pruning).
+
+Hosts that require another instruction filename get only a symlink to the root `AGENTS.md`. Move an existing host file's content to its owner before replacing it. No README.
+
+## Skills
+
+- Repo-local skills are allowed.
+- No duplication of CLI `--help`, `AGENTS.md` lines, or another skill. Link to the owner.
+- Every named path and command exists. The agent-context check covers skills too.
+- The description says when the skill applies.
+- When the CLI performs a skill's procedure in one call, delete the skill or cut it to what remains.
 
 ## Pruning
 
