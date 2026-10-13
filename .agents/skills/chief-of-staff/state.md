@@ -59,6 +59,8 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Decision-log review: done 2026-10-13. Tobias gave verdicts. Rules landed in global AGENTS (dotfiles 801660e) and the working section, and the log is cleared.
 - Hardware: done 2026-10-13. Vault ca48a50 adds `skills/hardware-deal-check` (offline, Tobias's ceilings, keeps 285K and 9950X, 128GB/2TB default) and links it globally. Tobias waits for a deal, with no purchase now. Thread settled.
 
+- CoS CLI (Tobias, 2026-10-13: board approved): Sol child `cos-cli-board-census-1` builds `scripts/cos.py` with census, board (fixed v4 design) and metrics, plus a `progress:` line in the report contract. Verify its diff and outputs, then render the board.
+
 ## Watch and hypotheses
 
 - UI review routing (Tobias, 2026-10-13): Sol is the only PR reviewer. No Opus UI reviewer until UI work actually starts; that UI work will run with an Opus 5.5 agent.
