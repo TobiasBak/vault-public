@@ -39,6 +39,7 @@ Teams are disposable (Tobias, 2026-10-12: P2 and GPUI leads ran 300+ runs in rev
 - Labels: `ready`, `in-progress` (with a comment linking the team thread), `blocked`, `needs-tobias`.
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - A team brief names the issue and adds only what the issue and repo can't carry: run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`, put its output first, and add the issue-specific details.
+- Before launching or extending work on a repo, check its value: who runs it, how often (session logs), and what the next PR buys them in measured terms. Safety and scope gates are not a value check (Tobias, 2026-10-13: two days of rust-mutants loop shaping with no measured user win).
 - Answer team questions from the vault and Tobias's known preferences. Raise a question only when it's genuinely his: product direction, architecture, money, or irreversible or outward-facing actions.
 - Judge by artifacts (PR, diff, CI on the head), not reports, per [subagent delegation](../../../agents/subagent-delegation.md). Delegate heavy verification.
 
