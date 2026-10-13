@@ -41,13 +41,13 @@ Running:
   - Wave 2 later: pi-workspace-view (it already has the weekly Monday audit; consider folding the skill into it), swe-benchmarking and orderready-platform (neither is a T3 project yet).
 - Secret guard: done. dotfiles#21 merged ac9ff31 and live (global hooksPath on Omarchy only). Repos with a local hooksPath (orderready, rust-mutants, stepkit-geometry) are not covered. Rollback: revert, then pull. Team closed (32 tasks: 22 accepted, 9 reworked, 1 rejected; 5 review rounds).
 - pwv done: #5 (PR #10), #6 (swe-benchmarking#1 871ed477 + pwv#14 54b790bb; case 011 peaks 220–255k), #8 DO NOT PROMOTE, #1 and #3 dead, #2+#4 closed (results PR #15 6e07641e; harness PR swe-benchmarking#2 closed unmerged, branch kept). feat/context-scouts has 12 inherited pytest failures (not green); file and fix them before the next experiment. Threads settled. #9 is parked with no go. Scout cap: 8 total; never bypass `launch.sh`; Sol or the lead launches subject runs.
-- dotfiles#12 restic: merged (0d58829d), applied with daemon-reload only, closed. dotfiles#11 NAS: merged; applying needs Tobias.
+- dotfiles#12 restic: merged (0d58829d), applied with daemon-reload only, closed. dotfiles#11 NAS and #16 Artificial Analysis: closed as not planned (Tobias, 2026-10-13: he doesn't care about the NAS or the key).
 
 Dead and superseded team threads are settled; a cleanup child settles finished subagent threads.
 
 ### Wound down (2026-10-12)
 
-The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2/case-wall-clock`. The B4 worktree `$ORDERREADY_DATA/wt/mailbox-corpus` holds an uncommitted mid-merge state; preserve it (#91). GPUI filed #92; its workbench integration merged as orderready PR #122 (head bab560bf → 1fd703b9) with budgets unchanged. The 35s-vs-15s qualification budget ruling is still Tobias's. Native Drawing qualification is a separate follow-up. orderready#86/#94/#95 are merged. New per-issue teams start from these issues.
+The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2/case-wall-clock`. The B4 worktree `$ORDERREADY_DATA/wt/mailbox-corpus` holds an uncommitted mid-merge state; preserve it (#91). GPUI filed #92; its workbench integration merged as orderready PR #122 (head bab560bf → 1fd703b9) with budgets unchanged. Budget ruling delegated to CoS (2026-10-13): lifecycle keeps 35s as a recorded exception; the 15s cap stays the default (comment on #92). Native Drawing qualification is a separate follow-up. orderready#86/#94/#95 are merged. New per-issue teams start from these issues.
 
 ### Repo-wide standing rules (until each repo documents them)
 
@@ -56,12 +56,11 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- dotfiles#11 NAS: apply the root units and restore `~/.config/samba/nas.credentials` (omarchy/README.md § NAS mount), then live-check reboot, read/write and outage.
-
-- Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
-- Decision-log review: about 199 unreviewed entries, 5x the 40 limit. Recommend a reviewed subset (entries marked **[review]**) and clearing the rest as right calls.
+- Decision-log review: per Tobias (2026-10-13), an Opus 5.5 child (task `cos-decision-log-review-20261013`) reviews the log read-only and lists what he should look at. Bring him its list; once he gives verdicts, record the lessons and clear the reviewed entries.
 
 ## Watch and hypotheses
+
+- UI review routing (Tobias, 2026-10-13): Sol is the only PR reviewer. No Opus UI reviewer until UI work actually starts; that UI work will run with an Opus 5.5 agent.
 
 - [dotfiles pr-merge](t3-thread://v1/mcp:2f15d818-7390-4a5e-8b38-10e0215e6466) (Tobias, 2026-10-13): `gate` and `review` status checks on the exact head, plus `.github/merge-gate.toml` protected and test globs; the `cos-approved` label waives the path checks. Sandbox proof, then a webhook reviewer (T3 webhook `schedule_task`, fresh thread per PR event, always Sol 6.1 high per Tobias 2026-10-13; it posts the `review` status from its own per-head-SHA worktree where it may build, probe and test, never push; Tobias 2026-10-13), then an orderready adoption issue. Once one repo adopts, update the global rules and the skill so leads merge via `pr-merge`.
 - [hardware buying](t3-thread://v1/mcp:db6ae599-1d51-47cd-b690-28112627cfde) (Tobias, 2026-10-13): research ADDITIONAL Linux boxes (not upgrading the PC; Tobias 2026-10-13): what agent-heavy development needs per box, how work reaches it (T3 per box vs offload nodes), DK power cost, fleet shape; then a DK used/new deal-finding process. Output: a generic vault note plus the proposal as a Tobias decision. Nothing built or bought.
