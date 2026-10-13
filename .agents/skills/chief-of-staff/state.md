@@ -55,7 +55,6 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Orderready: `tools/or test --full` is the gate (local, no hosted CI); `tools/or test --repeat N` for repeat proofs; never hand-edit the verdict cache or `~/.cache/orderready/verdicts`; no binary fixtures in Git; the pre-publication `filter-repo` purge needs Tobias's go. Parity: exact React parity until cutover, quirks as rows in `docs/parity-record.md`.
 
 - [pi-workspace-view prune-epoch confirm](t3-thread://v1/mcp:72b0adf7-8a76-45a5-9fc4-22f544ea8cde) (Tobias, 2026-10-13: confirm approved in principle). Case from a real public-repo task whose Sol sessions crossed 128k (no synthetic case; stop if none qualifies), 6+6 runs, adoption rule ≥15% cost drop with checks held. Plan gate before the 12 runs; global install stays Tobias's.
-- GitHub rate limit hit around 19:00Z 2026-10-13 (Tobias: find what new thing causes it). Read-only Sol child `cos-gh-ratelimit-investigation-1` is ranking consumers; bring the cause and fix to Tobias.
 
 ## Needs Tobias
 

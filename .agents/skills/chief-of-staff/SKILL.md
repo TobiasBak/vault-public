@@ -58,7 +58,7 @@ Feedback speed is the main lever: a small change shouldn't take hours (Tobias, 2
   ```
   metrics: wall=<start to merge> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
   ```
-  Teams add `subagents: tasks=<n> accepted=<n> reworked=<n> rejected=<n> rate_limited=<n>`.
+  Teams add `subagents: tasks=<n> accepted=<n> reworked=<n> rejected=<n> throttled=<n>`.
 - Read the block on each completion. Aggregate weekly lead time per issue, review rounds, gate share of wall time, and lead runs per issue from GitHub and T3 thread data; use `scripts/cos.py metrics` for lead-message counts by kind, CoS replies, next-send gate latency, idle-lead gaps, and CoS turn durations.
 - Slow feedback is a defect. When gate time, review rounds or tool latency dominate a repo's lead time, file a feedback-loop issue there and dispatch it ahead of feature work.
 
