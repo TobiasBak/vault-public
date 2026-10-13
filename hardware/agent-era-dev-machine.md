@@ -12,9 +12,9 @@ For cloud-served coding agents, buy local build capacity, not an AI accelerator.
 
 ## What to buy
 
-**CPU:** strong per-core performance shortens dependency critical paths; physical cores support independent crates, gates and mutation workers. Cargo [defaults to logical-CPU-count jobs](https://doc.rust-lang.org/cargo/commands/cargo-build.html), so independent invocations can oversubscribe a host. Coordinate host-wide admission. SMT threads and old server cores are not equivalent to modern desktop cores.
+**CPU:** strong per-core performance shortens dependency critical paths; physical cores support independent crates, gates and mutation workers. Cargo [defaults to logical-CPU-count jobs](https://doc.rust-lang.org/cargo/commands/cargo-build.html), so independent invocations can oversubscribe a host. Coordinate host-wide admission. SMT threads, Intel P/E cores and old server cores are not interchangeable capacity units. Ryzen AI Max is AMD; Intel's desktop line is Core Ultra. Neither an AI label nor an NPU/GPU score establishes compilation throughput. Compare complete-box cost within a capacity tier, using the same compilation harness where available. Keep synthetic multicore scores secondary; different engine versions, power settings or test cohorts cannot be joined into one ranking.
 
-**RAM:** usable capacity must cover host reserve, non-gate agents/watchers, VMs and concurrent gate reservations without double-counting. There is no universal GB-per-agent figure. Inspect every ancestor's [cgroup limits](https://docs.kernel.org/admin-guide/cgroup-v2.html): a larger child budget cannot defeat its parent. RAM does not automatically change fixed limits, job slots or CPU capacity.
+**RAM:** usable capacity must cover host reserve, non-gate agents/watchers, VMs and concurrent gate reservations without double-counting. There is no universal GB-per-agent figure. Inspect every ancestor's [cgroup limits](https://docs.kernel.org/admin-guide/cgroup-v2.html): a larger child budget cannot defeat its parent. RAM does not automatically change fixed limits, job slots or CPU capacity. Soldered RAM needs enough capacity at purchase; it has no DIMM upgrade path. Verify memory available to the CPU after any GPU reservation, not just the advertised total. A high-memory mini can ship with an inference-oriented split that leaves little RAM for builds, as the [GTR9 Pro review](https://www.servethehome.com/beelink-gtr9-pro-review-amd-ryzen-ai-max-395-system-with-128gb-and-dual-10gbe/3/) illustrates.
 
 **ECC:** require CPU, board, firmware, DIMMs and Linux reporting to support correction. DDR5 on-die ECC is not system-level ECC. Registered server DIMMs are not desktop UDIMMs. Check actual memory channels and population; [Lenovo's P620 specification](https://psref.lenovo.com/syspool/Sys/PDF/ThinkStation/ThinkStation_P620/ThinkStation_P620_Spec.pdf) illustrates the difference. Do not sacrifice useful capacity or serial speed for an unverified ECC label.
 
@@ -22,7 +22,7 @@ For cloud-served coding agents, buy local build capacity, not an AI accelerator.
 
 **Cooling:** judge sustained compilation, not gaming benchmarks or boost clocks. Verify airflow, fan noise and wall power at the actual sustained setting. A temperature snapshot does not establish throttling; CPU TDP and PSU rating are not electricity consumption.
 
-**GPU:** cloud coding models do not justify an inference GPU. Buy one only for explicit local-model, CUDA or graphics work. Preserve whatever display/GPU path real Linux and GUI verification requires.
+**GPU:** cloud coding models do not justify an inference GPU. Buy one only for explicit local-model, CUDA or graphics work. Preserve whatever display/GPU path real Linux and GUI verification requires. A bundled GPU is not a reason to reject an otherwise cheaper CPU/RAM system; compare the whole box without awarding an inference premium.
 
 ## Box and fleet choices
 
@@ -51,8 +51,8 @@ Compare delivered, usable configurations: VAT/import costs, delivery, missing pa
 
 For always-on boxes, annual kWh is `(idle watts × annual idle hours + load watts × annual load hours) / 1000`. Multiply by the actual delivered tariff. Use measured wall power and explicit operating assumptions; cheap enterprise hardware can lose on idle energy and noise.
 
-Keep observed price history rather than a seller's crossed-out price. Separate new, refurbished and private-used baselines. Require both an approved capacity/price ceiling and evidence of a market discount. Missing history or compatibility produces a research lead, not a buy alert.
+Use permitted price-history evidence rather than a seller's crossed-out price. Collection and retention need their own rights basis; native alerts do not grant one. Separate new, refurbished and private-used baselines. Require both an approved capacity/price ceiling and evidence of a market discount. Missing history or compatibility produces a research lead, not a buy alert.
 
-Use authorised APIs/feeds or native notifications. Unknown automation terms are not permission; robots.txt alone is not consent. Recheck stock and permissions before recommending a purchase. Never bypass access controls or purchase approval.
+Use authorised APIs/feeds or native notifications. Unknown automation terms are not permission; robots.txt alone is not consent. Recheck stock and permissions before recommending a purchase. Never bypass access controls or purchase approval. For Tobias's submitted offers, use [hardware-deal-check](../skills/hardware-deal-check/SKILL.md); it owns the offline boundary and his price ceilings.
 
 See [the feedback-loop skill](../skills/theodore-kaczynski-nullifier/SKILL.md) for cache/watcher ownership and [the Windows VM note](../software/omarchy-windows-vm.md) for VM memory and lifecycle constraints.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hardware deal check"
+  short_description: "Assess submitted hardware facts for a Danish deal"
+  default_prompt: "Use $hardware-deal-check to assess only the minimal hardware facts Tobias submits for this assessment. Check suitability, complete landed DKK, approved ceilings and discount evidence without fetching sites, opening URLs, ingesting mail, retaining records or taking external actions. Return the fixed verdict for Tobias's review, never purchase approval."
