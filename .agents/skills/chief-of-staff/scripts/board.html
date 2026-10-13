@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+:where(:root){--font-sans:system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;--foreground:#1f2328;--muted-foreground:#656d76;--border:#d0d7de;--radius:8px;--success:#1a7f37;--info:#0969da;--warning:#9a6700;--secondary:#eaeef2}
+body{font-family:var(--font-sans);color:var(--foreground);margin:0}
+.wrap{display:flex;flex-direction:column;gap:22px}
+h2{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);margin:0 0 8px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline}
+h2 span{letter-spacing:0;text-transform:none;font-weight:400;font-size:11px}
+.needs{border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:grid;grid-template-columns:auto 1fr;gap:6px 16px;align-items:start}
+.big{font-size:34px;font-weight:700;line-height:1;color:var(--success);grid-row:span 2}
+.needs p{margin:0;font-size:13px}
+.soon{font-size:12.5px;color:var(--muted-foreground);line-height:1.55;margin:0;padding-left:16px}
+.soon b{color:var(--foreground);font-weight:500}
+.team{border-bottom:1px solid var(--border);padding:12px 0;display:grid;grid-template-columns:minmax(150px,1.1fr) 2fr;gap:6px 18px}
+.team:last-child{border-bottom:0}
+.nm{font-weight:600;font-size:14px}.rp{font-size:11px;color:var(--muted-foreground);font-family:var(--font-mono)}
+.goal{font-size:11.5px;color:var(--muted-foreground);margin-top:3px;line-height:1.35}
+.track{display:flex;gap:4px;align-items:flex-start}
+.st{flex:1;min-width:0}
+.st i{display:block;height:6px;border-radius:3px;background:var(--secondary)}
+.st.d i{background:var(--success)}.st.c i{background:var(--info)}.st.b i{background:var(--warning)}
+.st span{display:block;font-size:10.5px;color:var(--muted-foreground);margin-top:4px;line-height:1.25}
+.st.c span,.st.b span{color:var(--foreground);font-weight:500}
+.now{font-size:12.5px;margin-top:8px;line-height:1.4}
+.now em{font-style:normal;color:var(--warning)}
+.m{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--muted-foreground);margin-top:6px}
+.m b{color:var(--foreground);font-weight:500}
+.m .hot b{color:var(--warning)}
+.pill{font-size:10.5px;padding:1px 7px;border-radius:999px;margin-left:6px;vertical-align:1px;font-weight:500}
+.run{background:color-mix(in srgb,var(--info) 18%,transparent);color:var(--info)}
+.park{background:var(--secondary);color:var(--muted-foreground)}
+.waste{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.k{border:1px solid var(--border);border-radius:var(--radius);padding:10px 12px;font-size:11.5px;color:var(--muted-foreground);line-height:1.4}
+.k b{display:block;font-size:20px;color:var(--foreground);font-weight:700}
+.k.w b{color:var(--warning)}
+.done{font-size:12.5px;color:var(--muted-foreground);line-height:1.6}
+.done b{color:var(--foreground);font-weight:500}
+@media(max-width:560px){.team{grid-template-columns:1fr}.waste{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+
+<section><h2>Needs you <span>$updated</span></h2>
+<div class="needs"><div class="big">$needs_count</div>$needs_lines
+$coming</div></section>
+
+<section><h2>Teams</h2><div id="t">
+$teams
+</div></section>
+
+<section><h2>Time lost today <span>active teams</span></h2><div class="waste">
+<div class="k w"><b>$wait</b>teams waiting on CoS replies</div>
+<div class="k"><b>$restart_dead</b>runs in restart clusters</div>
+<div class="k"><b>$other_dead</b>other failed, cancelled or interrupted runs</div>
+</div></section>
+
+<section><h2>Finished today</h2><div class="done">
+$finished
+</div></section>
+</div>
+</body></html>
