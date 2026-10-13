@@ -56,8 +56,8 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- Decision-log review (Opus child done 2026-10-13): 8 items in front of Tobias. They are the 2-round cap overridden on the secret guard, Tauri lanes deleted against "ship until parity", the #54 parameter band and 9.6→60s budget left unlogged, secret-audit exemptions, the polkit install via the docker group, the customer-string ruling, the dropped server_id ban plus workcenter key-table consolidation, and hook bypasses that now skip gitleaks. 197 of 212 entries are cleared as right calls. Once he gives verdicts, record the lessons and clear the log.
-- Hardware proposal (team done; vault 50cef27; `/tmp/agent-hardware-proposal.md`): one extra whole-team Omarchy/T3 host with 16 cores, 96GB RAM and 2TB NVMe. Ceilings are DKK 21k new / 14k used. A private permission-first deal watch is planned; it never buys autonomously. Awaiting Tobias.
+- Decision-log review: done 2026-10-13. Tobias gave verdicts. Rules landed in global AGENTS (dotfiles 801660e) and the working section, and the log is cleared.
+- Hardware: Tobias approved the vision of a second PC where agent teams run on their own (no Mac to develop on). He wants CPU candidates ranked on price/performance, including AMD Ryzen AI Max (Strix Halo) and recent Intel Core Ultra. The hardware team is extending its comparison, then sets up the private permission-first deal watch. It never buys autonomously.
 
 ## Watch and hypotheses
 
