@@ -58,12 +58,11 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- Decision-log review: done 2026-10-13. Tobias gave verdicts. Rules landed in global AGENTS (dotfiles 801660e) and the working section, and the log is cleared.
-- Hardware: done 2026-10-13. Vault ca48a50 adds `skills/hardware-deal-check` (offline, Tobias's ceilings, keeps 285K and 9950X, 128GB/2TB default) and links it globally. Tobias waits for a deal, with no purchase now. Thread settled.
-
-- CoS CLI (Tobias, 2026-10-13: board approved): Sol child `cos-cli-board-census-1` builds `scripts/cos.py` with census, board (fixed v4 design) and metrics, plus a `progress:` line in the report contract. Verify its diff and outputs, then render the board. Then (Tobias go 2026-10-13, decisions.md): a second Sol child adds `cos brief` (one-source preamble) and the guards (T3 restart refusal, commit by path if reliably checkable, steer/auto hint in census). After that I cut the working section to rules only and state.md to the non-derivable parts. Re-measure answer latency on 2026-10-20 against the baseline of median 29 s, p90 12 min, 3.1 h waiting.
+- (none open)
 
 ## Watch and hypotheses
+
+- CoS CLI (Tobias, 2026-10-13: board approved): Board landed (03fef37, `cos.py census|board|metrics`). Sol child `cos-cli-brief-guards-1` now adds `cos brief`, restart-check, `cos commit`, steer/auto hints and board fixes; before that `cos-cli-board-census-1` built `scripts/cos.py` with census, board (fixed v4 design) and metrics, plus a `progress:` line in the report contract. Verify its diff and outputs, then render the board. Then (Tobias go 2026-10-13, decisions.md): a second Sol child adds `cos brief` (one-source preamble) and the guards (T3 restart refusal, commit by path if reliably checkable, steer/auto hint in census). After that I cut the working section to rules only and state.md to the non-derivable parts. Re-measure answer latency on 2026-10-20 against the baseline of median 29 s, p90 12 min, 3.1 h waiting.
 
 - UI review routing (Tobias, 2026-10-13): Sol is the only PR reviewer. No Opus UI reviewer until UI work actually starts; that UI work will run with an Opus 5.5 agent.
 
