@@ -54,7 +54,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Orderready: before it goes public (#81/#72), its `.githooks` must call the global secret guard, because a local `core.hooksPath` bypasses it.
 - Orderready: `tools/or test --full` is the gate (local, no hosted CI); `tools/or test --repeat N` for repeat proofs; never hand-edit the verdict cache or `~/.cache/orderready/verdicts`; no binary fixtures in Git; the pre-publication `filter-repo` purge needs Tobias's go. Parity: exact React parity until cutover, quirks as rows in `docs/parity-record.md`.
 
-- [pi-workspace-view prune-epoch confirm](t3-thread://v1/mcp:72b0adf7-8a76-45a5-9fc4-22f544ea8cde) (Tobias, 2026-10-13: confirm approved in principle). Case from a real public-repo task whose Sol sessions crossed 128k (no synthetic case; stop if none qualifies), 6+6 runs, adoption rule ≥15% cost drop with checks held. Plan gate before the 12 runs; global install stays Tobias's.
+- pwv prune-epoch confirm (Tobias approved it in principle, 2026-10-13): INCONCLUSIVE. Stock slot01 hit a sandbox setup failure (exit 125) before any assistant output, leaving 0 valid runs and 11 unlaunched. #16 is closed, and results/HANDOFF merged as PR #17 (b67b55a5). The frozen harness is on swe-benchmarking `feat/prune-epoch-confirm-frozen`. #18 (probable skill-symlink input mismatch) is parked; any new cohort needs a new gate. Settle the lead (mcp:72b0adf7) once its run ends.
 
 ## Needs Tobias
 
