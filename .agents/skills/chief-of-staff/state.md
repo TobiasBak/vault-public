@@ -46,6 +46,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - Decision-log review: entries marked **[review]**.
 
 ## Watch and hypotheses
+- Missed team reports (2026-10-13): plans and merge-ready PRs from top-level team threads do not reach this thread. #113 sat for 2.5h and #117 for 7h. Every turn, run `t3_thread_list` across active projects and read the last message of any team thread whose status is `completed` and that is not settled.
 
 - 200K Opus compaction: kept. Prompt per request fell 48% for 4.2M of compaction overhead (`~/.cache/claude-usage-20261012/report.md`; the result is in `agents/coding-models.md`). Re-measure only if quota burn or rework complaints rise.
 - Retro 2026-10-11 (`~/.cache/cos-retro-20261011/`):
