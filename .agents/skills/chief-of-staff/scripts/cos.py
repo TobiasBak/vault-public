@@ -12,6 +12,7 @@ import re
 import sqlite3
 import statistics
 from string import Template
+import subprocess
 import sys
 from zoneinfo import ZoneInfo
 
@@ -339,6 +340,35 @@ def age(at, now):
     return duration(max(0, (now - at).total_seconds()))
 
 
+def send_hint(snapshot, thread):
+    return f"{thread} send:{'steer' if thread in snapshot.running else 'auto'}"
+
+
+def outside_runs(snapshot):
+    return sorted(
+        (start or requested, thread, run_id)
+        for thread, runs in snapshot.runs.items() if snapshot.root(thread) != COS_THREAD_ID
+        for run_id, start, _, status, requested in runs if status == "running"
+    )
+
+
+def restart_check(snapshot):
+    live = outside_runs(snapshot)
+    for _, thread, run_id in live:
+        print(f"running | {snapshot.title(thread)} | {thread} | run {run_id}")
+    if not live:
+        print("No running runs outside CoS and its children; restart allowed.")
+    return 1 if live else 0
+
+
+def commit(message, paths):
+    subprocess.run(["git", "add", "--", *paths], check=True)
+    subprocess.run(["git", "commit", "-m", message, "--", *paths], check=True)
+    subprocess.run(["git", "pull", "--rebase", "--autostash"], check=True)
+    subprocess.run(["git", "push"], check=True)
+    return 0
+
+
 def census(snapshot, now):
     items = []
     for lead in snapshot.leads:
@@ -348,7 +378,7 @@ def census(snapshot, now):
         replies = snapshot.data[3][lead]
         for at, text in snapshot.reports[lead]:
             if not replies or replies[-1] <= at:
-                items.append((at, f"unanswered report {age(at, now)} {report_kind(text)} | {title} | {lead}"))
+                items.append((at, f"unanswered report {age(at, now)} {report_kind(text)} | {title} | {send_hint(snapshot, lead)}"))
         if lead in snapshot.running or snapshot.settled(lead):
             continue
         assistant = snapshot.last_assistant.get(lead)
@@ -360,7 +390,7 @@ def census(snapshot, now):
             plan = re.search(r"\b(?:plan|question|approve|approval|permission)\b|\?", text, re.I)
             if not sent and (classify(text) == "merge-ready" or plan):
                 kind = "merge-ready" if classify(text) == "merge-ready" else "plan/question"
-                items.append((at, f"idle unreported {age(at, now)} {kind}: answer or merge | {title} | {lead}"))
+                items.append((at, f"idle unreported {age(at, now)} {kind}: answer or merge | {title} | {send_hint(snapshot, lead)}"))
         ends = [end for _, _, end, _, _ in snapshot.runs[lead] if end]
         if ends:
             last_end = max(ends)
@@ -371,30 +401,35 @@ def census(snapshot, now):
                 completions = [end for _, _, end, status, _ in snapshot.runs[child] if status == "completed" and end and end > last_end]
                 if completions:
                     at = min(completions)
-                    items.append((at, f"idle unused child {age(at, now)}: nudge lead | {title} | {lead} | child {child}"))
+                    items.append((at, f"idle unused child {age(at, now)}: nudge lead | {title} | {send_hint(snapshot, lead)} | child {send_hint(snapshot, child)}"))
     running_roots = {snapshot.root(thread) for thread in snapshot.running}
     for at, thread, run_id in snapshot.queued:
         root = snapshot.root(thread)
         if root in running_roots and root in snapshot.leads:
-            items.append((at, f"queued message {age(at, now)}: promote to steer or cancel stale | {snapshot.title(thread)} | {thread} | {run_id}"))
+            items.append((at, f"queued message {age(at, now)}: promote to steer or cancel stale | {snapshot.title(thread)} | {send_hint(snapshot, thread)} | {run_id}"))
     for thread, payload in snapshot.threads.items():
         if thread == COS_THREAD_ID or not snapshot.visible(thread) or snapshot.settled(thread) or thread in snapshot.running:
             continue
         root = snapshot.root(thread)
         reason = None
         at = timestamp(payload["updatedAt"])
-        if root in snapshot.leads and snapshot.done(root):
+        lineage = payload.get("lineage") or {}
+        latest = max(snapshot.runs[thread], key=lambda run: run[4], default=None)
+        if (lineage.get("parentThreadId") == COS_THREAD_ID and lineage.get("relationshipToParent") == "subagent"
+                and latest and latest[3] == "completed" and latest[2]):
+            at = latest[2]
+            reason = "CoS child completed with no later run; verify used"
+        elif root in snapshot.leads and snapshot.done(root):
             reason = "root lead done"
         elif thread in snapshot.used_results:
             at, parent = snapshot.used_results[thread]
             reason = f"result consumed by completed parent run {parent}; verify used"
         if reason:
-            items.append((at, f"settle candidate {age(at, now)}: {reason} | {snapshot.title(thread)} | {thread}"))
-    live = [(start or requested, thread, run_id) for thread, runs in snapshot.runs.items() if thread != COS_THREAD_ID
-            for run_id, start, _, status, requested in runs if status == "running"]
+            items.append((at, f"settle candidate {age(at, now)}: {reason} | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"))
+    live = outside_runs(snapshot)
     if live:
         at = min(start for start, _, _ in live)
-        details = "; ".join(f"{snapshot.title(thread)} [{thread}]" for _, thread, _ in sorted(live))
+        details = "; ".join(f"{snapshot.title(thread)} [{send_hint(snapshot, thread)}]" for _, thread, _ in live)
         items.append((at, f"running outside CoS {age(at, now)}: {len(live)} runs; hold T3 restart | {details}"))
     for _, line in sorted(items, key=lambda item: (item[0], item[1])):
         print(line)
@@ -453,7 +488,8 @@ def state_lines(path, heading):
             active = line.lstrip("#").strip().casefold() == heading.casefold()
         elif active and line.startswith("- "):
             text = line[2:].strip()
-            if text.casefold() not in {"none", "none.", "nothing", "nothing."} and not re.search(r"\b(?:done|closed|resolved)\b", text.split(".", 1)[0], re.I):
+            status = text.replace("**", "").replace("`", "")
+            if status.casefold() not in {"none", "none.", "nothing", "nothing."} and not re.fullmatch(r"(?:.+?:\s*)?done[.!]?", status, re.I):
                 result.append(text)
     return result
 
@@ -517,12 +553,19 @@ def write_board(snapshot, now, out):
         next_step = current or next((index + 1 for index, (_, status) in enumerate(steps) if not status), len(steps))
         step_count = f'<span>step <b>{next_step} of {len(steps)}</b></span>' if steps else ""
         sentence = re.split(r"(?<=[.!?])\s+", one_line(text), maxsplit=1)[0]
+        replies = snapshot.data[3][lead]
+        answer_index = bisect.bisect_right(replies, report_at)
+        now_class = "now"
+        if answer_index < len(replies):
+            answered_at = replies[answer_index].astimezone(LOCAL_ZONE).strftime("%H:%M")
+            sentence = f"answered {answered_at}: {sentence}"
+            now_class += " goal"
         running = lead in running_roots
         pill = "run" if running else "park"
         status = "running" if running else "parked"
         rows.append(
             f'<div class="team"><div><div class="nm">{escape(snapshot.title(lead))}<span class="pill {pill}">{status}</span></div>'
-            f'<div class="rp">{escape(snapshot.projects.get(snapshot.threads[lead]["projectId"], ""))}</div></div><div>{track}<div class="now">{escape(sentence)}</div><div class="m">{step_count}'
+            f'<div class="rp">{escape(snapshot.projects.get(snapshot.threads[lead]["projectId"], ""))}</div></div><div>{track}<div class="{now_class}">{escape(sentence)}</div><div class="m">{step_count}'
             f'<span>wait on CoS <b>{board_duration(wait_today(snapshot, lead, since, now))}</b></span>'
             f'<span>children <b>{len(children[lead])}</b></span><span>dead runs <b>{dead[lead] / 60:.1f} min</b></span>'
             f'<span>last report <b>{escape(age(report_at, now))}</b></span></div></div></div>'
@@ -549,8 +592,14 @@ def write_board(snapshot, now, out):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Read-only chief-of-staff control CLI.", allow_abbrev=False)
+    parser = argparse.ArgumentParser(description="Chief-of-staff control CLI; T3 reads are read-only.", allow_abbrev=False)
     commands = parser.add_subparsers(dest="command", required=True)
+    brief = commands.add_parser("brief", description="Print the one-source team-brief preamble.", allow_abbrev=False)
+    brief.add_argument("--short", action="store_true", help="Print only the report-trigger restatement.")
+    commands.add_parser("restart-check", description="Refuse a T3 restart while runs outside CoS and its children are running.", allow_abbrev=False)
+    commit_parser = commands.add_parser("commit", description="Commit only named paths, pull/rebase with autostash, then push once.", allow_abbrev=False)
+    commit_parser.add_argument("message", metavar="MSG")
+    commit_parser.add_argument("paths", nargs="+", metavar="PATH")
     commands.add_parser(
         "census", description="Print unanswered reports, unreported idle gates, unused child completions, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
     )
@@ -566,10 +615,20 @@ def main():
     metrics.add_argument("--until", type=timestamp, metavar="ISO")
     args = parser.parse_args()
     try:
+        if args.command == "brief":
+            text = Path(__file__).with_name("brief.md").read_text()
+            if args.short:
+                text = text.split("## Report back\n", 1)[1].lstrip()
+            print(text, end="")
+            return 0
+        if args.command == "commit":
+            return commit(args.message, args.paths)
         with closing(open_readonly(STORE_PATH)) as db:
             data = load_data(db)
             snapshot = Snapshot(db, data) if args.command != "metrics" else None
         now = datetime.now(timezone.utc)
+        if args.command == "restart-check":
+            return restart_check(snapshot)
         if args.command == "census":
             census(snapshot, now)
         elif args.command == "board":
@@ -582,6 +641,9 @@ def main():
             if since >= until:
                 raise ValueError("--since must be earlier than --until")
             report(data, STORE_PATH, since, until)
+    except subprocess.CalledProcessError as error:
+        print(f"cos: git {error.cmd[1]} failed (exit {error.returncode}); stopped", file=sys.stderr)
+        return error.returncode
     except (OSError, sqlite3.Error, ValueError, KeyError, TypeError) as error:
         print(f"cos: {type(error).__name__}; check the read-only T3 store, state.md and output path; use --help", file=sys.stderr)
         return 1
