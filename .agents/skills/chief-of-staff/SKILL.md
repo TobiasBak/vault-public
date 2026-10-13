@@ -40,7 +40,7 @@ Teams are disposable (Tobias, 2026-10-12: P2 and GPUI leads ran 300+ runs in rev
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - A team brief names the issue and adds only what the issue and repo can't carry:
   - Gates (Sol leads, Tobias 2026-10-12): post the plan and wait for the chief of staff's go before code. Never merge: hand over the merge-ready PR (gate green on the head, review clean); the chief of staff reads the diff and gate output, then merges. At most 3 concurrent children. Stop and report on a child that weakens or deletes an existing test, or drops a check of a real requirement (a worker fixing its own new, invalid assertion is fine; report it), an out-of-scope edit, the same failure twice, or an unbacked claim.
-  - Workers: Space Bunny by default; Sol for independent review, locking/cleanup/ownership work, and as fallback after limit errors; report usage (see Track performance).
+  - Workers: Pi GPT-6.1 Sol at thinking `high` for all delegated work, including a separate Sol child for independent review. Use `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}`, never Codex CLI for Sol. Give children full access; put limits like read-only in the task. Stop using Space Bunny entirely; never paid OpenCode models. Report usage (see Track performance).
   - Scope discipline: anything out of scope becomes a new issue, not more work.
   - Review rule: one independent review, which blocks only on correctness, security, data loss or a broken contract. Everything else becomes a follow-up issue. At most two rounds; then the lead decides and records why in the PR.
   - Finish: close the issue with a comment giving the outcome and a metrics block (see Track performance). Settle each subagent thread once its result is used.
@@ -57,7 +57,7 @@ Feedback speed is the main lever: a small change shouldn't take hours (Tobias, 2
   ```
   metrics: wall=<start to merge> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
   ```
-  Teams that used Space Bunny add `space_bunny: tasks=<n> accepted=<n> reworked=<n> rejected=<n> rate_limited=<n> fallback_sol=<n> tokens=<total|unknown>`.
+  Teams add `subagents: tasks=<n> accepted=<n> reworked=<n> rejected=<n> rate_limited=<n>`.
 - Read the block on each completion. Aggregate weekly from GitHub and T3 thread data (`scripts/team_metrics.py`, once it exists) into lead time per issue, review rounds, gate share of wall time, and lead runs per issue.
 - Slow feedback is a defect. When gate time, review rounds or tool latency dominate a repo's lead time, file a feedback-loop issue there and dispatch it ahead of feature work.
 

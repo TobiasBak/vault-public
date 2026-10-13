@@ -4,7 +4,9 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider gui
 
 ## Current choice
 
-Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost, and made Space Bunny the default subagent on 2026-10-12. No measurement shows the current team split beats plain Sol on cost per finished task; include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
+Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
+
+**Use Pi GPT-6.1 Sol at thinking `high` for all delegated work; stop using Space Bunny entirely** (Tobias, 2026-10-13). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
 
 ## Provider guidance
 
@@ -131,9 +133,9 @@ Tobias wants v2 in T3, not v1. Verified 2026-10-03: nightly `0.0.46-nightly.2026
 - **Binary:** T3 `opencode` uses `~/.local/share/pnpm/bin/opencode`, `@opencode/cli` 2.0.22; dotfiles bootstrap owns installs/updates. Removed separate `~/.local/share/t3code-opencode` v1; don't recreate.
 - **Updater failure:** T3 installed v2 without required postinstall: `opencode --version` exited "postinstall script was not run". Repair with [pnpm build permission](https://opencode.ai/v2/docs). On pnpm 11.13.1, persist `allowBuilds: {"@opencode/cli": true}` in `~/.local/share/pnpm/global/v11/pnpm-workspace.yaml`, not global `config.yaml`; verified normal global installs run postinstall without extra flag. Refresh T3 provider afterward: the live snapshot caches failures even after executable repair.
 - **Migration:** v1/v2 share database; never run side by side. Snapshot before first v2 startup; credentials/supported config carry over. ([guide](https://opencode.ai/v2/docs/migrate-v1/))
-- **Free models only (Tobias, 2026-10-12):** never paid Go/Zen models. Free models rotate weekly; Tobias allows Space Bunny in all repos regardless of retention.
+- **Free models only (Tobias, 2026-10-12):** never paid Go/Zen models. Free models rotate weekly. Space Bunny is retired regardless of retention; see [current choice](#current-choice).
 - **Free-model data policies, checked 2026-10-12:** [OpenCode's current model docs](https://github.com/anomalyco/opencode/blob/c57c448d31c390880e06493f81b91a2c92536ad9/services/www/src/docs/content/console/models.mdx#privacy) state the following. These are provider claims, not an independent audit. `opencode models --verbose` is unsupported in v2; checked `opencode models` and the [live Zen catalog](https://opencode.ai/zen/v1/models) for model IDs.
-  - **Space Bunny Free, LongCat 2.5 Preview Free, Step 5 Preview Free:** explicitly zero retention and no use of data for model training.
+  - **Space Bunny Free (retired), LongCat 2.5 Preview Free, Step 5 Preview Free:** explicitly zero retention and no use of data for model training.
   - **Big Pickle, Exo Free, MiMo-V2.6-Flash Free, MiMo-V2.5 Free, Ling 3.1 Flash Free, Ling 3.0 Flash Fin Free:** exceptions to the general zero-retention/no-training policy. Collected data may be used to improve the model during the free period; no retention duration is given.
   - **Nemotron 3 Ultra Free, Nemotron 3.5 Lightning Free:** NVIDIA trial endpoints log use for security and product/service improvement; improvement session data is not linked to identity or a persistent identifier. Do not submit personal or confidential data. No retention duration is given.
   - **Muse Spark 1.3 Contributor Free:** permission to train future Meta models on prompts and completions in exchange for discounted pricing; no retention duration is given.
@@ -144,10 +146,10 @@ Tobias wants v2 in T3, not v1. Verified 2026-10-03: nightly `0.0.46-nightly.2026
 
 One `opencode run` per model on two small public dotfiles fixes with a test check (mise options; retire a Pi extension), six concurrent, 20-minute cap; transcripts and diffs read against the merged fix. Artifacts: `~/.cache/free-bakeoff-20261012/`.
 
-- **Usable workers, under review:** Space Bunny (best investigation, honest report; 197/101 s), Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research).
+- **Initial results, not current routing:** Space Bunny (best investigation, honest report; 197/101 s), Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research). Space Bunny is now retired; see [current choice](#current-choice).
 - **Avoid:** Nemotron 3.5 Lightning (failed both, littered debug files, claimed success), Nemotron 3 Ultra (hardcoded, timed out flailing), Step 5 Preview (passed, then spent 10 minutes repairing its own throwaway harness). Ling 3.1 Flash works but is slow and hit upstream 429s. Exo Free was already deprecated.
 - **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Free workers need a precise brief and an independent Sol review; never trust their done report alone.
-- **Space Bunny round 2** (dotfiles 9ff2c91, win-vm reboot recovery across commands with lease ownership; two runs, 347/288 s): both passed the fix's hidden tests and `./verify`, investigated first, stayed in scope, and wrote their own tests. Both still introduced a lock race the reference doesn't have, caught only by extra probes. Run 1 skips recovery when its shared-to-exclusive upgrade fails, then executes in the stale clone. Run 2 lets `status` run unleased and delete a freshly leased clone and container. Run 2 also ended without a final report. Fit: bounded implementation and black-box tests under a fixed design. Never give it locking, cleanup or ownership design, and review those paths adversarially.
+- **Space Bunny round 2** (dotfiles 9ff2c91, win-vm reboot recovery across commands with lease ownership; two runs, 347/288 s): both passed the fix's hidden tests and `./verify`, investigated first, stayed in scope, and wrote their own tests. Both still introduced a lock race the reference doesn't have, caught only by extra probes. Run 1 skips recovery when its shared-to-exclusive upgrade fails, then executes in the stale clone. Run 2 lets `status` run unleased and delete a freshly leased clone and container. Run 2 also ended without a final report. These failures preceded its retirement; they do not justify using it for narrower tasks.
 - `opencode run` can exit 1 after a clean finish (cancelled web search); judge by the check, not the exit code.
 
 ## Retired DeepSeek Codex experiment
