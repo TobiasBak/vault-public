@@ -60,9 +60,10 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
 - Decision-log review: about 199 unreviewed entries, 5x the 40 limit. Recommend a reviewed subset (entries marked **[review]**) and clearing the rest as right calls.
-- Auto-merge design (Tobias said yes in principle, 2026-10-13): the control CLI posts a `gate` status and the Sol reviewer posts a `review` status on the exact head. A dotfiles `pr-merge` script merges only when both are green, no protected paths are touched and no test or expectation lines are deleted, unless the CoS adds a `cos-approved` label. Rollout starts in orderready. Waits on his OK to launch the dotfiles team.
 
 ## Watch and hypotheses
+
+- [dotfiles pr-merge](t3-thread://v1/mcp:2f15d818-7390-4a5e-8b38-10e0215e6466) (Tobias, 2026-10-13): `gate` and `review` status checks on the exact head, plus `.github/merge-gate.toml` protected and test globs; the `cos-approved` label waives the path checks. Sandbox proof, then an orderready adoption issue. Once one repo adopts, update the global rules and the skill so leads merge via `pr-merge`.
 
 - Reflection pending (2026-10-13): a Sol child is researching T3 local workarounds (child wake, auto vs steer, typed report channel, wake without polling). Once the gate-narrowing child commits SKILL.md, record the reflection lessons in the working section: fix at the owner before adding prose, measure my own loop (`team_metrics.py`), and land rule changes in the skill in the same turn.
 - #56 lead is idle waiting on its mesh child and hasn't received the gate-narrowing rule. Include it in the next message to that lead.
