@@ -64,6 +64,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 ## Watch and hypotheses
 
 - [dotfiles pr-merge](t3-thread://v1/mcp:2f15d818-7390-4a5e-8b38-10e0215e6466) (Tobias, 2026-10-13): `gate` and `review` status checks on the exact head, plus `.github/merge-gate.toml` protected and test globs; the `cos-approved` label waives the path checks. Sandbox proof, then an orderready adoption issue. Once one repo adopts, update the global rules and the skill so leads merge via `pr-merge`.
+- [hardware buying](t3-thread://v1/mcp:db6ae599-1d51-47cd-b690-28112627cfde) (Tobias, 2026-10-13): research what agent-heavy Linux development needs, measured against the current host, then design a DK used/new deal-finding process. Output: a generic vault note plus the proposal as a Tobias decision. Nothing built or bought.
 
 - Reflection follow-ups (2026-10-13): `scripts/team_metrics.py` exists. Baseline for 2026-10-13 00:00–17:01Z: 145 lead messages, about 79 unclassified noise (secret-leak 25/37, #44 16/20); 122 answered, gate latency median 34s, p90 13.5m, max 2.66h; 144 CoS turns, median 19s, p90 1.3m. Idle-after-child gaps are under 1s. The cost is leads ending turns without reporting, which the script doesn't measure yet. Re-run after the extension lands and compare noise share and p90. The T3 research ran on 0.0.46-nightly.20261013.3042:
   - Child completion does wake the parent (`completionWake: always`). The SKILL census rationale is corrected.
