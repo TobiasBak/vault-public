@@ -47,7 +47,7 @@ Dead and superseded team threads are settled; a cleanup child settles finished s
 
 ### Wound down (2026-10-12)
 
-The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2/case-wall-clock`. The B4 worktree `$ORDERREADY_DATA/wt/mailbox-corpus` holds an uncommitted mid-merge state; preserve it (#91). GPUI filed #92 and pushed `gpui/workbench-lifecycle-final` (53873a35), which waits on the 35s-vs-15s qualification budget decision. orderready#86/#94/#95 are merged. New per-issue teams start from these issues.
+The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2/case-wall-clock`. The B4 worktree `$ORDERREADY_DATA/wt/mailbox-corpus` holds an uncommitted mid-merge state; preserve it (#91). GPUI filed #92; its workbench integration merged as orderready PR #122 (head bab560bf → 1fd703b9) with budgets unchanged. The 35s-vs-15s qualification budget ruling is still Tobias's. Native Drawing qualification is a separate follow-up. orderready#86/#94/#95 are merged. New per-issue teams start from these issues.
 
 ### Repo-wide standing rules (until each repo documents them)
 
