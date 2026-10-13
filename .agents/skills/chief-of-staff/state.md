@@ -59,9 +59,13 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 - dotfiles#11 NAS: apply the root units and restore `~/.config/samba/nas.credentials` (omarchy/README.md § NAS mount), then live-check reboot, read/write and outage.
 
 - Artificial Analysis: Tobias has no API key. Either he signs up (free tier) and stores it at `~/.keys/artificial-analysis` (0600), or the tracker drops scores. The table (dotfiles #15) works without them; #16 waits.
-- Decision-log review: entries marked **[review]**.
+- Decision-log review: about 199 unreviewed entries, 5x the 40 limit. Recommend a reviewed subset (entries marked **[review]**) and clearing the rest as right calls.
+- Auto-merge design (Tobias said yes in principle, 2026-10-13): the control CLI posts a `gate` status and the Sol reviewer posts a `review` status on the exact head. A dotfiles `pr-merge` script merges only when both are green, no protected paths are touched and no test or expectation lines are deleted, unless the CoS adds a `cos-approved` label. Rollout starts in orderready. Waits on his OK to launch the dotfiles team.
 
 ## Watch and hypotheses
+
+- Reflection pending (2026-10-13): a Sol child is researching T3 local workarounds (child wake, auto vs steer, typed report channel, wake without polling). Once the gate-narrowing child commits SKILL.md, record the reflection lessons in the working section: fix at the owner before adding prose, measure my own loop (`team_metrics.py`), and land rule changes in the skill in the same turn.
+- #56 lead is idle waiting on its mesh child and hasn't received the gate-narrowing rule. Include it in the next message to that lead.
 - Census heartbeat: scheduled task `cos-census-heartbeat-1` posts into this thread every 30 min (2026-10-13). The census procedure is in SKILL.md. The Orderready nightly verdict check still runs on Opus; update_scheduled_task can't change its model, so recreate it from a Pi thread.
 
 - 200K Opus compaction: kept. Prompt per request fell 48% for 4.2M of compaction overhead (`~/.cache/claude-usage-20261012/report.md`; the result is in `agents/coding-models.md`). Re-measure only if quota burn or rework complaints rise.
