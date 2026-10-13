@@ -56,7 +56,8 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- Decision-log review: per Tobias (2026-10-13), an Opus 5.5 child (task `cos-decision-log-review-20261013`) reviews the log read-only and lists what he should look at. Bring him its list; once he gives verdicts, record the lessons and clear the reviewed entries.
+- Decision-log review (Opus child done 2026-10-13): 8 items in front of Tobias. They are the 2-round cap overridden on the secret guard, Tauri lanes deleted against "ship until parity", the #54 parameter band and 9.6→60s budget left unlogged, secret-audit exemptions, the polkit install via the docker group, the customer-string ruling, the dropped server_id ban plus workcenter key-table consolidation, and hook bypasses that now skip gitleaks. 197 of 212 entries are cleared as right calls. Once he gives verdicts, record the lessons and clear the log.
+- Hardware proposal (team done; vault 50cef27; `/tmp/agent-hardware-proposal.md`): one extra whole-team Omarchy/T3 host with 16 cores, 96GB RAM and 2TB NVMe. Ceilings are DKK 21k new / 14k used. A private permission-first deal watch is planned; it never buys autonomously. Awaiting Tobias.
 
 ## Watch and hypotheses
 
