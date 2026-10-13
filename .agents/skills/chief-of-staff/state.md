@@ -5,7 +5,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 ## Coordination
 
 - Current CoS: [Chief of Staff Model Routing](t3-thread://v1/b826766b-7e34-4c9d-bc2d-d3199e4744f6), Opus 5.5 high. All live leaders report here.
-- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. All subagents run on Pi Sol 6.1 high; Space Bunny is retired (Tobias 2026-10-13; policy edit in flight, see below). Metrics use `subagents:` instead of `space_bunny:`. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
+- Team leads run on Pi Sol 6.1 high behind CoS gates (trial, Tobias 2026-10-12): plan go before code, CoS merges, ≤3 children, ≤2 review rounds. All subagents run on Pi Sol 6.1 high; Space Bunny is retired (Tobias 2026-10-13; dotfiles#20 merged as 0d14a26 and live, and the routing hook denies it). Metrics use `subagents:` instead of `space_bunny:`. Opus is the CoS only; Haiku is retired. Policy lives in dotfiles `agents/AGENTS.md`.
 - Omarchy is the only workstation; serv01 stays NixOS; the old disk is cold storage. No production deployments are authorized.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)). Orderready's nightly/staging Windows tests run there.
 
@@ -22,7 +22,6 @@ Running:
 - [orderready#87 hook-test GIT_* leak](t3-thread://v1/mcp:2f499bb5-7e26-468e-b69d-c54b01532d37): go given (isolation at xtask's process boundary in test builds, decoy-child regression that must fail on main). `--no-verify` push approved. Gates run inside git hooks stay unsafe until it merges.
 - [Secret-leak prevention](t3-thread://v1/mcp:b808f31b-b1b8-40a2-9d2e-652bbfd41461) (dotfiles root; 22 public repos): go given for the global core.hooksPath gitleaks guard (isolated bare repo with alternates, chains to repo hooks, incremental pre-push, fail closed), history audit of all 22, and GitHub push protection on every public repo. The CoS activates the global hooksPath after merge, because it hits every live team at once.
 - [pwv#2+#4 compaction](t3-thread://v1/mcp:8e61b6dd-a5d2-4d60-8998-8adf9d526443): finishing. Structured is dead, native-70k dead on cost, native-90k inconclusive; write-up, review round 2, then PRs to the CoS.
-- Space Bunny retirement: a Sol child is editing dotfiles `agents/AGENTS.md` (PR, separate worktree `~/code/dotfiles-wt-sol-default`) and vault references. The CoS merges it.
 - pwv done: #5 (PR #10), #6 (swe-benchmarking#1 871ed477 + pwv#14 54b790bb; case 011 peaks 220–255k), #8 DO NOT PROMOTE, #1 and #3 dead. Threads settled. #9 is parked with no go. Scout cap: 8 total; never bypass `launch.sh`; Sol or the lead launches subject runs.
 - dotfiles#12 restic: merged (0d58829d), applied with daemon-reload only, closed. dotfiles#11 NAS: merged; applying needs Tobias.
 
