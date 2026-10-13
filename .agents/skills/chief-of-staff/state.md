@@ -58,7 +58,6 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- (none open)
 
 ## Watch and hypotheses
 
