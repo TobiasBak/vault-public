@@ -11,6 +11,10 @@ Not exhaustive. Search with `rg`.
 - [tobias/partnership.md](tobias/partnership.md): agent character, voice, disagreement, and pressure tests
 - [tobias/shopping.md](tobias/shopping.md): shopping priorities and Danish availability
 
+## Hardware
+
+- [hardware/agent-era-dev-machine.md](hardware/agent-era-dev-machine.md): cloud-agent build capacity, fleet execution boundaries and genuine hardware deals
+
 ## Agents
 
 - [agents/agent-native-codebases.md](agents/agent-native-codebases.md): patch accretion, making the easy change correct, the knowledge-placement order, enforce-first hardening
