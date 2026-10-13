@@ -31,6 +31,12 @@ Running:
   - [orderready](t3-thread://v1/mcp:096413ab-875a-4c8a-94f4-d24a078b9584), building on #107 and sequenced around #113
   - [rust-mutants](t3-thread://v1/mcp:b906cffc-472b-46d3-8d8c-e15bf1d2f628)
   - stepkit-studio#1 builds in the skill from the start (no README, black-box only, control CLI).
+  - Trigger (Tobias, 2026-10-13): once all four wave-1 teams are fully done (every PR merged or closed, threads settled), launch one Sol review team in vault-public to suggest changes to theodore-kaczynski-nullifier based on how the teams performed.
+    - Evidence: each team's thread, subagents, PRs and review rounds.
+    - Look at where the skill's rules were misread, skipped or fought; which audit items paid off in measured before/after; plan revisions and CoS corrections (the skills ban, docs/ADR); rework and stop-rule hits; time split.
+    - Use the `retro` and `review-agent-history` skills.
+    - Include stepkit-studio#1 as the greenfield data point.
+    - Output: ranked suggestions with evidence links, sent to the CoS, which brings them to Tobias. Don't edit the skill until Tobias approves.
   - Wave 2 later: pi-workspace-view (it already has the weekly Monday audit; consider folding the skill into it), swe-benchmarking and orderready-platform (neither is a T3 project yet).
 - Secret guard: done. dotfiles#21 merged ac9ff31 and live (global hooksPath on Omarchy only). Repos with a local hooksPath (orderready, rust-mutants, stepkit-geometry) are not covered. Rollback: revert, then pull. Team closed (32 tasks: 22 accepted, 9 reworked, 1 rejected; 5 review rounds).
 - pwv done: #5 (PR #10), #6 (swe-benchmarking#1 871ed477 + pwv#14 54b790bb; case 011 peaks 220–255k), #8 DO NOT PROMOTE, #1 and #3 dead, #2+#4 closed (results PR #15 6e07641e; harness PR swe-benchmarking#2 closed unmerged, branch kept). feat/context-scouts has 12 inherited pytest failures (not green); file and fix them before the next experiment. Threads settled. #9 is parked with no go. Scout cap: 8 total; never bypass `launch.sh`; Sol or the lead launches subject runs.
