@@ -35,10 +35,11 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-mailbox-logs-1` (Sol): copies the old drive's `~/.keys` here, then pulls the past week's mailbox automation logs read-only from the orderready runner host into the private orderready data dir. On result: spot-check the manifest and key modes, then give Tobias the week's summary.
+- None.
 
 ## Needs Tobias
 
+- Orderready runner log pull: keys copied to this install (700/600). The runner host has been offline on Tailscale since 2026-10-14 11:06 UTC, so no logs were pulled. Waiting on Tobias: bring it back online, or approve another route (the customer VPN credentials in ~/.keys, or the archive SMB share credentials). Recommendation: if the archives live on that share, use it.
 - orderready#69: dedicated Monitor, AX and mailbox test environments, accounts and allowed effects for the real-environment nightly run. Blocks #69 and the release (#72). Recommendation: decide after #91 and #79 land. Nobody is idle waiting on it. Raised 2026-10-14.
 
 ## Watch
