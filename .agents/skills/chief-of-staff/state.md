@@ -19,8 +19,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - [#138 PR gate + nightly](t3-thread://v1/mcp:2d4cc779-09d9-4a10-887c-d4f16c0ff94e), Sol. Implementing the GO'd design: one real main-bootstrap case plus once-built baseline fixture; nightly issues name raw failing case IDs only. The sticky-test timeout is pre-existing (#139). On merge-ready: verify, `pr-merge`; then delete scheduled task `scheduled-task:command:mcp:158a57f6-2737-40e7-a61c-261fa4faf1ae:schedule-task:p2-nightly-verdict-check-1` (Opus nightly check, superseded) and have the lead live-check the first real product PR.
 - [#91 mailbox corpus](t3-thread://v1/mcp:20df8d60-5189-443a-8817-7c997e32b8b5), Sol, preserved worktree `$ORDERREADY_DATA/wt/mailbox-corpus`. Migrating cases with original input bytes (binary fixtures go to the local fixture store by SHA; repo bans binary files in Git). 188/189/190 keep exact sources; export-proof receipts are findings only. Then two local hooked merges, push the real branch with full ancestry, PR handoff. No open gate.
-- [#79 mailbox enroll + machines page](t3-thread://v1/mcp:0f802e97-362a-4272-a6e0-737155243f6f), Opus (UI). GO'd: migrate 8 corpus cases + Windows lane to pairing, delete old stdin tests and platform `machine create`, ports admin seam + 4 admin routes, GPUI machines page mounted when #53 lands. Census 2026-10-14 flagged it idle with a plan or question: read its last message and answer.
-- [#62 case wall clock](t3-thread://v1/mcp:8b9600ac-d941-4c7f-bc30-ce49689b5c1d), Sol, `wt/case-wall-clock`. CPU rule GO'd (schedstat run_delay); then one fresh eight-observation W7, gate, PR; yields the heavy slot to product. Census 2026-10-14: last run failed; resume it.
+- [#79 mailbox enroll + machines page](t3-thread://v1/mcp:0f802e97-362a-4272-a6e0-737155243f6f), Opus (UI). GO'd: migrate 8 corpus cases + Windows lane to pairing, delete old stdin tests and platform `machine create`, ports admin seam + 4 admin routes, GPUI machines page mounted when #53 lands. No open question (checked 2026-10-14): waiting on its own W3 corpus and G1 GUI children, then PRs and a full-gate ask.
+- [#62 case wall clock](t3-thread://v1/mcp:8b9600ac-d941-4c7f-bc30-ce49689b5c1d), Sol, `wt/case-wall-clock`. CPU rule GO'd (schedstat run_delay); then one fresh eight-observation W7, gate, PR; yields the heavy slot to product. Last run died on a provider error mid-integration; resumed 2026-10-14 (settle slice B ordering question, integrate, W7). Its two CPU children stay unsettled until it integrates.
 - Repo rules: `tools/or test --full` is the full gate; never hand-edit `~/.cache/orderready/verdicts`; no binary fixtures in Git; `cos-approved` label is CoS-only.
 
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
@@ -31,11 +31,11 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
-- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b). Running: #16 and side lane #22. Next: #8 (expects a gate; renderer pixel bands), #9, #10. Follow-ups #19, #20 (upstream = geometry #76), #24.
+- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f). Running: side lane #22, #8 measurement (S19), #9 research. Next: #8 (expects a gate; renderer pixel bands), #9, #10. Follow-ups #19, #20 (upstream = geometry #76), #24.
 
 ## CoS children in flight
 
-- `node:delegated-task:command%3Amcp%3Ade412bf8-cff4-4245-ba58-a9ea021fcd6a%3Adelegate-task%3Acos-report-retarget-1` (Sol; owned by the old CoS thread b826766b, so its completion wakes that thread: read the result from the child thread or the dotfiles log on the census): Pi `report_to_cos` extension retargets to the latest `CoS-thread:` line, plus whether live sessions load it without restart. On result: verify the dotfiles commit; if live sessions need a reload, tell Tobias which leads stay pinned to the old thread until their issue ends.
+- `node:delegated-task:command%3Amcp%3Ade412bf8-cff4-4245-ba58-a9ea021fcd6a%3Adelegate-task%3Acos-report-retarget-1` (Sol; owned by the settled old CoS thread b826766b, which relays its result and any reports still pinned there to me): Pi `report_to_cos` extension retargets to the latest `CoS-thread:` line, plus whether live sessions load it without restart. On result: verify the dotfiles commit; if live sessions need a reload, tell Tobias which leads stay pinned to the old thread until their issue ends.
 
 ## Needs Tobias
 
