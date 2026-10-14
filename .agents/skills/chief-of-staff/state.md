@@ -35,11 +35,10 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- None.
+- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-mailbox-logs-2` (Sol): the runner is back online. Pulls a week of mailbox automation logs read-only into the private orderready data dir, plus today's outage cause from the event log. On result: spot-check the manifest, then summarize for Tobias.
 
 ## Needs Tobias
 
-- Orderready runner log pull: keys copied (700/600). The runner has been offline on Tailscale since 2026-10-14 11:06 UTC. Tobias is diagnosing it from his secondary laptop. When he says it's back, rerun the same brief (decisions.md 2026-10-14), using the RDP credentials file for the `ordre` login.
 - orderready#69: dedicated Monitor, AX and mailbox test environments, accounts and allowed effects for the real-environment nightly run. Blocks #69 and the release (#72). Recommendation: decide after #91 and #79 land. Nobody is idle waiting on it. Raised 2026-10-14.
 
 ## Watch
