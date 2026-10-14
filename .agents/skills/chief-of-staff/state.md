@@ -54,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - [#53 GPUI shell + sign-in + navigation](t3-thread://v1/mcp:36a3ea04-682a-43ae-bb92-73a4b35b08d6), Opus (UI), `issue-53-gpui-shell`. Launched 2026-10-14; #79's machines page mounts on it. Rebase onto #139 before push.
 - [Host-wide heavy lease](t3-thread://v1/mcp:5037a218-c6be-40d0-9d9e-d135ed6e0c3d), Sol, dotfiles `heavy-lease` (Tobias approved 2026-10-14). flock tool in dotfiles plus one adoption PR per repo. Harness wiring is GO'd; assertions unchanged. CoS grants stay in force until it lands.
-- geometry #68: Tobias chose the tagged `reconstructed` trim outcome as its own design issue (2026-10-14). The #68 lead closes #68 with the finding and files the design issue. Launch an Opus lead for that issue if `cos.py quota` < 60%.
+- [#84 reconstructed trim outcome](t3-thread://v1/mcp:e4281cd8-ed5a-4bdc-b401-eb20b6a5550e), Opus lead (quota 55%/5%), `issue-84-reconstructed-trim`. Design comes to the CoS for a GO before code (published contract). #68 closed 2026-10-14; follow-ups #83 and #85. Settle the #68 thread mcp:521c3613 once its turn ends.
 - Studio lead queue: #33, #34 and #38 follow-ups after #40/#42.
 - Opus leads allowed when every Claude quota window is < 60% (Tobias, 2026-10-14); check with `cos.py quota` (child `cos-quota-policy-1` is building it and updating the routing text). At launch: five_hour 51%, seven_day 4%.
 
