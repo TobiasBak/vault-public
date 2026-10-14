@@ -174,3 +174,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-14 #91: the other-numeric STOP was accepted (candidate-229's synthetic PDF drops original quantity, price and delivery date). GO on a read-only inventory, with dispositions defaulting to original bytes by SHA; the 6-file fix stays held until the expanded plan. Vault note software/cargo-target-cache.md landed (ea90380).
 - 2026-10-14 studio#35 (#26) merged c8be2eb5. Tobias asked for a Sol-vs-Opus lead diagnosis and a CoS self-retrospective: two read-only Sol research children launched (fan-out ≤3 each), evidence-cited, with confounds controlled.
 - 2026-10-14 geometry#67: the gate/nightly Cargo target audit is clean (checkout-local targets), no issue needed. Isolated rebuild continues.
+- 2026-10-14 studio#36 (#27) merged 784b55cb: bands tightened per the GO, same samples, no assertion dropped. #19 may start in parallel with #32 if disjoint.
