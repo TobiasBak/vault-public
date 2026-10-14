@@ -59,6 +59,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Opus leads allowed when every Claude quota window is < 60% (Tobias, 2026-10-14); check with `cos.py quota` (child `cos-quota-policy-1` is building it and updating the routing text). At launch: five_hour 51%, seven_day 4%.
 
 ## Holds
+- mcp:8b9600ac-d941-4c7f-bc30-ce49689b5c1d: #62 parked until #139 merges and its watcher unit is gone; then its one light proof
 
 - mcp:0f802e97-362a-4272-a6e0-737155243f6f: #79 parked until #139 merges
 
