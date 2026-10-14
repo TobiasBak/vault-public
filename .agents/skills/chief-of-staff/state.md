@@ -25,13 +25,13 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
-- [#75 gate team](t3-thread://v1/mcp:61b06fd3-e81c-481c-948d-0444a2a0c9da), Sol, branch `gate/fast-pr-nightly-full`. Holds the heavy slot: hooked push running, then subset demonstration, then merge-ready. On merge or slot release: tell the #67 lead it has the slot (product gates first).
-- [#67 large-file stalls](t3-thread://v1/mcp:4be01f9a-8d50-4169-a811-5f19b87b48bb), Sol, branch `issue-67-remaining-stalls` at 299a85fe. Queued grant: one p0283 ordinal-15 probe under gdb (stack snapshots first, at most two 90 s windows), then STOP, report, release the slot. Waiting on the slot.
+- [#75 gate team](t3-thread://v1/mcp:61b06fd3-e81c-481c-948d-0444a2a0c9da), Sol, branch `gate/fast-pr-nightly-full`. Hooked push failed closed on the 1800 s cap (duplicate parsing of 19 GiB of observations). GO'd fix: parse once, outputs identical. Slot lent to #67; when #67 reports release, tell #75 to resume the hooked push and subset demo.
+- [#67 large-file stalls](t3-thread://v1/mcp:4be01f9a-8d50-4169-a811-5f19b87b48bb), Sol, branch `issue-67-remaining-stalls` at 299a85fe. Holds the heavy slot since 2026-10-14 for one p0283 ordinal-15 gdb probe (at most two 90 s windows), then reports and releases. On release: tell #75.
 - Open, no team: #73 nested parity CLI, #76 spline rounding bound (from studio #20), #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60/#61 need a value check before any go.
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
-- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f). Running: side lane #22, #8 measurement (S19), #9 research. #8 merged (PR #28). Next: #9 (research running), #10, #22 PR pending. Follow-ups #19, #20 (upstream = geometry #76), #24, #26, #27.
+- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f), #28 (#8, c2b6f449), #29 (#22, 1f87c1c0; Windows branch unrun until nightly). Running: #9 value measurement. Next: #10. Follow-ups #19, #20 (upstream = geometry #76), #24, #26, #27.
 
 ## CoS children in flight
 
