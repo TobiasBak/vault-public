@@ -61,11 +61,11 @@ Smell: a docs change triggers the full matrix.
 - Each job declares its inputs once. Selection and cache key both derive from it.
 - A path no job claims is an error.
 
-## 8. Narrowest check first, full corpus once
+## 8. Touched cases for PRs, full corpus nightly
 
 Smell: full CI after every edit.
 
-- In the loop: static checks and affected cases. Full corpus once, on the final head, through the verdict cache. The CLI picks the scope.
+- In the loop and for PRs: static checks and affected cases, through the verdict cache. The CLI picks the scope conservatively; shared code, harness, dependency or budget changes select everything. The full corpus runs on nightly promotion, or nightly on main without staging. The [gate](enforcement.md#checks) compares PR failures against main.
 
 ## 9. Budgets are visible
 

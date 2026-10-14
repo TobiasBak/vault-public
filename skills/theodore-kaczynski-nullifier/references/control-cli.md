@@ -19,7 +19,7 @@ A command earns its place by answering a real repeated question, not by completi
 | `why <case>` | First divergence, minimal diff, `.actual` path, the `emit` command for the failing request, repro command. |
 | `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
 | `check` | Format, lint, types, enforcement rules. Never runs cases. |
-| `test [<case>...]` | Affected cases by default; `--full` for the final head. |
+| `test [<case>...]` | Conservatively selected affected cases by default; `--full` for nightly promotion, or nightly on main without staging. See the [gate policy](enforcement.md#checks). |
 | `accept <case> --source "<truth>"` | Writes expected output and its oracle. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |

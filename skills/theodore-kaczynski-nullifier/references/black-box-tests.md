@@ -109,7 +109,7 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 - One build, one warm environment, the whole selection.
 - Hermetic: per-case temp dir, port, and fake state, so cases can run in parallel. Parallelize when the selection overruns its budget.
 - Clock and randomness injected. No real sleeps. Seeds printed on failure.
-- Runs the cases affected by the diff; the full corpus once on the final head. When the full corpus fits the affected-case budget, every run is full; don't build dependency selection.
+- Runs the cases affected by the diff; shared code, harness, dependency or budget changes select everything. The full corpus runs on nightly promotion, or nightly on main without staging, under the [gate policy](enforcement.md#checks). When the full corpus fits the affected-case budget, every run is full; don't build dependency selection.
 - Reports every case over budget. A hung case is killed at its budget and reported as that case's failure, with the request it was in.
 - Writes to the verdict cache and serves the watcher.
 
