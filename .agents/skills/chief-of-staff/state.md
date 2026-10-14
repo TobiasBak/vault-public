@@ -36,7 +36,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
-- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f), #28 (#8, c2b6f449), #29 (#22, 1f87c1c0; Windows branch unrun until nightly), #30 (#10 reversed-Z, ca945954). #9 closed not planned (no measured win; the load stall is engine-side, evidence on geometry #67). Next: #24 → #26 → #27 (bands GO'd 2026-10-14: same method as #8, deviation ≤0.52, half-width ≥3) → #19. Follow-ups #19, #20 (upstream = geometry #76), #24, #26, #27.
+- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f), #28 (#8, c2b6f449), #29 (#22, 1f87c1c0; Windows branch unrun until nightly), #30 (#10 reversed-Z, ca945954), #31 (#24 one pending dialog, 133dcf44). #9 closed not planned (no measured win; the load stall is engine-side, evidence on geometry #67). GO'd (2026-10-14) #32, a harness fix: the shared build target plus preserved mtimes let verdicts link another worktree's artifacts. Lock, content-hash manifest, cache-key bump, then rerun main's gate once on a fresh verdict. It goes ahead of #19 and runs in parallel with #26 → #27 (bands GO'd 2026-10-14: same method as #8, deviation ≤0.52, half-width ≥3) → #19. Follow-ups #19, #20 (upstream = geometry #76), #26, #27, #33 (#31 non-blocking).
 
 ## CoS children in flight
 
