@@ -35,7 +35,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-mailbox-logs-2` (Sol): the runner is back online. Pulls a week of mailbox automation logs read-only into the private orderready data dir, plus today's outage cause from the event log. On result: spot-check the manifest, then summarize for Tobias.
+- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-mailbox-logs-2` (Sol): the runner is back online. Pulls a week of mailbox automation logs and the full `archives/` read-only into the private orderready data dir, plus today's outage cause. Purpose (Tobias): recent errors (he got an alert email this morning) and a replay corpus for the Rust mailbox automation. On result: spot-check the manifest, report the errors, then hand the corpus to the orderready Rust mailbox team as test input.
 
 ## Needs Tobias
 
