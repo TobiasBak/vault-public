@@ -40,10 +40,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-
-
-
-
+- `cos-139-sticky-test-compile-fix-1` (Sol): #139 fix PR to me; on merge notify #79 and #138.
+- `cos-ax-knowledge-bc-installed-1` (Sol): BC-installed facts into ax-knowledge, based on 3b0a0178; PR to me, then `pr-merge`.
 
 ## Needs Tobias
 
