@@ -17,7 +17,7 @@ import sys
 from zoneinfo import ZoneInfo
 
 
-COS_THREAD_ID = "b826766b-7e34-4c9d-bc2d-d3199e4744f6"
+COS_THREAD_ID = Path(__file__).with_name("cos-thread").read_text().strip()
 KINDS = ("go-request", "merge-ready", "done", "blocked", "tobias-decision", "other")
 TABLES = {
     "orchestration_v2_projection_threads",
@@ -624,9 +624,9 @@ def main():
     args = parser.parse_args()
     try:
         if args.command == "brief":
-            text = Path(__file__).with_name("brief.md").read_text()
+            text = Path(__file__).with_name("brief.md").read_text().replace("{cos_thread}", COS_THREAD_ID)
             if args.short:
-                text = text.split("## Report back\n", 1)[1].lstrip()
+                text = f"CoS-thread: {COS_THREAD_ID}\n\n" + text.split("## Report back\n", 1)[1].lstrip()
             print(text, end="")
             return 0
         if args.command == "commit":
