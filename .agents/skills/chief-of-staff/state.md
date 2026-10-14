@@ -31,7 +31,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
 - #75 done: PR #77 merged (0d8011aa), primary main fast-forwarded, `stepkit-geometry-nightly.timer` installed (daily 03:00, first run 2026-10-15). Thread settled. Check the first nightly's result on 2026-10-15.
-- [#67 large-file stalls](t3-thread://v1/mcp:4be01f9a-8d50-4169-a811-5f19b87b48bb), Sol, branch `issue-67-remaining-stalls` at 299a85fe. Counter run done and slot released (2026-10-14). Root evaluations are 87% of evaluated nodes and 99.5% root-disjoint, with heavy replay (1,292 restarts). GO'd the narrow candidate, per-segment root-ribbon reuse; implementation, build and static review PASS. Output identity pending; waits for the slot after #62. Correction (2026-10-14): the unexported-pops tail bound is conditional (the counter discards write errors), so don't claim an unconditional kill-count bound.
+- [#67 large-file stalls](t3-thread://v1/mcp:4be01f9a-8d50-4169-a811-5f19b87b48bb), Sol, branch `issue-67-remaining-stalls` at 299a85fe. Counter run done and slot released (2026-10-14). Root evaluations are 87% of evaluated nodes and 99.5% root-disjoint, with heavy replay (1,292 restarts). GO'd the narrow candidate, per-segment root-ribbon reuse; implementation, build and static review PASS. Readiness invalidated (2026-10-14): baseline and candidate binaries were identical because of the shared-target stale artifacts (same class as studio#32). Rebuilding all four variants from empty distinct target dirs, one re-brief; the lead checks the geometry gate for the same issue. Waits for the slot after #62. Correction (2026-10-14): the unexported-pops tail bound is conditional (the counter discards write errors), so don't claim an unconditional kill-count bound.
 - Open, no team: #73 nested parity CLI, #76 spline rounding bound (from studio #20), #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60/#61 need a value check before any go.
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
@@ -41,6 +41,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## CoS children in flight
 
 - `cos-139-sticky-test-compile-fix-1` (Sol): fixture reworked, cold compile gone; timeouts were host contention (load 23–67). Slot granted after #62's W7: barrier by PID exit, final screening + 3 serialized runs, then PR. I apply cos-approved after independent review. On merge, notify #79 and #138, then re-grant the slot.
+
+- `cos-vault-cargo-shared-target-note-1` (Sol): vault note on Cargo shared-target stale artifacts.
 
 ## Needs Tobias
 
