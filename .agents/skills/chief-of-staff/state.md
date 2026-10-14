@@ -44,7 +44,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 
 
-- `cos-retro-sol-vs-opus-leads-1` (Sol): Sol vs Opus as team leads, evidence-backed; report at ~/.cache/agent-tmp/lead-model-retro/sol-vs-opus.md.
 
 ## Needs Tobias
 
