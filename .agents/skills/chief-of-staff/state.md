@@ -44,7 +44,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Watch
 
-- Pi leads started before dotfiles b6fd8d9 stay pinned to the old CoS thread b826766b until their process restarts: orderready #138, #91, #62; geometry #75, #67. The settled old thread relays their reports; on each census also read its tail for unrelayed ones. Unpins when those issues end or on a clean `restart-check` restart; no restart forced for this.
+- Pi leads started before dotfiles b6fd8d9 (orderready #138, #91, #62; geometry #75, #67) were pinned to the old CoS thread b826766b. As of 2026-10-14 that thread is no longer readable, and #138, #67, #62, #79 and studio report straight here. If a lead goes quiet past its expected report, ask it for its status directly.
 - Weekly pi-workspace-view task `scheduled-task:command:mcp:b44bca5c-af0c-40b2-8d4a-be9117fa0414:schedule-task:cos-workspace-view-weekly-omarchy-1` (Mondays 09:00, bound to thread 4d49b702) failed its last run; check why before 2026-10-19.
 
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
