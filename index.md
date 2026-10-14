@@ -39,6 +39,7 @@ Not exhaustive. Search with `rg`.
 - [software/api-design.md](software/api-design.md): consumer-shaped APIs, one contract, lifecycle, events, errors, plugins, persisted-format renames
 - [software/ai-era-durability.md](software/ai-era-durability.md): what survives cheap AI, the typed-plan architecture, provider-native harnesses
 - [software/performance-aware-data-design.md](software/performance-aware-data-design.md): when data layout dominates hot paths
+- [software/cargo-target-cache.md](software/cargo-target-cache.md): shared Cargo target freshness hazards and safe A/B builds
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime
