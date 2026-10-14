@@ -59,7 +59,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 ## Needs Tobias
 
-- Nullifier skill review suggestions, once the review team reports.
+- Nullifier skill review (done 2026-10-14, lead settled): 10 ranked changes in `~/.cache/agent-tmp/nullifier-review/report.md`. Brought to Tobias; CoS recommends approving 1–6 now, holding 7–10. No skill edit until he decides.
 
 
 ## Watch and hypotheses
