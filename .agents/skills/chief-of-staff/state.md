@@ -4,11 +4,11 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Coordination
 
-- Current CoS: thread ID in [scripts/cos-thread](scripts/cos-thread), Opus 5.5 high. Handover procedure: SKILL.md working section.
+- Current CoS: thread ID in [scripts/cos-thread](scripts/cos-thread), Opus 5.5 high. Took over from b826766b on 2026-10-14. Handover procedure: SKILL.md working section.
 - Routing: leads and children on Pi Sol 6.1 high; UI leads on Opus 5.5 high (studio, orderready#79). Policy lives in dotfiles `agents/AGENTS.md`.
 - Delivery model (Tobias, 2026-10-14, permanent): PR→main on fast check + touched tests + no new failures vs main; full suite nightly on main→staging; green nightlies auto-promote main to staging; only Tobias touches production; infra runs beside product; product gates get the heavy slot first.
 - Private repos may hold customer names and customer-derived content (Tobias, 2026-10-14). Public repos and the vault may not.
-- Census heartbeat: `scheduled-task:command:mcp:4d99500e-c753-4a80-a929-ab8f0ccc698e:schedule-task:cos-census-heartbeat-1`, every 30 min, bound to the CoS thread. A successor recreates it bound to itself and deletes the old one.
+- Census heartbeat: `scheduled-task:command:mcp:534c308f-ba1f-4c9e-a41d-995dceb4e574:schedule-task:cos-census-heartbeat-d41aa0f0`, every 30 min, bound to the CoS thread. A successor recreates it bound to itself and deletes the old one.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
@@ -35,7 +35,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- `node:delegated-task:command%3Amcp%3Ade412bf8-cff4-4245-ba58-a9ea021fcd6a%3Adelegate-task%3Acos-report-retarget-1` (Sol; its completion wakes the old CoS thread, so poll it with `task_status` on the census): Pi `report_to_cos` extension retargets to the latest `CoS-thread:` line, plus whether live sessions load it without restart. On result: verify the dotfiles commit; if live sessions need a reload, tell Tobias which leads stay pinned to the old thread until their issue ends.
+- `node:delegated-task:command%3Amcp%3Ade412bf8-cff4-4245-ba58-a9ea021fcd6a%3Adelegate-task%3Acos-report-retarget-1` (Sol; owned by the old CoS thread b826766b, so its completion wakes that thread: read the result from the child thread or the dotfiles log on the census): Pi `report_to_cos` extension retargets to the latest `CoS-thread:` line, plus whether live sessions load it without restart. On result: verify the dotfiles commit; if live sessions need a reload, tell Tobias which leads stay pinned to the old thread until their issue ends.
 
 ## Needs Tobias
 
