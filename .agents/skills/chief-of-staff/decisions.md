@@ -242,3 +242,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 03:55: merged dotfiles PR #31 (`heavy-lease isolate`) at 9698920 as 051999e. verify-2 exit 0 on the exact head and tree; the review passed with no findings. ~/.dotfiles pulled on main. Repo integrations can proceed; geometry's waits for #80.
 - 2026-10-15 04:05: orderready #153's isolate integration adds CI to the existing WATCH_ENVIRONMENT whitelist, so a CI parent's watcher keeps its CI-presence contract. In-scope call by the lead, accepted, no reply needed. It's covered by the fix-only review and the new tree.
 - 2026-10-15 04:10: Studio #43's queued grant re-binds to tree 544c7ff2 (isolate integrated, fix-only r2 clean), replacing c36beb93. Still first adoption, behind the product queue.
+- 2026-10-15 04:15: orderready #153's queued grant re-binds to tree cb3e18de (isolate plus the CI whitelist, fix-only r3 clean), replacing 41c1d1ce. Second adoption.
