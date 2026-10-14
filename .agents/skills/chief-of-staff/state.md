@@ -31,7 +31,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
-- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f). Running: side lane #22, #8 measurement (S19), #9 research. #8 band gate GO'd 2026-10-14; next its merge-ready PR. Then #9, #10. Follow-ups #19, #20 (upstream = geometry #76), #24.
+- [#1 v1 viewer lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7), Opus (UI). Merged 2026-10-14: #15, #17 (pin 299a85fe), #18 (#12), #21 (#13), #23 (#11, cdd2f14b), #25 (#16, ea43570f). Running: side lane #22, #8 measurement (S19), #9 research. #8 merged (PR #28). Next: #9 (research running), #10, #22 PR pending. Follow-ups #19, #20 (upstream = geometry #76), #24, #26, #27.
 
 ## CoS children in flight
 
