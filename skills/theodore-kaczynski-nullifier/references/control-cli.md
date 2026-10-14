@@ -27,6 +27,7 @@ A command earns its place by answering a real repeated question, not by completi
 | `doctor` | Read-only check that this is the intended build with the prerequisites of the edit loop. Optional capabilities are reported, never blocking; the commands that need them block themselves. |
 | `mutants` | Mutation run; surviving mutants as tasks. |
 | `explain-miss <job>` | Field-level difference between this key and the nearest cached one. |
+| `trace [verdict]` | Verification bottleneck and change summary under the [tracing contract](tracing.md). |
 
 AGENTS.md lists the names. `--help` is the documentation.
 

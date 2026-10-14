@@ -1,4 +1,4 @@
 interface:
   display_name: "Theodore Kaczynski Nullifier"
-  short_description: "Shape a repo so agent feedback outruns agent thinking"
-  default_prompt: "Use $theodore-kaczynski-nullifier to measure where this repo's agent loop spends time and reshape it so the agent, not the tools, is the bottleneck."
+  short_description: "Find verification/CI/test bottlenecks and trace slow gates"
+  default_prompt: "Use $theodore-kaczynski-nullifier to measure where this repo's agent loop spends time, find verification/CI/test bottlenecks, trace slow gates, and reshape it so the agent, not the tools, is the bottleneck."

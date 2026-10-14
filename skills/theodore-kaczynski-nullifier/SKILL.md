@@ -1,6 +1,6 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Shape a repository for agent-only development so feedback is faster than agent thinking. Use when setting up or restructuring a repo, when agent loops feel slow, when builds, tests, CI, or platform runs dominate sessions, whenever writing, reviewing, or migrating tests, and whenever writing AGENTS.md. Defines black-box-only testing, agent context, cached verdicts, always-on watchers, one-call answers, and no blind waits.
+description: Shape a repository for agent-only development so feedback is faster than agent thinking. Use when setting up or restructuring a repo, when agent loops feel slow, when builds, tests, CI, or platform runs dominate sessions, to find verification/CI/test bottlenecks or trace slow gates, whenever writing, reviewing, or migrating tests, and whenever writing AGENTS.md. Defines black-box-only testing, agent context, cached verdicts, always-on watchers, one-call answers, and no blind waits.
 ---
 
 # Theodore Kaczynski Nullifier
@@ -25,6 +25,7 @@ Technology was never the problem. Waiting on it is.
 2. **Select one outcome.** Name the consumer workflow, who uses it, observed frequency, process boundary, current cost, and removable cause. Fix the largest measured recurring cost at its owner: the CLI, cache, harness, or host tooling. Never with an instruction agents must remember. Correctness, security, and data-loss defects justify scoped fixes without a speed claim.
 3. **Check value.** Use existing evidence. A baseline and causal hypothesis can justify one or two matched screens. A migration, watcher, new enforcement system, or standalone proof program proceeds only when the screen demonstrates value. Otherwise park it; a failed screen does not justify another research program to rescue the candidate.
 4. **Measure again** on the selected workflow after the change.
+- Use `<cli> trace [verdict]` to locate verification bottlenecks and critical-path deltas under the [tracing contract](references/tracing.md).
 
 ## Adopt capabilities for the outcome
 
@@ -34,6 +35,7 @@ The references:
 - [manifest.md](references/manifest.md)
 - [black-box-tests.md](references/black-box-tests.md)
 - [control-cli.md](references/control-cli.md)
+- [tracing.md](references/tracing.md)
 - [enforcement.md](references/enforcement.md)
 - [agent-context.md](references/agent-context.md)
 
@@ -53,6 +55,7 @@ Choose what removes the selected cost or repairs the broken contract:
 Prove the delivered outcome, not every capability in this skill:
 - For an optimization, a before-and-after ledger for the targeted cost on the selected workflow.
 - For changed contracts, success, targeted failure, applicable blocked prerequisites, and affected cache or cleanup behavior through the real public entrypoint. Use the [disposable proof procedure](references/control-cli.md#proof); reuse valid evidence for unchanged surfaces.
+- For tracing, a real gate run emits a trace that loads as valid Chrome Trace JSON; one injected delay in a single step appears as the top critical-path delta in `<cli> trace`.
 - For adopted or changed enforcement, the gate rejects the forbidden pattern and accepts the approved path through its real entrypoints.
 - For cache changes, repeated unchanged-tree verdict reuse without building and rejection of stale evidence.
 - For edit-loop changes, a one-line source edit reaching its verdict, rebuild included, faster than a model turn. Cache hits prove nothing about the edit loop.
