@@ -45,7 +45,7 @@ Running:
   - Wave 2 later: pi-workspace-view (it already has the weekly Monday audit; consider folding the skill into it), swe-benchmarking and orderready-platform (neither is a T3 project yet).
 - Secret guard: done. dotfiles#21 merged ac9ff31 and live (global hooksPath on Omarchy only). Repos with a local hooksPath (orderready, rust-mutants, stepkit-geometry) are not covered. Rollback: revert, then pull. Team closed (32 tasks: 22 accepted, 9 reworked, 1 rejected; 5 review rounds).
 - pwv done: #5 (PR #10), #6 (swe-benchmarking#1 871ed477 + pwv#14 54b790bb; case 011 peaks 220–255k), #8 DO NOT PROMOTE, #1 and #3 dead, #2+#4 closed (results PR #15 6e07641e; harness PR swe-benchmarking#2 closed unmerged, branch kept). Context-handling line closed (Tobias, 2026-10-14: stock Pi beats every alternative; #9 closed not planned). Threads settled. Scout cap: 8 total; never bypass `launch.sh`; Sol or the lead launches subject runs.
-- [pwv sgrep scout](t3-thread://v1/mcp:2a27dcf3-f689-4b9b-9ddc-8dedb0b6211e): stopped at precheck (not promising; ~12% search share, 95% cached input); results PR pending, then merge and settle. pwv #19.
+- pwv sgrep scout: done 2026-10-14. Not promising (search ~12% of input, 95% cached; ~5.9% cost ceiling). PR #20 merged as 457db28e; #19 closed; lead settled.
 - dotfiles#12 restic: merged (0d58829d), applied with daemon-reload only, closed. dotfiles#11 NAS and #16 Artificial Analysis: closed as not planned (Tobias, 2026-10-13: he doesn't care about the NAS or the key).
 
 Dead and superseded team threads are settled; a cleanup child settles finished subagent threads.
