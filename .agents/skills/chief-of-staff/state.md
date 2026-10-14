@@ -27,7 +27,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - AX domain knowledge lives in orderready `docs/ax-knowledge.md` (PR #143, 8abbd2a1). #141 done: PR #146 merged (3b0a0178, 2026-10-14). Follow-up #147 (oracle regeneration must keep approved Rust divergences). #69/#72 commented; #69 recommended closed as superseded.
 - #144 AX GUI→server calls: 25-step map and passive Trace Parser plan for Tobias's weekend sessions (T01 Journal promotion, T04 sales-linked production creation, T05 backward scheduling first). Tobias can't create/deploy TT-style services (2026-10-14), so .NET BC on existing classes is the primary route, the TT owner is an optional later ask, and GUI is the fallback #144 updated: (a) 6, (c) BC 12, (d) 7. Runner check 2026-10-14: BC not installed (Ax32 6.3.6000.9100, components 6.3.164.0); the automation user `ordre` is an enabled local admin, so the install and ETW tracing are possible. Tobias installed BC on the runner (2026-10-14); BC Logon over SSH as `ordre` SUCCEEDED (DLL 6.3.164.0; no version or Kerberos rejection); my probe method was wrong (curUserId is a kernel function). The corrected probe returned xSession.userId = Ordre: BC is usable for reads under `ordre`. Risk: the BC DLL is older than the client kernel (CU AxUpdate if calls misbehave). BC facts in ax-knowledge (PR #151 merged, 7c8a0865). Next AX step: Tobias's weekend traces (T01, T04, T05). Facts in ax-knowledge (PR #150 merged). Printing out of scope (Tobias, 2026-10-14: we don't print); #144 body updated: printing step dropped, no (d) row needs the GUI. No team until traces exist.
 - #139 (2026-10-14 21:30): the earlier `--repeat 3` passes (26.5/26.4/26.0 s, 158 tests) don't count, because the root watcher unit was active-idle. The driver is moving to unit and cgroup checks plus malformed-record rejection. The review blocker (the prepared key omitted the embedded docs/api/platform.openapi.json) is fixed by reusing jobs::package_inputs. Then fastcheck, a blocker-only recheck, and a fresh 3-run proof after the root unit exits naturally; `--repeat` skips watch::ensure (control/mod.rs:294-306).
-- #139 sticky-test compile timeout: CoS Sol child `cos-139-sticky-test-compile-fix-1` (workload stops cold-building deps in the timed test; no deadline/assertion change), PR to me. Repo-wide push/gate blocker: on merge, notify #79 and #138. Slot GRANTED (2026-10-14 23:20) at 0c47c1f5 (recheck approved): 3-run proof, push, PR, gate.
+- #139 MERGED 2026-10-15 (orderready PR #152, e5fc71d4). Child closing the issue and filing the follow-up: `tools/or status` calls watch::ensure (control/mod.rs:211) and restarts the watcher. Notified #79, #114, #128, #138 and #62.
 - Queued team: #142 runner replay cases (18 attempts from 8–14 Oct; offline stages plus AX/Graph fakes). Start a Sol lead when #91 lands.
 - Repo rules: `tools/or test --full` is the full gate; never hand-edit `~/.cache/orderready/verdicts`; no binary fixtures in Git; `cos-approved` label is CoS-only.
 
@@ -59,9 +59,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Opus leads allowed when every Claude quota window is < 60% (Tobias, 2026-10-14); check with `cos.py quota` (child `cos-quota-policy-1` is building it and updating the routing text). At launch: five_hour 51%, seven_day 4%.
 
 ## Holds
-- mcp:8b9600ac-d941-4c7f-bc30-ce49689b5c1d: #62 parked until #139 merges and its watcher unit is gone; then its one light proof
 
-- mcp:0f802e97-362a-4272-a6e0-737155243f6f: #79 parked until #139 merges
 
 ## Needs Tobias
 
