@@ -14,6 +14,8 @@ import statistics
 from string import Template
 import subprocess
 import sys
+from urllib.error import HTTPError
+from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 
@@ -372,6 +374,55 @@ def restart_check(snapshot):
     return 1 if live else 0
 
 
+def quota():
+    try:
+        credentials = json.loads((Path.home() / ".claude/.credentials.json").read_text())
+        token = credentials["claudeAiOauth"]["accessToken"]
+        if not isinstance(token, str) or not token:
+            raise ValueError
+    except Exception:
+        print("opus_leads: unknown (credentials unavailable)")
+        return 1
+    try:
+        request = Request(
+            "https://api.anthropic.com/api/oauth/usage",
+            headers={"Authorization": f"Bearer {token}", "anthropic-beta": "oauth-2025-04-20"},
+        )
+        with urlopen(request, timeout=15) as response:
+            usage = json.load(response)
+    except HTTPError as error:
+        print(f"opus_leads: unknown (HTTP {error.code})")
+        return 1
+    except Exception:
+        print("opus_leads: unknown (request failed)")
+        return 1
+    try:
+        windows = []
+        for name, window in usage.items():
+            if window is None or not isinstance(window, dict) or "resets_at" not in window:
+                continue
+            utilization = window["utilization"]
+            if (not re.fullmatch(r"[a-z][a-z0-9_]*", name)
+                    or isinstance(utilization, bool) or not isinstance(utilization, (int, float))
+                    or not math.isfinite(utilization) or utilization < 0):
+                raise ValueError
+            resets = timestamp(window["resets_at"]).isoformat(timespec="minutes").replace("+00:00", "Z")
+            windows.append((name, utilization, resets))
+        if not {"five_hour", "seven_day"} <= {name for name, _, _ in windows}:
+            raise ValueError
+    except Exception:
+        print("opus_leads: unknown (invalid usage response)")
+        return 1
+    for name, utilization, resets in windows:
+        print(f"{name} {utilization:g}% resets {resets}")
+    limited = next(((name, utilization) for name, utilization, _ in windows if utilization >= 60), None)
+    if limited:
+        print(f"opus_leads: sol_only ({limited[0]} at {limited[1]:g}%)")
+    else:
+        print("opus_leads: allowed")
+    return 0
+
+
 def commit(message, paths):
     subprocess.run(["git", "add", "--", *paths], check=True)
     subprocess.run(["git", "commit", "-m", message, "--", *paths], check=True)
@@ -627,6 +678,7 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     brief = commands.add_parser("brief", description="Print the one-source team-brief preamble.", allow_abbrev=False)
     brief.add_argument("--short", action="store_true", help="Print only the report-trigger restatement.")
+    commands.add_parser("quota", description="Print Claude plan utilization and whether quota permits Opus team leads.", allow_abbrev=False)
     commands.add_parser("restart-check", description="Refuse a T3 restart while runs outside CoS and its children are running.", allow_abbrev=False)
     commit_parser = commands.add_parser("commit", description="Commit only named paths, pull/rebase with autostash, then push once.", allow_abbrev=False)
     commit_parser.add_argument("message", metavar="MSG")
@@ -652,6 +704,8 @@ def main():
                 text = f"CoS-thread: {COS_THREAD_ID}\n\n" + text.split("## Report back\n", 1)[1].lstrip()
             print(text, end="")
             return 0
+        if args.command == "quota":
+            return quota()
         if args.command == "commit":
             return commit(args.message, args.paths)
         with closing(open_readonly(STORE_PATH)) as db:

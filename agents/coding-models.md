@@ -6,11 +6,11 @@ OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider gui
 
 Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
-**Use Pi GPT-6.1 Sol at thinking `high` for all delegated work; stop using Space Bunny entirely** (Tobias, 2026-10-13). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
+**Space Bunny is retired** (Tobias, 2026-10-13); use the [team-routing policy](subagent-delegation.md#compute-routing). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
 
 - Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. See [review routing](subagent-delegation.md#compute-routing). The lead-model trial (Sol vs Opus leading the same issue) tests the design/planning side.
 
-- Tobias, 2026-10-14: "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer". Sol leads and executes because Claude quota is limited and Sol usage on his plans is very good, not because Sol is the better lead. Harden lead tooling and skills so Sol leads close the gap to Opus through mechanisms, not reminders.
+- Tobias, 2026-10-14: "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer". Claude quota and Sol's generous plan usage drive the [lead-routing policy](subagent-delegation.md#compute-routing), not a judgment that Sol is the better lead. Harden lead tooling and skills so Sol leads close the gap to Opus through mechanisms, not reminders.
 
 ## Provider guidance
 
