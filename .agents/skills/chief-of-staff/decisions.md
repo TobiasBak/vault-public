@@ -149,3 +149,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-14 orderready#138: barrier for the four GUI attempts redefined as process-based: no running `tools/or gate` or `tools/or test --full` for any orderready checkout (wait on exit by PID). Why: #79 PR1 isn't pushed yet, and a named-job barrier would stall.
 - 2026-10-14 geometry#75: merged PR #77 at fdb594a3 (gate SUCCESS, equivalence PASS, independent review clean); the lead installs the nightly timer. Heavy slot to #67.
 - 2026-10-14 runner BC check: Tobias authorized running the readiness commands over SSH (read-only checks plus one BC logon calling Global::curUserId). Why: it decides whether the BC route is testable.
+- 2026-10-14 orderready#144: route update accepted after spot-checking the body: standard AIF 6, BC 12 (the 11 former custom-AIF steps plus the original BC one), none/GUI 7. No doc PR was needed.
