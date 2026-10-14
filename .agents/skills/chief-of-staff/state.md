@@ -44,6 +44,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - `cos-vault-cargo-shared-target-note-1` (Sol): vault note on Cargo shared-target stale artifacts.
 
+- `cos-studio-screenshot-1` (Sol): fresh Studio screenshots from main, on isolated Xvfb with its own target dir; show them to Tobias.
+
 ## Needs Tobias
 
 - Nothing open.
