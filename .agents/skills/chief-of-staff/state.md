@@ -59,7 +59,7 @@ The P2, GPUI and old-lead threads are settled. P2 filed #88–#99 and pushed `p2
 
 - pwv prune-epoch confirm (Tobias approved it in principle, 2026-10-13): INCONCLUSIVE. Stock slot01 hit a sandbox setup failure (exit 125) before any assistant output, leaving 0 valid runs and 11 unlaunched. #16 is closed, and results/HANDOFF merged as PR #17 (b67b55a5). The frozen harness is on swe-benchmarking `feat/prune-epoch-confirm-frozen`. #18 (probable skill-symlink input mismatch) is parked; any new cohort needs a new gate. Lead settled.
 
-- Nullifier skill review (done 2026-10-14, lead settled): 10 ranked changes in `~/.cache/agent-tmp/nullifier-review/report.md`. Tobias approved 1–6 and held 7–10. A Sol writer (task nullifier-skill-edit-1) is editing uncommitted. Next: independent Sol review, then commit to main.
+- Nullifier skill review (done 2026-10-14, lead settled): 10 ranked changes in `~/.cache/agent-tmp/nullifier-review/report.md`. Tobias approved 1–6 and held 7–10. Landed as bbb8b3a after an independent review; its one blocker was fixed (the AGENTS.md template now names only adopted commands). 7–10 stay held until new evidence comes in.
 
 ## Needs Tobias
 
