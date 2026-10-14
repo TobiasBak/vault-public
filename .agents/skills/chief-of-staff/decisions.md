@@ -158,3 +158,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-14 runner: the SID check shows the automation user is an enabled local Administrator. Merged orderready PR #150 (ax-knowledge deployment facts). Gave Tobias BC install steps: AX Setup add-component, match the 6.3.6000.9100 kernel via the CU's AxUpdate.
 - 2026-10-14 studio#27: GO'd narrowing the pixel bands for 13 samples to the #8 bands (measured deviation ≤0.52, half-width 3–4, +15 palette-shift negative proof). Why: it tightens the tests on measured margins.
 - 2026-10-14 orderready#146: pr-merge refused on ancestry after #150 merged; delegated a rebase with diff-equivalence proof and a re-gate. Lesson: merge PRs that touch the same doc in sequence, or expect a re-gate.
+- 2026-10-14 runner: Tobias installed BC; delegated the pre-authorized version check and one-shot logon test. Told him no restart is needed unless Setup asks.
