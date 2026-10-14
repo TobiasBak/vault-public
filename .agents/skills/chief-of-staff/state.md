@@ -43,7 +43,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - `cos-139-sticky-test-compile-fix-1` (Sol): fixture reworked, cold compile gone; timeouts were host contention (load 23–67). Slot granted after #62's W7: barrier by PID exit, final screening + 3 serialized runs, then PR. I apply cos-approved after independent review. On merge, notify #79 and #138, then re-grant the slot.
 
 
-- `cos-studio-screenshot-1` (Sol): fresh Studio screenshots from main, on isolated Xvfb with its own target dir; show them to Tobias.
 
 - `cos-retro-sol-vs-opus-leads-1` (Sol): Sol vs Opus as team leads, evidence-backed; report at ~/.cache/agent-tmp/lead-model-retro/sol-vs-opus.md.
 - `cos-retro-self-1` (Sol): CoS retrospective (where teams went wrong from my guidance); report at ~/.cache/agent-tmp/lead-model-retro/cos-retro.md. Bring both to Tobias with a recommendation.
