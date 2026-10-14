@@ -10,6 +10,8 @@ Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) fo
 
 - Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. See [review routing](subagent-delegation.md#compute-routing). The lead-model trial (Sol vs Opus leading the same issue) tests the design/planning side.
 
+- Tobias, 2026-10-14: "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer". Sol leads and executes because Claude quota is limited and Sol usage on his plans is very good, not because Sol is the better lead. Harden lead tooling and skills so Sol leads close the gap to Opus through mechanisms, not reminders.
+
 ## Provider guidance
 
 | Model | Provider positioning | Provider effort guidance |
