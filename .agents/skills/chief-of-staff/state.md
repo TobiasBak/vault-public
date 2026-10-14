@@ -37,11 +37,14 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
+- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-ax-gui-to-calls-map-1` (Sol, read-only research): maps every AX GUI workflow step to its likely X++ object and a server-side route (standard AIF / custom TT-style AIF / .NET BC / none), plus a Trace Parser capture plan for a test AX. Output: an orderready issue. Tobias GO'd 2026-10-14; the trace itself needs #69 test env and his AX authorization.
+
 
 
 
 ## Needs Tobias
 
+- orderready#141: Invalid URL email advice too narrow. Asked Tobias 2026-10-14: fix in Rust only, recorded as an intended difference from Python (recommended), or also patch the production Python version (his deploy).
 - orderready#69: dedicated Monitor, AX and mailbox test environments, accounts and allowed effects for the real-environment nightly run. Blocks #69 and the release (#72). Recommendation: decide after #91 and #79 land. Nobody is idle waiting on it. Raised 2026-10-14.
 
 ## Watch
