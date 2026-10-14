@@ -1,6 +1,6 @@
 # Enforcement
 
-Every rule in this skill is a program that exits nonzero, or a CLI behavior that makes the violation impossible. AGENTS.md lines, skills, and review prompts are not checks.
+Every rule adopted for the selected outcome is a program that exits nonzero, or a CLI behavior that makes the violation impossible. The table defines adopted checks, not an implementation backlog. AGENTS.md lines, skills, and review prompts are not checks.
 
 ## Checks
 
@@ -36,12 +36,12 @@ Extend the corpus/parser/ case that covers this behavior, or add one with input,
 
 ## Rollout
 
-1. The check covers the whole repo, existing violations included.
-2. The gate fails on it. Its failures are the repair inventory.
-3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Unit tests go through the [migration](black-box-tests.md#migrating-an-existing-suite).
-4. Merge gate and repair together.
+1. Select checks required by the chosen consumer outcome. A new enforcement system proceeds only after the [value check](../SKILL.md#the-loop), or as a scoped correctness, security, or data-loss fix. Unrelated conformance is separate work.
+2. Each adopted check covers the whole repo, existing violations included. Its failures identify repairs for that check, not a mandate to adopt every other rule.
+3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Suite deletion requires explicit authority and the [migration proof](black-box-tests.md#migrating-an-existing-suite).
+4. Deliver gate and repair together to the repository's designated merge owner.
 
-No baselines, suppressions, warning modes, or narrowed scope. Fix a wrong check against the contract; never weaken a correct one. Stopping early leaves the gate failing on the repair branch with the command, remaining failures, and resume point recorded.
+No baselines, suppressions, warning modes, or narrowed scope for an adopted check. Fix a wrong check against the contract; never weaken a correct one. Stopping early leaves the gate failing on the repair branch with the command, remaining failures, and resume point recorded.
 
 ## Proof
 

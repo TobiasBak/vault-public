@@ -37,8 +37,9 @@ Exactly these sections, in this order:
 
 ## Loop
 
-- `<cli> map` to find a behavior; `<cli> status` for the verdict on the current tree; `<cli> why <case>` for a failure.
-- Never sleep. `<cli> wait <job>`.
+- <Commands for adopted behavior lookup, current-tree verdict, and failure diagnosis capabilities. Omit capabilities not adopted.>
+- Never sleep.
+- <Command for waiting on job exit or verdict, only if background jobs are adopted.>
 - Batch independent reads into one call.
 - Tests are black-box cases in `<corpus>/`. No unit tests. Extend an existing case before adding one. Expected-output changes need a `Behavior-Change:` trailer naming the source of truth.
 
@@ -64,7 +65,14 @@ Exactly these sections, in this order:
 - Command documentation. `--help` owns it.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
-- Docs directories. Contracts become checks and black-box cases. Before deleting a contract doc, confirm no consumer outside the repo reads it. A consumed contract is the published interface: keep only the minimal machine-checked form that consumer needs, and record its exact approved path in the gate.
+- Docs directories. Contracts become checks and black-box cases through [contract migration](#contract-migration).
+
+## Contract migration
+
+- Before migrating a contract, apply the [contract and proof lifetime check](black-box-tests.md#migrating-an-existing-suite).
+- Relocating a decision or contract does not revoke it. Preserve its authority and consumer route before removing its old prose home.
+- Before deleting a contract doc, confirm no consumer outside the repo reads it.
+- A consumed contract is the published interface: keep only the minimal machine-checked form that consumer needs, and record its exact approved path in the gate.
 
 ## Instruction surfaces
 

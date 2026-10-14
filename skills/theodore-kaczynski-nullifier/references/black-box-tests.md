@@ -19,20 +19,22 @@ A test is an input at the published interface and a specified output. Nothing el
 
 ## Fat cases
 
-- A case is a scenario, not an assertion. It covers every behavior one input can reach.
+- A case is a scenario, not an assertion. Keep it fat within the feedback budget.
 - One request per payload, operation, and call-level arguments when the interface takes a list of subjects. Repeating a call per subject is the one-assert-per-test habit at request level. Different call-level arguments and separate rejection scenarios are separate requests.
 - Extend an existing case before adding one. A new case needs an input no existing case can absorb: a conflicting starting state, a different case kind, or a budget overrun.
 - Each behavior and entry-point pair is covered by exactly one case.
 - Every published entry point to a behavior is covered. Coverage through another entry point doesn't count.
 - A write is proven by reading it back through the interface or the environment, never by the write's own response.
-- The first divergence localizes failures. Small cases buy nothing.
+- When a complete scenario cannot fit its budget, first split independently reproducible behavior groups. Each case owns startup, preparation, readback, and teardown.
+- Preserve every original request and assertion exactly once with a projection map. Independent setup can add requests; it never replaces an original assertion. Shared authored input is allowed; shared mutable starting state is not.
+- Do not start a product-performance project merely to preserve a giant case. Verify the projection map, independent lifecycles, and complete fresh output counts. An incomplete monolith is not a throughput baseline for the split.
 
 ## Forbidden
 
 - Unit tests, tests of internal modules, private access, assertions on call sequences or internal data.
 - Expected values whose only source is the code under test.
 - Assertions on diagnostic stage dumps.
-- Splitting a scenario into cases that share a starting state.
+- Splitting a scenario into cases that share mutable starting state.
 - Mass-blessing.
 
 ## Case layout
@@ -135,7 +137,7 @@ A GUI is a thin shell over an API. The API is the box; the GUI gets only cases f
 
 ## Coverage
 
-Mutation testing on a schedule. Each surviving mutant extends a case until it dies, or is dead code to delete. Line coverage is not measured.
+When mutation testing is adopted for the selected outcome, run it on a schedule. Each surviving mutant extends a case until it dies, or is dead code to delete. Line coverage is not measured.
 
 ## Lifecycle
 
@@ -145,7 +147,11 @@ Mutation testing on a schedule. Each surviving mutant extends a case until it di
 
 ## Migrating an existing suite
 
-Read the old suite as a list of behaviors. Never port tests one to one: names, grouping, and fixtures of the old suite leave no trace in the corpus.
+- Start only for a selected outcome with explicit suite-deletion authority.
+- Before building a migration harness, identify the authoritative public contract and accepted replacement or cutover decisions. Confirm that the proof and its oracle remain useful after those changes.
+- Park backend-specific migration when its authority is being replaced; keep the old suite intact. A preservation result does not transfer across backend changes.
+
+Read the old suite as a list of behaviors. Never port tests one to one: names, grouping, and fixtures of the old suite leave no trace in the corpus. A pilot that exposes an infeasible or valueless migration can stop it. It never authorizes deleting tests without replacement proof.
 
 1. Freeze the old suite and its fixture builders. No edits except deletion.
 2. Write fat cases in the [finished shape](#case-layout) for the behaviors.

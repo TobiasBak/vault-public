@@ -94,8 +94,10 @@ Smell: a secondary-platform run on every PR.
 - Build on the primary, ship artifacts to the secondary. Never build on the secondary.
 - Platform-specific code sits behind one thin seam.
 
-## 13. Bounded review loops
+## 13. Review blockers, not round counts
 
-Smell: review rounds outlast implementation.
+Smell: an arbitrary cap stops a blocking-fix recheck, or nonblocking findings restart review.
 
-- A readiness bar and a round limit. Merge authority goes with the bar.
+- One independent review. Only correctness, security, data loss, or a broken contract blocks readiness.
+- A further round rechecks a blocking fix and its regressions. Nonblocking findings become follow-ups, never another review round.
+- Merge authority remains with the repository's designated owner.
