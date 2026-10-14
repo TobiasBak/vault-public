@@ -94,9 +94,8 @@ def load_data(db):
             if target not in threads:
                 raise ValueError("A CoS send has no stored destination thread")
             outgoing[target].append(at)
-    contacts = incoming.keys() | outgoing.keys()
     leads = sorted(
-        (lead for lead in contacts if lead != COS_THREAD_ID and not threads[lead][1].get("parentThreadId")),
+        (lead for lead in threads if lead != COS_THREAD_ID and not threads[lead][1].get("parentThreadId")),
         key=lambda lead: (threads[lead][0].casefold(), lead),
     )
     runs = defaultdict(list)
@@ -292,6 +291,17 @@ class Snapshot:
             latest_child = max(self.runs[child], key=lambda entry: entry[4], default=None)
             if run and run[2] and run[2] >= consumed and latest_child and latest_child[0] == source_run:
                 self.used_results[child] = (consumed, parent)
+        self.consumed_children = {}
+        for child, payload in self.threads.items():
+            lineage = payload.get("lineage") or {}
+            parent = lineage.get("parentThreadId")
+            latest = max(self.runs[child], key=lambda run: run[4], default=None)
+            if lineage.get("relationshipToParent") != "subagent" or not latest or latest[3] != "completed" or not latest[2]:
+                continue
+            ends = [end for _, start, end, status, _ in self.runs[parent]
+                    if status == "completed" and start and start > latest[2] and end]
+            if ends:
+                self.consumed_children[child] = min(ends)
         self.children_today = []
         for subagent_id, parent, child, started in db.execute(
             "SELECT subagent_id, thread_id, child_thread_id, started_at FROM orchestration_v2_projection_subagents WHERE started_at IS NOT NULL"
@@ -372,6 +382,14 @@ def commit(message, paths):
 
 def census(snapshot, now):
     items = []
+    state = Path(__file__).resolve().parent.parent / "state.md"
+    holds = {}
+    for line in state_lines(state, "Holds"):
+        thread, reason = line.split(": ", 1)
+        holds[thread] = reason
+        if thread in snapshot.threads and snapshot.visible(thread):
+            at = timestamp(snapshot.threads[thread]["updatedAt"])
+            items.append((at, f"held {age(at, now)}: {reason} | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"))
     for lead in snapshot.leads:
         if not snapshot.visible(lead) or snapshot.settled(lead):
             continue
@@ -380,13 +398,15 @@ def census(snapshot, now):
         for at, text in snapshot.reports[lead]:
             if not replies or replies[-1] <= at:
                 items.append((at, f"unanswered report {age(at, now)} {report_kind(text)} | {title} | {send_hint(snapshot, lead)}"))
-        if lead in snapshot.running or snapshot.settled(lead):
+        if lead in holds:
             continue
         latest = max(snapshot.runs[lead], key=lambda run: run[4], default=None)
         if latest and latest[3] in {"failed", "interrupted", "cancelled"}:
             _, _, end, status, requested = latest
             at = end or requested
             items.append((at, f"dead lead {age(at, now)}: last run {status}; resume or settle | {title} | {send_hint(snapshot, lead)}"))
+            continue
+        if lead in snapshot.running:
             continue
         assistant = snapshot.last_assistant.get(lead)
         if assistant:
@@ -403,7 +423,7 @@ def census(snapshot, now):
             last_end = max(ends)
             for child, payload in snapshot.threads.items():
                 lineage = payload.get("lineage") or {}
-                if lineage.get("parentThreadId") != lead or not snapshot.visible(child):
+                if lineage.get("parentThreadId") != lead or not snapshot.visible(child) or child in holds:
                     continue
                 completions = [end for _, _, end, status, _ in snapshot.runs[child] if status == "completed" and end and end > last_end]
                 if completions:
@@ -431,6 +451,9 @@ def census(snapshot, now):
         elif thread in snapshot.used_results:
             at, parent = snapshot.used_results[thread]
             reason = f"result consumed by completed parent run {parent}; verify used"
+        elif thread in snapshot.consumed_children:
+            at = snapshot.consumed_children[thread]
+            reason = "child result consumed by parent's later run; verify used"
         if reason:
             items.append((at, f"settle candidate {age(at, now)}: {reason} | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"))
     live = outside_runs(snapshot)

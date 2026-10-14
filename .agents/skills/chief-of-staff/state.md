@@ -52,6 +52,10 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 
 
+## Holds
+
+- mcp:0f802e97-362a-4272-a6e0-737155243f6f: #79 parked until #139 merges
+
 ## Needs Tobias
 
 - Nothing open.
