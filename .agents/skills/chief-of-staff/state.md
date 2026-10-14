@@ -35,7 +35,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- None.
+- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-mailbox-logs-1` (Sol): copies the old drive's `~/.keys` here, then pulls the past week's mailbox automation logs read-only from the orderready runner host into the private orderready data dir. On result: spot-check the manifest and key modes, then give Tobias the week's summary.
 
 ## Needs Tobias
 
