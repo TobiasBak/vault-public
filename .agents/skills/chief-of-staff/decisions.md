@@ -164,3 +164,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-14 runner BC: the probe returned userId Ordre, so BC is verified for logon and session reads over SSH. Delegated the ax-knowledge update and #144 comment.
 - 2026-10-14 orderready#146: merged at d27958a8 (merge 3b0a0178) after the rebase, equivalence proof and a full gate of 118 obligations. Told the BC-doc child to base on the new main.
 - 2026-10-14 orderready#151 (BC-installed facts in ax-knowledge, 1 file +6 -3): verified that it's based on main, merged 7c8a0865, linked, child settled.
+- 2026-10-14 orderready#91: GO on the 6-file protected input/expectation fix (Graph numerics restored to 2/12.5, links order rederived from the comparator, slash SHA restored to the original 6ef831). Leaves derived independently of Rust output, no loosened assertions; a STOP if any other numeric vector drifted.
