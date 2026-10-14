@@ -35,6 +35,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
+- `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-runner-replay-issue-1` (Sol): opens the orderready issue that turns the 18 runner attempts (8–14 Oct) into Rust mailbox replay cases via #91's corpus and fixture store. Tobias GO'd 2026-10-14. On result: record the issue and start a Sol team on it when #91 lands.
+
 - `node:delegated-task:command%3Amcp%3A7356da3c-9a02-4a0c-bb9c-11121d1369fd%3Adelegate-task%3Acos-ax-knowledge-doc-1` (Sol): orderready docs-only PR adding `docs/ax-knowledge.md` (one home for AX domain knowledge, seeded with Tobias's Invalid URL rule and item validation blocks). Also checks whether the status email's "fix primary URL" advice misses the Email variant (issue if so). On result: review and merge via `pr-merge`.
 
 
