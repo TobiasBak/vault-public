@@ -77,8 +77,9 @@ def load_data(db):
     for target, created_at, raw in db.execute(
         """SELECT thread_id, created_at, payload_json
            FROM orchestration_v2_projection_messages
-           WHERE role='user' AND instr(message_id, 'thread-send') > 0
-             AND (thread_id=? OR json_extract(payload_json, '$.senderThreadId')=?)
+           WHERE role='user'
+             AND ((thread_id=? AND instr(message_id, 'thread-send') > 0)
+                  OR json_extract(payload_json, '$.senderThreadId')=?)
            ORDER BY created_at, message_id""",
         (COS_THREAD_ID, COS_THREAD_ID),
     ):
@@ -242,7 +243,7 @@ class Snapshot:
             thread_id: json.loads(raw)
             for thread_id, raw in db.execute("SELECT thread_id, payload_json FROM orchestration_v2_projection_threads")
         }
-        self.leads = [lead for lead in data[1] if data[2][lead]]
+        self.leads = data[1]
         self.projects = dict(db.execute("SELECT project_id, title FROM projection_projects"))
         self.reports = defaultdict(list)
         for at, raw in db.execute(
@@ -539,7 +540,8 @@ def write_board(snapshot, now, out):
         root = snapshot.root(thread)
         activity[root] = max(at, activity.get(root, at))
     running_roots = {snapshot.root(thread) for thread in snapshot.running}
-    leads = [lead for lead in snapshot.leads if snapshot.visible(lead)
+    reporting_leads = [lead for lead in snapshot.leads if snapshot.reports[lead]]
+    leads = [lead for lead in reporting_leads if snapshot.visible(lead)
              and (lead in running_roots or not snapshot.settled(lead)) and activity.get(lead, since) >= recent]
     dead, restart, other = dead_today(snapshot, since, now)
     children = defaultdict(set)
@@ -577,7 +579,7 @@ def write_board(snapshot, now, out):
             f'<span>last report <b>{escape(age(report_at, now))}</b></span></div></div></div>'
         )
     finished = []
-    for lead in snapshot.leads:
+    for lead in reporting_leads:
         payload = snapshot.threads[lead]
         settled_at = timestamp(payload["settledAt"]) if payload.get("settledAt") else None
         done_at = snapshot.reports[lead][-1][0] if snapshot.done(lead) and report_kind(snapshot.reports[lead][-1][1]) == "done" else None
