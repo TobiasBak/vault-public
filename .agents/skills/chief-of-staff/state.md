@@ -55,10 +55,11 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - mcp:0f802e97-362a-4272-a6e0-737155243f6f: #79 parked until #139 merges
+- mcp:521c3613-1db4-4d23-b2e7-d1de2dcadcf2: #68 phase 2 parked on Tobias's trim-reconstruction decision
 
 ## Needs Tobias
 
-- Nothing open.
+- geometry #68 (2026-10-14 22:35): real customer STEP files refuse planar faces because their trims are inexact in the source (line/circle junctions miss or double-intersect; exact rational proof; ~/.cache/agent-tmp/68-exact/report.md). The current contract certifies literal-source incidence only, so these refusals are correct. Decision: keep the contract (parts render with open plates), or authorize a separate tolerance-bounded `reconstructed` trim outcome with a certified constructed boundary, recorded displacement and a tag distinguishing it from literal-source certification. CoS recommends authorizing it as its own design issue. #68 lead parked.
 
 ## Watch
 
