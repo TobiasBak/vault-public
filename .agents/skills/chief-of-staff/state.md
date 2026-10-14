@@ -52,16 +52,18 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 
 
+- [#53 GPUI shell + sign-in + navigation](t3-thread://v1/mcp:36a3ea04-682a-43ae-bb92-73a4b35b08d6), Opus (UI), `issue-53-gpui-shell`. Launched 2026-10-14; #79's machines page mounts on it. Rebase onto #139 before push.
+- [Host-wide heavy lease](t3-thread://v1/mcp:5037a218-c6be-40d0-9d9e-d135ed6e0c3d), Sol, dotfiles `heavy-lease` (Tobias approved 2026-10-14). flock tool in dotfiles plus one adoption PR per repo. Harness wiring is GO'd; assertions unchanged. CoS grants stay in force until it lands.
+- geometry #68: Tobias chose the tagged `reconstructed` trim outcome as its own design issue (2026-10-14). The #68 lead closes #68 with the finding and files the design issue. Launch an Opus lead for that issue if `cos.py quota` < 60%.
+- Studio lead queue: #33, #34 and #38 follow-ups after #40/#42.
+- Opus leads allowed when every Claude quota window is < 60% (Tobias, 2026-10-14); check with `cos.py quota` (child `cos-quota-policy-1` is building it and updating the routing text). At launch: five_hour 51%, seven_day 4%.
+
 ## Holds
 
 - mcp:0f802e97-362a-4272-a6e0-737155243f6f: #79 parked until #139 merges
-- mcp:521c3613-1db4-4d23-b2e7-d1de2dcadcf2: #68 phase 2 parked on Tobias's trim-reconstruction decision
 
 ## Needs Tobias
 
-- geometry #68 (2026-10-14 22:35): real customer STEP files refuse planar faces because their trims are inexact in the source (line/circle junctions miss or double-intersect; exact rational proof; ~/.cache/agent-tmp/68-exact/report.md). The current contract certifies literal-source incidence only, so these refusals are correct. Decision: keep the contract (parts render with open plates), or authorize a separate tolerance-bounded `reconstructed` trim outcome with a certified constructed boundary, recorded displacement and a tag distinguishing it from literal-source certification. CoS recommends authorizing it as its own design issue. #68 lead parked.
-- Host-wide heavy lease (2026-10-14): a cross-repo lock with holder metadata that every heavy tool and watcher takes, replacing CoS-granted slots. CoS recommends building it.
-- Opus UI quota (2026-10-14): whether to spend Opus on the idle UI teams (GPUI #53, Studio #38, #33, #34).
 
 ## Watch
 
