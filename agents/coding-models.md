@@ -8,6 +8,8 @@ Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) fo
 
 **Use Pi GPT-6.1 Sol at thinking `high` for all delegated work; stop using Space Bunny entirely** (Tobias, 2026-10-13). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
 
+- Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. See [review routing](subagent-delegation.md#compute-routing). The lead-model trial (Sol vs Opus leading the same issue) tests the design/planning side.
+
 ## Provider guidance
 
 | Model | Provider positioning | Provider effort guidance |
