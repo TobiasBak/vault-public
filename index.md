@@ -42,6 +42,7 @@ Not exhaustive. Search with `rg`.
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime
+- [software/ocr.md](software/ocr.md): Indra OCR candidate, local CPU operation, commercial-license restrictions and vendor benchmark conditions
 - [software/browser-derived-clients.md](software/browser-derived-clients.md): turning browser traces into HTTP clients; Danish supermarket offers
 - [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats, Access with Worker destinations
 - [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, free-plan pausing and restore
