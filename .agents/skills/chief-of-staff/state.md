@@ -35,7 +35,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- `node:delegated-task:command%3Amcp%3Ade412bf8-cff4-4245-ba58-a9ea021fcd6a%3Adelegate-task%3Acos-report-retarget-1` (Sol; owned by the settled old CoS thread b826766b, which relays its result and any reports still pinned there to me): Pi `report_to_cos` extension retargets to the latest `CoS-thread:` line, plus whether live sessions load it without restart. On result: verify the dotfiles commit; if live sessions need a reload, tell Tobias which leads stay pinned to the old thread until their issue ends.
+- None.
 
 ## Needs Tobias
 
@@ -43,6 +43,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Watch
 
+- Pi leads started before dotfiles b6fd8d9 stay pinned to the old CoS thread b826766b until their process restarts: orderready #138, #91, #62; geometry #75, #67. The settled old thread relays their reports; on each census also read its tail for unrelayed ones. Unpins when those issues end or on a clean `restart-check` restart; no restart forced for this.
 - Weekly pi-workspace-view task `scheduled-task:command:mcp:b44bca5c-af0c-40b2-8d4a-be9117fa0414:schedule-task:cos-workspace-view-weekly-omarchy-1` (Mondays 09:00, bound to thread 4d49b702) failed its last run; check why before 2026-10-19.
 
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
