@@ -187,3 +187,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-14 Tobias: Sol 6.1 is a far better non-UI reviewer, Opus the better designer and planner. Delegated a vault note. The lead trial tests the design/planning side. #139 screening green (28 s vs 118 s); repeat-3 next.
 - 2026-10-14 Tobias: unlimited usage would mean Opus everywhere with Sol as reviewer; Sol leads only for quota reasons. Added to the vault note task.
 - 2026-10-14 #62 traced the contamination: tools/or test -> watch::ensure auto-schedules a full gate. That's a shared hazard, so it went to #139 (wait for own watcher exit between repeats, STOP if inseparable). #62's private harness fix approved; told it the queue order.
+- 2026-10-14 20:51: #76 B at 70a34c1, gate-ready, queued after A per slot order. Geometry #80 `sg watch` hazard sent to A, B and #67: SG_NO_WATCH=1, verify by PID, and #67's comparison refuses to start beside watchers.
