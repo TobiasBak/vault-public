@@ -60,6 +60,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Needs Tobias
 
 - geometry #68 (2026-10-14 22:35): real customer STEP files refuse planar faces because their trims are inexact in the source (line/circle junctions miss or double-intersect; exact rational proof; ~/.cache/agent-tmp/68-exact/report.md). The current contract certifies literal-source incidence only, so these refusals are correct. Decision: keep the contract (parts render with open plates), or authorize a separate tolerance-bounded `reconstructed` trim outcome with a certified constructed boundary, recorded displacement and a tag distinguishing it from literal-source certification. CoS recommends authorizing it as its own design issue. #68 lead parked.
+- Host-wide heavy lease (2026-10-14): a cross-repo lock with holder metadata that every heavy tool and watcher takes, replacing CoS-granted slots. CoS recommends building it.
+- Opus UI quota (2026-10-14): whether to spend Opus on the idle UI teams (GPUI #53, Studio #38, #33, #34).
 
 ## Watch
 
