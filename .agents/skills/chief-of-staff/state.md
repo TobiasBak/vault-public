@@ -39,7 +39,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
-- Orderready runner log pull: keys copied to this install (700/600). The runner host has been offline on Tailscale since 2026-10-14 11:06 UTC, so no logs were pulled. Waiting on Tobias: bring it back online, or approve another route (the customer VPN credentials in ~/.keys, or the archive SMB share credentials). Recommendation: if the archives live on that share, use it.
+- Orderready runner log pull: keys copied (700/600). The runner has been offline on Tailscale since 2026-10-14 11:06 UTC. Tobias is diagnosing it from his secondary laptop. When he says it's back, rerun the same brief (decisions.md 2026-10-14), using the RDP credentials file for the `ordre` login.
 - orderready#69: dedicated Monitor, AX and mailbox test environments, accounts and allowed effects for the real-environment nightly run. Blocks #69 and the release (#72). Recommendation: decide after #91 and #79 land. Nobody is idle waiting on it. Raised 2026-10-14.
 
 ## Watch
