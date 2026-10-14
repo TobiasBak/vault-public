@@ -381,6 +381,12 @@ def census(snapshot, now):
                 items.append((at, f"unanswered report {age(at, now)} {report_kind(text)} | {title} | {send_hint(snapshot, lead)}"))
         if lead in snapshot.running or snapshot.settled(lead):
             continue
+        latest = max(snapshot.runs[lead], key=lambda run: run[4], default=None)
+        if latest and latest[3] in {"failed", "interrupted", "cancelled"}:
+            _, _, end, status, requested = latest
+            at = end or requested
+            items.append((at, f"dead lead {age(at, now)}: last run {status}; resume or settle | {title} | {send_hint(snapshot, lead)}"))
+            continue
         assistant = snapshot.last_assistant.get(lead)
         if assistant:
             at, run_id, text = assistant
@@ -601,7 +607,7 @@ def main():
     commit_parser.add_argument("message", metavar="MSG")
     commit_parser.add_argument("paths", nargs="+", metavar="PATH")
     commands.add_parser(
-        "census", description="Print unanswered reports, unreported idle gates, unused child completions, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
+        "census", description="Print unanswered reports, dead leads, unreported idle gates, unused child completions, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
     )
     board = commands.add_parser(
         "board", description="Write the fixed-design board from T3 and state.md. Today is Europe/Copenhagen. Wait sums today's reports to their next CoS send, including pending waits ending at now or settlement; one reply may answer several reports. Dead-run time is clipped to today. Restart clusters have at least three distinct roots ending within ten seconds. Children count distinct tasks started today, including native subagents when stored. Done uses the latest report kind, not the status of a completed turn.", allow_abbrev=False,
