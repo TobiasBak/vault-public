@@ -515,3 +515,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #69: closed as not planned. It follows directly from Tobias's 2026-10-14 decision (no dedicated Monitor/AX/mailbox test environments), so it never needed him; I had wrongly listed it as waiting on him.
 
 - 2026-10-15 Tobias: the subagents line in messages to him has no value; messages are conversational, decision-oriented updates. Added to the working section; delegated scoping the global AGENTS.md subagents rule to parent/CoS reports.
+- 2026-10-15 dotfiles eb25ac41: the global AGENTS.md subagents line is scoped to parent and CoS reports plus PR closing comments, never messages to Tobias. Verified; child settled.
