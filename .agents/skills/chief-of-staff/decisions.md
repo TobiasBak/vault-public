@@ -431,3 +431,7 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #73: merged PR #79 at 3f1bbb68 → affaa43c (0 behind, 4 files, Sol and Opus UI APPROVE on that exact head).
 
 - 2026-10-15 #91: SECURITY PASS accepted (deny ok on advisories, bans, licenses and sources; same-head gitleaks 0). GO'd the final slot per final-slot-request.md: verify the base, test --full leased, push, PR, then a label request to the CoS before the explicit gate, then the Sol exact-head review and merge_ready.
+
+- 2026-10-15 #91: applied cos-approved on PR #176 (head c7b1c678, 0 behind, label read back) and linked the PR to the lead. Next: explicit tools/or gate, then Sol exact-head review, then merge_ready.
+- 2026-10-15 #62: campaign-03 GO. Independent pre-flight f93ff138 says APPROVE with no blocker, the execution dirs are absent and the lease is free. One execution only, with the full pin check right before launch and STOP/no retry. All 8 rows must be valid before the verifier, gate and review.
+- 2026-10-15 Studio: the lead's run 255 and studio-77-spike-1 failed on the Claude 5-hour limit, not on the work. Nudged the lead to resume #77 after the reset. Settled 11 finished children (studio-75/73, #62 case-clock ×3, b4 fingerprint review).
