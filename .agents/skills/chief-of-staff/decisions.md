@@ -475,3 +475,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-15 Studio #81: merged PR #90 (547a4fdf → 90673c17) at the exact head; #82 GO. Studio reviewer near-miss: the scratch Xvfb harness auto-picked :0, the host Xwayland, and was caught before any window mapped. The lead fixed the template; the CoS delegated a private-display rule into the frontend-design Verification section so the guard lives in the skill, not in scratch.
 - 2026-10-15 orderready #62: the event-CPU design recovered both GUI cases inside the 10% target, so CPU capture stays in the GUI cases.
+
+- 2026-10-15 orderready #178 archive outcome: GO for one protected manifest edit: in bins/mailbox, move the existing workspace zip/serde_json/dunce entries from dev- to normal dependencies so the shipping archive policy can inspect ZIP/JSON identity and use dunce for canonical containment. Conditions: Cargo.lock byte-identical; no version, feature, allowlist, lint or budget change; listed in the PR. Rejected the alternatives: duplicating the archive parsing in an unrelated crate, or using the disallowed std canonicalizer.
