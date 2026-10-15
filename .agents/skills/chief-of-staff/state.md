@@ -76,4 +76,3 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Orderready admission can false-block on reclaimable cgroup cache; the workaround is `memory.reclaim` on app-t3code.slice.
 - Trim the SKILL working section toward rules only; decisions.md has 120+ unreviewed entries, so put a log review in front of Tobias when he has time.
 
-- pr-merge ENOTEMPTY (detached git auto-gc in the temp repo): until the dotfiles fix lands, run with `GIT_CONFIG_COUNT=3 GIT_CONFIG_KEY_0=gc.auto GIT_CONFIG_VALUE_0=0 GIT_CONFIG_KEY_1=maintenance.auto GIT_CONFIG_VALUE_1=false GIT_CONFIG_KEY_2=fetch.writeCommitGraph GIT_CONFIG_VALUE_2=false`. Fix child: cos-pr-merge-enotempty-1.
