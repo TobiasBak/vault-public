@@ -477,3 +477,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #62: the event-CPU design recovered both GUI cases inside the 10% target, so CPU capture stays in the GUI cases.
 
 - 2026-10-15 orderready #178 archive outcome: GO for one protected manifest edit: in bins/mailbox, move the existing workspace zip/serde_json/dunce entries from dev- to normal dependencies so the shipping archive policy can inspect ZIP/JSON identity and use dunce for canonical containment. Conditions: Cargo.lock byte-identical; no version, feature, allowlist, lint or budget change; listed in the PR. Rejected the alternatives: duplicating the archive parsing in an unrelated crate, or using the disallowed std canonicalizer.
+
+- 2026-10-15 orderready #179: merged PR #189 (drawing session reuse) at head 3b60849f → 0a683cf4; gate and review success on the exact head. Repeated pre-push budget near-misses under load ~11 (drawing-selection-lifecycle at exactly 25000/25000 ms, first-order-assemblies 11141/11000; both pass alone) are ruled contention that #62's deadline classification covers: no retune and no new issue.
