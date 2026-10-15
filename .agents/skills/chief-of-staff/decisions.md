@@ -403,3 +403,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #70: option A. The slashed eye always means show; on an inherited-hidden row it reveals hidden ancestors. B is a dead control and C a no-op click. Sequenced after #67; #71 after #70.
 
 - 2026-10-15 Studio #67: merged PR #72 at 1d7da88a → 4e6c4650 (0 behind, 4 files, Sol and Opus UI APPROVE on that exact head). Non-blocking polish goes to #73.
+
+- 2026-10-15 #62 campaign-02: LIGHT failed before any measurement (scratch-sample `xtask status`: git tree unavailable; `cargo metadata`: mise error, truncated). Ruled non-consuming and not a repeat failure, since the cause differs from campaign-01. GO'd an unleased diagnosis that keeps full stderr, proves the root cause with a failing and a passing run, fixes the harness sample setup and the stderr retention, and passes LIGHT end-to-end. Campaign-03 needs a fresh GO; a protected-surface or allowlist change STOPs.
