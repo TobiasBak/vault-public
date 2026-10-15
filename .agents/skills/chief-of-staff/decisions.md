@@ -387,3 +387,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #65: merged PR #68 at c5a1962a → 1f9118ed (a one-line oracle-prose change in case.toml with a Behavior-Change trailer; Sol approved).
 
 - 2026-10-15 Studio #66: GO for option A. Hidden rows use opaque CHALK_MUTED italic, keep counts at full tone, show a persistent slashed eye and a tooltip, with a 3.99:1 floor. Alpha 0.45 measured about 2:1, and 0.8 erases the hidden/visible distinction. Protected changes in the same GO: an additive `expand` script op, the collapsed set moved from Outline to Controller, and four appended synthetic-triangle requests. The lead framed the choice as Tobias's; I decided it because A reuses the existing absent-value idiom, and told him he can override.
+
+- 2026-10-15 #153: merged PR #175 at 318ebe22 → orderready main 3adc0689. It was 0 behind with combined status success (gate + review) and cos-approved; the watcher was stopped. The main hold is lifted. #62 now rebases and relaunches W7 as campaign-02, and #91's audit targets 3adc0689.
