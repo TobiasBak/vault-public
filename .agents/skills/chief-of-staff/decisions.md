@@ -427,3 +427,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #75: merged PR #78 at e736c99e → c35a4c22. I accepted the new step-deep-row-click case as the regression test for Sol's r1 blocker: it fails before the fix and passes after, and no existing expectation moved. The Opus UI check was on c5205b28; the only changes since are the script click-point search, the help text and corpus, with no rendering change and Sol r2 covering them, so the check stands.
 
 - 2026-10-15 #91: accepted the fingerprint commit c7b1c678 and the gitleaks restart with zero findings. The deny STOP came from my brief's wording (`tools/or deny check` doubled the check), so it doesn't count against the lead. GO'd one deny-only `tools/or deny` on the frozen head, reusing that head's scan.
+
+- 2026-10-15 Studio #73: merged PR #79 at 3f1bbb68 → affaa43c (0 behind, 4 files, Sol and Opus UI APPROVE on that exact head).
