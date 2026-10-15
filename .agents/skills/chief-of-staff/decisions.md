@@ -368,3 +368,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-15 #153: the first normal push was blocked at pre-push by 2 GUI budget cases (a11y.snapshot waits, 25000/25500 ms), with newFailures empty. Before any retry, discriminate: run both cases fresh on main and on the head in one lease. Head passes → one push retry. #153 regression → fix. Main fails → issue + STOP. No budget edits or bypass.
 - 2026-10-15 Studio #56+#57: GO for the protected expectation change. #56 relabels the Reconstructed area row to 'Source boundary area', because the facade measures the source boundary rather than a certified measure of the reconstructed boundary. #57 sets the unselected hatch mix to 0.70. I checked the re-derived bands (188.657, 87.399, 157.352 ± 4). Nothing else moves, and the gate is Opus implementation + Opus UI check + Sol review.
+
+- 2026-10-15 Studio #56+#57: merged PR #59 at 9025eea → b34b7cb2. It was 0 behind 92c52bc6 and changed only the 5 expected files. Sol and the Opus UI check both approved; #60 and #61 are filed as non-blocking follow-ups. #153: Sol found no source blockers on 318ebe22, and the push disposition stands.
