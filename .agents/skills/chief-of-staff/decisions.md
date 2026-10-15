@@ -415,3 +415,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #71: merged PR #76 at af232b9f → 4629cc94 (0 behind, tree.rs only, Sol and Opus UI APPROVE on that exact head). The compact-row glyph cost goes to follow-up #77.
 
 - 2026-10-15 Studio #75 r2: C2 replaces C, because the corpus runs `--script` headless and a window-only op would leave gestures unchecked by the gate. One path everywhere: the real Outline::show in an in-process egui context, sized from the shell's own constants, with the dispatch extracted and shared. C3 (Xvfb in the gate) was rejected.
+
+- 2026-10-15 #91: integration accepted on 39454a48 (every phase passed, errata disclosed and harmless). GO'd security only: one leased redacted gitleaks scan over HEAD --not --remotes=origin plus the tools/or deny check, STOP on any finding. The control-pair time on main was 39.1 s against 50.6 s integrated: one observation inside the 120 s bound, recorded in the PR and flagged if it recurs above 1.2× in the final slot.
