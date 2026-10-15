@@ -73,3 +73,5 @@ Keep the tone conversational: plain verbs, sentence case, no filler, with tone m
 ## Verification
 
 Local repository addition: verify the rendered interface in a browser at desktop and mobile sizes. Exercise the changed user flows and relevant empty, error, and loading states; check keyboard navigation, visible focus, and reduced motion where applicable. Compilation alone is not behavioral verification. Report what you checked and any browser or interaction checks you could not perform.
+
+For headless native-app capture, start Xvfb or any nested X server on an explicit free private display (e.g. `:181` or higher) with `-nolisten tcp`, never auto-select (`-displayfd` or no display number) or inherit the host's `DISPLAY` or `WAYLAND_DISPLAY`. Verify the reported display matches the requested one, and abort before launching or driving the app if it does not.
