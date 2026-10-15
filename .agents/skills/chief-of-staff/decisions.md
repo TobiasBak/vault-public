@@ -468,3 +468,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #178: merged PR #184 (log retention) at head d0c568d2 → 9c4fc241 after checking the protected files against the approved oracle list. GO'd the next outcome under the same Phase 2 terms: archive budget plus the screenshot→AX capture swap. pr-merge's first attempt failed cleaning up its temp dir (ENOTEMPTY in pr-merge-*/repo.git/objects); the retry merged cleanly.
 
 - 2026-10-15 Studio #83: merged PR #91 (7eaae078 → 3f1ceab9) at the exact head; mergeState CLEAN, gate check+full pass, Opus UI r1 APPROVE on head. Its two follow-ups (focus tooling, hazard cue on dense trees) stay unfiled unless real use shows them.
+
+- 2026-10-15 orderready #179: SLOT GRANTED for the PR #189 gate (drawing handler 114.8 → 60.1 ms median); it queues behind the #178 lease holder. The first-order-assemblies over-budget (11043/11000 ms at load ~10, then 3/3 alone) is ruled contention: no budget change, report it if it recurs. #191 (grid a11y cache) gets its own slot request after review.
