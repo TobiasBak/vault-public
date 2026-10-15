@@ -511,3 +511,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #178: cos-approved on PR #196 at 17952139 after a CoS diff check (Cargo.toml 3 moves, no lock; first-order-logging oracle adds only the zero-counter accounting record; erp-ax desktop-capture oracles swapped for window capture, session-failure assertion kept). Next: published gate, exact-head review, merge_ready.
 
 - 2026-10-15 orderready #178: GO to merge main 49bee589 into #196 normally and regate on the new head, with one review there. Standing rule for #178: a conflict-free main merge plus regate needs no ask; a conflict in a harness, fixture, budget, oracle or cos-approved file is a STOP.
+
+- 2026-10-15 orderready #69: closed as not planned. It follows directly from Tobias's 2026-10-14 decision (no dedicated Monitor/AX/mailbox test environments), so it never needed him; I had wrongly listed it as waiting on him.
