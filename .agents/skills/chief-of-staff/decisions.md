@@ -472,3 +472,6 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #179: SLOT GRANTED for the PR #189 gate (drawing handler 114.8 → 60.1 ms median); it queues behind the #178 lease holder. The first-order-assemblies over-budget (11043/11000 ms at load ~10, then 3/3 alone) is ruled contention: no budget change, report it if it recurs. #191 (grid a11y cache) gets its own slot request after review.
 
 - 2026-10-15 orderready #179: the PR #189 gate was blocked by base drift (main moved to #184), not by a failing test. A rerun at 3b60849f is approved under the existing grant. SLOT GRANTED for PR #191 (grid a11y cache, draw CPU 29.1→20.4 ms p50) at 172f92d0. Standing rule for this lead: if a base move doesn't overlap the PR's files, merge main and rerun without asking.
+
+- 2026-10-15 Studio #81: merged PR #90 (547a4fdf → 90673c17) at the exact head; #82 GO. Studio reviewer near-miss: the scratch Xvfb harness auto-picked :0, the host Xwayland, and was caught before any window mapped. The lead fixed the template; the CoS delegated a private-display rule into the frontend-design Verification section so the guard lives in the skill, not in scratch.
+- 2026-10-15 orderready #62: the event-CPU design recovered both GUI cases inside the 10% target, so CPU capture stays in the GUI cases.
