@@ -470,3 +470,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #83: merged PR #91 (7eaae078 → 3f1ceab9) at the exact head; mergeState CLEAN, gate check+full pass, Opus UI r1 APPROVE on head. Its two follow-ups (focus tooling, hazard cue on dense trees) stay unfiled unless real use shows them.
 
 - 2026-10-15 orderready #179: SLOT GRANTED for the PR #189 gate (drawing handler 114.8 → 60.1 ms median); it queues behind the #178 lease holder. The first-order-assemblies over-budget (11043/11000 ms at load ~10, then 3/3 alone) is ruled contention: no budget change, report it if it recurs. #191 (grid a11y cache) gets its own slot request after review.
+
+- 2026-10-15 orderready #179: the PR #189 gate was blocked by base drift (main moved to #184), not by a failing test. A rerun at 3b60849f is approved under the existing grant. SLOT GRANTED for PR #191 (grid a11y cache, draw CPU 29.1→20.4 ms p50) at 172f92d0. Standing rule for this lead: if a base move doesn't overlap the PR's files, merge main and rerun without asking.
