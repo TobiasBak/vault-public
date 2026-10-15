@@ -518,3 +518,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 dotfiles eb25ac41: the global AGENTS.md subagents line is scoped to parent and CoS reports plus PR closing comments, never messages to Tobias. Verified; child settled.
 - 2026-10-15 Studio v1 audit done: filed #93 (deep-tree labels break), #94 (pan/orbit raw motion), #95 (polish), #96-#100 (coverage); 9 of 40 behaviors are asserted black-box. The lead runs #93 (Opus), #94 and #100 (Sol); #97 and #98 follow. Three product choices go to Tobias with recommendations.
 - 2026-10-15 orderready #178: MERGED PR #196 (e704ecb0 → c9aa4117) via pr-merge, first try (the ENOTEMPTY fix holds). GO for SQL cleanup and admission. Told #62 that main moved and that the conflict-free merge rule applies to #195.
+- 2026-10-15 Studio #100: MERGED PR #104 (a40a2173 → 4a3daf0d); corpus only, two new cases (edge overlay, eye→geometry), both fail when an expected value is perturbed.
