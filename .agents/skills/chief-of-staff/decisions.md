@@ -413,3 +413,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #75: option C, a window-only `click` op (eye, chevron or row) that injects real pointer events via raw_input_hook. It is deterministic on Linux and Windows and exercises the real hit-test path. A is outside the gate and B brings X11 deps and pixel oracles. Corpus changes are additive only; any moved expectation STOPs. The premise was wrong: XTest clicks do reach egui, the capture just fired a frame early.
 
 - 2026-10-15 Studio #71: merged PR #76 at af232b9f → 4629cc94 (0 behind, tree.rs only, Sol and Opus UI APPROVE on that exact head). The compact-row glyph cost goes to follow-up #77.
+
+- 2026-10-15 Studio #75 r2: C2 replaces C, because the corpus runs `--script` headless and a window-only op would leave gestures unchecked by the gate. One path everywhere: the real Outline::show in an in-process egui context, sized from the shell's own constants, with the dispatch extracted and shared. C3 (Xvfb in the gate) was rejected.
