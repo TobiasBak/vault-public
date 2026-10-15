@@ -401,3 +401,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-15 #62: continuation GO'd from rebased head 01b78523 (identity proven, no repeat rebase). A worker's ENOENT on a guessed path is a navigation miss, not a failure, so it doesn't consume the campaign-02 attempt or need a GO. Real identity, preservation, compatibility, allowlist, census or runtime failures still STOP.
 - 2026-10-15 Studio #70: option A. The slashed eye always means show; on an inherited-hidden row it reveals hidden ancestors. B is a dead control and C a no-op click. Sequenced after #67; #71 after #70.
+
+- 2026-10-15 Studio #67: merged PR #72 at 1d7da88a → 4e6c4650 (0 behind, 4 files, Sol and Opus UI APPROVE on that exact head). Non-blocking polish goes to #73.
