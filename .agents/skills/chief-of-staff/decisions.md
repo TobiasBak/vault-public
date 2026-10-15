@@ -372,3 +372,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 Studio #56+#57: merged PR #59 at 9025eea → b34b7cb2. It was 0 behind 92c52bc6 and changed only the 5 expected files. Sol and the Opus UI check both approved; #60 and #61 are filed as non-blocking follow-ups. #153: Sol found no source blockers on 318ebe22, and the push disposition stands.
 
 - 2026-10-15 Studio #60: GO for the protected hatch-band change. A shader-only RECONSTRUCTED_HATCH #820A5F gives deutan ΔE 7→23 and luminance 1.25→2.38:1 on Steel, while the UI keeps #D6409F. I verified the re-derived bands (129.857, 49.599, 112.553 ± 4). If the stripe reads as shadow or dirt, STOP rather than tune. #61 was closed as not planned: the mono text already breaks at token boundaries, and the reviewer's note misread it.
+
+- 2026-10-15 #91: B and 5 leased samples passed on 002fe1b7 (case_us max 9306415; ×134 = 1247059610). Under the pre-agreed arithmetic 11000 fails and 13000 fits, so I GO'd a budget-only case.toml edit, 11000 → 13000, with budget_basis appended and the old unleased admission superseded. Security and the final slot stay separate.
