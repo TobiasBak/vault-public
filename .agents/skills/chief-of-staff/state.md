@@ -65,6 +65,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Watch
 
+- orderready GUI a11y latency: application-shell measured ~200 ms per a11y.snapshot/act in the #62 PR run. Once #62's paired main/head run reports: if main also shows ≥150 ms per snapshot, file an orderready issue for scoped snapshots that names all 7 GUI cases, and route it to the next free Sol lead. If only head is slow, it's #62's regression.
+
 - Pi leads started before dotfiles b6fd8d9 (orderready #138, #91, #62; geometry #75, #67) were pinned to the old CoS thread b826766b. As of 2026-10-14 that thread is no longer readable, and #138, #67, #62, #79 and studio report straight here. If a lead goes quiet past its expected report, ask it for its status directly.
 
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
