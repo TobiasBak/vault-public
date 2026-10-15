@@ -62,6 +62,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
+- Studio guest `./studio check`: 12.4 s against a 2 s budget. The budget is reported, not enforced. Recommendation: enforce a separate guest budget at 15 s and keep 2 s on the host. Raised 2026-10-15.
 
 ## Watch
 
