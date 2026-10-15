@@ -439,3 +439,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 · decided by Tobias · Studio guest `./studio check`: 12.4 s inside the VM is fine. The lead adds a separate enforced 15 s guest budget, keeps 2 s on the host, and queues it behind #77.
 - 2026-10-15 · CoS · deleted the stale weekly pi-workspace-view task (cos-workspace-view-weekly-omarchy-1). Tobias stopped the context experiments on 2026-10-14, so nothing feeds it.
 - 2026-10-15 #91: merged PR #176 with pr-merge at c7b1c678 → 1264e1e9. I checked: 0 behind 3adc0689, gate and review statuses success on that head, cos-approved present, review report 52c04541 APPROVE with no findings. Launched the #142 Sol lead (mcp:c2acaea2) from origin/main.
+- 2026-10-15 #91: DONE accepted. I checked that #91 is closed as completed and #62/#63 are still open, with criterion 7 parked on both. Settled the lead's thread.
