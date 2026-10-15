@@ -493,3 +493,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 orderready #62: applied cos-approved to PR #194 at 9a92fef8, published from the new branch issue-62-case-wall-clock. Its protected list matches prior approvals (decisions 2026-10-14: import-preview 47500; drawing selection and wheel 27000; buttons 33500; all interim pending #63) plus the additive classifier_tests.rs. GO: gate, exact-head Sol review, merge_ready.
 
 - 2026-10-15 Studio #82: merged PR #92 (49f40824 → 51454022) at the exact head; check and test-full pass (16 cases); the additive corpus case only. Next: #43 rebase if still open, else wait for the nightly to close #80 and give the #40 verdict.
+
+- 2026-10-15 orderready #62: review F1 is a follow-up, not a blocker. The control and corpus paths still let a complete deadline-only run write expected.txt. It's pre-existing on main 8f and not introduced by #194, so it goes to #195. The PR body must say the invariant isn't enforced until #195 lands. #194 stays at its 17 verified files.
