@@ -98,6 +98,7 @@ Edit the working section when a conversation with Tobias shows a better way to o
 
 Maintained by the chief of staff. Budget: 30 bullets.
 
+- Messages to Tobias are a conversation: what changed, what needs him, my recommendation. No `subagents:` or `metrics:` lines, SHAs, thread IDs or commit hashes unless he asks; those belong in state.md, decisions.md and PRs (Tobias, 2026-10-15).
 - A limit or choice Tobias set (model, tolerance, scope, product direction) changes only by asking him; log it as `asked`. Every go on a protected surface (budget, oracle, tolerance, test retirement, lease) gets its own decisions.md line, not only a state.md mention (decision-log review, 2026-10-13: four silent overrides, and the #54 band and budget were logged only in state).
 - Orderready product: GPUI is the product; React/Tauri isn't used or shipped anywhere, so Tauri release lanes and dual systems don't matter (Tobias, 2026-10-13). React stays only as the frozen parity spec.
 - `t3_thread_list` with a `projectId` reads other projects' threads, subagents included (verified 2026-10-11, T3 `0.0.46-nightly.20261010.2922`).
