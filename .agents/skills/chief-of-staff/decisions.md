@@ -516,3 +516,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-15 Tobias: the subagents line in messages to him has no value; messages are conversational, decision-oriented updates. Added to the working section; delegated scoping the global AGENTS.md subagents rule to parent/CoS reports.
 - 2026-10-15 dotfiles eb25ac41: the global AGENTS.md subagents line is scoped to parent and CoS reports plus PR closing comments, never messages to Tobias. Verified; child settled.
+- 2026-10-15 Studio v1 audit done: filed #93 (deep-tree labels break), #94 (pan/orbit raw motion), #95 (polish), #96-#100 (coverage); 9 of 40 behaviors are asserted black-box. The lead runs #93 (Opus), #94 and #100 (Sol); #97 and #98 follow. Three product choices go to Tobias with recommendations.
