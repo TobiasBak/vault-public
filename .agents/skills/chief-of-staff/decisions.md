@@ -363,3 +363,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-15 #91: renewed B + 5 GO on 002fe1b7/9631e5df. Verified the parent is c9ad02b9 and the diff touches only format.rs (a mechanical lint fix: whitelist literals → module const). The STOP rules and the 11000/13000 cap arithmetic are unchanged; transcripts come before any cap edit.
 
 - 2026-10-15 #62: GO for a narrow private-guard fix. no_watch.command_matches flagged queued `heavy-lease run --wait -- tools/or …` leaves as heavy, which would deadlock W7 or wrongly invalidate #91's queue. The fix recognizes only trusted kernel-waiting leaves that have a linked FLOCK waiter row, fails closed on ambiguity, refuses rather than waiting inside the lease, and adds no new acquisitions. Source review comes before lease 1.
+
+- 2026-10-15 Studio #46: merged PR #55 at 452da99 → 92c52bc6. It was 0 behind 8f87ed4a and the gate passed fresh. The Opus UI check on the rebased head approved it from app-window and Xvfb captures, which clears the earlier Sol-only hold.
