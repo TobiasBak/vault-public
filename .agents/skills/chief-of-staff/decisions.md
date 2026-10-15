@@ -321,3 +321,8 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
   - Then a leaf-diff proof, one fix-only review, commits, and one verification request (the 4 cases plus the harness check).
 - 2026-10-15 Studio run 7 on 84d75a6 (pushed) started 07:21Z. Asked the lead to cite the review and check receipts that satisfied the pre-GO.
 - 2026-10-15 orderready #153 native stopped at check: E0308 at jobs_cases.rs:133, because the moved byte-identical body met the new `packages()` helper's owned String. Source GO: exactly `package.as_str()` in that `-p` array; the proof discloses the type adaptation and keeps the old artifacts; one fix-only review. With no blockers, the native grant carries over unchanged to the new tree. #86 gate stage released: its queue condition is met.
+- 2026-10-15 Studio #42 run 7 FAIL on 84d75a6; the pre-GO receipts held (s36-r2 APPROVE, check pass). No hang, timeout or cap trip; the vctip.exe linger is identified and terminated. GO, as one commit:
+  - A: cargo `--config` goes after the subcommand, because the cargo-clippy external subcommand dropped the pre-subcommand config and went online. Product fix.
+  - B: the Windows-only unused `Context` import is scoped to cfg(unix).
+  - C: Assert-Case's exact clean red 129 is dropped (Windows renders 130, inside the oracle band [126,133]). The clean pass-verdict/band check and mutated 144 divergence are kept, as a correction of the harness's own new assertion.
+  Run 8 is pre-GO'd on a green check and a clean review. If run 8 fails only on the 2 s static check budget, the measured split goes to Tobias.
