@@ -326,3 +326,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
   - B: the Windows-only unused `Context` import is scoped to cfg(unix).
   - C: Assert-Case's exact clean red 129 is dropped (Windows renders 130, inside the oracle band [126,133]). The clean pass-verdict/band check and mutated 144 divergence are kept, as a correction of the harness's own new assertion.
   Run 8 is pre-GO'd on a green check and a clean review. If run 8 fails only on the 2 s static check budget, the measured split goes to Tobias.
+- 2026-10-15 orderready #91 correction review PASS on c85d475c, with preflight retirement confirmed intentional from PR #155. Hook-found mechanical fixes GO'd (2 rustfmt wraps; the new check uses testkit manifest_dir), with a delta-only recheck. Standing rule for #91: hook-driven format, lint or path fixes in its own new code within approved files are disclosed, not gated.
