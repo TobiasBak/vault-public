@@ -383,3 +383,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-15 #62 W7 campaign-01: the guard refused at Unit 1 because of #153's active worktree watcher, before bootstrap and with nothing measured. I rule it a precondition refusal, not a failed qualification, and allow one relaunch in a new namespace (campaign-02). It runs after #175 merges and #62 rebases onto the new main, once a read-only census confirms no orderready-watch unit is active. The #153 worker stops its watcher after its gate. The guard is unchanged and any further refusal means STOP.
 - 2026-10-15 Studio #63: merged PR #64 at 66abc508 → 79a74cd7 (a one-line palette change; Sol and Opus UI approved). #65 GO'd as an oracle-prose-only fix with Sol review. #66 and #67 need plans; #67 is visual semantics.
+
+- 2026-10-15 Studio #65: merged PR #68 at c5a1962a → 1f9118ed (a one-line oracle-prose change in case.toml with a Behavior-Change trailer; Sol approved).
