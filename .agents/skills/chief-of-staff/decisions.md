@@ -715,3 +715,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 22:10 Claude reset passed (five_hour 5%, seven_day 27%). Resumed only the close-flow Opus UI team per the approved plan: rebase onto main after #215, child A alone to finish #161/#162 and prove the case RED→green, then child B cross-reviews. Every other Opus lead stays paused until close-flow hands off. Sol stays paused (Codex).
 
 - 2026-10-16 22:30 Merged orderready PR #217 (closes #216) at exact head 4a672e66 → bb458298: gate success with receipt, and the review at the `review` status target names both flagged paths (xtask/src/control/gate.rs, xtask/tests/gate.rs). This was the first merge under the reviewer-attestation pr-merge, and it passed with no label. Deleted the `cos-approved` label from orderready.
+
+- 2026-10-16 22:40 Close-flow lead self-reported a local `--no-verify` commit it used to carry work across a rebase; the commit was reset away and never pushed. No harm done, and the lead was told to use `git stash` next time. Nudged it to consume child A's result now that the lease is free.
