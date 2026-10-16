@@ -657,3 +657,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio PR #176 merged (main 41c9cee): adds `capture` to the agent-command allowlist in enforce.rs (+1). It had to land before the capture slice, because pre-push validates AGENTS.md with the base control.
 
 - 2026-10-16 Studio #167 capture slice merged as PR #177 (main 69c2895); #167 closed. `./studio capture` uses a process-group timeout kill and the live-pid lock rule; Sol r2 found no blockers; tree identical to the gated pre-rebase head. #169 S1: the corpus never had an unheld auto-start check (the runner is always --script), so the witness is a logged app-window --open→Ready capture; native launch mode filed as a low-priority follow-up.
+
+- 2026-10-16 Studio #169/#172 slice S merged as PR #179 (main ef8d30b): scripted hold everywhere, wait part on a failed load, help wording, rows-hover error; only step-progressive changed, as pre-approved; 2 new cases fail on base; Sol PASS; S1 auto-start witness logged; #178 native launch mode filed.
