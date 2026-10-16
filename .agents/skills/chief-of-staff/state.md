@@ -30,7 +30,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - #142 DONE 2026-10-15 as a one-off behavior audit (issue comment 6196038154): 18 attempts, 106 MATCH, 20 intended-divergence, 0 LOST/CHANGED; no fix issues. Desktop orchestration is still unqualified. `replay-draft-order` matches OIP `--draft-order` (main.py:42-56), so it stays. The branch is a throwaway; the lead is settled.
 - #178 runner retention CLOSED 2026-10-16: PRs #184, #196 and #198 merged (main cbda46bb); native Windows runtime, AX and junction NOT RUN, follow-up #199; lead settled.
 - #179 import GUI performance CLOSED 2026-10-16: PRs #182 (zbus span cap), #189 (drawing handler 114.8→60.1 ms median) and #191 (grid a11y cache, build p50 4.02→0.80 ms) merged; Windows unmeasured (#181, blocked on #77); follow-ups #180, #183, #186–#188, #190, #192; lead settled.
-- #201 CPU namespace identity MERGED 2026-10-16 (PR #207 a4562f84 → cb88ca27), closed. [Lead](t3-thread://v1/mcp:4bce811f-3ebe-4246-adb9-9b2bcb44feb4) posts metrics, rechecks #202/#206, then settle.
+- #201 CPU namespace identity DONE 2026-10-16 (PR #207 → cb88ca27); lead settled. #202 (five GUI cases 20–29 s native wall, above 15 s; needs a repeat-5 calibration) and #206 (tmpfs pathname socket, same-user trust) still open, no team.
 - Repo rules: `tools/or test --full` is the full gate; never hand-edit `~/.cache/orderready/verdicts`; no binary fixtures in Git; `cos-approved` label is CoS-only.
 
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
