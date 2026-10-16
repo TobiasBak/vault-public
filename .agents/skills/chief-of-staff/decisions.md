@@ -631,3 +631,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #154 merged as PR #162 (main 7ad896b): watcher-stop blocks on the owner lock until the worker exits; exact head c726cb4 on current main, gates pass; Windows nightly exit 0 on pre-rebase 782296d with watch.rs verified byte-identical; Sol review no blockers. Lands before Saturday nightly.
 
 - 2026-10-16 Studio #153 merged as PR #163 (main 67954a6): refusal-cell focus stability on resize; new case only, fails with shell.rs reverted; exact head 2e5c0e2 on current main, gates and pre-push pass, Opus UI review approved. 480 px space left as is: below the 780 px desktop minimum.
+
+- 2026-10-16 Studio #111 GO: panels gains top-level meter {track, fill} read back from the painted status-bar meter (omitted when none); load-progress-panels response 5 expectation gains meter with zero fill plus one oracle sentence; separate meter op rejected (duplicates paint pass). Conditions: new case witnesses nonzero hand-derived fill (1/2 → 24 of 48 pt), total/total or 0 mutant fails, test --full shows only that existing change, Behavior-Change trailer, Opus UI review.
