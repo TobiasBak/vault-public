@@ -563,3 +563,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #122: PR #126 merged 293375cf → bc62c94 (2-line cfg fix in shell.rs). Windows clippy failed before the fix and passes after; a sweep of all crates found no other Windows-only break. Cross-target clippy follow-up filed as #125, queued after #50.
 
 - 2026-10-16 Studio #108+#102: PR #127 merged c39291c9 → 11a70b2. The corpus diff is insert-only (toolbar-open-dialog), the mutation is killed, and Sol approved. #108/#102 closed.
+
+- 2026-10-16 Provider update (Tobias asked). Claude 2.1.301, Pi 1.3.0, Codex 0.163.0, OpenCode 2.0.30, all via mise. The T3 server was already on nightly 20261015.3176. Tobias updated the desktop AUR package to the same nightly via dotfiles `agents/t3/install-desktop.sh`. Dotfiles PR #36 (mise.lock only) merged 29da3156 → 3a7ed51 after a full ./verify passed. The T3 Pi extension's before_agent_start handler is compatible with the Pi 1.2.0 API change.
