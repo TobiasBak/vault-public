@@ -75,6 +75,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 
 ## Needs Tobias
+- orderready #162 close-flow parity (asked 2026-10-16 22:50): keep close busy across the environment-switch reload because GPUI does not abort in-flight auth (rec), or cancel auth on reload to match the old app. The close-flow PR merge waits on this.
 
 - Studio v1 product choices from the audit (the lead waits on none of them; #93, #94 and #100 are running): (1) refused faces listed → rec: a 'Refusals' tree filter showing refused nodes plus their ancestors, not a new panel; (2) entity counts → rec: a collapsible per-type count (top N) under Document; (3) compact tree under 260 px → rec: the eye always shows on hidden rows, hover-only on visible rows. (4) feedback for a selected face hidden behind others (x-ray or silhouette) → rec: defer past v1 as its own issue (simplest form: the selected face's edges drawn dashed with no depth test). Waiting on Tobias's answer; then the Studio lead files and builds them.
 - Studio #164: depth cue for tree rows past the indent cap (40+ levels, which all align at one x) → rec: a small muted depth number before the label on capped rows only; guide lines get unreadable at a 4 pt step. Raised 2026-10-16.
