@@ -547,3 +547,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 orderready #63: 20/99 cases calibrated. gui/application-shell blocked on 'owned CPU task: ambiguous task namespace identity', a #62 CPU-accounting harness defect that can block product gates too. The lead files it as its own issue and does not fix it in #63. One whole-batch rerun is allowed; if it recurs, STOP, and the CoS decides whether that issue goes first.
 
 - 2026-10-16 Studio #118 (HiDPI item): PR #120 merged 1082135c → acdba44. The corpus diff is insert-only (refusal-marker-hidpi, 3 files), ppp 1 is byte-identical, and the Opus UI review approved and killed both mutations. #118 stays open for the remainder (edge/hatch widths, Renderer::render ppp validation, padding witness).
+
+- 2026-10-16 orderready #63: PR #203 cos-approved at head 5b3f58ad. Verified: 99 case.toml files, only budget_ms and budget_basis lines changed, all budgets multiples of 500. Increases: first-order-assemblies 11000→12500 and local-state-failure 2500→3500. Five cases above 15000 sit below their old budgets (pre-approved). Speed-up follow-up is #202. Next: gate, Sol review, merge_ready.
