@@ -588,3 +588,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #128 (PR #137, Open-Handle null on exited process incl. PS 5.1 null Handle) merged → main aad04ca; exact-head gate green; review round 1 found a residual 5.1 window, fixed in-commit (same race), round 2 re-check on a 5.1 guest approved.
 
 - 2026-10-16 Studio #50 (PR #138, INSTALL deletes VCTIP.EXE for derived MSVC version, receipt hashes) merged → main d6725ed; exact-head gate green, independent review clean. Sat 03:45 scheduled nightly is the verdict run for #40/#50/#80/#123/#124.
+
+- 2026-10-16 orderready #204: GO on the workspace rustix `fs`+`net` feature additions (manifest-protected; no new crate, no Cargo.lock change, avoids unsafe) to ride in the PR. Accepted: tmpfs size=2G (mailbox FLOOR_BYTES 1 GiB), a clean audit (no case needs real disk), and copy-out failures as infra-fail with witnessed failure paths.
