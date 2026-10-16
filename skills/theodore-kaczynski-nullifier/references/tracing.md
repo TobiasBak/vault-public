@@ -1,6 +1,6 @@
 # Verification tracing
 
-Every feedback command writes one trace per verdict, beside the verdict and keyed by its ID: `check`, `test`, `gate`, watcher jobs, and nightly. Preserve trace identity on [cached verdict reuse](manifest.md#3-cache-verdicts); never present cached producer work as a new execution.
+Every feedback command writes one trace per verdict, beside the verdict and keyed by its ID: `check`, `test`, `gate`, watcher jobs, and promotion runs. Preserve trace identity on [cached verdict reuse](manifest.md#3-cache-verdicts); never present cached producer work as a new execution.
 
 ## Spans
 
@@ -37,4 +37,4 @@ Reading the raw trace is never required to identify the bottleneck.
 
 ## Baseline and enforcement
 
-Nightly on main retains baseline traces. A critical-path regression beyond the [repository's budget](manifest.md#9-budgets-are-visible) opens or updates an issue through the [existing nightly enforcement path](enforcement.md#checks). Do not add a second enforcement path.
+Promotion runs retain baseline traces. A critical-path regression beyond the [repository's budget](manifest.md#9-budgets-are-visible) opens or updates an issue from the [promotion PR](enforcement.md#checks). Do not add a second enforcement path.
