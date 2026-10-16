@@ -64,6 +64,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Holds
 
+- CODEX USAGE PAUSE (2026-10-16 20:10 CEST; Tobias reports Codex dropped from 80% to 7% remaining within minutes). Interrupted the 3 running Sol children: Windows #77 B1, #80 auth, and #212/#214 round 3 (not a CoS-launched thread). Sol and Opus are now both paused; nothing resumes until Tobias says so.
+
 - CLAUDE USAGE PAUSE (Tobias 2026-10-16 ~19:30 CEST, five_hour 84%, resets 19:59Z): interrupted the 3 native-screen Opus implementers, close-flow child A and the Studio lead's pre-flight. All Opus leads were told to spend no turns until I release the pause; Sol children keep running. Resume plan APPROVED by Tobias: on the first heartbeat after 22:00 CEST with quota < 60%, one Opus UI team at a time (close-flow first, then screens with one implementer at a time); non-UI leads to Sol on their next phase. Studio pre-flight must finish before Sat 03:45.
 
 - LAUNCH FREEZE (Tobias 2026-10-16 19:07: "Too much shit running, dont start more"): no new teams, launched threads or scope extensions. Running teams finish their current in-scope work. Every new request, follow-up or next-in-line item goes on the start-later list below; nothing on it starts until Tobias lifts the freeze.

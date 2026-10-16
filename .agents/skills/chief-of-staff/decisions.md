@@ -707,3 +707,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Tobias approved the resume plan and the cap rule: at most one live Opus UI team with at most one Opus child, Sol for all non-UI leads, quota checked every heartbeat. Sol child `cos-opus-cap-rule-1` is updating dotfiles AGENTS.md and the cos.py quota/brief text.
 
 - 2026-10-16 Opus cap rule landed: dotfiles agents/AGENTS.md (verify 53/53, only the rule hunk committed) and the cos.py quota/brief text (vault). Child settled.
+
+- 2026-10-16 20:10 Tobias: Codex fell from 80% to 7% remaining in minutes, with nothing of his own running. Pi Sol children run on his Codex subscription; 3 were live (2 Windows-team, 1 #212/#214) after a day of many Sol children (69-issue triage, reviews, implementers). Interrupted all three. Told him the burn is probably ours, though a minutes-scale drop matches known Codex metering bugs, and pointed him to support@openai.com plus openai/codex GitHub issues. Lesson: the CoS has no Codex quota check; cos.py quota covers Claude only.
