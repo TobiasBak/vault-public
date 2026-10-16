@@ -683,3 +683,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #178 condition 5 amended: the 12-face base reaches Ready before the shot, so the PR split buys nothing. One PR; native-auto-start stays on the 12-face fixture; the wait-for-terminal red is witnessed once by a logged 5/5 run on a generated heavy scratch fixture (not committed: a heavy corpus fixture costs every gate and nightly, and its red is host-speed dependent). If no size reds, ship without the red, stated in the PR.
 
 - 2026-10-16 Studio #178 part 1 MERGED: PR #185 at 4fa090f → 98f36c0 (launch field, native runner, shared allocator, atomic load.json, terminal-wait capture; Sol approved in 3 rounds; heavy scratch red 5/5 loading on base, 5/5 ready on head). Accepted the split: the pre-push base validator rejects the new field in a case on the same head. The case PR follows on the rebased 158238d.
+
+- 2026-10-16 Studio #178 DONE: PR #186 (native-auto-start case, additive, tree = gated f29a1b9) 6a10a2a → de7320a. Assigned backlog done; lead idles until the Sat nightly verdict.
