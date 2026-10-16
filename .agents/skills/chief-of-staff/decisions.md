@@ -599,3 +599,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 
 - 2026-10-16 Studio #141 (PR #143, concurrent host and Windows clippy in separate target dirs) merged → main 6131f93; warm check 1606–1637 ms, budget unchanged, independent APPROVE.
 - 2026-10-16 Studio #101 GO on a protected expectation move: tree-viewport-selection-roundtrip `$[22]`/`$[23]` rows +1 pt. Basis: main's own desktop paints the selected row at 437..460 while main's script read back 436, so the old expectation was wrong against independent pixel truth, and head matches the paint. Captures are pixel-identical. #142 (watch-status holds the heavy lease while blocked on the GPU slot, stalling all gates) runs right after #101: never hold the lease while blocked.
+
+- 2026-10-16 Studio #101 (PR #144, a single shell::window layout for every scripted pass, plus the viewport-border-hit case) merged → main a43c718. Exact-head check/test/status green. The r3 Opus re-review approved, confirmed the pixel rows independently, and the new case fails on main. Follow-up #145 covers oracle wording only.
