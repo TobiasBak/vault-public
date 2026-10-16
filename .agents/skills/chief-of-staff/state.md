@@ -64,6 +64,9 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Holds
 
+- LAUNCH FREEZE (Tobias 2026-10-16 19:07: "Too much shit running, dont start more"): no new teams, launched threads or scope extensions. Running teams finish their current in-scope work. Every new request, follow-up or next-in-line item goes on the start-later list below; nothing on it starts until Tobias lifts the freeze.
+- Start later (in order): orderready #202 GUI flow cost (after Windows lands); geometry #87/#90/#78 (needs Tobias's #87 policy); host lazy-mise-wrapper follow-up (16 wrappers in ~/.local/bin hang under systemd; issue pending from the Windows lead); orderready fresh #103 attribution; orderready #90 disposition; geometry #25 consumer preview.
+
 
 ## Needs Tobias
 
