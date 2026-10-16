@@ -669,3 +669,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 orderready #201 MERGED: PR #207 at a4562f84 → cb88ca27 via pr-merge (gate full corpus 138/138, Sol exact-head review approve; departure-only fix, live ambiguity still blocks). Issue closed; lead to post metrics, recheck #202/#206 and report done.
 
 - 2026-10-16 orderready #201 done; lead settled. #202 and #206 confirmed still open on the new main, left unstaffed.
+
+- 2026-10-16 Studio slice U MERGED: PR #180 at 220e837 → 4e62940 (check, test --full, Opus UI approve; the load-progress status flips are the pre-approved U1 wording; uniform-cap flips hand-derived; rows drag witnessed red on base, green on head). #169 and #172 closed; follow-ups #181, #175, #178 queued.
