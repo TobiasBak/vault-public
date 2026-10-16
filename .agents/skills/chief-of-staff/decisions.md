@@ -675,3 +675,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #178 GO: case.toml gains `launch = "script"|"native"` (published-contract extension, default script), and unscripted `--capture-window` waits for a terminal load of the opened file and writes load.json. Conditions: pre-open Idle never fires the shot; one display allocator shared with capture; validator rejects unknown/extra native ops; load.json atomic; PR1 contract+runner+load.json, PR2 wait-for-terminal+native-auto-start so the red is real (stop if racy); Windows proven by the first nightly, no skip.
 
 - 2026-10-16 Studio #181 MERGED: PR #182 at 5b72a5e → e7749a1 (additive case + help/error text; Sol approve). Told the lead to file the scripted resize-delta fidelity gap at low priority.
+
+- 2026-10-16 Studio #178 condition 3 amended: no negative-case facility exists, so validator rejections are witnessed once by a logged scratch-tree run (S1 precedent) instead of a new control-corpus harness surface built for two errors.
