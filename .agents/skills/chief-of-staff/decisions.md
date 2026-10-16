@@ -663,3 +663,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio slice U GO: (1) the per-row cap is replaced by a uniform cap reserving one mark slot, since the per-row cap inverted depth at the cap; extra flips allowed only for rows at the cap in the two deep cases, plus a monotone-x assertion; (2) singular "of 1 part"; (3) `rows` gains an optional mid-drag `drag {from,to,button}` (new script API), reusing the drag pointer path and always releasing, witnessed by viewport- and handle-origin drags plus a hover control.
 
 - 2026-10-16 Nudged stalled leads: #179 close-out turn had died on the Claude 5-hour limit (2026-10-15 18:00), told to resume; #201 turn ended with its gate unreported and the lease free, told to check the outcome and continue to merge_ready.
+
+- 2026-10-16 orderready #179 accepted as done: issue closed with per-climb baseline→after numbers in the final comment; Windows gap tracked in #181; lead settled.
