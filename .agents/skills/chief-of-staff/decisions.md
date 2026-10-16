@@ -561,3 +561,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 orderready #201 blocks. (1) RED alone can't pass pre-push, so RED and GREEN go in one push: RED commit first, red log cited, no bypass. (2) The push gate blocked 11 small cases deadline-only at wall ≈ budget + 5 ms with low stall. I rejected "the #203 budgets are too tight": #203's head passed --full, and the budget + 5 ms signature means a hang ended by the deadline kill, not contention. Ordered one diagnostic full-selection run on clean main 672f6595. Main blocks → budget issue, CoS decides. Main passes → the seam in the RED commit is at fault (it must be a production no-op).
 
 - 2026-10-16 Studio #122: PR #126 merged 293375cf → bc62c94 (2-line cfg fix in shell.rs). Windows clippy failed before the fix and passes after; a sweep of all crates found no other Windows-only break. Cross-target clippy follow-up filed as #125, queued after #50.
+
+- 2026-10-16 Studio #108+#102: PR #127 merged c39291c9 → 11a70b2. The corpus diff is insert-only (toolbar-open-dialog), the mutation is killed, and Sol approved. #108/#102 closed.
