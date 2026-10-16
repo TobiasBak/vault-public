@@ -677,3 +677,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #181 MERGED: PR #182 at 5b72a5e → e7749a1 (additive case + help/error text; Sol approve). Told the lead to file the scripted resize-delta fidelity gap at low priority.
 
 - 2026-10-16 Studio #178 condition 3 amended: no negative-case facility exists, so validator rejections are witnessed once by a logged scratch-tree run (S1 precedent) instead of a new control-corpus harness surface built for two errors.
+
+- 2026-10-16 Studio #175 MERGED: PR #184 at 82222b2 → aacd4d3 (renderer.rs + one additive case, red on base; Opus UI approve). 1x short-dash note not filed (inherent to sub-12 pt faces).
