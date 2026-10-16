@@ -621,3 +621,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #115 item 7 part 2 merged as PR #157 (main 274dd2f): case-only (load-error-long-name), exact head 74fc02c on main 80cb982, check/test --full/status pass, review approved. Status `tree` is the control Identity hash, not the git tree.
 
 - 2026-10-16 Studio #115 item 2 merged as PR #158 (main 0390374): script host applies every effect in-frame like desktop Host::apply; new case only, no existing expectation changed; exact head f7203fd on main 274dd2f, gates pass, review approved. #115 complete; lead closes it. Next: #154, then follow-ups.
+
+- 2026-10-16 Studio #145 merged as PR #159 (main 9501622): oracle wording in 3 case.toml, no expected/request change (pre-scoped by the #101 GO), exact head c007145 on main 0390374, gates pass, review no blockers.
