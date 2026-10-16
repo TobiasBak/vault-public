@@ -625,3 +625,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #145 merged as PR #159 (main 9501622): oracle wording in 3 case.toml, no expected/request change (pre-scoped by the #101 GO), exact head c007145 on main 0390374, gates pass, review no blockers.
 
 - 2026-10-16 Studio #155 merged as PR #160 (main 5376f19): exact numeric compare above 2^53, witness fails pre-fix/passes post; head d86f21c gated on 0390374, one behind main. Accepted stale base: main delta was 3 prose-only case.toml (#159), disjoint from cases.rs. Rule: a stale base is OK only when the main delta is non-code and disjoint.
+
+- 2026-10-16 Studio #148 merged as PR #161 (main 92ca5ae): card dismissal, focus ring, pending-dialog Open disabled; exact head f2eb412 on current main; check/test --full (no expected change)/status/commit gate pass; Xvfb app-window pixel-probe witnesses; review no blockers. Reminded the lead that visible UI review goes to Opus.
