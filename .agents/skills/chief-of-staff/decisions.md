@@ -590,3 +590,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #50 (PR #138, INSTALL deletes VCTIP.EXE for derived MSVC version, receipt hashes) merged → main d6725ed; exact-head gate green, independent review clean. Sat 03:45 scheduled nightly is the verdict run for #40/#50/#80/#123/#124.
 
 - 2026-10-16 orderready #204: GO on the workspace rustix `fs`+`net` feature additions (manifest-protected; no new crate, no Cargo.lock change, avoids unsafe) to ride in the PR. Accepted: tmpfs size=2G (mailbox FLOOR_BYTES 1 GiB), a clean audit (no case needs real disk), and copy-out failures as infra-fail with witnessed failure paths.
+
+- 2026-10-16 Studio #134 (PR #139, watcher counts only relevant events, idle exit 300 s) merged → main bbe02f8; exact-head gate green, independent review approved; proof 0.37 s vs 40.9 s CPU under ancestor churn. #125's mise.toml `targets` change flagged as protected (toolchain manifest): must be stated with rationale in its merge_ready.
