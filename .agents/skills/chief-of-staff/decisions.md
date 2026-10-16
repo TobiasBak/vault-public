@@ -613,3 +613,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #114 (PR #151, panels section arrays for multi-section galleys) merged → main 2758b78. Protected expectation change across 22 cells in 6 expected.json files, requests untouched. GO conditions met: hand derivation first, concat.py 0 diffs, reviewer 13/13 independent re-derivation, Behavior-Change trailer.
 
 - 2026-10-16 Studio #115 item 7: GO (a), a closed `$os` expected matcher (linux and windows both required, literal values, unknown OS fails), so the elided error-card path stays exact across platforms. Conditions: wrong-value and missing-key witnesses on Linux and the Windows guest, README contract, a per-use case.toml justification, hand-derived values, a Behavior-Change trailer, and a test --full gate. Rejected (b) as weaker and internal-ish, and (c) as leaving a real requirement unchecked.
+
+- 2026-10-16 Studio #116 merged as PR #152 (main fe201b5): exact head 7782f4f on main 2758b78, status pass, no expected.json change, Opus UI review approved. Non-blocking notes (refusal-cell widget id shift, 480 px space use) go to one follow-up issue.
