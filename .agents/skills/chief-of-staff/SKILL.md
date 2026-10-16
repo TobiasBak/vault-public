@@ -36,6 +36,7 @@ Teams are disposable (Tobias, 2026-10-12: P2 and GPUI leads ran 300+ runs in rev
 - New work from Tobias: file the issue, label it `ready`, launch a team. Run independent issues in parallel and record real dependencies in the issues. The limit is host and gate capacity, not team count.
 - Big or unclear work gets a design team first. Its output is repo docs plus `ready` issues, and then it ends.
 - Design-heavy issues wait until Tobias decides who leads them.
+- Non-UI team leads always use Pi GPT-6.1 Sol at thinking `high`. UI teams use Claude Opus 5.5 at effort `high`: at most one live Opus UI team, with at most one Opus child at a time. Run `python3 .agents/skills/chief-of-staff/scripts/cos.py quota` before launching and on every heartbeat; the UI team runs only while every reported window is below 60%, otherwise it waits. Never switch a running lead mid-task. The chief of staff remains Opus. On 2026-10-16, four Opus leads plus parallel Opus UI children took the five-hour window from 7% to 84% in about 90 minutes; launch-only checks ignore burn rate (Tobias, 2026-10-16).
 - Labels: `ready`, `in-progress` (with a comment linking the team thread), `blocked`, `needs-tobias`.
 - Chief-of-staff work goes to `delegate_task` children, routed per the global instructions: vault edits, diagnostics, audits, cross-repo census.
 - A team brief names the issue and adds only what the issue and repo can't carry: run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`, put its output first, and add the issue-specific details.

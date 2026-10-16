@@ -381,7 +381,7 @@ def quota():
         if not isinstance(token, str) or not token:
             raise ValueError
     except Exception:
-        print("opus_leads: unknown (credentials unavailable)")
+        print("opus_ui_team: unknown (credentials unavailable)")
         return 1
     try:
         request = Request(
@@ -391,10 +391,10 @@ def quota():
         with urlopen(request, timeout=15) as response:
             usage = json.load(response)
     except HTTPError as error:
-        print(f"opus_leads: unknown (HTTP {error.code})")
+        print(f"opus_ui_team: unknown (HTTP {error.code})")
         return 1
     except Exception:
-        print("opus_leads: unknown (request failed)")
+        print("opus_ui_team: unknown (request failed)")
         return 1
     try:
         windows = []
@@ -411,15 +411,15 @@ def quota():
         if not {"five_hour", "seven_day"} <= {name for name, _, _ in windows}:
             raise ValueError
     except Exception:
-        print("opus_leads: unknown (invalid usage response)")
+        print("opus_ui_team: unknown (invalid usage response)")
         return 1
     for name, utilization, resets in windows:
         print(f"{name} {utilization:g}% resets {resets}")
     limited = next(((name, utilization) for name, utilization, _ in windows if utilization >= 60), None)
     if limited:
-        print(f"opus_leads: sol_only ({limited[0]} at {limited[1]:g}%)")
+        print(f"opus_ui_team: wait ({limited[0]} at {limited[1]:g}%)")
     else:
-        print("opus_leads: allowed")
+        print("opus_ui_team: allowed (max 1 live, 1 Opus child)")
     return 0
 
 
@@ -678,7 +678,7 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     brief = commands.add_parser("brief", description="Print the one-source team-brief preamble.", allow_abbrev=False)
     brief.add_argument("--short", action="store_true", help="Print only the report-trigger restatement.")
-    commands.add_parser("quota", description="Print Claude plan utilization and whether quota permits Opus team leads.", allow_abbrev=False)
+    commands.add_parser("quota", description="Print Claude plan utilization and whether quota permits one Opus UI team with one Opus child. Non-UI leads always use Sol; check UI quota before launching and on every heartbeat.", allow_abbrev=False)
     commands.add_parser("restart-check", description="Refuse a T3 restart while runs outside CoS and its children are running.", allow_abbrev=False)
     commit_parser = commands.add_parser("commit", description="Commit only named paths, pull/rebase with autostash, then push once.", allow_abbrev=False)
     commit_parser.add_argument("message", metavar="MSG")
