@@ -609,3 +609,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #111(part)+#112 (PR #149, 4 new insert-only cases plus overlay/key/drop/focus ops; dismissal keyed to load generation) merged → main 7ed3e46. Exact-head check/test --full/status green, Opus APPROVE, mutants fail. #111 stays open for the deferred progress delivery. Pre-approved #147 (refusal-card oracle names repeated vertices #24/#26): oracle text only, with hand derivation and independent re-derivation. Follow-up #148: capture-mode scripts can't drive overlay or focus.
 
 - 2026-10-16 Studio #147 (PR #150, refusal-card oracle prose: loop #511 repeats #24/#26, no #20) merged → main c64dee4; a single case.toml changed, independent Sol re-derivation approved.
+
+- 2026-10-16 Studio #114 (PR #151, panels section arrays for multi-section galleys) merged → main 2758b78. Protected expectation change across 22 cells in 6 expected.json files, requests untouched. GO conditions met: hand derivation first, concat.py 0 diffs, reviewer 13/13 independent re-derivation, Behavior-Change trailer.
