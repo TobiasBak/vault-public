@@ -629,3 +629,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #148 merged as PR #161 (main 92ca5ae): card dismissal, focus ring, pending-dialog Open disabled; exact head f2eb412 on current main; check/test --full (no expected change)/status/commit gate pass; Xvfb app-window pixel-probe witnesses; review no blockers. Reminded the lead that visible UI review goes to Opus.
 
 - 2026-10-16 Studio #154 merged as PR #162 (main 7ad896b): watcher-stop blocks on the owner lock until the worker exits; exact head c726cb4 on current main, gates pass; Windows nightly exit 0 on pre-rebase 782296d with watch.rs verified byte-identical; Sol review no blockers. Lands before Saturday nightly.
+
+- 2026-10-16 Studio #153 merged as PR #163 (main 67954a6): refusal-cell focus stability on resize; new case only, fails with shell.rs reverted; exact head 2e5c0e2 on current main, gates and pre-push pass, Opus UI review approved. 480 px space left as is: below the 780 px desktop minimum.
