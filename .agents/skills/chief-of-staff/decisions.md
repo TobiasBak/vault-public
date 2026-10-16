@@ -617,3 +617,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #116 merged as PR #152 (main fe201b5): exact head 7782f4f on main 2758b78, status pass, no expected.json change, Opus UI review approved. Non-blocking notes (refusal-cell widget id shift, 480 px space use) go to one follow-up issue.
 
 - 2026-10-16 Studio #115 item 7 part 1 merged as PR #156 (main 80cb982): `$os` matcher, exact head 595df6a on main fe201b5, check/test --full/status pass, Sol review approved, GO conditions met with case on top. Split justified: pre-push validates with main control. #154 (Windows nightly watcher cleanup race) prioritized before Saturday nightly since it can block promotion.
+
+- 2026-10-16 Studio #115 item 7 part 2 merged as PR #157 (main 274dd2f): case-only (load-error-long-name), exact head 74fc02c on main 80cb982, check/test --full/status pass, review approved. Status `tree` is the control Identity hash, not the git tree.
