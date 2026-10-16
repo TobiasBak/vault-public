@@ -77,6 +77,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 
 ## Needs Tobias
+- orderready #224 native-screen data cache (asked 2026-10-17 00:20): keep reload-on-mount now and decide once across all screens (rec), or match the frozen 5-minute route cache with refetch on focus. Nothing blocks on it; screens reload on mount meanwhile.
 - orderready #162 close-flow parity (asked 2026-10-16 22:50): keep close busy across the environment-switch reload because GPUI does not abort in-flight auth (rec), or cancel auth on reload to match the old app. The close-flow PR merge waits on this.
 
 - Studio v1 product choices from the audit (the lead waits on none of them; #93, #94 and #100 are running): (1) refused faces listed → rec: a 'Refusals' tree filter showing refused nodes plus their ancestors, not a new panel; (2) entity counts → rec: a collapsible per-type count (top N) under Document; (3) compact tree under 260 px → rec: the eye always shows on hidden rows, hover-only on visible rows. (4) feedback for a selected face hidden behind others (x-ray or silhouette) → rec: defer past v1 as its own issue (simplest form: the selected face's edges drawn dashed with no depth test). Waiting on Tobias's answer; then the Studio lead files and builds them.
