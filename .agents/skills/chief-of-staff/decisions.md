@@ -679,3 +679,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-16 Studio #178 condition 3 amended: no negative-case facility exists, so validator rejections are witnessed once by a logged scratch-tree run (S1 precedent) instead of a new control-corpus harness surface built for two errors.
 
 - 2026-10-16 Studio #175 MERGED: PR #184 at 82222b2 → aacd4d3 (renderer.rs + one additive case, red on base; Opus UI approve). 1x short-dash note not filed (inherent to sub-12 pt faces).
+
+- 2026-10-16 Studio #178 condition 5 amended: the 12-face base reaches Ready before the shot, so the PR split buys nothing. One PR; native-auto-start stays on the 12-face fixture; the wait-for-terminal red is witnessed once by a logged 5/5 run on a generated heavy scratch fixture (not committed: a heavy corpus fixture costs every gate and nightly, and its red is host-speed dependent). If no size reds, ship without the red, stated in the PR.
