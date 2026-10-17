@@ -1,6 +1,6 @@
 # Chief of staff state
 
-Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, source code, or nonpublic employer/customer details. Keep only live operational obligations; repos and decisions.md hold the history.
+Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, source code, or nonpublic employer/customer details. Keep only live operational obligations; repos hold the history.
 
 ## Coordination
 
@@ -46,7 +46,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
 - `cos-remove-t3-desktop-1` (Sol, 20:29): uninstall T3 desktop app (Tobias: never uses it); keep t3code.service untouched.
 - `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it. 20:31: build sat 9+ min in the interactive lease queue behind 6 agent waiters; steered to requeue with --class gate (Tobias waiting). Rule until heavy-lease has a human-waiting class: builds Tobias waits on use --class gate.
-- `cos-drop-decisions-log-1` (Sol): delete decisions.md (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
+- `cos-drop-decisions-log-1` (Sol): delete the CoS decision log (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
