@@ -8,6 +8,7 @@ Context engineering controls what the model sees at each inference. The **workin
 - Stored knowledge needs a retrieval route that fires before the decision. When improving an agent setup, inspect active instructions and triggers, not just reference notes.
 - Advertised context size is not usable size. Retrieval, multi-hop reasoning, and aggregation degrade before the window fills, and cached tokens still occupy attention.
 - Even a short irrelevant rule can constrain judgment. Optimize for useful information, not minimum tokens or maximum procedure.
+- Tobias prioritizes prefix caching (2026-10-11). Confirm context changes using actual prefix-cache usage and whole-task cost per successful result, separating warm-up from steady long runs. Neither a 97% cache hit rate nor fewer visible tokens alone proves a win; count cache churn, compaction and output too.
 
 ## State tiers
 

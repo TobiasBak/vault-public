@@ -1,6 +1,6 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Shape a repository for agent-only development so feedback is faster than agent thinking. Use when setting up or restructuring a repo, when agent loops feel slow, when builds, tests, CI, or platform runs dominate sessions, to find verification/CI/test bottlenecks or trace slow gates, whenever writing, reviewing, or migrating tests, and whenever writing AGENTS.md. Defines black-box-only testing, agent context, cached verdicts, always-on watchers, one-call answers, and no blind waits.
+description: Shape a repository for agent-only development. Use when setting up or restructuring a repo for agents, when a measured feedback-loop cost (build, test, CI, gate or platform run) is the selected work, when tracing slow gates, or when writing AGENTS.md.
 ---
 
 # Theodore Kaczynski Nullifier
@@ -21,10 +21,12 @@ Technology was never the problem. Waiting on it is.
 
 ## The loop
 
+The goal is PR lead time on a named product workflow, not tool latency for its own sake. This work runs beside product work, never as its precondition.
+
 1. **Measure.** Agents can't see their own time. Read the harness's session logs: model time is request to response, tool time is call to result. Split it into model, tool by class (build, test, platform, git, wait), and waiting on children or the user.
 2. **Select one outcome.** Name the consumer workflow, who uses it, observed frequency, process boundary, current cost, and removable cause. Fix the largest measured recurring cost at its owner: the CLI, cache, harness, or host tooling. Never with an instruction agents must remember. Correctness, security, and data-loss defects justify scoped fixes without a speed claim.
 3. **Check value.** Use existing evidence. A baseline and causal hypothesis can justify one or two matched screens. A migration, watcher, new enforcement system, or standalone proof program proceeds only when the screen demonstrates value. Otherwise park it; a failed screen does not justify another research program to rescue the candidate.
-4. **Measure again** on the selected workflow after the change.
+4. **Measure again** on the selected workflow after the change. Stop when a one-line edit reaches its verdict faster than a model turn, or the issue's measured target is met. Further feedback-loop work needs a new measured cost.
 - Use `<cli> trace [verdict]` to locate verification bottlenecks and critical-path deltas under the [tracing contract](references/tracing.md).
 
 ## Adopt capabilities for the outcome

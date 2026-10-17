@@ -24,6 +24,8 @@ This covers every experiment and every hill-climbing loop: prompts, skills, cont
 - **Pay for rigor only at confirm.** Use replicated arms, a hardened harness and independent review only when a scout shows an effect large enough to matter. Real-session measurement after a reversible settings change often confirms more cheaply than a benchmark.
 - The slow part is harness building and review rounds, not runs. The 12-run comparison finished quickly; the checkpoint trial's six hardening reviews did not.
 
+Subscription-backed benchmarks have no artificial dollar cap (Tobias, 2026-10-11). Label API-equivalent costs as estimates, not spend; still bound runs and respect quota. This grants no paid-API spending authority.
+
 Correctness, safety, and integrity are hard gates applied before optimization. Keep score, cost, latency, complexity, and reliability as separate numbers unless a combined scalar means something. When gains are equal, prefer the simpler candidate. Refresh baselines after any protocol change.
 
 **Fits** when trials are cheap and repeatable, changes are isolated and reversible, feedback is automatic and hard to game, noise is measurable, and gains can be checked on held-out cases. Good targets include performance, skills and prompts, retrieval policy, orchestration, and compiler or DB config. **Weak** when feedback is subjective, delayed, sparse, unsafe, or easy to Goodhart.

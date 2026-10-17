@@ -1,4 +1,4 @@
 interface:
   display_name: "Theodore Kaczynski Nullifier"
-  short_description: "Find verification/CI/test bottlenecks and trace slow gates"
-  default_prompt: "Use $theodore-kaczynski-nullifier to measure where this repo's agent loop spends time, find verification/CI/test bottlenecks, trace slow gates, and reshape it so the agent, not the tools, is the bottleneck."
+  short_description: "Agent repo setup, selected feedback-loop costs and slow gates"
+  default_prompt: "Use $theodore-kaczynski-nullifier when setting up or restructuring a repo for agents, when a measured build, test, CI, gate or platform-run cost is the selected work, when tracing slow gates, or when writing AGENTS.md. Target PR lead time on a named product workflow, beside product work. Stop at the measured target or when a one-line edit reaches its verdict faster than a model turn."

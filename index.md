@@ -48,13 +48,15 @@ Not exhaustive. Search with `rg`.
 - [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats, Access with Worker destinations
 - [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, free-plan pausing and restore
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
+- [software/t3-code-operations.md](software/t3-code-operations.md): thread/workspace mechanics, secret ownership, webhook setup, Connect and safe restarts
+- [software/omarchy-agent-operations.md](software/omarchy-agent-operations.md): package installation, privilege and unprivileged `/proc` safety checks
 - [software/omarchy-windows-vm.md](software/omarchy-windows-vm.md): agent use of Tobias's local Windows VM: the `win-vm` CLI (SSH, in-session GUI, UIA, screenshots), lifecycle ownership, guest bootstrap, getting files in
 
 ## Global skills (`skills/`)
 
 All model-invoked; agents select relevant skills automatically:
 - `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- `theodore-kaczynski-nullifier`: shape repos so agent feedback outruns agent thinking; black-box-only tests, cached verdicts, always-on watchers, [verification tracing](skills/theodore-kaczynski-nullifier/references/tracing.md)
+- `theodore-kaczynski-nullifier`: agent-repo setup, selected measured feedback-loop costs, slow-gate tracing and AGENTS.md; improve product PR lead time, then stop ([tracing](skills/theodore-kaczynski-nullifier/references/tracing.md))
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
 - `unslop`: concise, natural prose

@@ -7,7 +7,7 @@ For cloud-served coding agents, buy local build capacity, not an AI accelerator.
 - Separate model latency, gate execution and admission waiting. Preserve workload, compiler version, cache state, concurrency, process boundary and errors beside every measurement.
 - Cargo's [timings report](https://doc.rust-lang.org/cargo/reference/timings.html) distinguishes units waiting for CPU slots from units blocked by dependencies. Its active-unit graph excludes parallelism inside rustc.
 - Measure whole gate process trees or cgroups, not one rustc or parent shell. Include VM reservations and other gates. Summed process RSS can double-count shared pages.
-- Use available memory, pressure and active paging, not low Linux free memory or historical swap occupancy alone. Worktrees mostly cost disk until their tools run.
+- Use available memory, pressure and active paging, not low Linux free memory or historical swap occupancy alone. Reclaimable cache isn't unavailable RAM; repair guards that count it as such while retaining every ancestor's genuine nonreclaimable budget. Worktrees mostly cost disk until their tools run.
 - Passive samples can reveal contention, but cannot establish clean-build time, sustained cooling limits or an upgrade speedup.
 
 ## What to buy
@@ -34,6 +34,8 @@ For cloud-served coding agents, buy local build capacity, not an AI accelerator.
 - Remote rental can absorb bursts. Include transfer/setup latency, cache persistence, confidential-source handling and idle billing. No local hardware purchase is required to evaluate that option.
 
 ## Make extra machines execute work
+
+Move work through Git, never by copying live worktrees or T3 state (Tobias, 2026-10-11). Commit and push all source state, using WIP branches for dirty work; put handoffs in the owning repos and the restart plan in CoS state. Start fresh threads on the destination. Copy only data Git cannot hold, as cold backups.
 
 Keep a whole team's agents, worktrees, gates and caches on its chosen host when the harness supports separate environments. T3's [remote-access documentation](https://github.com/pingdotgg/t3code/blob/05e4f888a0d8591c790d036140080092cf024d30/docs/user/remote-access.md) describes this ownership and new-thread balancing, not gate reservations. Confirm installed capabilities before relying on upstream features.
 
