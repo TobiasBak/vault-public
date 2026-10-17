@@ -853,3 +853,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 17:50 orderready #259 (#252 load-immune budgets) merged as 7b012795 at exact head be52aeb1. Gate and review succeeded on the head, and the review names every GO'd protected path. BEFORE, AFTER and DELAY qualified in the real environment with no budget changes. Follow-up #260 (stray build descendants). Now unblocked: orderready #253 --class adoption (verdict and budgets have both landed in tools/or) and dotfiles #40 slot increase.
 
 - 2026-10-17 17:51 Launched two Sol leads now that #259 is unblocked: orderready#253 class adoption (mcp:9e26396d, brief j.txt, worktree issue-253-lease-classes from origin/main) and dotfiles#40 pool size (mcp:97cfdfd4, brief k.txt, measure first, go_request before any POOL_SIZE edit).
+
+- 2026-10-17 17:55 #253 GO: verification.rs (gate env on its two captured-child branches) and promotion.rs (gate wrapper only, weight 4). tools/or unchanged, no test or receipt changes; diff-selected test plus the normal gate. Stale nightly unit invoking a removed command: issue only.
