@@ -45,7 +45,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - #124 remains open until a failing nightly files a report; #188 cold-cache `--try` gap is low priority. Resize-delta fidelity gap and widget-id shift/480 px-space follow-up still need disposition; no issue numbers recorded.
 
 ## CoS children in flight
-- `cos-or-alloc-diag-1` (20:59, Sol): RP2XL import "fixed operation 20 leaves no slot for <raw id>"; diagnose + file issues; relay plainly to Tobias.
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
@@ -64,6 +63,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
+- Asked 21:03: routing conflict on one part (RP2XL: T2 fixed laser route vs needed Sav) — fail whole order (today, same as OIP) or blocked per-part preview the user fixes? Rec: blocked per-part preview, never silent skip. Send ruling to Import lead; issues #274/#275 filed.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
