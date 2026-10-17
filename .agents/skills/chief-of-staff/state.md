@@ -14,12 +14,14 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
+- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) 20:59: #270 → #269 → parity checklist (send it the audit issue + Tobias priority). Only live Opus team (quota max 1).
+- #265 lead: #273 (cause 1) pr-merge refused, stale vs #271 → rebase+regate; cause 2 case split GO'd 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
 ### orderready (T3 project mcp:e9b15f49-8281-4ab3-97fd-958e235a97e6, private)
 
-- Sol product leads, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), [#183 then #232](t3-thread://v1/mcp:db96fb05-07cd-4b6e-9d05-8097ee8c4817) (#183 MERGED as PR #264 → c17d4859; #232 in progress), from origin/main. GUI #269 Maskiner permission + #270 Tilbage/Søg kunde dropdown (Tobias 2026-10-17, first in line) then #218/#221/#225/#228/#234/#238/#239/#242/#244 wait for Studio #190's Opus UI turn; census ready count includes blocked issues.
+- Sol product leads, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), #183/#232 done+settled 20:59 (#183 MERGED as PR #264 → c17d4859; #232 in progress), from origin/main. GUI #269 Maskiner permission + #270 Tilbage/Søg kunde dropdown (Tobias 2026-10-17, first in line) then #218/#221/#225/#228/#234/#238/#239/#242/#244 wait for Studio #190's Opus UI turn; census ready count includes blocked issues.
 - Infra lead [#265 GUI case spurious blocks](t3-thread://v1/mcp:195068c7-d2e9-4a30-8f48-71c385be892a), Sol, brief r: fix the /proc parser first, then attribute application-shell; budget/case changes need a go. Only orderready infra team. Next: #268 xtask memory admission false-blocks on reclaimable cache (Tobias: make sure it gets fixed), queued to this lead 20:42.
 - #138: [lead](t3-thread://v1/mcp:2d4cc779-09d9-4a10-887c-d4f16c0ff94e) still owes closure reply and forwarding 4537dd47 to #62; settle after reply. Follow-ups #140 qualification, #145 wording. #91 criterion 7 remains parked in #62/#63, though both are later recorded closed; disposition unclear.
 - [Windows GUI qualification #185→#77/#83](t3-thread://v1/mcp:a999a9cd-5c95-4d7f-887f-8c30e8b14f11): use promotion qualification's Windows obligations, not retired nightly.rs. Close obsolete #80 as superseded; old nightly budget is void, new budget needs an ask. GO'd cfg(windows)-only xtask→windows-interop leaf edge and safe Job/keyboard/session wrappers; close via pid-verified UIA WindowPattern.Close.
@@ -39,10 +41,11 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
 - Tobias 2026-10-17: v1 is done after #190; park #113, #183, #188, #191–#193, #124 (open, no team); stop and settle the team after #190 merges.
-- [UI lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7): #190 resumed 18:15: geometry re-pinned to deffaf8f (Studio 0910ebe on main c6dd990), Opus implementer `studio-190-ui-impl-1` running; lead reviews, then merge_ready. Picks: #164 muted depth number on capped rows only; Refusals tree filter, collapsible per-type counts, eye always visible on hidden rows; defer x-ray. #194 already merged #164/#189; which picks remain is unclear.
+- Studio v1 DONE 20:59 (#196 merged b3ec7ae; #1 outcome posted; rest parked, no team). Lead settled.
 - #124 remains open until a failing nightly files a report; #188 cold-cache `--try` gap is low priority. Resize-delta fidelity gap and widget-id shift/480 px-space follow-up still need disposition; no issue numbers recorded.
 
 ## CoS children in flight
+- `cos-or-alloc-diag-1` (20:59, Sol): RP2XL import "fixed operation 20 leaves no slot for <raw id>"; diagnose + file issues; relay plainly to Tobias.
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
