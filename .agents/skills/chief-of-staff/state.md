@@ -8,7 +8,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Routing: leads and children on Pi Sol 6.1 high; UI leads on Opus 5.5 high (studio, orderready#79). Policy lives in dotfiles `agents/AGENTS.md`.
 - No dedicated Monitor/AX/mailbox test environments (Tobias, 2026-10-14): nightlies run on fakes and target staging; Tobias deploys staging by hand and tests real environments on weekends.
 - Delivery model (Tobias, 2026-10-14, permanent): PR→main on fast check + touched tests + no new failures vs main; full suite nightly on main→staging; green nightlies auto-promote main to staging; only Tobias touches production; infra runs beside product; product gates get the heavy slot first.
-- Private repos may hold customer names and customer-derived content (Tobias, 2026-10-14). Public repos and the vault may not.
+- Private repos may hold customer names and customer-derived content (Tobias, 2026-10-14). Public repos and the vault may not. Orderready will never be public (Tobias, 2026-10-17); #99/#81 closed.
 - Census heartbeat: `scheduled-task:command:mcp:534c308f-ba1f-4c9e-a41d-995dceb4e574:schedule-task:cos-census-heartbeat-d41aa0f0`, every 30 min, bound to the CoS thread. A successor recreates it bound to itself and deletes the old one.
 - Tobias 2026-10-17: Two Opus UI teams allowed while every quota window <40%; keep the 60% stop. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
@@ -38,6 +38,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
 
+- Tobias 2026-10-17: v1 is done after #190; park #113, #183, #188, #191–#193, #124 (open, no team); stop and settle the team after #190 merges.
 - [UI lead](t3-thread://v1/mcp:7ceb210a-d7b1-41bd-9ebd-51026526c1e7): #190 resumed 18:15: geometry re-pinned to deffaf8f (Studio 0910ebe on main c6dd990), Opus implementer `studio-190-ui-impl-1` running; lead reviews, then merge_ready. Picks: #164 muted depth number on capped rows only; Refusals tree filter, collapsible per-type counts, eye always visible on hidden rows; defer x-ray. #194 already merged #164/#189; which picks remain is unclear.
 - #124 remains open until a failing nightly files a report; #188 cold-cache `--try` gap is low priority. Resize-delta fidelity gap and widget-id shift/480 px-space follow-up still need disposition; no issue numbers recorded.
 
@@ -59,8 +60,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
-- Orderready #99/#81: "protected fixture names" = customer identifiers in orderready test fixtures; only matters if the repo goes public (private repos may hold them, Tobias 2026-10-14). Asked 20:35 whether orderready will ever be public; recommend closing #99/#81 if not.
-- Studio scope: asked 20:35 whether to call v1 done after #190 and park the polish issues (#113, #183, #188, #191–#193, #124); my recommendation is yes.
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
 ## Watch
