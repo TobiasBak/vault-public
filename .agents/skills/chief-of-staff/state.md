@@ -55,6 +55,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
 - #278 dist lead mcp:d1f4740d (Sol, issue-278-distribution, 23:0x): Tobias GO on all 3 recs (new IDs/feeds no migration, additive links on downloads.web.app, Authenticode later: ships UNSIGNED, cert = backlog #279); Hedema/Larsbroe out of scope. Protected GO given 23:1x (feeds/IDs/tests, signing off-by-default, fail-closed legacy-API guard). Open: shared-vs-isolated platform service+registry → asked lead what registry is, then Tobias. No prod writes.
+- #283 GUI load flake (close-flow/configuration) → #265 lead; Import lead got 1x invalidate of 4 keys 23:4x, refail = stop.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
