@@ -51,8 +51,10 @@ Compare delivered, usable configurations: VAT/import costs, delivery, missing pa
 
 For always-on boxes, annual kWh is `(idle watts × annual idle hours + load watts × annual load hours) / 1000`. Multiply by the actual delivered tariff. Use measured wall power and explicit operating assumptions; cheap enterprise hardware can lose on idle energy and noise.
 
-Use permitted price-history evidence rather than a seller's crossed-out price. Collection and retention need their own rights basis; native alerts do not grant one. Separate new, refurbished and private-used baselines. Require both an approved capacity/price ceiling and evidence of a market discount. Missing history or compatibility produces a research lead, not a buy alert.
+Research public shops, price-comparison and price-history sites, public used marketplaces and vendor specifications. Use price history rather than a seller's crossed-out price. Separate new, refurbished and private-used baselines. Require both an approved capacity/price ceiling and evidence of a market discount. Missing history or compatibility produces a research lead, not a buy alert.
 
-Use authorised APIs/feeds or native notifications. Unknown automation terms are not permission; robots.txt alone is not consent. Recheck stock and permissions before recommending a purchase. Never bypass access controls or purchase approval. For Tobias's submitted offers, use [hardware-deal-check](../skills/hardware-deal-check/SKILL.md); it owns the offline boundary and his price ceilings.
+Use [hardware-deal-check](../skills/hardware-deal-check/SKILL.md) to find and assess offers delivered in Denmark; it owns Tobias's price ceilings, arithmetic and research limits. Recheck stock, price and delivery before recommending a purchase. Never bypass captchas, paywalls or access controls, log into accounts, contact sellers, buy, bid or reserve. Every purchase needs Tobias's explicit approval. Keep private sellers' personal details and private-listing URLs in the in-session report, never in tracked files; do not maintain vault price databases or histories.
+
+Reject Macs for development. Consider a Mac as a CI box only when a project needs macOS verdicts. Apple Silicon's ARM VMs do not supply the required x86 Omarchy/Wayland and Windows environments.
 
 See [the feedback-loop skill](../skills/theodore-kaczynski-nullifier/SKILL.md) for cache/watcher ownership and [the Windows VM note](../software/omarchy-windows-vm.md) for VM memory and lifecycle constraints.

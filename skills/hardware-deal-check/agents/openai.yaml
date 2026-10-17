@@ -1,4 +1,4 @@
 interface:
   display_name: "Hardware deal check"
-  short_description: "Assess submitted hardware facts for a Danish deal"
-  default_prompt: "Use $hardware-deal-check to assess only the minimal hardware facts Tobias submits for this assessment. Check suitability, complete landed DKK, approved ceilings and discount evidence without fetching sites, opening URLs, ingesting mail, retaining records or taking external actions. Return the fixed verdict for Tobias's review, never purchase approval."
+  short_description: "Find and assess hardware deals delivered in Denmark"
+  default_prompt: "Use $hardware-deal-check to find and assess new or used development-hardware deals delivered in Denmark. Research public shops, marketplaces, vendor specifications and price history. Check suitability, complete landed DKK, approved ceilings and discount evidence. Follow the skill's privacy and access limits; never log into accounts, contact sellers, buy, bid or reserve. Return sourced candidates and the fixed verdict for Tobias's review, never purchase approval."

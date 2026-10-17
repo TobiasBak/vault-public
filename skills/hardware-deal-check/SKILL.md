@@ -1,23 +1,25 @@
 ---
 name: hardware-deal-check
-description: Assess new or used development hardware, discounts and offers deliverable in Denmark using only facts Tobias submits for this assessment. Use when Tobias asks whether a submitted hardware offer is suitable or a genuine deal.
+description: Find and assess new or used development hardware deliverable in Denmark. Use when Tobias asks to search for hardware deals, compare offers or check whether a specific offer is suitable or genuinely discounted.
 ---
 
 # Hardware deal check
 
-## Offline boundary
+## Discovery and limits
 
-Assess only minimal facts Tobias submits for THIS assessment. Discovery and native DBA/eBay alerts stay with him. Do not fetch or open sites or URLs, ingest a mailbox, email bodies, copied listing content or seller personal details, or build API adapters. Do not create history files, logs, datasets or databases, schedule work, contact sellers, bid, reserve or buy. Do not pursue retention rights as part of this skill.
+Actively search public shops, price-comparison and price-history sites, and public used marketplaces. Start with PriceRunner DK, Proshop, Komplett, Computersalg, Elgiganten, Power, DBA and eBay; include reputable EU shops that deliver to Denmark. Read the exact public listing and vendor specification pages. Research missing facts before asking Tobias, and use independently found price history as discount evidence.
 
-Ask for missing factual fields, not raw content. If prohibited material arrives, do not process or repeat it; ask Tobias for the minimal facts instead. Keep private listings, sellers, URLs and their examples out of tracked notes and this skill. Identify a candidate only by an approved hardware type, exact CPU, capacity and condition, not a listing identifier.
+Never buy, bid, reserve, contact sellers or log into Tobias's accounts. Every purchase requires his explicit approval; a ceiling or review verdict is not approval. Never bypass captchas, paywalls or access controls. If a source blocks access, report the gap and try another public source.
 
-Cloud-model context is not zero-retention. Do not promise to delete host or provider transcripts, or claim the submission grants platform processing or storage rights. Keep the assessment in the current reply; do not retain a separate record. A ceiling or review verdict never authorizes a purchase. Every purchase requires Tobias's explicit approval.
+Keep private sellers' personal details and private-listing URLs only in the in-session report, never in the vault or any tracked file. Do not create price databases or history files in the vault. Keep deal results in the current report rather than maintaining a vault price record. Do not ingest mail or schedule recurring sweeps unless separately requested. Cloud-model context is not zero-retention; do not promise deletion of host or provider transcripts.
+
+Record the observation date and source links in the report. Separate fetched evidence, Tobias's supplied facts and assumptions. Unavailable evidence stays unknown.
 
 ## Target and ceilings
 
 The target is a second Omarchy PC running full autonomous T3 teams, controlled from the existing PC. Keep Intel Core Ultra 9 285K AND AMD Ryzen 9 9950X shortlisted, default to 128GB RAM / 2TB local NVMe, and wait for a deal. Intel Core Ultra 7 265K and AMD Ryzen AI Max+ 395 are watch-only. The 395 is AMD, not Intel. Do not promote watch-only types without Tobias's choice.
 
-Reject Macs for development. A Mac mini belongs only to an explicitly approved narrow use, never the default candidate; this table gives it no ceiling. Cloud-served models justify no GPU/NPU inference premium.
+Reject Macs for development. Do not recommend a Mac mini as a CI box unless a project needs macOS verdicts: the required x86 Linux (Omarchy, Wayland) and Windows verdicts are not supplied by its ARM VMs. This table gives Macs no ceiling. Cloud-served models justify no GPU/NPU inference premium.
 
 Tobias's willingness-to-pay choices, 2026-10-13; not benchmark-derived or proof of a discount
 
@@ -36,13 +38,13 @@ The P620 used ceiling is before the extra operating-cost adjustment below. A 64G
 
 ## Hard filters
 
-Separate submitted evidence, known failures and unknowns. An unknown fact stays unknown, never zero or an inferred pass. Require:
+Separate sourced evidence, known failures and unknowns. An unknown fact stays unknown, never zero or an inferred pass. Require:
 
 - Exact CPU and variant, installed RAM, usable Linux RAM after GPU carve-out, and host/VM/team headroom. Check DIMM type, population, trained speed and supported configuration. Distinguish soldered capacity limits from verified replaceable-memory upgrades. A maximum supported capacity is not installed RAM.
 - At least 2TB local NVMe, complete case, PSU and sustained CPU/chassis cooling. Include required console, mains/display cables and adapters. Confirm a working wired path of at least 2.5GbE, including needed NIC, switch ports and cabling.
-- Exact board/NIC, Omarchy kernel and firmware compatibility, and submitted qualification of the required native UI/display and KVM/guest paths. Vendor Linux support, a Windows driver fix or Xvfb alone does not prove those paths. Full-team operation needs demonstrated host-owned admission and sufficient usable RAM, not an advertised core count.
+- Exact board/NIC, Omarchy kernel and firmware compatibility, and qualification evidence for the required native UI/display and KVM/guest paths. Vendor Linux support, a Windows driver fix or Xvfb alone does not prove those paths. Full-team operation needs demonstrated host-owned admission and sufficient usable RAM, not an advertised core count.
 - Sustained power, cooling and noise evidence at the intended setting. Label workload, duration, wall-power boundary and acoustic conditions; a different variant or workload leaves limits. TDP, boost clocks, a PSU rating or a seller's quiet label is not evidence.
-- Exact selected-variant stock, observation date, Denmark delivery and complete VAT treatment. Distinguish preorder, family availability and selectable options from submitted stock evidence. Establish actual consumer/business buyer status, warranty, defect/return rights and return costs; do not assume consumer rights for a business purchase.
+- Exact selected-variant stock, observation date, Denmark delivery and complete VAT treatment. Distinguish preorder, family availability and selectable options from verified selected-variant stock evidence. Establish actual consumer/business buyer status, warranty, defect/return rights and return costs; do not assume consumer rights for a business purchase.
 - For used systems, condition and SSD model/health. For ECC claims, CPU/board/firmware/DIMMs and Linux correction reporting, plus populated channels. On-die ECC alone is not system ECC.
 - Funds for the complete usable system and every required addition. Add a Windows licence only if this new box actually hosts a separate Windows guest and no valid applicable licence is stated. If licence need or entitlement is unclear, ask. Do not assume an OEM host licence covers the guest or impose a fixed retailer price.
 
@@ -52,7 +54,7 @@ Use transparent arithmetic, not a new script:
 
 `landed DKK = item with correct VAT + shipping + payment/FX fees + import costs + required parts/accessories/software + required network/cooling additions`
 
-Convert foreign-currency components only with Tobias's submitted FX rate and date. Use only submitted delivery facts. Never add VAT twice to a gross price, automatically deduct VAT on used-margin goods, assume tax recovery or rely on false customs declarations. Show each component, currency and VAT basis. Explicitly submitted zero or not-required costs are valid; unknown costs are not. An incomplete total is only a known subtotal, not a landed price.
+Convert foreign-currency components with a sourced FX rate and date or Tobias's supplied rate; include payment-provider FX fees separately. Verify Denmark delivery and shipping from public shop terms or the selected listing. Never add VAT twice to a gross price, automatically deduct VAT on used-margin goods, assume tax recovery or rely on false customs declarations. Show each component, currency and VAT basis. Explicitly evidenced zero or not-required costs are valid; unknown costs are not. An incomplete total is only a known subtotal, not a landed price.
 
 ## Electricity adjustment
 
@@ -68,13 +70,13 @@ H is Tobias's submitted ownership horizon in years. Tariff, duty cycle and refer
 
 ## Discount evidence
 
-No submitted history means `discount_unproven`, even below the ceiling. MSRP, crossed-out prices and an old quote do not establish a market discount. Do not invent a 90-day baseline or treat the prior proposed 20% rule as Tobias's approved contract.
+No reliable price-history or comparable-baseline evidence means `discount_unproven`, even below the ceiling. MSRP, crossed-out prices and an old quote do not establish a market discount. Do not invent a 90-day baseline or treat the prior proposed 20% rule as Tobias's approved contract.
 
-Only if Tobias explicitly submits permitted minimal baseline facts for this assessment, compare like-for-like complete delivered variants and conditions:
+Use public price history, researched comparable offers or Tobias's supplied baseline facts to compare like-for-like complete delivered variants and conditions:
 
 `observed discount % = (comparable baseline landed DKK - candidate landed DKK) / comparable baseline landed DKK × 100`
 
-Require a positive baseline cost. Label observation dates, sample count, coverage, gaps, variant/condition and cost-basis limits. Do not fetch or retain the baseline, fill missing days or call a sparse comparison a market low. Report the observed comparison without an arbitrary hard percentage rule. If it does not support a genuine discount, keep `discount_unproven`.
+Require a positive baseline cost. Label observation dates, sample count, coverage, gaps, variant/condition and cost-basis limits. Cite the baseline source in the report; do not retain a vault history file, fill missing days or call a sparse comparison a market low. Report the observed comparison without an arbitrary hard percentage rule. If it does not support a genuine discount, keep `discount_unproven`.
 
 ## Verdict
 
@@ -82,17 +84,17 @@ Use this fixed format:
 
 - **Status:** `rejected` / `needs_information` / `discount_unproven` / `qualifies_for_Tobias_review`.
 - **Capacity tier + CPU:** minimal approved type, exact CPU, installed and usable RAM, local NVMe, new/used condition.
-- **Submitted landed cost + breakdown:** complete total or known subtotal with unknown components.
+- **Landed cost + breakdown:** complete total or known subtotal with unknown components.
 - **Ceiling including energy adjustment:** base, any evidence-backed used adjustment and result; otherwise uncomputed adjustment or no approved ceiling.
 - **Hard-filter unknowns:** failures, evidence limits and outstanding requirements.
-- **Discount basis / limits:** submitted comparison and coverage, or absent/unproven.
+- **Discount basis / limits:** sourced comparison and coverage, or absent/unproven.
 - **Exact additional facts needed:** only the missing minimal facts or Tobias choices; write “none” if complete.
 
-A known hard-filter failure or a known cost exceeding the applicable ceiling is `rejected`. Otherwise missing required facts, an unapproved tier/role or an unresolved required operating-cost adjustment is `needs_information`. Once suitability and cost are complete, absent/insufficient discount evidence is `discount_unproven`. Only a suitable, within-ceiling candidate with supported discount evidence is `qualifies_for_Tobias_review`. That last status is not purchase approval. Ask Tobias to submit refreshed stock, price and delivery facts before any purchase decision, never recheck externally.
+A known hard-filter failure or a known cost exceeding the applicable ceiling is `rejected`. Otherwise missing required facts, an unapproved tier/role or an unresolved required operating-cost adjustment is `needs_information`. Once suitability and cost are complete, absent/insufficient discount evidence is `discount_unproven`. Only a suitable, within-ceiling candidate with supported discount evidence is `qualifies_for_Tobias_review`. That last status is not purchase approval. Recheck public stock, price and Denmark delivery before a purchase recommendation; ask Tobias only for facts or choices that public research cannot establish.
 
 ## Verification
 
-Dry-run the procedure with synthetic minimal facts only, without assessment-time fetches, file writes, schedules or external actions. Inspect the actual actions taken, not just the claimed offline intent. No script or retained fixture is needed.
+For discovery, inspect public listings and vendor specifications, cite current price and delivery evidence, and leave blocked or missing facts unknown. Confirm that no account access, seller contact or purchasing action occurred and that no private-listing URLs or seller personal details entered tracked files. No script or retained fixture is needed. Dry-run the assessment logic with these synthetic facts:
 
 1. A complete, qualified 128GB / 2TB 9950X new system at 20,000 landed DKK, with all cost components explicit and no history, returns `discount_unproven`, not purchase approval.
 2. The same facts with unknown Denmark shipping return `needs_information`. Show the known subtotal and unknown shipping, never zero shipping.

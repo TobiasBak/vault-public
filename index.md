@@ -56,7 +56,7 @@ All model-invoked; agents select relevant skills automatically:
 - `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
 - `theodore-kaczynski-nullifier`: shape repos so agent feedback outruns agent thinking; black-box-only tests, cached verdicts, always-on watchers, [verification tracing](skills/theodore-kaczynski-nullifier/references/tracing.md)
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
-- [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): assess Tobias's submitted development-hardware facts offline against his delivered-price ceilings
+- [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
 - `unslop`: concise, natural prose
 - `domain-modeling` (Matt Pocock): glossary and ADRs
 - `grilling` (Matt Pocock): stress-test a plan by interview
