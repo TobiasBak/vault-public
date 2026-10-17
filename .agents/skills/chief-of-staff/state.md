@@ -45,7 +45,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
-- [dotfiles#40 pool size](t3-thread://v1/mcp:97cfdfd4-2daf-4d84-a35b-22dc23ca81e7), Sol, brief k: measure-only GO, private pool under outer lease; solo contract deferred until a win. Restarted after handoff killed its run. orderready #262 follow-up remains open.
+- dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead mcp:97cfdfd4 to settle after its final turn.
 - Hardware-deals thread mcp:f562cb73 is a settle candidate; result already relayed, no work remains.
 
 ## Holds
