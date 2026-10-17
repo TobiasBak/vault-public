@@ -14,7 +14,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
-- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b): Tobias 21:02: full Import page REDESIGN, "way better", not parity; old-app features must exist; real Gemini on RP2XL OK (few calls); #270 folded in, #269 separate; Tobias 21:09: routing-conflict part goes through BLOCKED, order continues (#275), Sol child checks gap numbers (Sav=15) + whether laser route should apply to machined parts (product q back to CoS); audit issue = feature inventory only. Only live Opus team (quota max 1).
+- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b): Tobias 21:02: full Import page REDESIGN, "way better", not parity; old-app features must exist; real Gemini on RP2XL OK (few calls); #270 folded in, #269 separate; Tobias 21:09: routing-conflict part goes through BLOCKED, order continues (#275), Sol child checks gap numbers (Sav=15) + whether laser route should apply to machined parts (product q back to CoS); inventory #276 sent (62 missing; top10 order given; design+slicing in #276 first). Only live Opus team (quota max 1).
 - #265 lead: #273 (cause 1) merged 21:02 (3135c37); cause 2 case split GO'd 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
@@ -55,7 +55,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
-- `cos-or-import-parity-audit-1` (Sol, 20:52): read-only inventory of old-app import page vs GPUI (Tobias: drawing preview and options missing, too many cards); files one checklist issue for the next UI team.
 - #235 PR #267 PARKED 20:54 on #265: pre-push hook verification hits the #265 GUI contention; review clean on rebased 1ac411b4; no bypass. When #265 lands, tell lead to push normally + one `tools/or gate`.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. #87 is already launched. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
