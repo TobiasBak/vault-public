@@ -803,3 +803,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 16:05 #252: release-then-reacquire is ruled out by the lead's kernel proof. The parent gate/hooks hold copies of the lease descriptor, and when the child closed its copies 2 slots stayed held (release-descriptor-proof.json). The admission relocation is GO on the previously listed protected paths only.
 
 - 2026-10-17 15:30 Merged orderready #219 'Never block close' (2af739aa). The gate and an independent Opus review are bound to 61be771c. It closes #162/#165/#220; #221 re-scoped; #256 and #242 are follow-ups. The Opus UI slot moves to the Studio lead with the delegated picks (#164 depth number; v1 Refusals filter, per-type counts, eye always shown, x-ray deferred). The 27.04 s application-shell timeout under a parallel pre-push was passed to the #252 team.
+
+- 2026-10-17 15:35 Close-flow team DONE and settled (wall 21h14m, longest wait about 15h on Tobias's #162 ruling). Native-screens thread settled. #161 was closed by GitHub's keyword parse and has been reopened, blocked on #218. Lesson for PR bodies: write 'refs #N' for any issue that another issue will close.
