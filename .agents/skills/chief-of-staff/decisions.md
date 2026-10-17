@@ -859,3 +859,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 18:01 #253 heavy GRANT at head 0e84b492 (review no blockers): verdict, pre-push, normal gate via repo entry points. Pool idle. #262 filed (pool-validator/FD gaps, preexisting).
 - 2026-10-17 18:07 #253 MERGED as orderready #263 (f44d798c) after exact-head gate+review success (benign failure 8 s before success). Follow-ups #261, #262.
 - 2026-10-17 18:08 #253 lead DONE (closed, cleaned, metrics posted); settled.
+- 2026-10-17 18:12 dotfiles#40 was stuck: t3_worktree_handoff killed run 1 (provider stream closed) and the continuation run sat queued for 20 min. Census was silent about it: GAP, it misses a queued run with no active run behind a failed one. Cancelled the queue and restarted with the context restated. Quota reset (0%): resumed the Studio Opus lead on #190 (re-pin deffaf8f).
