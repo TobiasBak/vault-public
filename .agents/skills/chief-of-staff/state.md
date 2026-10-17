@@ -31,7 +31,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
 - [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: junctions with proved tolerance-bounded displacement are measured with per-channel error terms, otherwise refused; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
-- [#102 red main](t3-thread://v1/mcp:17072b56-c5ed-4159-b994-b17455108c0c), Sol, brief n: GO'd descriptor-loss fix at 4 case_runner sites plus byte-race fixture driver plumbing only.
 - #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60 needs value checks; #61 decided 2026-10-17 (versioned dedup format), ready. #90/#78 remain in start-later list; #87 policy is decided.
 - Follow-ups #83/#85 from #68; #93 wall time on 5 faces. #89 decided 2026-10-17 (literal faces get budget priority); ready. #76 trial hardening/rerun obligation is under CoS children.
 - #75: check first nightly result; no result recorded here. Theodore verification-tracing contract: pilot in one repo beside product work still pending.
