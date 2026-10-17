@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Live teams
 - Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #269 GOs 21:13/21:40, platform #8 merged (6149aac), orderready side building; routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable.
-- #265 lead: #273+#277 merged (21:59, 60ab33e); closing #265, then #268 fresh checkout.
+- #265 lead: #273+#277 merged (21:59, 60ab33e); #265 closed. #268 GO 22:07 (retire xtask local memory check; heavy-lease sole owner; CI unchanged) after #235 classification.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
