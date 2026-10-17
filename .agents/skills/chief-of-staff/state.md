@@ -30,7 +30,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
 - [#67 ribbon reuse](t3-thread://v1/mcp:b4fa9c4d-2446-4905-80d2-5939a53773ac), Sol: `issue-67-ribbon` from `issue-67-resume` ca941ab, brief l.
-- [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: exact touch is measured through a certified literal-tangent path; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
+- [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: junctions with proved tolerance-bounded displacement are measured with per-channel error terms, otherwise refused; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
 - [#102 red main](t3-thread://v1/mcp:17072b56-c5ed-4159-b994-b17455108c0c), Sol, brief n: GO'd descriptor-loss fix at 4 case_runner sites plus byte-race fixture driver plumbing only.
 - #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60/#61 need value checks. #90/#78 remain in start-later list; #87 policy is decided.
 - Follow-ups #83/#85 from #68; #93 wall time on 5 faces. #89 remains under Needs Tobias. #76 trial hardening/rerun obligation is under CoS children.
