@@ -763,3 +763,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 13:15 Tobias rejected the offline-only hardware-deal-check boundary; he wants agents to hunt deals. Launched a Sol lead to rewrite the skill (keeping no-purchase, no seller contact, no logins, no private seller data in the public vault, and his ceilings unchanged), then run one Denmark sweep. The previous boundary had been his own earlier choice; the new instruction supersedes it.
 
 - 2026-10-17 13:40 GO (protected surface, existing test): #241 extends xtask/tests/gate.rs pr_required/assert_selected_proof with explicit, exact expected fast-test lists. The old helper excluded every test:* job, which contradicts the issue's owning-package fast tests. All other checks stay unchanged; separate commit; the review names the full path.
+
+- 2026-10-17 13:55 GO (protected surface, existing test fixture): #241 adds an additive touch of corpus/gui/linux-wam-probe/requests.json in gate.rs given_production_proofs. The transitive closure now claims 101 of 102 cases, so the fixture keeps the existing full-case expectations exact. No assertion changes.
