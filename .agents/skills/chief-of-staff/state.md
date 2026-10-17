@@ -52,7 +52,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Holds
 
-- Tobias 2026-10-17: hands-on orderready runs for him always use real Gemini (key `~/.keys/gemini.env`, copied from old disk OIP .env); Monitor/AX stay fake. Relaunch child `cos-or-try-gui-gemini-1` (Sol, 20:51) also files the one-command `tools/or dev` issue.
+- Tobias 2026-10-17: hands-on orderready runs for him start already signed in as the fixture user and always use real Gemini (key `~/.keys/gemini.env`, copied from old disk OIP .env); Monitor/AX stay fake. Relaunch child `cos-or-try-gui-gemini-1` (Sol, 20:51) also files the one-command `tools/or dev` issue.
 - `cos-or-import-parity-audit-1` (Sol, 20:52): read-only inventory of old-app import page vs GPUI (Tobias: drawing preview and options missing, too many cards); files one checklist issue for the next UI team.
 - #235 PR #267 20:52: told lead to push rebased 1ac411b4, review, one `tools/or gate`; if the 12 GUI cases block again → witness to #265, report blocked.
 - Orderready GPUI on Tobias desktop (first launch was full fakes; login fixture-worker / fixture-password-not-real; stop `kill -TERM 73849`; logs ~/.cache/agent-tmp/or-try-gui/). `tools/or dev` still targets Tauri; GUI builds Tobias waits on use `--class gate`.
