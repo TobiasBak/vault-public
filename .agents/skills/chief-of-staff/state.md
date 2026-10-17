@@ -33,7 +33,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
-- [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: junctions with proved tolerance-bounded displacement are measured with per-channel error terms, otherwise refused; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
+- [#87 lead](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7): PR #106 merged 21:23 (d070a1d); closing #87 + settling; then settle lead. #90/#78 stay open.
 - #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60 needs value checks; #61 decided 2026-10-17 (versioned dedup format), ready. #90/#78 remain in start-later list; #87 policy is decided.
 - Follow-ups #83/#85 from #68; #93 wall time on 5 faces. #89 decided 2026-10-17 (literal faces get budget priority); ready. #76 trial hardening/rerun obligation is under CoS children.
 - #75: check first nightly result; no result recorded here. Theodore verification-tracing contract: pilot in one repo beside product work still pending.
@@ -57,7 +57,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
 - #235 PR #267 PARKED 20:54 on #265: pre-push hook verification hits the #265 GUI contention; review clean on rebased 1ac411b4; no bypass. When #265 lands, tell lead to push normally + one `tools/or gate`.
 
-- Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. #87 is already launched. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
+- Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
