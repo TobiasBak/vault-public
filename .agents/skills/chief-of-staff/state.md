@@ -46,7 +46,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## CoS children in flight
 - `cos-or-dist-plan-1` (22:37, Sol, read-only): Tobias: Rust GUI + mailbox automation downloadable as separate links on orderready DNS, auto-update works, old installs untouched. Files issue + design + Tobias decisions; relay in morning.
 
-- `cos-disk-cleanup-1`: 83%→77% (79 worktrees, pnpm); steered 22:11 (Tobias angry): stop tiny-dir pass, rm orderready primary target + merged-wt targets + caches, top-15 consumers, recs. Relay fast.
+- Disk cleanup done 22:40: 83%→52% (895G free). Log ~/.cache/disk-cleanup-20261017/. 80 dirty old worktrees left (mostly ~/.local/share/orderready/wt/case-clock-* probes); later: CoS-delegated triage, not a Tobias ask. Tell Tobias in morning.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
@@ -55,7 +55,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
-- #235 PR #267 PARKED 22:21: even full-pool exclusive push blocked (4 GUI deadline-only, drawing-*/machines-shell-route). Suspect unleased disk-cleanup I/O; send ONE exclusive retry when cos-disk-cleanup-1 ends; then #265 lead.
+- #235 PR #267 22:40: ONE exclusive-pool retry sent after disk cleanup; if blocks → #265 lead owns, no more retries.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
