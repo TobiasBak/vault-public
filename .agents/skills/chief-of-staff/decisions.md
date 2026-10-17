@@ -858,3 +858,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 18:00 Settled the load-immune budgets lead (#252 closed by #259, worktrees and scratch cleaned, evidence archived) and all 40 finished child threads from the census. Child thread IDs for settle need the census 'thread:' prefix, URL-encoded as shown.
 - 2026-10-17 18:01 #253 heavy GRANT at head 0e84b492 (review no blockers): verdict, pre-push, normal gate via repo entry points. Pool idle. #262 filed (pool-validator/FD gaps, preexisting).
 - 2026-10-17 18:07 #253 MERGED as orderready #263 (f44d798c) after exact-head gate+review success (benign failure 8 s before success). Follow-ups #261, #262.
+- 2026-10-17 18:08 #253 lead DONE (closed, cleaned, metrics posted); settled.
