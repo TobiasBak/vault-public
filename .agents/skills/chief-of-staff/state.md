@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Live teams
 - Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #269 GOs 21:13/21:40, platform #8 merged (6149aac), orderready side building; routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable. Renumber GO 22:11 (A–E, F pre-approved by rule).
-- #265 lead: #273/#277/#282 merged (#282 f1ba2c6 = #268: heavy-lease sole local memory owner); now #283 (GUI load flake close-flow/configuration; Import lead got 1x invalidate of 4 keys, refail = stop).
+- #265 lead: #273/#277/#282 merged (#282 f1ba2c6 = #268: heavy-lease sole local memory owner); now #283 (GUI load flake; GO 23:5x: proxy EOF for unmatched cancel + bounded focusable await; Import lead got 1x invalidate of 4 keys, refail = stop).
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
