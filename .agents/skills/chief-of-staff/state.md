@@ -62,6 +62,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
+- Asked 21:20 (Import lead): (b) customer route "applies to" sheet/pipe-profile/assembly/all (default all) — rec YES, own issue; (a) live TEST-Monitor probe for gap op numbers (Sav=15) — rec skip, (b) covers the real case. Until then slice P blocks the part.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
