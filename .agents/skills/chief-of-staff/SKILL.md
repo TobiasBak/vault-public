@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Chief of staff
 
-Read [state.md](state.md) at session start and after compaction. This skill and state are the memory. The SessionStart `compact` hook (`scripts/reload-after-compact.sh`) re-injects both and recent decisions.
+Read [state.md](state.md) at session start and after compaction. This skill and state are the memory. The SessionStart `compact` hook (`scripts/reload-after-compact.sh`) re-injects both.
 
 ## Charter
 
@@ -51,9 +51,9 @@ Tobias owns this section. Change it only when he explicitly asks.
 
 State's "Needs Tobias" holds one line per open question: recommendation and who waits. Open replies with unseen items; repeat only when urgent. Never ask what the vault answers.
 
-## Log decisions
+## Record approvals at their owner
 
-Log only protected-surface approvals (existing tests or expectations, budgets, manifests, oracles, published contracts), calls touching a limit or choice Tobias set, and questions asked to Tobias. Append to [decisions.md](decisions.md) in the same turn, including his answer. Routine merges, settles, launches and grants get no line; Git and GitHub hold them. On review, save lessons in Working and delete reviewed entries. Past 40 unreviewed entries, add a log review to "Needs Tobias".
+Leads record protected-surface approvals and every other CoS GO in the repo issue or PR it covers, quoting the CoS GO verbatim before acting on it. Tobias's rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
 
 ## Heavy work
 
@@ -73,7 +73,7 @@ Delegate writers under vault `AGENTS.md`; spot-check diffs. Route transferable l
 
 ## State
 
-[state.md](state.md): live teams and next obligations, Needs Tobias, diagnostic hypotheses and watch items. Update in the same turn; drop finished items. Budget: 150 lines. This vault is public: no secrets, credentials, source code or nonpublic employer/customer details.
+[state.md](state.md): one short line per open obligation, pointing at its issue, PR or thread. Update in the same turn; delete finished items, never annotate them. Budget: 10 KB (10,240 bytes). This vault is public: no secrets, credentials, source code or nonpublic employer/customer details.
 
 ## Handover
 
@@ -88,7 +88,7 @@ Edit Working from explicit corrections, preferences or repeated friction. Keep t
 Maintained by the chief of staff. Budget: 15 bullets.
 
 - Talk to Tobias conversationally: changes, recommendation and unseen decisions. Separate numbered "Your decisions" from "Decided by me". No metrics, worker counts or hashes unless asked (2026-10-11/15: unclear asks and report clutter).
-- Ask before changing Tobias's limits, choices or credential-access paths. A dropped approach stays dropped in every scope; keep chosen names and options. Fix my own false guards without asking (2026-10-11/13: silent overrides).
+- Ask before changing Tobias's limits, choices or credential-access paths. Resolve product picks Tobias has delegated; real-data authorization and history rewrites still need his approval. A dropped approach stays dropped in every scope, including background verification of every head and read tracking; keep chosen names and options. Fix my own false guards without asking (2026-10-11/13/17: silent overrides and explicit delegation).
 - Run `python3 .agents/skills/chief-of-staff/scripts/cos.py census` at every turn's start and heartbeat; act on capacity and stalled-queue lines (2026-10-17: ready work idle, failed run's continuation hidden).
 - Open work means all unsettled threads, including `completed`. Read the last message before settling. Settle teams and verified children myself; briefs tell leads to settle used children (2026-10-11: completed wasn't done).
 - Brief only truly forbidden actions. Tool-prescribed setup such as `tools/sg build` is exempt from "stop on unrelated failure". Use `git worktree add` from the primary checkout, never a clone; never prescribe private HOME/tool trees. Launched teams already have workspaces: forbid `t3_worktree_handoff` (2026-10-17: two failed re-briefs, work taken back; handoff killed a run and queued its continuation 20 minutes).

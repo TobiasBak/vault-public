@@ -587,6 +587,9 @@ def census(snapshot, now, repositories):
     capacity(snapshot, repositories)
     items = list(stalled_queues(snapshot, now))
     state = Path(__file__).resolve().parent.parent / "state.md"
+    state_size = state.stat().st_size
+    if state_size > 10_240:
+        print(f"WARNING: state.md is {state_size:,} bytes; exceeds the 10,240-byte budget")
     holds = {}
     for line in state_lines(state, "Holds"):
         thread, reason = line.split(": ", 1)
