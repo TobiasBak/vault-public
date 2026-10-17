@@ -10,7 +10,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Delivery model (Tobias, 2026-10-14, permanent): PR→main on fast check + touched tests + no new failures vs main; full suite nightly on main→staging; green nightlies auto-promote main to staging; only Tobias touches production; infra runs beside product; product gates get the heavy slot first.
 - Private repos may hold customer names and customer-derived content (Tobias, 2026-10-14). Public repos and the vault may not. Orderready will never be public (Tobias, 2026-10-17); #99/#81 closed.
 - Census heartbeat: `scheduled-task:command:mcp:534c308f-ba1f-4c9e-a41d-995dceb4e574:schedule-task:cos-census-heartbeat-d41aa0f0`, every 30 min, bound to the CoS thread. A successor recreates it bound to itself and deletes the old one.
-- Tobias 2026-10-17: Two Opus UI teams allowed while every quota window <40%; keep the 60% stop. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
+- Tobias 2026-10-17: Opus UI teams: two while every quota window <40%, one while <60%, none at ≥60%; one Opus child per team. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
@@ -45,7 +45,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## CoS children in flight
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
-- `cos-two-opus-ui-rule-1` (Sol, 20:35): write the two-Opus-UI-teams rule (<40% two, <60% one) into its source docs/code; returns lines for SKILL/state/brief.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
