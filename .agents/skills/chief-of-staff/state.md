@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Live teams
 - Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #269 GOs 21:13/21:40, platform #8 merged (6149aac), orderready side building; routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable. Renumber GO 22:11 (A–E, F pre-approved by rule).
-- #265 lead: #273+#277 merged (21:59, 60ab33e); #265 closed. #268 GO 22:07 (retire xtask local memory check; heavy-lease sole owner; CI unchanged) after #235 classification.
+- #265 lead: #273/#277/#282 merged (#282 f1ba2c6 = #268: heavy-lease sole local memory owner); now #283 (GUI load flake close-flow/configuration; Import lead got 1x invalidate of 4 keys, refail = stop).
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
@@ -55,7 +55,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
 - #278 dist lead mcp:d1f4740d (Sol, issue-278-distribution, 23:0x): Tobias GO on all 3 recs (new IDs/feeds no migration, additive links on downloads.web.app, Authenticode later: ships UNSIGNED, cert = backlog #279); Hedema/Larsbroe out of scope. Protected GO given 23:1x (feeds/IDs/tests, signing off-by-default, fail-closed legacy-API guard). Open: shared-vs-isolated platform service+registry → asked lead what registry is, then Tobias. No prod writes.
-- #283 GUI load flake (close-flow/configuration) → #265 lead; Import lead got 1x invalidate of 4 keys 23:4x, refail = stop.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
@@ -72,4 +71,3 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
 - `mise up pi` to 1.2.0 only when `pgrep -f "installs/pi/"` is empty; then spot-check one Sol child.
 - T3 restarts kill every live run: run `cos.py restart-check` first. The T3 nightly timer updates the service; Tobias has no desktop app (removed 2026-10-17).
-- Orderready admission false-blocks on reclaimable cgroup cache (hit again 2026-10-17 20:40, freed 6.7 GB); workaround: `echo 3G > memory.reclaim` on app-t3code.slice. Fix: orderready #268.
