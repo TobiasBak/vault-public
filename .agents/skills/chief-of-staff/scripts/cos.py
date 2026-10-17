@@ -91,7 +91,7 @@ def load_data(db):
         if target == COS_THREAD_ID:
             if sender not in threads:
                 raise ValueError("A CoS report has no stored sender thread")
-            incoming[sender].append((at, classify(payload.get("text", ""))))
+            incoming[sender].append((at, report_kind(payload.get("text", ""))))
         elif sender == COS_THREAD_ID:
             if target not in threads:
                 raise ValueError("A CoS send has no stored destination thread")
@@ -183,7 +183,7 @@ def report(data, path, since, until):
     print(f"Window: [{iso(since)}, {iso(until)}) UTC")
     print(f"Source: {path} (read-only snapshot)")
     print("Durations: s=seconds, m=minutes, h=hours; p90=nearest rank.")
-    print("Kinds: PR URL + 40-hex SHA first, then Tobias decision, blocked, go request, done; keyword heuristics.")
+    print("Kinds: explicit [kind] first, then PR URL + 40-hex SHA, Tobias decision, blocked, go request, done; keyword heuristics.")
     print("\nLead messages")
     message_rows = []
     gate_rows = []
@@ -213,6 +213,13 @@ def report(data, path, since, until):
     print("This measures next-send delay, not whether the reply grants a gate or addresses the report.")
     table(("Lead", "Reports", "Delays in order"), gate_rows)
     table(("answered", "median", "p90", "max", "pending"), [(*summary(waits), pending)])
+    print("\nBlocked time: each blocked report to the lead's next run start; clipped to the window.")
+    print("Reports are summed separately; open intervals end at --until.")
+    blocked_rows = []
+    for lead in leads:
+        intervals, open_count = blocked_intervals(incoming[lead], runs[lead], since, until)
+        blocked_rows.append((threads[lead][0], len(intervals), duration(sum(intervals)), open_count))
+    table(("Lead", "reports", "blocked", "open"), blocked_rows)
     print("\nIdle-lead gaps: first completed direct-child run after a lead run ends to its next run start.")
     print("Overlapping lead runs are merged; gaps are clipped to the window; open gaps end at --until.")
     gap_rows = []
@@ -230,6 +237,23 @@ def report(data, path, since, until):
                 excluded += 1
     print("\nCoS turn durations: runs starting and ending within the window, including failed/cancelled turns.")
     table(("turns", "median", "p90", "max", "unfinished at until"), [(*summary(cos_durations), excluded)])
+
+
+def blocked_intervals(reports, runs, since, until):
+    starts = sorted(start for start, _, _ in runs)
+    intervals = []
+    open_count = 0
+    for at, kind in reports:
+        if kind != "blocked" or at >= until:
+            continue
+        index = bisect.bisect_right(starts, at)
+        next_start = starts[index] if index < len(starts) else until
+        end = min(next_start, until)
+        start = max(at, since)
+        if start < end:
+            intervals.append((end - start).total_seconds())
+            open_count += next_start >= until
+    return intervals, open_count
 
 
 def report_kind(text):
@@ -431,8 +455,137 @@ def commit(message, paths):
     return 0
 
 
-def census(snapshot, now):
-    items = []
+def github_repositories(project_roots):
+    repositories = defaultdict(set)
+    for project, root in project_roots.items():
+        try:
+            result = subprocess.run(
+                ["git", "-C", root, "remote", "-v"], capture_output=True, text=True, timeout=5,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            continue
+        if result.returncode:
+            continue
+        remotes = []
+        for line in result.stdout.splitlines():
+            fields = line.split()
+            if len(fields) < 2:
+                continue
+            match = re.fullmatch(r"(?:https?://github\.com/|git@github\.com:|ssh://git@github\.com/)([^/\s]+/[^/\s]+?)(?:\.git)?/?", fields[1], re.I)
+            if match:
+                remotes.append((fields[0] != "origin", match[1]))
+        if remotes:
+            repositories[min(remotes)[1]].add(project)
+    return repositories
+
+
+def gh_json(arguments, timeout=15):
+    try:
+        result = subprocess.run(["gh", *arguments], capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        raise ValueError("gh timed out") from None
+    except OSError:
+        raise ValueError("gh unavailable") from None
+    if result.returncode:
+        raise ValueError(f"gh failed (exit {result.returncode})")
+    try:
+        return json.loads(result.stdout)
+    except ValueError:
+        raise ValueError("invalid gh response") from None
+
+
+def capacity(snapshot, repositories):
+    for repo, projects in sorted(repositories.items()):
+        live = sum(snapshot.threads[lead].get("projectId") in projects
+                   and snapshot.visible(lead) and not snapshot.settled(lead) for lead in snapshot.leads)
+        try:
+            issues = gh_json(["issue", "list", "--repo", repo, "--state", "open", "--label", "ready",
+                              "--search", "-label:in-progress", "--limit", "10000", "--json", "number"])
+            if not isinstance(issues, list) or len(issues) >= 10000:
+                raise ValueError("issue result incomplete")
+            numbers = sorted(int(issue["number"]) for issue in issues)
+        except (ValueError, KeyError, TypeError) as error:
+            reason = str(error) if isinstance(error, ValueError) else "invalid gh response"
+            print(f"capacity {repo}: unknown ({reason})")
+            continue
+        if numbers:
+            print(f"capacity {repo}: live={live} ready_unlaunched={len(numbers)} | " + " ".join(f"#{number}" for number in numbers[:5]))
+
+
+MERGED_PRS_QUERY = """
+query($search: String!, $endCursor: String) {
+  search(query: $search, type: ISSUE, first: 25, after: $endCursor) {
+    issueCount
+    pageInfo { hasNextPage endCursor }
+    nodes { ... on PullRequest {
+      mergedAt
+      labels(first: 100) { nodes { name } pageInfo { hasNextPage } }
+      closingIssuesReferences(first: 100) {
+        pageInfo { hasNextPage }
+        nodes { labels(first: 100) { nodes { name } pageInfo { hasNextPage } } }
+      }
+    } }
+  }
+}
+"""
+
+
+def merged_pr_counts(repo, since, until):
+    # Search by UTC dates, then apply the exact half-open timestamp window locally.
+    search = f"repo:{repo} is:pr is:merged merged:{since.date()}..{until.date()}"
+    pages = gh_json(["api", "graphql", "--paginate", "--slurp", "-f", f"query={MERGED_PRS_QUERY}",
+                     "-f", f"search={search}"], timeout=30)
+    counts = Counter(product=0, infra=0)
+    for page in pages:
+        if page.get("errors"):
+            raise ValueError("GitHub query failed")
+        result = page["data"]["search"]
+        if result["issueCount"] > 1000:
+            raise ValueError("PR search exceeds GitHub's 1000-result limit")
+        for pr in result["nodes"]:
+            if not since <= timestamp(pr["mergedAt"]) < until:
+                continue
+            issues = pr["closingIssuesReferences"]
+            label_sets = [pr["labels"], *(issue["labels"] for issue in issues["nodes"])]
+            if issues["pageInfo"]["hasNextPage"] or any(labels["pageInfo"]["hasNextPage"] for labels in label_sets):
+                raise ValueError("PR labels or closing issues incomplete")
+            infra = any(label["name"].casefold() == "infra" for labels in label_sets for label in labels["nodes"])
+            counts["infra" if infra else "product"] += 1
+    return counts
+
+
+def merged_pr_report(repositories, since, until):
+    print("\nMerged PRs: infra when the PR or a closing issue carries the infra label; otherwise product.")
+    rows = []
+    total = Counter(product=0, infra=0)
+    unknown = 0
+    for repo in sorted(repositories):
+        try:
+            counts = merged_pr_counts(repo, since, until)
+        except (ValueError, KeyError, TypeError) as error:
+            reason = str(error) if isinstance(error, ValueError) else "invalid gh response"
+            rows.append((repo, "unknown", "unknown", reason))
+            unknown += 1
+            continue
+        total.update(counts)
+        rows.append((repo, counts["product"], counts["infra"], sum(counts.values())))
+    rows.append(("TOTAL" if not unknown else "TOTAL (known repos only)", total["product"], total["infra"], sum(total.values())))
+    table(("Repository", "product", "infra", "total / error"), rows)
+
+
+def stalled_queues(snapshot, now):
+    for thread in snapshot.threads:
+        if not snapshot.visible(thread) or snapshot.settled(thread) or thread in snapshot.running:
+            continue
+        latest = max(snapshot.runs[thread], key=lambda run: run[4], default=None)
+        if latest and latest[3] == "queued" and now - latest[4] > timedelta(minutes=2):
+            at = latest[4]
+            yield at, f"stalled queue {age(at, now)}: latest run queued with nothing running; cancel the queued run and resend | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"
+
+
+def census(snapshot, now, repositories):
+    capacity(snapshot, repositories)
+    items = list(stalled_queues(snapshot, now))
     state = Path(__file__).resolve().parent.parent / "state.md"
     holds = {}
     for line in state_lines(state, "Holds"):
@@ -506,7 +659,7 @@ def census(snapshot, now):
             at = snapshot.consumed_children[thread]
             reason = "child result consumed by parent's later run; verify used"
         if reason:
-            items.append((at, f"settle candidate {age(at, now)}: {reason} | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"))
+            items.append((at, f"settle candidate {age(at, now)}: {reason} | {snapshot.title(thread)} | {send_hint(snapshot, thread)} | settle:{thread}"))
     live = outside_runs(snapshot)
     if live:
         at = min(start for start, _, _ in live)
@@ -684,14 +837,14 @@ def main():
     commit_parser.add_argument("message", metavar="MSG")
     commit_parser.add_argument("paths", nargs="+", metavar="PATH")
     commands.add_parser(
-        "census", description="Print unanswered reports, dead leads, unreported idle gates, unused child completions, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
+        "census", description="Print ready-issue capacity, unanswered reports, dead leads, unreported idle gates, unused child completions, stalled queues, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
     )
     board = commands.add_parser(
         "board", description="Write the fixed-design board from T3 and state.md. Today is Europe/Copenhagen. Wait sums today's reports to their next CoS send, including pending waits ending at now or settlement; one reply may answer several reports. Dead-run time is clipped to today. Restart clusters have at least three distinct roots ending within ten seconds. Children count distinct tasks started today, including native subagents when stored. Done uses the latest report kind, not the status of a completed turn.", allow_abbrev=False,
     )
     board.add_argument("--out", type=Path, default=Path("/tmp/cos-board.html"), metavar="PATH")
     metrics = commands.add_parser(
-        "metrics", description="Measure CoS messages, next-send delays, idle-lead gaps and turn durations from local T3 V2 SQLite.",
+        "metrics", description="Measure CoS messages, next-send delays, blocked time, idle-lead gaps and turn durations from local T3 V2 SQLite, plus merged product/infra PRs from GitHub's current labels.",
         epilog="Window is [since, until). ISO timestamps need a timezone. Defaults: first CoS report/run to now. No message text is printed.", allow_abbrev=False,
     )
     metrics.add_argument("--since", type=timestamp, metavar="ISO")
@@ -711,11 +864,12 @@ def main():
         with closing(open_readonly(STORE_PATH)) as db:
             data = load_data(db)
             snapshot = Snapshot(db, data) if args.command != "metrics" else None
+            project_roots = dict(db.execute("SELECT project_id, workspace_root FROM projection_projects WHERE deleted_at IS NULL"))
         now = datetime.now(timezone.utc)
         if args.command == "restart-check":
             return restart_check(snapshot)
         if args.command == "census":
-            census(snapshot, now)
+            census(snapshot, now, github_repositories(project_roots))
         elif args.command == "board":
             write_board(snapshot, now, args.out)
         else:
@@ -726,6 +880,7 @@ def main():
             if since >= until:
                 raise ValueError("--since must be earlier than --until")
             report(data, STORE_PATH, since, until)
+            merged_pr_report(github_repositories(project_roots), since, until)
     except subprocess.CalledProcessError as error:
         print(f"cos: git {error.cmd[1]} failed (exit {error.returncode}); stopped", file=sys.stderr)
         return error.returncode
