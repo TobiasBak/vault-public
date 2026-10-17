@@ -10,11 +10,12 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Delivery model (Tobias, 2026-10-14, permanent): PR→main on fast check + touched tests + no new failures vs main; full suite nightly on main→staging; green nightlies auto-promote main to staging; only Tobias touches production; infra runs beside product; product gates get the heavy slot first.
 - Private repos may hold customer names and customer-derived content (Tobias, 2026-10-14). Public repos and the vault may not.
 - Census heartbeat: `scheduled-task:command:mcp:534c308f-ba1f-4c9e-a41d-995dceb4e574:schedule-task:cos-census-heartbeat-d41aa0f0`, every 30 min, bound to the CoS thread. A successor recreates it bound to itself and deletes the old one.
+- Tobias 2026-10-17: Two Opus UI teams allowed while every quota window <40%; keep the 60% stop. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
 
-Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`), then `link_pull_request`.
+Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
 ### orderready (T3 project mcp:e9b15f49-8281-4ab3-97fd-958e235a97e6, private)
 
@@ -46,7 +47,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - `cos-remove-t3-desktop-1` (Sol, 20:29): uninstall T3 desktop app (Tobias: never uses it); keep t3code.service untouched.
 - `cos-two-opus-ui-rule-1` (Sol, 20:35): write the two-Opus-UI-teams rule (<40% two, <60% one) into its source docs/code; returns lines for SKILL/state/brief.
 - `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it. 20:31: build sat 9+ min in the interactive lease queue behind 6 agent waiters; steered to requeue with --class gate (Tobias waiting). Rule until heavy-lease has a human-waiting class: builds Tobias waits on use --class gate.
-- `cos-drop-decisions-log-1` (Sol): delete the CoS decision log (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
@@ -57,9 +57,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. #87 is already launched. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
-- Vault: delegate parity-scope rule into tobias/preferences.md. Business logic needs parity, UI incidentals may improve; completion not recorded.
-
-- Tobias 2026-10-17: never link PRs to the CoS thread (`link_pull_request`); leads report merge-ready PRs. Two Opus UI teams allowed while every quota window <40%; keep the 60% stop. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
 
 ## Needs Tobias
 
