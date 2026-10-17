@@ -57,6 +57,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
+- `cos-state-compact-1` (Sol, 18:40): fixes agents/subagent-delegation.md Opus routing (commits vault) and drafts a compacted state.md to ~/.cache/agent-tmp/cos-state-compact/ (draft only; I review and install). Vault skill rework a9b08c8 accepted, writer settled.
 - `cos-139-sticky-test-compile-fix-1` (Sol): fixture reworked, cold compile gone; timeouts were host contention (load 23–67). Corrected screening GREEN (2026-10-14): barrier on kernel FLOCK ownership (slot metadata goes stale after release). Target nextest 28.3 s, down from 118.3 s; assertions, budgets and watchdogs unchanged; probes removed. Now: commit, then `--repeat 3` serialized, then PR. Slot granted after #62's W7; first barrier timed out at 1800 s on #62's leftover watchers, child holding until I relay #62's exit. Barrier by PID exit, final screening + 3 serialized runs, then PR. I apply cos-approved after independent review. On merge, notify #79 and #138, then re-grant the slot.
 
 
