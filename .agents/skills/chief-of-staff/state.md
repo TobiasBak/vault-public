@@ -63,7 +63,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
-- Code-signing cert: Tobias must procure (Authenticode, decided 2026-10-17); ask when #278 lead needs it.
+- Code signing: Tobias buys later via Microsoft (Azure Trusted/Artifact Signing assumed; #278 lead told, pluggable step). Ask when lead names Azure resources needed.
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
 ## Watch
