@@ -8,9 +8,7 @@ Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) fo
 
 **Space Bunny is retired** (Tobias, 2026-10-13); use the [team-routing policy](subagent-delegation.md#compute-routing). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
 
-- Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. See [review routing](subagent-delegation.md#compute-routing). The lead-model trial (Sol vs Opus leading the same issue) tests the design/planning side.
-
-- Tobias, 2026-10-14: "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer". Claude quota and Sol's generous plan usage drive the [lead-routing policy](subagent-delegation.md#compute-routing), not a judgment that Sol is the better lead. Harden lead tooling and skills so Sol leads close the gap to Opus through mechanisms, not reminders.
+Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment, not a routing exception. Follow the [team-routing policy](subagent-delegation.md#compute-routing) for permitted roles. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
 
 ## Provider guidance
 
