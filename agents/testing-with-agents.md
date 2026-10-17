@@ -47,6 +47,12 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 - Omarchy's `omarchy-crash-watch` shows a "Process crashed" toast for every systemd-coredump journal entry with the coredump `MESSAGE_ID` (`fc2e22bc…`), sending Tobias investigating expected crashes. Verified with a probe binary on his PC, 2026-10-11.
 - `RLIMIT_CORE=0` (`ulimit -c 0`, `LimitCORE=0`) still journals "terminated abnormally without generating a coredump" under that ID. With a pipe `core_pattern`, 1 makes the kernel skip the helper entirely, so there is no entry or toast. This is the [documented kernel special case](https://man7.org/linux/man-pages/man5/core.5.html).
 
+## Tool-manager test doubles
+
+- Never shadow a tool manager on `PATH` with a delegating wrapper. A fake `mise` left first on `PATH` while the real `mise install` runs can trigger auto-reshimming that repoints every global shim in `~/.local/share/mise/shims` at the fake, breaking `cargo` and `rustc` across projects.
+- Inject test inputs another way, or make `HOME`, `XDG_*`, `MISE_DATA_DIR`, `MISE_CACHE_DIR`, `MISE_STATE_DIR` and `CARGO_HOME` all private. Fingerprint host-global tool directories, including mise shims and their link targets, before and after such experiments.
+- Recover with `PATH=/usr/bin:/bin /usr/bin/mise reshim`, then relink leftover orphan shims to `/usr/bin/mise`.
+
 ## Git fixtures inside hooks
 
 - Tools and tests that spawn Git for fixture repositories, worktrees or clones must remove every variable listed by `git rev-parse --local-env-vars` from the child environment, including children that launch Git indirectly.
