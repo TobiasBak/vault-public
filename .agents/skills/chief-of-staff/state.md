@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Live teams
 - Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) 20:59: #270 → #269 → parity checklist (send it the audit issue + Tobias priority). Only live Opus team (quota max 1).
-- #265 lead: #273 (cause 1) pr-merge refused, stale vs #271 → rebase+regate; cause 2 case split GO'd 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
+- #265 lead: #273 (cause 1) merged 21:02 (3135c37); cause 2 case split GO'd 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
