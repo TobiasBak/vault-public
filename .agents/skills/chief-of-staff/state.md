@@ -24,7 +24,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - [Windows GUI qualification #185→#77/#83](t3-thread://v1/mcp:a999a9cd-5c95-4d7f-887f-8c30e8b14f11): use promotion qualification's Windows obligations, not retired nightly.rs. Close obsolete #80 as superseded; old nightly budget is void, new budget needs an ask. GO'd cfg(windows)-only xtask→windows-interop leaf edge and safe Job/keyboard/session wrappers; close via pid-verified UIA WindowPattern.Close.
 - [Close-flow #162/#165/#161](t3-thread://v1/mcp:9bf20638-ba45-4d99-b9fe-ac568d6b3838): team closing out after #219. Re-scope #220/#221 against parity rule, judge #242 in-app leave guard separately; closure status unclear. #218 Shift+Tab follow-up restores #161 steps.
 - #202 GUI flow cost waits for Windows GUI team to land; both touch the corpus GUI runner. Then fresh #103 attribution before #103–#105 work. #90 needs disposition of old pressure-cohort findings.
-- #144: no team until Tobias's weekend traces T01/T04/T05 exist; real-data authorization stays Tobias's. BC is usable for reads; facts belong in repo docs/ax-knowledge.md.
+- #144: Tobias tests Business Connector with the CoS on 2026-10-18; no team before that. Weekend traces T01/T04/T05 still pending; real-data authorization stays Tobias's. BC is usable for reads; facts belong in repo docs/ax-knowledge.md.
 - Open follow-ups: #148, #149, platform#7, #171; #147 oracle regeneration; #154 status watcher startup; #199 Windows runtime/AX/junction qualification; #180, #183, #186–#188, #190, #192 import performance; #181 Windows measurement blocked on #77; #250 Windows warnings; #236–#239, #243, #244, #248; #158, #159, #163. #242 remains unstarted.
 - Repo rules: `tools/or test --full` is the full gate; never hand-edit `~/.cache/orderready/verdicts`; no binary fixtures in Git.
 
@@ -32,8 +32,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: junctions with proved tolerance-bounded displacement are measured with per-channel error terms, otherwise refused; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
 - [#102 red main](t3-thread://v1/mcp:17072b56-c5ed-4159-b994-b17455108c0c), Sol, brief n: GO'd descriptor-loss fix at 4 case_runner sites plus byte-race fixture driver plumbing only.
-- #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60/#61 need value checks. #90/#78 remain in start-later list; #87 policy is decided.
-- Follow-ups #83/#85 from #68; #93 wall time on 5 faces. #89 remains under Needs Tobias. #76 trial hardening/rerun obligation is under CoS children.
+- #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60 needs value checks; #61 decided 2026-10-17 (versioned dedup format), ready. #90/#78 remain in start-later list; #87 policy is decided.
+- Follow-ups #83/#85 from #68; #93 wall time on 5 faces. #89 decided 2026-10-17 (literal faces get budget priority); ready. #76 trial hardening/rerun obligation is under CoS children.
 - #75: check first nightly result; no result recorded here. Theodore verification-tracing contract: pilot in one repo beside product work still pending.
 
 ### stepkit-studio (T3 project mcp:49a07e59-1f64-44c2-9649-5dd070ed4cba, private)
@@ -59,11 +59,13 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 - Vault: delegate parity-scope rule into tobias/preferences.md. Business logic needs parity, UI incidentals may improve; completion not recorded.
 
+- Tobias 2026-10-17: never link PRs to the CoS thread (`link_pull_request`); leads report merge-ready PRs. Two Opus UI teams allowed while every quota window <40%; keep the 60% stop. Geometry #50 backend switch approved (parity remains the technical gate). Orderready #137 OCR closed, no more OCR work.
+
 ## Needs Tobias
 
-- Linking PR #266 to the CoS thread was declined by Tobias (2026-10-17); don't retry; ask before linking again if unclear.
-- Open for Tobias (asked 2026-10-17): allow two Opus UI teams; my recommendation is yes while five_hour < 40%, keep the 60% stop.
-- Parked choices, not urgent: geometry #89 (triangle allocation order policy), geometry #61 (versioned persisted observation format), orderready #137 (OCR: measure scanned-PDF incidence first), #144 (real-data qualification authorization), orderready #99 / geometry #50 (history rewrite / backend promotion).
+- Orderready #99/#81: "protected fixture names" = customer identifiers in orderready test fixtures; only matters if the repo goes public (private repos may hold them, Tobias 2026-10-14). Asked 20:35 whether orderready will ever be public; recommend closing #99/#81 if not.
+- Studio scope: asked 20:35 whether to call v1 done after #190 and park the polish issues (#113, #183, #188, #191–#193, #124); my recommendation is yes.
+- 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
 ## Watch
 
