@@ -753,3 +753,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 10:50 #240 (Configuration #54) verified merge-ready at 820c9305: gate success, review bound to the head, CLEAN, application-shell authorized. pr-merge refused because the review named `corpus/gui/application-shell/**` and bare filenames, not the three full paths. Sent back for an updated review naming each full path, with no code change. Lesson for briefs: the reviewer attestation must list every protected file by full path; globs fail pr-merge.
 
 - 2026-10-17 10:55 Merged #240 at e49eb826 after the reworded attestation named all four protected paths (review 5557060306, same verdict, no new round). Told the lead to hold #242 until #219 lands, since both touch the shell files.
+
+- 2026-10-17 11:15 Accepted the native-screens lead stopping early at 47%: at its burn rate it would have crossed 55% before the 13:10 reset. Resume #56 in the same child thread on the first heartbeat after the reset.
