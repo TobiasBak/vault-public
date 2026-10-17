@@ -44,7 +44,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## CoS children in flight
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
-- `cos-remove-t3-desktop-1` (Sol, 20:29): uninstall T3 desktop app (Tobias: never uses it); keep t3code.service untouched.
 - `cos-two-opus-ui-rule-1` (Sol, 20:35): write the two-Opus-UI-teams rule (<40% two, <60% one) into its source docs/code; returns lines for SKILL/state/brief.
 - `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it. 20:31: build sat 9+ min in the interactive lease queue behind 6 agent waiters; steered to requeue with --class gate (Tobias waiting). Rule until heavy-lease has a human-waiting class: builds Tobias waits on use --class gate.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
