@@ -855,3 +855,4 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 17:51 Launched two Sol leads now that #259 is unblocked: orderready#253 class adoption (mcp:9e26396d, brief j.txt, worktree issue-253-lease-classes from origin/main) and dotfiles#40 pool size (mcp:97cfdfd4, brief k.txt, measure first, go_request before any POOL_SIZE edit).
 
 - 2026-10-17 17:55 #253 GO: verification.rs (gate env on its two captured-child branches) and promotion.rs (gate wrapper only, weight 4). tools/or unchanged, no test or receipt changes; diff-selected test plus the normal gate. Stale nightly unit invoking a removed command: issue only.
+- 2026-10-17 18:00 Settled the load-immune budgets lead (#252 closed by #259, worktrees and scratch cleaned, evidence archived) and all 40 finished child threads from the census. Child thread IDs for settle need the census 'thread:' prefix, URL-encoded as shown.
