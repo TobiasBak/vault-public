@@ -14,6 +14,7 @@ Not exhaustive. Search with `rg`.
 ## Hardware
 
 - [hardware/agent-era-dev-machine.md](hardware/agent-era-dev-machine.md): cloud-agent build capacity, fleet execution boundaries and genuine hardware deals
+- [hardware/colab-in-google-ai-plans.md](hardware/colab-in-google-ai-plans.md): Colab compute units and accelerators bundled with Google AI plans, runtime rules, the Colab CLI
 
 ## Agents
 

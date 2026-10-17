@@ -31,7 +31,7 @@ For cloud-served coding agents, buy local build capacity, not an AI accelerator.
 - Mini PCs must prove sustained cooling, memory capacity and expansion. Do not pair a barebone price with an unavailable high-memory SKU.
 - Several boxes isolate teams and failures, but duplicate base RAM, storage and cache warming. A big box pools capacity but increases the shared failure domain. Choose from measured per-box admission and successful gates/hour, not summed core counts.
 - Keep NAS and backup service separate from expendable build state. Remote workers need source access, not private model credentials.
-- Remote rental can absorb bursts. Include transfer/setup latency, cache persistence, confidential-source handling and idle billing. No local hardware purchase is required to evaluate that option.
+- Remote rental can absorb bursts. Include transfer/setup latency, cache persistence, confidential-source handling and idle billing. No local hardware purchase is required to evaluate that option. Google AI plans already include some Colab compute; see [Colab in Google AI plans](colab-in-google-ai-plans.md).
 
 ## Make extra machines execute work
 
