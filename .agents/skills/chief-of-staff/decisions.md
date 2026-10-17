@@ -737,3 +737,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 01:10 five_hour is at 51% (38→51 in 30 minutes) and resets 03:00 CEST. I warned native screens to get Configuration #54 to a committed checkpoint and to hold the review until I confirm quota. When a heartbeat shows ≥60%, the team pauses until the reset.
 
 - 2026-10-17 01:40 QUOTA PAUSE: five_hour 65%, over the 60% Opus UI cap. Interrupted the Configuration #54 child and told the native-screens lead to end its turn; the work stays in the worktree. Resume on the first heartbeat after the 03:00 CEST reset with five_hour <60%.
+
+- 2026-10-17 03:10 Claude window reset (five_hour 0%, the first quota call returned an invalid response and the retry worked). Resumed native screens: Configuration #54, then Price catalog #56, one Opus child at a time. The brief restates the Sol pause, the launch freeze and the in-turn wait rule. Studio's nightly fires at 03:45, and its verdict comes at 04:30.
