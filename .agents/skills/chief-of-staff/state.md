@@ -20,7 +20,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ### orderready (T3 project mcp:e9b15f49-8281-4ab3-97fd-958e235a97e6, private)
 
 - Sol product leads, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), [#183 then #232](t3-thread://v1/mcp:db96fb05-07cd-4b6e-9d05-8097ee8c4817) (#183 MERGED as PR #264 → c17d4859; #232 in progress), from origin/main. GUI #218/#221/#225/#228/#234/#238/#239/#242/#244 wait for Studio #190's Opus UI turn; census ready count includes blocked issues.
-- Infra lead [#265 GUI case spurious blocks](t3-thread://v1/mcp:195068c7-d2e9-4a30-8f48-71c385be892a), Sol, brief r: fix the /proc parser first, then attribute application-shell; budget/case changes need a go. Only orderready infra team.
+- Infra lead [#265 GUI case spurious blocks](t3-thread://v1/mcp:195068c7-d2e9-4a30-8f48-71c385be892a), Sol, brief r: fix the /proc parser first, then attribute application-shell; budget/case changes need a go. Only orderready infra team. Next: #268 xtask memory admission false-blocks on reclaimable cache (Tobias: make sure it gets fixed), queued to this lead 20:42.
 - #138: [lead](t3-thread://v1/mcp:2d4cc779-09d9-4a10-887c-d4f16c0ff94e) still owes closure reply and forwarding 4537dd47 to #62; settle after reply. Follow-ups #140 qualification, #145 wording. #91 criterion 7 remains parked in #62/#63, though both are later recorded closed; disposition unclear.
 - [Windows GUI qualification #185→#77/#83](t3-thread://v1/mcp:a999a9cd-5c95-4d7f-887f-8c30e8b14f11): use promotion qualification's Windows obligations, not retired nightly.rs. Close obsolete #80 as superseded; old nightly budget is void, new budget needs an ask. GO'd cfg(windows)-only xtask→windows-interop leaf edge and safe Job/keyboard/session wrappers; close via pid-verified UIA WindowPattern.Close.
 - [Close-flow #162/#165/#161](t3-thread://v1/mcp:9bf20638-ba45-4d99-b9fe-ac568d6b3838): team closing out after #219. Re-scope #220/#221 against parity rule, judge #242 in-app leave guard separately; closure status unclear. #218 Shift+Tab follow-up restores #161 steps.
@@ -46,13 +46,14 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
 - `cos-two-opus-ui-rule-1` (Sol, 20:35): write the two-Opus-UI-teams rule (<40% two, <60% one) into its source docs/code; returns lines for SKILL/state/brief.
-- `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it. 20:31: build sat 9+ min in the interactive lease queue behind 6 agent waiters; steered to requeue with --class gate (Tobias waiting). Rule until heavy-lease has a human-waiting class: builds Tobias waits on use --class gate. 20:41: build sat 5.5 min more in xtask memory admission (T3 slice 15 GB of 18 GB, mostly reclaimable cache); CoS ran memory.reclaim 3G → 8.3 GB, build compiling.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
 - Hardware-deals thread mcp:f562cb73 is a settle candidate; result already relayed, no work remains.
 
 ## Holds
+
+- Orderready GPUI running on Tobias desktop (fakes; login fixture-worker / fixture-password-not-real; stop `kill -TERM 73849`; logs ~/.cache/agent-tmp/or-try-gui/). `tools/or dev` still targets Tauri; GUI builds Tobias waits on use `--class gate`.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. #87 is already launched. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
@@ -69,4 +70,4 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
 - `mise up pi` to 1.2.0 only when `pgrep -f "installs/pi/"` is empty; then spot-check one Sol child.
 - T3 restarts kill every live run: run `cos.py restart-check` first. The T3 nightly timer updates the service; Tobias has no desktop app (removed 2026-10-17).
-- Orderready admission false-blocks on reclaimable cgroup cache (hit again 2026-10-17 20:40, freed 6.7 GB); workaround: `echo 3G > memory.reclaim` on app-t3code.slice. Needs a real fix issue.
+- Orderready admission false-blocks on reclaimable cgroup cache (hit again 2026-10-17 20:40, freed 6.7 GB); workaround: `echo 3G > memory.reclaim` on app-t3code.slice. Fix: orderready #268.
