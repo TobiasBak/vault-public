@@ -18,8 +18,8 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### orderready (T3 project mcp:e9b15f49-8281-4ab3-97fd-958e235a97e6, private)
 
-- Sol product leads, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), [#98 workcenter defaults](t3-thread://v1/mcp:e2bc18cb-7603-4d80-8ba2-39543cc66b5e), [#183 then #232](t3-thread://v1/mcp:db96fb05-07cd-4b6e-9d05-8097ee8c4817) (#183 MERGED as PR #264 → c17d4859; #232 in progress), from origin/main. GUI #218/#221/#225/#228/#234/#238/#239/#242/#244 wait for Studio #190's Opus UI turn; census ready count includes blocked issues.
-- (20:06) #98 draft PR #266 blocked on GUI-case flakes (application-shell 30 ms over budget under contention; close-flow /proc '-1' counter): one more push verification authorized, else park until #265. Infra lead [#265 GUI case spurious blocks](t3-thread://v1/mcp:195068c7-d2e9-4a30-8f48-71c385be892a), Sol, brief r: fix the /proc parser first, then attribute application-shell; budget/case changes need a go. Only orderready infra team.
+- Sol product leads, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), [#183 then #232](t3-thread://v1/mcp:db96fb05-07cd-4b6e-9d05-8097ee8c4817) (#183 MERGED as PR #264 → c17d4859; #232 in progress), from origin/main. GUI #218/#221/#225/#228/#234/#238/#239/#242/#244 wait for Studio #190's Opus UI turn; census ready count includes blocked issues.
+- #98 MERGED as PR #266 (5adf43cc); lead closing out, settle on done. Infra lead [#265 GUI case spurious blocks](t3-thread://v1/mcp:195068c7-d2e9-4a30-8f48-71c385be892a), Sol, brief r: fix the /proc parser first, then attribute application-shell; budget/case changes need a go. Only orderready infra team.
 - #138: [lead](t3-thread://v1/mcp:2d4cc779-09d9-4a10-887c-d4f16c0ff94e) still owes closure reply and forwarding 4537dd47 to #62; settle after reply. Follow-ups #140 qualification, #145 wording. #91 criterion 7 remains parked in #62/#63, though both are later recorded closed; disposition unclear.
 - [Windows GUI qualification #185→#77/#83](t3-thread://v1/mcp:a999a9cd-5c95-4d7f-887f-8c30e8b14f11): use promotion qualification's Windows obligations, not retired nightly.rs. Close obsolete #80 as superseded; old nightly budget is void, new budget needs an ask. GO'd cfg(windows)-only xtask→windows-interop leaf edge and safe Job/keyboard/session wrappers; close via pid-verified UIA WindowPattern.Close.
 - [Close-flow #162/#165/#161](t3-thread://v1/mcp:9bf20638-ba45-4d99-b9fe-ac568d6b3838): team closing out after #219. Re-scope #220/#221 against parity rule, judge #242 in-app leave guard separately; closure status unclear. #218 Shift+Tab follow-up restores #161 steps.
@@ -30,7 +30,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### stepkit-geometry (T3 project mcp:da4aca75-407d-45f6-a717-1826c232b90c)
 
-- [#67 ribbon reuse](t3-thread://v1/mcp:b4fa9c4d-2446-4905-80d2-5939a53773ac), Sol: `issue-67-ribbon` from `issue-67-resume` ca941ab, brief l. PR #104 MERGED 19:56 → c2d1b34d (12x faster, outputs byte-identical); the 2.6 MB/13 MB models still time out at 300 s, #67 stays open, convergence in #97/#98. Lead finalizing; settle on done.
 - [#87 measure refusal](t3-thread://v1/mcp:7042feda-5d4c-4504-8646-0f1f73ac5ad7), Sol, brief m: tagged refusal on reconstructed junctions until a bound is proved. Policy revised: junctions with proved tolerance-bounded displacement are measured with per-channel error terms, otherwise refused; the two tangent-slot expectations stay at main unless one still refuses with per-case evidence; curved-cylinder-junction checks still approved.
 - [#102 red main](t3-thread://v1/mcp:17072b56-c5ed-4159-b994-b17455108c0c), Sol, brief n: GO'd descriptor-loss fix at 4 case_runner sites plus byte-race fixture driver plumbing only.
 - #81 parked under infra freeze; old lead settled. Open without teams: #73 nested parity CLI, #63 mesh40/point-jet, #65 release freshness, #58 generator supplement; #60/#61 need value checks. #90/#78 remain in start-later list; #87 policy is decided.
@@ -44,6 +43,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
+- `cos-drop-decisions-log-1` (Sol): delete decisions.md (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
 - [Heavy-lease scheduler](t3-thread://v1/mcp:2cb5489d-5432-41df-af57-599340a69529): core and pass_fds/nested-weight fixes merged; lead settlement not recorded. Follow-ups orderready #255 and #260 remain; #253 and #252 are closed.
 - dotfiles#40 pool size PARKED 19:38: reviewed harness tree 2ee6b19d ready; the efficiency weight-4 lease never got admitted in 3600 s under product load (intended). Pool stays 4. Relaunch only in an idle window (heavy-lease shows no waiters, e.g. overnight); resume note in the issue. Lead settled; relaunch fresh from the issue resume note.
@@ -58,6 +58,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
+- Linking PR #266 to the CoS thread was declined by Tobias (2026-10-17); don't retry; ask before linking again if unclear.
 - Open for Tobias (asked 2026-10-17): allow two Opus UI teams; my recommendation is yes while five_hour < 40%, keep the 60% stop.
 - Parked choices, not urgent: geometry #89 (triangle allocation order policy), geometry #61 (versioned persisted observation format), orderready #137 (OCR: measure scanned-PDF incidence first), #144 (real-data qualification authorization), orderready #99 / geometry #50 (history rewrite / backend promotion).
 
