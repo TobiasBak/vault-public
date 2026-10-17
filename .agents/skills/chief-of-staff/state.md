@@ -54,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
-- #235 PR #267 22:11: block = contention (c); lead pushes + gates holding full heavy-lease pool (gate class), nested passthrough; new receipt if still blocked.
+- #235 PR #267 PARKED 22:21: even full-pool exclusive push blocked (4 GUI deadline-only, drawing-*/machines-shell-route). Suspect unleased disk-cleanup I/O; send ONE exclusive retry when cos-disk-cleanup-1 ends; then #265 lead.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
