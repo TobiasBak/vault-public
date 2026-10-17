@@ -65,7 +65,7 @@ Smell: a docs change triggers the full matrix.
 
 Smell: full CI after every edit.
 
-- In the loop and for PRs: static checks and affected cases, through the verdict cache. The CLI picks the scope conservatively; shared code, harness, dependency or budget changes select everything. The full corpus runs on the promotion PR. The [gate](enforcement.md#checks) compares PR failures against main.
+- In the loop and for PRs: static checks and affected cases, through the verdict cache. The CLI picks the scope conservatively; a change it can't map to cases (shared code, harness, dependencies, budgets) runs that code's own tests plus one smoke case per lane. The full corpus runs on the promotion PR. The [gate](enforcement.md#checks) compares PR failures against main.
 
 ## 9. Budgets are visible
 
