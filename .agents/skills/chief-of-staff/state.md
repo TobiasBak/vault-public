@@ -14,8 +14,8 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
-- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #269 GOs 21:13/21:40, platform #8 merged (6149aac), orderready side building; routing-conflict part BLOCKED, order continues (#274/#275 slice P).
-- #265 lead: #273 (cause 1) merged 21:02 (3135c37); cause 2 case split GO'd (rev 21:19: 129–148 → pending-discard, 82/46/64/42; 5th-scenario fallback pre-approved; 15s cap kept) 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
+- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #269 GOs 21:13/21:40, platform #8 merged (6149aac), orderready side building; routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable.
+- #265 lead: #273+#277 merged (21:59, 60ab33e); closing #265, then #268 fresh checkout.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
@@ -54,14 +54,13 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
-- #235 PR #267 PARKED 20:54 on #265: pre-push hook verification hits the #265 GUI contention; review clean on rebased 1ac411b4; no bypass. When #265 lands, tell lead to push normally + one `tools/or gate`.
+- #235 PR #267 unparked 21:59: rebase onto 60ab33e, normal push, one gate.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
-- Asked 21:20 (Import lead): (b) customer route "applies to" sheet/pipe-profile/assembly/all (default all) — rec YES, own issue; (a) live TEST-Monitor probe for gap op numbers (Sav=15) — rec skip, (b) covers the real case. Until then slice P blocks the part.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
