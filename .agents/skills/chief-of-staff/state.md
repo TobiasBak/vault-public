@@ -43,7 +43,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## CoS children in flight
 
-- `cos-t3-nightly-check-1` (Sol, read-only): installed vs newest T3 Code nightly, what matters, restart needs; no install/restart.
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
 - `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it.
 - `cos-drop-decisions-log-1` (Sol): delete decisions.md (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
