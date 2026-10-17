@@ -44,7 +44,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - #124 remains open until a failing nightly files a report; #188 cold-cache `--try` gap is low priority. Resize-delta fidelity gap and widget-id shift/480 px-space follow-up still need disposition; no issue numbers recorded.
 
 ## CoS children in flight
-- `cos-or-dist-plan-1` (22:37, Sol, read-only): Tobias: Rust GUI + mailbox automation downloadable as separate links on orderready DNS, auto-update works, old installs untouched. Files issue + design + Tobias decisions; relay in morning.
 
 - Disk cleanup done 22:40: 83%→52% (895G free). Log ~/.cache/disk-cleanup-20261017/. 80 dirty old worktrees left (mostly ~/.local/share/orderready/wt/case-clock-* probes); later: CoS-delegated triage, not a Tobias ask. Tell Tobias in morning.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
@@ -63,6 +62,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
+- Morning: distribution plan orderready #278 (old installs untouched): 3 decisions: (1) new product IDs/feeds, no auto-migration (contradicts ADRs); (2) DNS: rec. additive links on verified Firebase host, vanity domain unproven; (3) signing: rec. timestamped Authenticode (Rust packaging unsigned now).
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
 ## Watch
