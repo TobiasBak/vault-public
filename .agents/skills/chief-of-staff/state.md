@@ -44,6 +44,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - #124 remains open until a failing nightly files a report; #188 cold-cache `--try` gap is low priority. Resize-delta fidelity gap and widget-id shift/480 px-space follow-up still need disposition; no issue numbers recorded.
 
 ## CoS children in flight
+- `cos-or-dist-plan-1` (22:37, Sol, read-only): Tobias: Rust GUI + mailbox automation downloadable as separate links on orderready DNS, auto-update works, old installs untouched. Files issue + design + Tobias decisions; relay in morning.
 
 - `cos-disk-cleanup-1`: 83%→77% (79 worktrees, pnpm); steered 22:11 (Tobias angry): stop tiny-dir pass, rm orderready primary target + merged-wt targets + caches, top-15 consumers, recs. Relay fast.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
@@ -53,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Holds
 
-- GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
+- Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
 - #235 PR #267 PARKED 22:21: even full-pool exclusive push blocked (4 GUI deadline-only, drawing-*/machines-shell-route). Suspect unleased disk-cleanup I/O; send ONE exclusive retry when cos-disk-cleanup-1 ends; then #265 lead.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
