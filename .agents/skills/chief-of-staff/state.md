@@ -44,6 +44,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## CoS children in flight
 
 - `cos-disk-cleanup-1` (Sol): disk near full; deletes merged clean worktrees, finished agent-tmp dirs and tool-pruned caches; KEEP list = live teams; reports snapshots/VM/dirty worktrees for decision.
+- `cos-remove-t3-desktop-1` (Sol, 20:29): uninstall T3 desktop app (Tobias: never uses it); keep t3code.service untouched.
 - `cos-or-try-gui-1` (Sol): build and launch orderready GPUI from main on Tobias's desktop against fakes; report how to use and stop it.
 - `cos-drop-decisions-log-1` (Sol): delete decisions.md (migrate standing rules), GO-in-repo rule in SKILL and brief, state.md 10 KB budget + census warning. Tobias approved gaps 1-2; Theodore change dropped.
 - `cos-76-ab-hardening-1`: 3 issues, report_to_cos readiness check and 2 brief bullets; status not updated after "running". Analysis: ~/.cache/agent-tmp/76-compare/analysis.md. Then optional pair 2 / hardened Sol rerun. Follow-ups geometry #78/#79 remain without recorded closure; #80 is closed.
@@ -70,5 +71,5 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - Old CoS thread b826766b is unreadable. If a lead goes quiet past its expected report, ask directly; most named old leads are now settled or replaced.
 - Re-measure CoS answer latency on 2026-10-20 with `cos.py metrics` (baseline: median 29 s, p90 12 min).
 - `mise up pi` to 1.2.0 only when `pgrep -f "installs/pi/"` is empty; then spot-check one Sol child.
-- T3 restarts kill every live run: run `cos.py restart-check` first. The T3 nightly timer updates the service, not the desktop app.
+- T3 restarts kill every live run: run `cos.py restart-check` first. The T3 nightly timer updates the service; Tobias has no desktop app (removed 2026-10-17).
 - Orderready admission can false-block on reclaimable cgroup cache; workaround: `memory.reclaim` on app-t3code.slice.
