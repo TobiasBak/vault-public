@@ -14,7 +14,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
-- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b): Tobias 21:02: full Import page REDESIGN, "way better", not parity; old-app features must exist; real Gemini on RP2XL OK (few calls); #270 folded in, #269 separate; audit issue = feature inventory only. Only live Opus team (quota max 1).
+- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b): Tobias 21:02: full Import page REDESIGN, "way better", not parity; old-app features must exist; real Gemini on RP2XL OK (few calls); #270 folded in, #269 separate; Tobias 21:09: routing-conflict part goes through BLOCKED, order continues (#275), Sol child checks gap numbers (Sav=15) + whether laser route should apply to machined parts (product q back to CoS); audit issue = feature inventory only. Only live Opus team (quota max 1).
 - #265 lead: #273 (cause 1) merged 21:02 (3135c37); cause 2 case split GO'd 20:59 (4 scenarios, 234 kept once, 5-pass budgets); then #268.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
@@ -63,7 +63,6 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
-- Asked 21:03: routing conflict on one part (RP2XL: T2 fixed laser route vs needed Sav) — fail whole order (today, same as OIP) or blocked per-part preview the user fixes? Rec: blocked per-part preview, never silent skip. Send ruling to Import lead; issues #274/#275 filed.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
