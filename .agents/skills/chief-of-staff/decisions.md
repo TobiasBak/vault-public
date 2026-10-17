@@ -755,3 +755,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 10:55 Merged #240 at e49eb826 after the reworded attestation named all four protected paths (review 5557060306, same verdict, no new round). Told the lead to hold #242 until #219 lands, since both touch the shell files.
 
 - 2026-10-17 11:15 Accepted the native-screens lead stopping early at 47%: at its burn rate it would have crossed 55% before the 13:10 reset. Resume #56 in the same child thread on the first heartbeat after the reset.
+
+- 2026-10-17 12:50 Tobias ruled #162 the other way from my rec: never block closing the app. Close hides the window at once, cancels in-flight auth, and lets already-sent saves drain in the background under a hard cap (my proposal, which he accepted). Standing rule: ports need parity in important business logic, not UI incidentals like busy-close dialogs; UI may improve on the old app. My rec got this wrong because I treated 'parity' as covering UI behaviour; don't escalate UI-incidental parity gaps as parity questions again. PR #219 needs a rework, queued for the next Opus UI slot after native screens' #56.
