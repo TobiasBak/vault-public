@@ -18,6 +18,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ### orderready (T3 project mcp:e9b15f49-8281-4ab3-97fd-958e235a97e6, private)
 
+- (18:41) Sol product leads launched from origin/main, briefs o/p/q: [#235 route timeout](t3-thread://v1/mcp:b0cbadaa-8c14-47e3-85ba-4b747656d28e), [#98 workcenter defaults](t3-thread://v1/mcp:e2bc18cb-7603-4d80-8ba2-39543cc66b5e), [#183 then #232](t3-thread://v1/mcp:db96fb05-07cd-4b6e-9d05-8097ee8c4817). Census 'ready_unlaunched=80' counts `blocked` issues; the GUI ones (#218 #221 #225 #228 #234 #238 #239 #242 #244) wait for the Opus UI slot (Studio #190 holds it).
 - #138 MERGED 2026-10-15 (orderready PR #160 at 07e0f4a7 → 4537dd47; gate+review green, cos-approved). Nightly-check scheduled task deleted. [Lead](t3-thread://v1/mcp:2d4cc779-09d9-4a10-887c-d4f16c0ff94e) forwards 4537dd47 to #62, told 2026-10-15 to close #138 now; the #91 receipt check moved to the CoS at #91's merge. Settle once it replies. Limits: #140 (full-unit/Windows/cold-install qualification), #145 (stale wording).
 - #164 rustls 0.23.46 MERGED 2026-10-15 (PR #166 at 6a23c5c6 → e60bd17d); issue closed with metrics, lead settled. #91 re-granted; #53, #79, #114 and #128 told to rebase onto e60bd17d.
 - #91 MERGED 2026-10-15 (PR #176 at c7b1c678 → 1264e1e9 via pr-merge; gate+review success, cos-approved). #91 is closed as completed. Criterion 7 is parked, with notes on #62 and #63 (both still open). The lead's thread is settled. [Lead](t3-thread://v1/mcp:20df8d60-5189-443a-8817-7c997e32b8b5).
