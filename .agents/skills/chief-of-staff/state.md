@@ -55,10 +55,9 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Holds
 
-- Tobias 2026-10-17: hands-on orderready runs for him start already signed in as the fixture user and always use real Gemini (key `~/.keys/gemini.env`, copied from old disk OIP .env); Monitor/AX stay fake. Relaunch child `cos-or-try-gui-gemini-1` (Sol, 20:51) also files the one-command `tools/or dev` issue.
+- GPUI-UP 21:00 for Tobias: real Gemini, pre-signed-in fixture-worker, fake Monitor; stop `kill -TERM 232424`; one-command launcher = #272 (infra). Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env).
 - `cos-or-import-parity-audit-1` (Sol, 20:52): read-only inventory of old-app import page vs GPUI (Tobias: drawing preview and options missing, too many cards); files one checklist issue for the next UI team.
 - #235 PR #267 PARKED 20:54 on #265: pre-push hook verification hits the #265 GUI contention; review clean on rebased 1ac411b4; no bypass. When #265 lands, tell lead to push normally + one `tools/or gate`.
-- Orderready GPUI on Tobias desktop (first launch was full fakes; login fixture-worker / fixture-password-not-real; stop `kill -TERM 73849`; logs ~/.cache/agent-tmp/or-try-gui/). `tools/or dev` still targets Tauri; GUI builds Tobias waits on use `--class gate`.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. #87 is already launched. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
