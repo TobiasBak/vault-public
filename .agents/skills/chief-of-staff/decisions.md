@@ -767,3 +767,5 @@ Entries marked **[review]** are the ones whose verdict would change how the chie
 - 2026-10-17 13:55 GO (protected surface, existing test fixture): #241 adds an additive touch of corpus/gui/linux-wam-probe/requests.json in gate.rs given_production_proofs. The transitive closure now claims 101 of 102 cases, so the fixture keeps the existing full-case expectations exact. No assertion changes.
 
 - 2026-10-17 14:10 GRANT (priority advice; orderready's lease enforces the slot): #241 heavy verification at reviewed tree 2fcd4de9, ranked below the native-screens #56 gate. Strict and slow suites run serially. Asked for a before/after timing ledger in the PR.
+
+- 2026-10-17 14:20 #241 first verification failed on its own new tests: the slow filter missed runtime::, the partition test raced cargo against nextest, and the launcher proof matched a stale inotify event. In-scope fixes, so no go needed; the existing grant carries to the fixed tree after a blocking-fix review. Baseline: old test:xtask 497–566 s per run.
