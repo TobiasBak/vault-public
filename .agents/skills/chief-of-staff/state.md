@@ -55,6 +55,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
 - #235 PR #267 22:40: ONE exclusive-pool retry sent after disk cleanup; if blocks → #265 lead owns, no more retries.
+- #278 dist lead mcp:d1f4740d (Sol, issue-278-distribution, 23:0x): Tobias GO on all 3 recs (new IDs/feeds no migration, additive links on downloads.web.app, Authenticode); Hedema/Larsbroe out of scope. Feed/old-surface changes need GO; no prod writes.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
@@ -62,7 +63,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 ## Needs Tobias
 
-- Morning: distribution plan orderready #278 (old installs untouched): 3 decisions: (1) new product IDs/feeds, no auto-migration (contradicts ADRs); (2) DNS: rec. additive links on verified Firebase host, vanity domain unproven; (3) signing: rec. timestamped Authenticode (Rust packaging unsigned now).
+- Code-signing cert: Tobias must procure (Authenticode, decided 2026-10-17); ask when #278 lead needs it.
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
 ## Watch
