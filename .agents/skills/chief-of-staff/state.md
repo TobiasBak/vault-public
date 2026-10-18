@@ -14,7 +14,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 - Windows VM: agents drive it with `win-vm` ([note](../../../software/omarchy-windows-vm.md)).
 
 ## Live teams
-- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #281 merged d629327 (#269); slice P #284 merged 4aa4295 (#274/#275); slice 1 GO 00:4x (2 tab-selected expectation lines + 1x close-flow invalidate, park till #283); routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable. Renumber GO 22:11 (A–E, F pre-approved by rule).
+- Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #281 merged d629327 (#269); slice P #284 merged 4aa4295 (#274/#275); slice 1 #287 merged 575509f (#270); slice 2 = #290 next; routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable. Renumber GO 22:11 (A–E, F pre-approved by rule).
 - Infra lead settled (#265/#268/#283 done). Ready: dotfiles#44 pr-merge merge-base fix (launch Sol when convenient).
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
@@ -54,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
-- #278: #285 merged 5a01b95 (00:29Z): Orderready.Gui/MailboxAutomation, rust-{gui,mailbox} feeds, additive pages, unsigned (#279), legacy-origin guard; runbook docs/distribution.md (prod publish = Tobias). #278 closed; settle lead mcp:d1f4740d next heartbeat. Registry choice = #292 needs-tobias (rec isolated).
+- #278: #285 merged 5a01b95 (00:29Z): Orderready.Gui/MailboxAutomation, rust-{gui,mailbox} feeds, additive pages, unsigned (#279), legacy-origin guard; runbook docs/distribution.md (prod publish = Tobias). #278 closed, lead settled. Registry choice = #292 needs-tobias (rec isolated).
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
