@@ -704,6 +704,58 @@ def orderready_static(commits):
     return results
 
 
+PLATFORM_CHECKS = ("lint", "format", "types", "openapi", "promotion_config", "tests")
+
+
+def platform_main_check(sha):
+    state_home = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state")
+    path = state_home / "orderready-platform/checks" / f"{sha}.json"
+    context = f"scripts/check.py receipt for main@{sha[:12]}"
+    try:
+        record = json.loads(path.read_text())
+    except FileNotFoundError:
+        return None, f"missing {context} | {path}"
+    except (OSError, ValueError):
+        return None, f"unreadable or invalid {context} | {path}"
+    try:
+        if type(record["format_version"]) is not int or record["format_version"] != 1:
+            raise ValueError("unsupported format_version")
+        if record["head_sha"] != sha:
+            raise ValueError("stale SHA (head_sha does not match current main)")
+        if record["worktree_clean"] is not True:
+            raise ValueError("worktree is not clean")
+        result = record["result"]
+        if result not in {"running", "passed", "failed"}:
+            raise ValueError("invalid result")
+        try:
+            started = timestamp(record["started_at"])
+            finished = timestamp(record["finished_at"]) if record["finished_at"] is not None else None
+        except (ValueError, TypeError, AttributeError):
+            raise ValueError("invalid receipt timestamps") from None
+        if (result == "running") != (finished is None) or (finished is not None and finished < started):
+            raise ValueError("invalid or missing finish timestamp")
+        failed = []
+        for name in PLATFORM_CHECKS:
+            check = record["checks"][name]
+            status, code = check["status"], check["exit_code"]
+            if status == "passed" and type(code) is int and code == 0:
+                continue
+            if status == "failed" and (code is None or (type(code) is int and code != 0)):
+                failed.append(name)
+            elif status not in {"running", "not_run"} or code is not None:
+                raise ValueError("invalid check status or exit code")
+            if result == "passed":
+                raise ValueError("not all six checks passed with exit code 0")
+        if result == "failed" and not failed:
+            raise ValueError("failed result without failed checks")
+        detail = f"; failed checks: {', '.join(failed)}" if result == "failed" else ""
+        return {"name": "scripts/check.py", "state": {"passed": "success", "failed": "failure", "running": "pending"}[result],
+                "at": iso(finished or started), "source": f"{path}{detail}"}, None
+    except (ValueError, KeyError, TypeError, AttributeError) as error:
+        reason = str(error) if type(error) is ValueError else "invalid receipt fields"
+        return None, f"{context}: {reason} | {path}"
+
+
 def print_main_health(repo, main, checks, required, prs, gaps):
     failed = {"failure", "error", "timed_out", "cancelled", "action_required", "startup_failure"}
     relevant = {name: evidence for name, evidence in checks.items()
@@ -782,7 +834,12 @@ def main_health():
                 except (OSError, ValueError, KeyError, TypeError):
                     gaps.append("local static receipts unavailable or invalid")
             else:
-                gaps.append("scripts/check.py records no durable main result; promotion Actions do not establish main health")
+                required.add("scripts/check.py")
+                check, gap = platform_main_check(main["oid"])
+                if check:
+                    checks.setdefault(check["name"], []).append(check)
+                else:
+                    gaps.append(gap)
             print_main_health(repo, main, checks, required, pr_checks, gaps)
         except (ValueError, KeyError, TypeError, IndexError) as error:
             reason = str(error) if isinstance(error, ValueError) else "invalid GitHub main-health response"

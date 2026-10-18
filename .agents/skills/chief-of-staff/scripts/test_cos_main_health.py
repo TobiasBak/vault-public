@@ -153,5 +153,97 @@ class MainHealthTests(unittest.TestCase):
                 self.assertIn("current local advisory revision", gap)
 
 
+class PlatformMainHealthTests(unittest.TestCase):
+    repo = "TobiasBak/orderready-platform"
+    sha = "a" * 40
+
+    def receipt(self):
+        return {
+            "format_version": 1, "head_sha": self.sha,
+            "started_at": "2026-10-18T11:00:00Z", "finished_at": AT,
+            "result": "passed", "worktree_clean": True,
+            "checks": {name: {"status": "passed", "exit_code": 0}
+                       for name in ("lint", "format", "types", "openapi", "promotion_config", "tests")},
+        }
+
+    def census_health(self, receipt, file_sha=None, xdg=True):
+        with tempfile.TemporaryDirectory() as tmp:
+            home = Path(tmp)
+            state = home / "state" if xdg else home / ".local/state"
+            path = state / "orderready-platform/checks" / f"{file_sha or self.sha}.json"
+            if receipt is not None:
+                path.parent.mkdir(parents=True)
+                path.write_text(json.dumps(receipt))
+            with patch.object(Path, "home", return_value=home), patch.dict("os.environ", {"XDG_STATE_HOME": str(state) if xdg else ""}), patch.object(cos, "MAIN_HEALTH_REPOS", (self.repo,)), patch.object(cos, "gh_json", return_value=[page(commit())]), patch.object(cos.subprocess, "run", side_effect=AssertionError("census must only read receipts")), contextlib.redirect_stdout(io.StringIO()) as out:
+                cos.main_health()
+            return out.getvalue()
+
+    def test_green_exact_main_in_xdg_and_default_state_home(self):
+        for xdg in (True, False):
+            with self.subTest(xdg=xdg):
+                output = self.census_health(self.receipt(), xdg=xdg)
+                self.assertIn(f"main-health {self.repo} main@{self.sha[:12]}: success scripts/check.py", output)
+                self.assertNotIn("GAP", output)
+                self.assertNotIn("SHARED BLOCKER", output)
+
+    def test_failed_checks_raise_shared_blocker(self):
+        receipt = self.receipt()
+        receipt["result"] = "failed"
+        receipt["checks"]["lint"] = {"status": "failed", "exit_code": 1}
+        receipt["checks"]["tests"] = {"status": "failed", "exit_code": None, "error": "OSError"}
+        output = self.census_health(receipt)
+        self.assertIn("RED scripts/check.py", output)
+        self.assertIn("failed checks: lint, tests", output)
+        self.assertIn(f"SHARED BLOCKER {self.repo}: scripts/check.py | main red", output)
+        self.assertNotIn("success", output)
+
+    def test_running_is_pending(self):
+        receipt = self.receipt()
+        receipt.update(result="running", finished_at=None)
+        receipt["checks"]["tests"] = {"status": "running", "exit_code": None}
+        output = self.census_health(receipt)
+        self.assertIn("pending scripts/check.py", output)
+        self.assertNotIn("success", output)
+        self.assertNotIn("SHARED BLOCKER", output)
+        self.assertNotIn("GAP", output)
+
+    def test_missing_receipt_is_gap(self):
+        output = self.census_health(None)
+        self.assertIn(f"GAP main-health {self.repo}: missing scripts/check.py receipt for main@{self.sha[:12]}", output)
+        self.assertNotIn("success", output)
+
+    def test_stale_receipt_never_establishes_current_main_health(self):
+        stale = self.receipt()
+        stale["head_sha"] = "c" * 40
+        for file_sha in (self.sha, stale["head_sha"]):
+            with self.subTest(file_sha=file_sha):
+                output = self.census_health(stale, file_sha=file_sha)
+                self.assertIn(f"GAP main-health {self.repo}", output)
+                self.assertIn("stale SHA" if file_sha == self.sha else "missing scripts/check.py receipt", output)
+                self.assertNotIn("success", output)
+
+    def test_invalid_receipts_cannot_report_green_or_leak_field_contents(self):
+        mutations = [
+            lambda r: r.update(format_version=2),
+            lambda r: r.update(format_version=True),
+            lambda r: r.update(finished_at=None),
+            lambda r: r.update(finished_at="do-not-print-this"),
+            lambda r: r.update(worktree_clean=False),
+            lambda r: r.update(result="invalid"),
+            lambda r: r["checks"].pop("types"),
+            lambda r: r["checks"]["tests"].update(exit_code=1),
+            lambda r: r["checks"]["tests"].update(exit_code=False),
+            lambda r: r["checks"]["tests"].update(status="not_run", exit_code=None),
+        ]
+        for index, mutate in enumerate(mutations):
+            with self.subTest(case=index):
+                receipt = self.receipt()
+                mutate(receipt)
+                output = self.census_health(receipt)
+                self.assertIn(f"GAP main-health {self.repo}", output)
+                self.assertNotIn("success", output)
+                self.assertNotIn("do-not-print-this", output)
+
+
 if __name__ == "__main__":
     unittest.main()
