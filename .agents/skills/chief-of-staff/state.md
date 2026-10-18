@@ -61,7 +61,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
-- Platform pipeline: platform#12 (CI only on staging/production merges), Sol lead mcp:93e31330; staging = real env (Tobias 10-18); CoS go 10-18: suites on promotion PR→staging, frozen legacy digest, scope OK; Tobias created project orderready-staging + own billing (10-18), TF takes ID as input; bootstrap apply needs Tobias go.
+- Platform pipeline: platform#12 (CI only on staging/production merges), Sol lead mcp:93e31330; staging = real env (Tobias 10-18); CoS go 10-18: suites on promotion PR→staging, frozen legacy digest, scope OK; staging project by Tobias; #13 merged 3e0dc77; bootstrap plan 63 add (issuecomment-6247667731) awaits Tobias GO + GH env protections.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
