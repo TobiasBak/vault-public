@@ -10,6 +10,7 @@ Not exhaustive. Search with `rg`.
 - [tobias/preferences.md](tobias/preferences.md): engineering taste, stack, testing, how to involve him
 - [tobias/partnership.md](tobias/partnership.md): agent character, voice, disagreement, and pressure tests
 - [tobias/shopping.md](tobias/shopping.md): shopping priorities and Danish availability
+- [tobias/how-to-win.md](tobias/how-to-win.md): Musk's "how to win" principles, Tobias's reflection and open threads; personal, grows over time
 
 ## Hardware
 
