@@ -41,6 +41,7 @@ General requirements every system meets unless its spec says otherwise:
 |---|---|
 | Data and persistence | [data.md](references/data.md) |
 | Release and deploy | [release.md](references/release.md) |
+| APIs and protocols | [api.md](references/api.md) |
 
 A project's spec adopts catalog requirements by ID and adds its own.
 

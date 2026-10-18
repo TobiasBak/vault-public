@@ -77,11 +77,11 @@ Enforcement: the owning module's update commands take the read version; a black-
 
 ### D18 Idempotent commands
 
-Commands that create something or have external effects carry a client-generated idempotency key or record ID (UUIDv7). Repeating a command is a no-op.
+Creates carry a client-generated record ID (UUIDv7). Other commands with effects carry a client-generated operation ID that is stored on the record they create or update, behind a unique constraint. Repeating a command is a no-op. No time-limited key cache.
 
-Reason: retries (D9), offline replay (D13) and network timeouts resend writes that may already have landed.
+Reason: retries (D9), offline replay (D13) and network timeouts resend writes that may already have landed. A unique constraint dedupes for the record's lifetime with no expiry to tune.
 
-Enforcement: command types require the key; a black-box case sends the same command twice and gets one effect.
+Enforcement: command types require the ID; the database enforces uniqueness; a black-box case sends the same command twice and gets one effect.
 
 ## Changing the schema
 
