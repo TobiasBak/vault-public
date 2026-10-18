@@ -1,6 +1,6 @@
 # Chief of staff state
 
-Owned by the [chief-of-staff](SKILL.md) skill. Public: only secrets stay out (tokens, keys, passwords, credential contents); customer names, paths, IDs, infra state OK. Keep only live operational obligations; repos hold the history.
+Owned by the [chief-of-staff](SKILL.md) skill. Public: only secrets stay out (tokens, keys, passwords, credential contents); customer names, paths, IDs, infra state OK. Live obligations only; repos hold history.
 
 ## Coordination
 
