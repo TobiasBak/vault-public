@@ -856,7 +856,211 @@ def stalled_queues(snapshot, now):
             yield at, f"stalled queue {age(at, now)}: latest run queued with nothing running; cancel the queued run and resend | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"
 
 
+# Snapshot-only detection: elapsed is process age, not continuous time in wchan.
+STEP_COMMAND = re.compile(r"(?:.*/)?(?:tools/or|xtask(?:\.exe)?|\.githooks/[^\s]+|scripts/check\.py)$")
+SECRET_ARGUMENT = re.compile(r"(?i)(?:token|password|passwd|secret|(?:api|access|private)[_-]?key|^--?key$)")
+
+
+def short_command(argv):
+    # Inline source is opaque. Suppress it regardless of shell/interpreter name.
+    for index, arg in enumerate(argv[1:], 1):
+        if re.fullmatch(r"-[A-Za-z]*[ce].*|(?i:--?(?:command|encodedcommand|eval))(?:=.*)?", arg, re.S):
+            argv = [*argv[:index], "[payload omitted]"]
+            break
+    # Redact before truncation, including URL credentials.
+    safe = []
+    hide_next = False
+    for arg in argv:
+        name, separator, _ = arg.partition("=")
+        sensitive = bool(SECRET_ARGUMENT.search(name)) and not any(c.isspace() for c in name)
+        safe.append("[redacted]" if hide_next else name + "=[redacted]" if sensitive and separator else arg)
+        hide_next = sensitive and not separator
+    text = " ".join(safe)
+    text = re.sub(r"(?i)([a-z][a-z0-9+.-]*://)[^/\s@]+@", r"\1[redacted]@", text)
+    text = re.sub(
+        r'''(?ix)((?:--?|\b)[\w-]*(?:token|password|passwd|secret|api[_-]?key|access[_-]?key|private[_-]?key|\bkey)\b(?:\s*[=:]\s*|\s+))(?:"[^"]*"|'[^']*'|[^\s;]+)''',
+        r"\1[redacted]", text,
+    )
+    text = re.sub(r"(?i)\bBearer\s+\S+", "Bearer [redacted]", text)
+    return one_line("".join(c if c.isprintable() else " " for c in text))[:140]
+
+
+def mise_subcommand(argv):
+    arguments = iter(argv[1:])
+    for arg in arguments:
+        if arg in {"-C", "--cd", "-E", "--env", "-j", "--jobs"}:
+            next(arguments, None)
+        elif arg == "--":
+            return next(arguments, "")
+        elif not arg.startswith("-"):
+            return {"i": "install", "x": "exec", "e": "env"}.get(arg, arg)
+    return ""
+
+
+def process_steps(proc):
+    ticks = os.sysconf("SC_CLK_TCK")
+    uptime = float((proc / "uptime").read_text().split()[0])
+    processes = {}
+    for directory in proc.iterdir():
+        if not directory.name.isdecimal():
+            continue
+        try:
+            fields = (directory / "stat").read_text().rsplit(")", 1)[1].split()
+            argv = (directory / "cmdline").read_bytes().decode(errors="replace").rstrip("\0").split("\0")
+            if not argv[0] or fields[0] == "Z":
+                continue
+            elapsed = max(0, uptime - int(fields[19]) / ticks)
+            mise = Path(argv[0]).name == "mise"
+            subcommand = mise_subcommand(argv) if mise else ""
+            processes[int(directory.name)] = {
+                "parent": int(fields[1]), "argv": argv, "elapsed": elapsed,
+                "cpu": (int(fields[11]) + int(fields[12])) / ticks / max(elapsed, .01) * 100,
+                "step": any(STEP_COMMAND.fullmatch(arg) for arg in argv)
+                        or subcommand in {"install", "exec", "env"},
+                "prep": subcommand == "install",
+                "idle": "__watch-payload" in argv and "--idle" in argv,
+            }
+        except (OSError, ValueError, IndexError):
+            continue  # Processes can exit or become unreadable during the snapshot.
+    return processes
+
+
+def process_ancestors(pid, processes):
+    seen = set()
+    while pid in processes and pid not in seen:
+        seen.add(pid)
+        yield pid
+        pid = processes[pid]["parent"]
+
+
+def admitted_processes():
+    # status resources are {name, holder: {pid, ...}}; waiters are NOT admitted.
+    try:
+        result = subprocess.run(["heavy-lease", "status", "--json"], capture_output=True, text=True, timeout=.3)
+        if result.returncode:
+            raise ValueError
+        status = json.loads(result.stdout)
+        return {entry["holder"]["pid"] for entry in status["slots"] + status["exclusive"]
+                if not entry.get("orphan_pin") and isinstance(entry.get("holder"), dict)
+                and type(entry["holder"].get("pid")) is int}
+    except (OSError, ValueError, KeyError, TypeError, subprocess.TimeoutExpired):
+        return None
+
+
+def process_attribution(proc, chain):
+    for pid in chain:
+        try:
+            environment = (proc / str(pid) / "environ").read_bytes().split(b"\0")
+        except OSError:
+            continue
+        for key in (b"T3_THREAD_ID", b"PI_SESSION_ID", b"CODEX_THREAD_ID"):
+            for entry in environment:
+                name, _, value = entry.partition(b"=")
+                if name == key and re.fullmatch(rb"[A-Za-z0-9_.:%-]{1,180}", value):
+                    return f"{key.decode()}={value.decode()}"
+    return "agent=unknown"
+
+
+def process_locks(proc):
+    holders, waits = defaultdict(set), {}
+    try:
+        lines = (proc / "locks").read_text().splitlines()
+    except OSError:
+        return holders, waits
+    for line in lines:
+        fields = line.split()
+        waiting = "->" in fields
+        fields = [field for field in fields if field != "->"]
+        try:
+            pid = int(fields[4])
+            major, minor, inode = fields[5].split(":")
+            key = (int(major, 16), int(minor, 16), int(inode))
+            if waiting:
+                waits[pid] = key
+            elif pid > 0:
+                holders[key].add(pid)
+        except (ValueError, IndexError):
+            continue
+    return holders, waits
+
+
+def lock_description(proc, pid, holders, waits):
+    directory = proc / str(pid)
+    mount_devices = {}
+    try:
+        for line in (directory / "mountinfo").read_text().splitlines():
+            fields = line.split()
+            mount_devices[fields[0]] = tuple(map(int, fields[2].split(":")))
+    except (OSError, ValueError, IndexError):
+        pass
+    try:
+        for fd in (directory / "fd").iterdir():
+            try:
+                stat = fd.stat()
+                key = (os.major(stat.st_dev), os.minor(stat.st_dev), stat.st_ino)
+                # Btrfs stat.st_dev can differ from the mount device in /proc/locks.
+                if key not in holders and any(lock[2] == stat.st_ino for lock in holders):
+                    try:
+                        info = (directory / "fdinfo" / fd.name).read_text().splitlines()
+                        mount = next(line.split()[1] for line in info if line.startswith("mnt_id:"))
+                        if mount in mount_devices:
+                            key = (*mount_devices[mount], stat.st_ino)
+                    except (OSError, IndexError, StopIteration):
+                        pass
+                if key == waits.get(pid) or (pid not in waits and key in holders and holders[key] - {pid}):
+                    owners = ",".join(str(owner) for owner in sorted(holders[key] - {pid})) or "unknown"
+                    return f"lock={short_command([os.readlink(fd)])} holder={owners}"
+            except OSError:
+                continue
+    except OSError:
+        pass
+    return "lock=unknown holder=unknown"
+
+
+def slow_steps(proc=Path("/proc"), threshold=120, preparation_threshold=60, lock_threshold=30):
+    processes = process_steps(proc)
+    chains = {pid: tuple(process_ancestors(pid, processes)) for pid in processes}
+    candidates = {pid for pid, chain in chains.items() if any(processes[parent]["step"] for parent in chain)}
+    if not candidates:
+        return
+    admitted = admitted_processes()
+    if admitted is None:
+        print("GAP slow-steps: heavy-lease status unavailable; long-job exclusions unknown")
+        admitted = set()
+    idle = {pid for pid, process in processes.items() if process["idle"]}
+    # Exempt the admitted/idle tree and launcher wrappers waiting above it.
+    exempt = {ancestor for pid in admitted | idle for ancestor in chains.get(pid, ())}
+    holders, waits = process_locks(proc)
+    for pid in sorted(candidates):
+        process = processes[pid]
+        chain = chains[pid]
+        prep = any(processes[parent]["prep"] for parent in chain)
+        if not prep and (pid in exempt or admitted.intersection(chain) or idle.intersection(chain)):
+            continue
+        elapsed = process["elapsed"]
+        try:
+            wchan = (proc / str(pid) / "wchan").read_text().strip() if elapsed >= lock_threshold else ""
+        except OSError:
+            wchan = ""
+        lock_wait = elapsed >= lock_threshold and bool(re.search(r"(?:locks?_.*wait|flock.*wait)", wchan))
+        slow = elapsed >= (preparation_threshold if prep else threshold)
+        if not slow and not lock_wait:
+            continue
+        try:
+            cwd = os.readlink(proc / str(pid) / "cwd")
+        except OSError:
+            cwd = "unknown"
+        detail = (f"pid={pid} elapsed={elapsed:.0f}s cpu-life={process['cpu']:.1f}% "
+                  f"cwd={short_command([cwd])} | {short_command(process['argv'])} | {process_attribution(proc, chain)}")
+        if slow:
+            print(f"SLOW STEP {detail}")
+        if lock_wait:
+            lock = lock_description(proc, pid, holders, waits)
+            print(f"LOCK WAIT {detail} | {wchan} wait-age=unknown (snapshot) {lock}")
+
+
 def census(snapshot, now, repositories):
+    slow_steps()
     main_health()
     capacity(snapshot, repositories)
     items = list(stalled_queues(snapshot, now))
@@ -1114,7 +1318,7 @@ def main():
     commit_parser.add_argument("message", metavar="MSG")
     commit_parser.add_argument("paths", nargs="+", metavar="PATH")
     commands.add_parser(
-        "census", description="Print recorded main health and shared blockers, ready-issue capacity, unanswered reports, dead leads, unreported idle gates, unused child completions, stalled queues, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
+        "census", description="Print slow launcher/check steps and lock waits, recorded main health and shared blockers, ready-issue capacity, unanswered reports, dead leads, unreported idle gates, unused child completions, stalled queues, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
     )
     board = commands.add_parser(
         "board", description="Write the fixed-design board from T3 and state.md. Today is Europe/Copenhagen. Wait sums today's reports to their next CoS send, including pending waits ending at now or settlement; one reply may answer several reports. Dead-run time is clipped to today. Restart clusters have at least three distinct roots ending within ten seconds. Children count distinct tasks started today, including native subagents when stored. Done uses the latest report kind, not the status of a completed turn.", allow_abbrev=False,
