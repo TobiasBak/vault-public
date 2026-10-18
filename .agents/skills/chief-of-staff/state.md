@@ -54,13 +54,14 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
-- #278: #285 merged 5a01b95 (00:29Z): unsigned (#279); runbook docs/distribution.md (prod publish = Tobias). #292 decided 10-18: isolated new Firestore registry + tolerant readers (ignore unknown fields); Sol lead mcp:467b7b12 (feature/292-isolated-registry). #301 = delete legacy registry, Tobias only. Names: platform-api-rust, platform-registry-rust. Lead: no IAM/deploy; source+synthetic+rollout runbook. Infra = OpenTofu in orderready-platform infra/gcp/platform; lead GO 10-18 on protected plan. Tobias OK agent apply (post-merge, additive-only plan); ADC ok; checks green; platform#10 merged 42840e8 + #302 merged 1ee6ae8 (10-18); apply GO (replan 4 add/0/0 only), then close #292.
+- #278: #285 merged 5a01b95 (00:29Z): unsigned (#279); runbook docs/distribution.md (prod publish = Tobias). #292 decided 10-18: isolated new Firestore registry + tolerant readers (ignore unknown fields); Sol lead mcp:467b7b12. #301 = delete legacy registry, Tobias only. Tobias OK agent apply; platform#10 merged 42840e8 + #302 merged 1ee6ae8 (10-18); apply GO (replan 4 add/0/0 only), then close #292.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
+- Delegation rewrite approved 10-18. Sol drafting → ~/.cache/agent-tmp/delegation-rules/; show Tobias the diff before applying.
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
