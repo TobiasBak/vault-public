@@ -4,6 +4,16 @@ Tobias's working note on Elon Musk's "how to win" principles: the principles, hi
 
 Source: [@InvestInAssets, 2026-10-17](https://x.com/InvestInAssets/status/2111397587064430954), an image compiling Musk quotes from interviews and talks. The compilation is unsourced; treat wording as approximate.
 
+## Core
+
+Risk-taking and hard work are the two that land hardest for Tobias (2026-10-18). Without them he sees himself going nowhere. Everything else in this note supports these two.
+
+> There's a tremendous bias against taking risks. Everyone is trying to optimize their ass-covering.
+
+> Work like hell. You just have to put in 80 to 100 hour weeks every week. This improves the odds of success.
+
+> When something is important enough, you do it even if the odds are not in your favor.
+
 ## The principles
 
 **Taking risk**
@@ -48,7 +58,8 @@ Source: [@InvestInAssets, 2026-10-17](https://x.com/InvestInAssets/status/211139
 
 ### Needs translating for the agent era
 
-- **80–100 hour weeks.** Musk's input is human hours. Tobias's scarce input is attention: intent, decisions, challenge. Agents supply the hours. The equivalent of "work like hell" is to keep decision latency low and agents busy around the clock, and to count loops and decisions per day rather than hours at the desk. Hours still matter, but wasted attention costs more than a short day.
+- **80–100 hour weeks.** Keep the hours and multiply them. Tobias's own hours go to what agents can't supply: intent, decisions, challenge, taste. Agents run around the clock beside him, so "work like hell" means both: put in the hours, and keep decision latency low enough that the fleet never idles waiting for him. Count shipped loops and decisions, not just time at the desk.
+- **Direction before effort.** Hours and risk compound only when aimed at the right thing. Working like hell on the wrong bet still goes nowhere, so recheck each week that the hardest work goes to the biggest bet.
 - **No task too menial.** Delegating everything risks losing contact with the ground truth. Doing the menial thing yourself sometimes, such as using the product as a user, reading raw transcripts, or onboarding a customer by hand, shows what no report surfaces.
 - **Many small things make a breakthrough.** Compounding is the strategy: every skill, check, vault note and tool makes the next run better. Don't wait for one big idea.
 
@@ -68,3 +79,5 @@ Source: [@InvestInAssets, 2026-10-17](https://x.com/InvestInAssets/status/211139
 ## Log
 
 Add dated entries: what was tried, what changed in practice, which principle held up and which didn't.
+
+- **2026-10-18:** Risk-taking and hard work picked as the core; see Core.
