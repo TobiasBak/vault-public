@@ -1,6 +1,6 @@
 ---
 name: system-specs
-description: Write, extend, or check requirement specs that let Tobias understand a system's design without reading code, for systems agents change and deploy several times a day. Use when defining or reviewing requirements for data, storage, releases and deploys, APIs, or other boundaries, when a design question touches version skew or deploy safety, or when implementing code a spec governs.
+description: Write, extend, or check requirement specs that let Tobias understand a system's design without reading code, for systems agents change several times a day. Use when defining or reviewing requirements for data, storage, releases and deploys, APIs, or other boundaries, when a design question touches version skew or deploy safety, or when implementing code a spec governs.
 ---
 
 # System specs
@@ -9,7 +9,7 @@ A spec tells Tobias what the system must do and why, without code. Agents read i
 
 ## The world specs assume
 
-Agents ship several times a day. So at any moment:
+Agents merge several times a day, staging updates continuously, and production releases up to daily plus hotfixes. So at any moment:
 - Two or more versions of the code run against the same data and talk to each other: rolling deploys, workers that haven't restarted, migrations applied before or after the code that uses them.
 - Every boundary sees data written by both newer and older code than itself.
 - No human is around to fix a halted system by hand.
