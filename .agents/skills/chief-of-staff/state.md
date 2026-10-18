@@ -54,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
-- #278: #285 merged 5a01b95 (00:29Z): Orderready.Gui/MailboxAutomation, rust-{gui,mailbox} feeds, additive pages, unsigned (#279), legacy-origin guard; runbook docs/distribution.md (prod publish = Tobias). #278 closed, lead settled. Registry choice = #292 needs-tobias (rec isolated).
+- #278: #285 merged 5a01b95 (00:29Z): Orderready.Gui/MailboxAutomation, rust-{gui,mailbox} feeds, additive pages, unsigned (#279), legacy-origin guard; runbook docs/distribution.md (prod publish = Tobias). #278 closed; settle lead mcp:d1f4740d next heartbeat. Registry choice = #292 needs-tobias (rec isolated).
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
