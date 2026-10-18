@@ -15,7 +15,7 @@ Owned by the [chief-of-staff](SKILL.md) skill. Public: no secrets, credentials, 
 
 ## Live teams
 - Opus UI [Import page lead](t3-thread://v1/mcp:3e1d2a97-defe-49a9-bbdf-4df41204173b) (only live Opus team): Tobias 21:02 full Import REDESIGN "way better" w/ old-app features (#276 inventory, design+slicing there), real Gemini on RP2XL OK; #270 folded in; #281 merged d629327 (#269); slice P #284 merged 4aa4295 (#274/#275); slice 1 GO 00:4x (2 tab-selected expectation lines + 1x close-flow invalidate, park till #283); routing: Tobias 21:59 no applies-to filter (customer route = all parts); renumber ALL ops sequentially 10/20/30 (no pinned numbers) unless Sol finds evidence numbers must be kept; blocked only if unplaceable. Renumber GO 22:11 (A–E, F pre-approved by rule).
-- #265 lead: #273/#277/#282 merged (#282 f1ba2c6 = #268: heavy-lease sole local memory owner); now #283 = PR #286 merge-ready, stale-base refusal → rebase 01:5x (GO 23:5x: proxy EOF for unmatched cancel + bounded focusable await; Import lead got 1x invalidate of 4 keys, refail = stop).
+- #265 lead: #273/#277/#282/#286 merged (#283 GUI flake fixed 61041de); closing, settle mcp:195068c7 after. pr-merge stale-base fix = dotfiles#44.
 
 Brief messages to leads with `cos.py brief --short`. Merge per the working section (orderready: `pr-merge`; others: `gh pr merge --match-head-commit`). Never `link_pull_request` (Tobias, 2026-10-17).
 
@@ -55,7 +55,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
 - #278 dist lead mcp:d1f4740d (Sol, issue-278-distribution, 23:0x): Tobias GO on all 3 recs (new IDs/feeds no migration, additive links on downloads.web.app, Authenticode later: ships UNSIGNED, cert = backlog #279); Hedema/Larsbroe out of scope. Protected GO given 23:1x (feeds/IDs/tests, signing off-by-default, fail-closed legacy-API guard). Open: shared-vs-isolated platform service+registry → asked lead what registry is, then Tobias. No prod writes.
-- MERGE ORDER (01:5x): #286 first, tell #278 lead; then MAIN FREEZE until #285 lands/blocked.
+- MAIN FREEZE since 02:0x (#286 merged 61041de): no merges until #285 (#278) lands/blocked.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
