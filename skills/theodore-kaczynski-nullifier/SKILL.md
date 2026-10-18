@@ -1,65 +1,72 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Shape a repository for agent-only development. Use when setting up or restructuring a repo for agents, when a measured feedback-loop cost (build, test, CI, gate or platform run) is the selected work, when tracing slow gates, or when writing AGENTS.md.
+description: Set up a repository so agents, not humans, develop in it. Use when setting up or restructuring a repo for agents, when the chosen work is cutting a measured wait (build, test, CI, gate or platform run), when tracing slow gates, or when writing AGENTS.md.
 ---
 
 # Theodore Kaczynski Nullifier
 
 Technology was never the problem. Waiting on it is.
 
+## Terms
+
+- **Published interface:** what outside users call: CLI, HTTP API, file-in/file-out contract, or a library's public API.
+- **Case:** one black-box test directory (input, expected output, `case.toml`). The **corpus** is all cases.
+- **Verdict:** pass, fail, or blocked for one tree. The **gate** is the git hooks running `<cli> check`.
+- **Approved path:** the allowed way to do what a check forbids. Every failure names it.
+- **Promotion PR:** the main→staging PR (main→production without staging). It runs the full corpus and secondary platforms.
+
 ## The law
 
 **Agent thinking is the only acceptable bottleneck.** A tool call slower than a model turn needs a reason. A turn spent on a question the repo could have answered in the previous call is waste.
 
-**No human reads this repository.** Repository-hygiene checks enforce these contracts when adopted for the selected outcome:
-- **Zero comments.** No explanatory comments, doc comments, TODOs, banners, or commented-out code. A line-1 interpreter directive is not a comment.
-- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), the CLI's `--help`, case records, and [approved published contracts](references/agent-context.md#what-stays-out). Every other prose file fails.
+**No human reads this repository.** Adopted checks enforce:
+- **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
+- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths.
 - **No README.**
-- Name things for `rg`.
+- Name things so `rg` finds them.
 
-**Only black-box tests, as few as possible.** Input in at the published interface, specified output out. Extend a case before adding one. Static checks, types, linters, and formatters carry everything else. Keep an existing suite intact until an authorized [migration](references/black-box-tests.md#migrating-an-existing-suite) proves its replacement.
+**Only black-box tests, as few as possible.** Input in at the published interface, specified output out. Extend a case before adding one. Static checks, types, linters, and formatters cover the rest. Keep an existing suite until an authorized [migration](references/black-box-tests.md#migrating-an-existing-suite) proves its replacement.
+
+## Where the why goes
+
+Comments stay banned, no exceptions. A reason names and code can't show goes:
+1. **First, into something that runs:** a gate check whose failure states the reason and approved path (`Cloud Run ignores resource.name conditions; grant roles/run.invoker on the service without one.`), or a case's `oracle` prose explaining the behavior.
+2. **Second, for a one-off decision no program can check:** a `Why:` commit trailer (`Why: pin serde_yaml 0.9.33; 0.9.34 breaks anchors.`), found with `git log -S'<code>'` or `git blame`.
+
+Anything else belongs in the issue or PR, never the tree.
 
 ## The loop
 
-The goal is PR lead time on a named product workflow, not tool latency for its own sake. This work runs beside product work, never as its precondition.
+Aim at shorter PR lead time on a named product workflow, not faster tools for their own sake. This runs beside product work, never as its precondition.
 
-1. **Measure.** Agents can't see their own time. Read the harness's session logs: model time is request to response, tool time is call to result. Split it into model, tool by class (build, test, platform, git, wait), and waiting on children or the user.
-2. **Select one outcome.** Name the consumer workflow, who uses it, observed frequency, process boundary, current cost, and removable cause. Fix the largest measured recurring cost at its owner: the CLI, cache, harness, or host tooling. Never with an instruction agents must remember. Correctness, security, and data-loss defects justify scoped fixes without a speed claim.
-3. **Check value.** Use existing evidence. A baseline and causal hypothesis can justify one or two matched screens. A migration, watcher, new enforcement system, or standalone proof program proceeds only when the screen demonstrates value. Otherwise park it; a failed screen does not justify another research program to rescue the candidate.
-4. **Measure again** on the selected workflow after the change. Stop when a one-line edit reaches its verdict faster than a model turn, or the issue's measured target is met. Further feedback-loop work needs a new measured cost.
-- Use `<cli> trace [verdict]` to locate verification bottlenecks and critical-path deltas under the [tracing contract](references/tracing.md).
+1. **Measure** from the harness's session logs; agents can't see their own time. Split time into model (request to response), tool by kind (build, test, platform, git, wait), and waiting on child agents or the user.
+2. **Pick one outcome:** the product workflow that gains and who uses it, how often it runs, the step where the time goes (e.g. pre-push), its current cost, and the cause you can remove. Fix the largest measured recurring cost where it originates (CLI, cache, harness, host tooling), never with an instruction agents must remember. Correctness, security, and data-loss bugs justify scoped fixes with no speed claim.
+3. **Check value** with existing evidence. A baseline plus a named cause justifies one or two small before-and-after trials under the same conditions. A migration, watcher, new enforcement system, or standalone proof effort goes ahead only if a trial shows value; otherwise shelve it, with no new research to rescue it.
+4. **Measure again** on the same workflow. Stop when a one-line edit reaches its verdict faster than a model turn, or the measured target is met. More loop work needs a new measured cost.
 
-## Adopt capabilities for the outcome
+## What to read
 
-Read every reference in full. They define the contracts of capabilities adopted for the selected outcome, not an implementation backlog. Do not weaken an adopted check to make it green. Unrelated whole-repository conformance is separate work. In a new repository, establish the real first workflow and its correctness boundaries; add operational machinery when that workflow needs it.
+Adopt only what removes the chosen cost or repairs a broken contract. References define each capability's contract once adopted; they are not a to-do list. Read only the ones the outcome needs:
 
-The references:
-- [manifest.md](references/manifest.md)
-- [black-box-tests.md](references/black-box-tests.md)
-- [control-cli.md](references/control-cli.md)
-- [tracing.md](references/tracing.md)
-- [enforcement.md](references/enforcement.md)
-- [agent-context.md](references/agent-context.md)
+| Job | Read |
+|---|---|
+| Choosing the slow pattern to fix (one-call answers, waits, cache, watcher, budgets, scope, review) | [manifest.md](references/manifest.md) |
+| Writing, changing, or migrating tests | [black-box-tests.md](references/black-box-tests.md) |
+| Adding CLI commands, output, runs, mutation testing, proofs | [control-cli.md](references/control-cli.md) |
+| Tracing slow gates | [tracing.md](references/tracing.md) |
+| Adopting, fixing, or rolling out checks | [enforcement.md](references/enforcement.md) |
+| `AGENTS.md`, skills, moving docs out of the tree | [agent-context.md](references/agent-context.md) |
 
-Choose what removes the selected cost or repairs the broken contract:
-- One control CLI whose adopted commands answer real recurring questions in one call, failures only.
-- A small black-box corpus of fat scenarios within their budgets, and static checks.
-- A verdict cache keyed on build inputs and case, shared across worktrees and agents.
-- An always-on watcher, so the verdict for the current tree exists before anyone asks.
-- `wait`, never `sleep`.
-- A visible time budget on every adopted tier.
-- Each adopted rule a gate check with an approved path.
-- A root `AGENTS.md` in the [fixed shape](references/agent-context.md#root-agentsmd).
-- Nothing duplicates the CLI; skills add only task-specific instructions.
+Never weaken an adopted check to pass. Whole-repo conformance is separate work. In a new repo, build the first real workflow and its correctness checks; add machinery when it needs it. Typical pieces: one control CLI answering recurring questions in one call, failures only; a small corpus of large scenario cases plus static checks; a verdict cache shared across worktrees and agents; a watcher; `wait`, never `sleep`; a visible budget per tier; every rule a gate check with an approved path; a root `AGENTS.md` in the [fixed shape](references/agent-context.md#root-agentsmd); nothing duplicating the CLI.
 
 ## Verification
 
-Prove the delivered outcome, not every capability in this skill:
-- For an optimization, a before-and-after ledger for the targeted cost on the selected workflow.
-- For changed contracts, success, targeted failure, applicable blocked prerequisites, and affected cache or cleanup behavior through the real public entrypoint. Use the [disposable proof procedure](references/control-cli.md#proof); reuse valid evidence for unchanged surfaces.
-- For tracing, a real gate run emits a trace that loads as valid Chrome Trace JSON; one injected delay in a single step appears as the top critical-path delta in `<cli> trace`.
-- For adopted or changed enforcement, the gate rejects the forbidden pattern and accepts the approved path through its real entrypoints.
-- For cache changes, repeated unchanged-tree verdict reuse without building and rejection of stale evidence.
-- For edit-loop changes, a one-line source edit reaching its verdict, rebuild included, faster than a model turn. Cache hits prove nothing about the edit loop.
-- For navigation or diagnostic changes, a fresh agent given a real bug report locates, reproduces, and proves the fix. Count its turns before and after.
-- For authorized suite deletion, the [replacement proof](references/black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop migration, never authorize deletion without proof.
+Prove what you delivered, not every capability here:
+- **Speedup:** before-and-after numbers for the targeted cost on the chosen workflow.
+- **Changed contract:** the [proof procedure](references/control-cli.md#proof).
+- **Tracing:** a real gate run writes valid Chrome Trace JSON, and one injected delay in one step is the top critical-path change in `<cli> trace`.
+- **Enforcement:** the gate rejects the forbidden pattern and accepts the approved path through its real entrypoints.
+- **Cache:** an unchanged tree reuses its verdict without building; stale evidence is rejected.
+- **Edit loop:** a one-line edit reaches its verdict, rebuild included, faster than a model turn. Cache hits prove nothing here.
+- **Navigation or diagnostics:** a fresh agent given a real bug report finds, reproduces, and proves the fix; count its turns before and after.
+- **Suite deletion:** the [replacement proof](references/black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop a migration, never authorize deletion.

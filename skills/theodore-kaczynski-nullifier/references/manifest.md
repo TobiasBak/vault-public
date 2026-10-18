@@ -1,103 +1,82 @@
 # Manifest
 
-Ordered by measured cost. Each: the smell that reveals it, then the fix.
+Common slow patterns, ordered by measured cost: the symptom, then the fix.
 
 ## 1. Ask the whole question in one call
 
-Smell: chains of `rg`, `tail`, `git log`, each its own turn.
+Symptom: chains of `rg`, `tail`, `git log`, each its own turn.
 
-- CLI commands match the questions agents ask: "is this head mergeable", "why did this case fail", "what changed since the last green verdict".
-- One call returns verdict, failing cases, first divergence, and repro command.
-- Every probe sequence that repeats across sessions is a missing command.
-- Independent reads go in one call.
-- `<cli> map [area]` answers "where is this behavior" from case records. Never a hand-written map.
+- Commands match the questions agents ask: "can this head merge", "why did this case fail", "what changed since the last green verdict". One call returns verdict, failing cases, first mismatch, and rerun command.
+- A probe sequence that repeats across sessions is a missing command. Independent reads go in one call.
+- `<cli> map [area]` answers "where is this behavior" from case records, never a hand-written map.
 
 ## 2. Wait on exit, never on a clock
 
-Smell: `sleep 540; tail log`.
-
-- `<cli> wait <job>` blocks until the job exits and returns its verdict. A job that dies at 35s answers at 35s.
+Symptom: `sleep 540; tail log`. Fix: `<cli> wait <job>` returns the verdict when the job exits; a job that dies at 35s answers at 35s.
 
 ## 3. Cache verdicts
 
-Smell: rerunning a suite already passed on the same tree.
+Symptom: rerunning a suite that already passed on the same tree.
 
-- Key: build inputs the case exercises (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version. Inputs, not output bytes.
-- The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. The cache key, the watcher, and the `Behavior-Change:` guard read the same set.
+- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version. Inputs, not output bytes.
+- The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. Cache key, watcher, and `Behavior-Change:` guard read this same set.
 - Value: verdict, actual-output hash, duration, producer.
-- Content-addressed, outside every worktree and build directory, shared by all agents. Nothing a cleanup can delete.
+- Stored by content hash outside every worktree and build directory, shared by all agents, beyond any cleanup.
 - Nondeterminism is a bug in the case or the system.
 - A new head whose diff touches none of a job's inputs reuses its verdict.
 
 ## 4. Have the answer before the question
 
-Smell: every edit followed by build, test, read.
+Symptom: every edit followed by build, test, read.
 
-- One watcher per worktree. On change: debounce, build, run affected cases, store the verdict for the tree hash.
-- `<cli> status` returns the verdict for the current tree hash, blocks while a run is in progress, never returns another tree's verdict.
-- Starts on the first feedback command (`status`, `test`, `build`); read-only commands such as `doctor` never start it. Exits with the worktree or when idle. Low priority; takes a slot (§11).
+- One watcher per worktree. On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
+- `<cli> status` returns the current tree's verdict, blocks while a run is in progress, never returns another tree's.
+- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the worktree or when idle; runs at low priority and takes a slot (§11).
 - Agents never call the build tool directly.
 
 ## 5. Never pay for a cold start twice
 
-Smell: the same build, boot, or setup repeated across worktrees, lanes, or runs.
-
-- Snapshot and resume, a warm pool, or a shared content-keyed cache.
-- New worktrees start from an existing build cache.
-- One long-lived environment per resource, not one per run.
+Symptom: the same build, boot, or setup repeated across worktrees, parallel jobs, or runs. Fix: snapshot and resume, a warm pool, or a shared content-keyed cache. New worktrees start from an existing build cache. One long-lived environment per resource, not per run.
 
 ## 6. Caches explain their misses
 
-Smell: "rebuilt again, no idea why."
+Symptom: "rebuilt again, no idea why." Fix: store the input details beside the key and on a miss print field-by-field differences against the nearest key. Compare inputs without building before retrying an expensive build. State that only affects execution stays out of the key.
 
-- Store the input identity next to the key. On a miss, print field-level differences against the nearest key.
-- Compare contexts without building before retrying an expensive build.
-- Execution-only state stays out of the key.
+## 7. One input set drives selection and cache key
 
-## 7. One input set drives scope and key
-
-Smell: a docs change triggers the full matrix.
-
-- Each job declares its inputs once. Selection and cache key both derive from it.
-- A path no job claims is an error.
+Symptom: a docs change triggers the full matrix. Fix: each job declares its inputs once; test selection and cache key both come from it. A path no job claims is an error.
 
 ## 8. Touched cases for PRs, full corpus on promotion
 
-Smell: full CI after every edit.
-
-- In the loop and for PRs: static checks and affected cases, through the verdict cache. The CLI picks the scope conservatively; a change it can't map to cases (shared code, harness, dependencies, budgets) runs that code's own tests plus one smoke case per lane. The full corpus runs on the promotion PR. The [gate](enforcement.md#checks) compares PR failures against main.
+Symptom: full CI after every edit. Fix: the [gate policy](enforcement.md#checks).
 
 ## 9. Budgets are visible
 
-Smell: a step quietly tripled.
+Symptom: a step quietly got three times slower.
 
-- Every tier has a budget next to its definition. Overruns print `budget 60s, took 158s`.
-- Defaults: static checks ≤2s, affected cases ≤10s, full local corpus ≤60s, platform runs asynchronous.
+- Every tier has a budget next to its definition, and overruns print `budget 60s, took 158s`.
+- Defaults: static checks ≤2s, affected cases ≤10s, full local corpus ≤60s, platform runs in the background.
 
 ## 10. Failures only
 
-Smell: passing output in context.
-
-- Passing cases print nothing. A failure prints case, first divergence, minimal diff, artifact paths, repro command. Logs go to artifacts.
+Symptom: passing output filling context. Fix: the [failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.
 
 ## 11. One heavy job per resource
 
-Smell: concurrent builds or guest runs slowing each other.
-
-- A slot per heavy resource (CPU, guest machine, accelerator), taken by the CLI. The watcher takes one too.
+Symptom: concurrent builds or VM runs slowing each other. Fix: one slot per heavy resource (CPU, VM, accelerator), taken by the CLI; the watcher takes one too.
 
 ## 12. Secondary platforms gate promotion, not the loop
 
-Smell: a secondary-platform run on every PR.
+Symptom: a secondary-platform run (e.g. the Windows VM) on every PR.
 
-- Merge on primary-platform evidence. Secondary platforms qualify release promotion.
-- Build on the primary, ship artifacts to the secondary. Never build on the secondary.
-- Platform-specific code sits behind one thin seam.
+- Merge on primary-platform evidence; secondary platforms qualify the promotion.
+- Build on the primary and ship artifacts to the secondary. Never build on the secondary.
+- Platform-specific code sits behind one thin layer.
 
 ## 13. Review blockers, not round counts
 
-Smell: an arbitrary cap stops a blocking-fix recheck, or nonblocking findings restart review.
+Symptom: a round cap stops the recheck of a blocking fix, or non-blocking findings restart review.
 
-- One independent review. Only correctness, security, data loss, or a broken contract blocks readiness.
-- A further round rechecks a blocking fix and its regressions. Nonblocking findings become follow-ups, never another review round.
-- Merge authority remains with the repository's designated owner.
+- One independent review. Only correctness, security, data loss, or a broken contract blocks.
+- A further round only rechecks a blocking fix and what it might break. Non-blocking findings become follow-ups, never another round.
+- Merge authority stays with the repo's designated owner.
