@@ -1,6 +1,6 @@
 ---
 name: system-specs
-description: Write, extend, or check requirement specs that let Tobias understand a system's design without reading code, for systems agents change several times a day. Use when defining or reviewing requirements for data, storage, releases and deploys, APIs, auth and permissions, tenancy, observability and incidents, dependencies, or other boundaries, when a design question touches version skew or deploy safety, or when implementing code a spec governs.
+description: Write, extend, or check requirement specs that let Tobias understand a system's design without reading code, for systems agents change several times a day. Use when defining or reviewing requirements for data, storage, releases and deploys, APIs, auth and permissions, tenancy, observability and incidents, dependencies, AI features, or other boundaries, when a design question touches version skew or deploy safety, or when implementing code a spec governs.
 ---
 
 # System specs
@@ -45,6 +45,7 @@ General requirements every system meets unless its spec says otherwise:
 | Access and security | [access.md](references/access.md) |
 | Observability and incidents | [observability.md](references/observability.md) |
 | Dependencies and supply chain | [dependencies.md](references/dependencies.md) |
+| AI in the product | [ai.md](references/ai.md) |
 
 A project's spec adopts catalog requirements by ID and adds its own.
 
