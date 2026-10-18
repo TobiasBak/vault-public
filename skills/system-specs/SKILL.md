@@ -46,6 +46,13 @@ General requirements every system meets unless its spec says otherwise:
 
 A project's spec adopts catalog requirements by ID and adds its own.
 
+## Auditing a repo
+
+1. Read the project's spec if it has one; otherwise every catalog applies.
+2. Mark each requirement met (cite the enforcing type, check or case), gap (what's missing and the cheapest enforcement), or not applicable (why, such as no external API).
+3. Rank gaps by how likely they are to break production, not by count.
+4. Report; change code only when asked.
+
 ## Verification
 
 For code a spec governs, show each touched requirement's enforcement working: the type or static check rejects the forbidden form and accepts the supported one, and the black-box case passes against data or peers from both the previous and the next version.
