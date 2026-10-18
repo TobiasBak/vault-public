@@ -61,7 +61,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 - orderready #224: tell native-screens lead to keep reload-on-mount and decide caching once across screens; no implementation work. Native-screens team is done; delivery of this message not recorded.
 
 ## Needs Tobias
-- Delegation rewrite approved 10-18 (no #292 ref; lead-only rules → cos.py brief + SKILL working; global keeps general). Sol applying (cos-delegation-rules-apply-1).
+- Delegation rewrite landed 10-18: dotfiles 4624f50, vault 67a37c1 (lead rules in scripts/brief.md). Asked Tobias: platform staging→prod deploy pipeline issue + team?
 
 - 2026-10-18: run through .NET Business Connector with Tobias for orderready #144; record findings in #144 and docs/ax-knowledge.md.
 
