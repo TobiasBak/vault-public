@@ -71,7 +71,7 @@ Delegate writers under vault `AGENTS.md`; spot-check diffs. Route transferable l
 
 ## State
 
-[state.md](state.md): one short line per open obligation, pointing at its issue, PR or thread. Update in the same turn; delete finished items, never annotate them. Budget: 10 KB (10,240 bytes). This vault is public: no secrets, credentials, source code or nonpublic employer/customer details.
+[state.md](state.md): one short line per open obligation, pointing at its issue, PR or thread. Update in the same turn; delete finished items, never annotate them. Budget: 10 KB (10,240 bytes). This vault is public: no secrets, credentials, source code or nonpublic employer/customer details. Lead reports come from private repos where customer names are allowed: never paste them verbatim; strip customer order, part and drawing names and customer system specifics first.
 
 ## Handover
 
