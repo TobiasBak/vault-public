@@ -1,0 +1,4 @@
+interface:
+  display_name: "System specs"
+  short_description: "Write requirement specs for systems agents change daily"
+  default_prompt: "Use $system-specs to write or check the spec for this part of the system."
