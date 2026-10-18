@@ -21,7 +21,7 @@ Enforcement: production credentials exist only in the pipeline; production confi
 
 ### R2 One version, known running state
 
-Every artifact built from a commit carries that commit's single version. A release manifest links artifact digests, migrations and verification results to it. A deployment inventory records what actually runs, including mixed versions mid-rollout and client adoption.
+Every artifact built from a commit carries that commit's single version. A release manifest links artifact digests, migrations and verification results to it. A deployment inventory records what actually runs, including mixed versions mid-rollout, client adoption, and each tenant database's schema version.
 
 Reason: "client ≥ X" and "server has migration Y" stay simple comparisons, and "what is running" has one answer.
 
@@ -63,7 +63,7 @@ Enforcement: the release branch accepts only promotions of commits already on ma
 
 ### R7 Executable deploy order
 
-Migrations, then server, then clients. The order is a dependency graph that advances only on success and rechecks its preconditions when each step executes.
+Migrations, then server, then clients. The order is a dependency graph that advances only on success and rechecks its preconditions when each step executes. Code that needs a migration waits until every tenant database has it.
 
 Reason: a consumer outrunning its provider or migration breaks, and separately passing pipelines race. Enforces [D8](data.md#d8-strict-commands) and [D11](data.md#d11-migration-execution).
 

@@ -103,11 +103,11 @@ Enforcement: compile-time-checked queries or an equivalent schema check in the b
 
 ### D11 Migration execution
 
-Additive migrations run as a separate step before the code that needs them. Backfills run as resumable jobs that are safe to repeat, never at startup. Nothing destructive runs at startup. A client that owns its local store migrates it additively on open.
+Additive migrations run as a separate step before the code that needs them. Backfills run as resumable jobs that are safe to repeat, never at startup. Nothing destructive runs at startup. A client that owns its local store migrates it additively on open. With a database per tenant, migrations roll out across tenant databases in stages, internal and test tenants first; a failure halts the rollout without affecting tenants already migrated, and each tenant's schema version is recorded.
 
 Reason: old code must keep working on the new schema during a deploy; long rewrites at startup block or race instances.
 
-Enforcement: the deploy pipeline runs migrations before rollout; a static check rejects destructive statements outside D5 changes.
+Enforcement: the deploy pipeline runs migrations before rollout; a static check rejects destructive statements outside D5 changes; a black-box case fails one tenant's migration and finds the others serving.
 
 ### D12 Compatibility gate
 
