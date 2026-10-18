@@ -19,7 +19,8 @@ from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
 
-COS_THREAD_ID = Path(__file__).with_name("cos-thread").read_text().strip()
+STATE_DIR = Path.home() / ".local/state/chief-of-staff"
+COS_THREAD_ID = (STATE_DIR / "cos-thread").read_text().strip()
 KINDS = ("go-request", "merge-ready", "done", "blocked", "tobias-decision", "other")
 TABLES = {
     "orchestration_v2_projection_threads",
@@ -587,7 +588,7 @@ def stalled_queues(snapshot, now):
 def census(snapshot, now, repositories):
     capacity(snapshot, repositories)
     items = list(stalled_queues(snapshot, now))
-    state = Path(__file__).resolve().parent.parent / "state.md"
+    state = STATE_DIR / "state.md"
     state_size = state.stat().st_size
     if state_size > 10_240:
         print(f"WARNING: state.md is {state_size:,} bytes; exceeds the 10,240-byte budget")
@@ -816,7 +817,7 @@ def write_board(snapshot, now, out):
         done_at = snapshot.reports[lead][-1][0] if snapshot.done(lead) and report_kind(snapshot.reports[lead][-1][1]) == "done" else None
         if (settled_at and since <= settled_at < now and snapshot.settled(lead)) or (done_at and since <= done_at < now):
             finished.append(f'<b>{escape(snapshot.title(lead))}</b>')
-    state = Path(__file__).resolve().parent.parent / "state.md"
+    state = STATE_DIR / "state.md"
     needs = state_lines(state, "Needs Tobias")
     coming = state_lines(state, "Coming to you")
     html = Template(Path(__file__).with_name("board.html").read_text()).substitute(

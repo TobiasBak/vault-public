@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Chief of staff
 
-Read [state.md](state.md) at session start and after compaction. This skill and state are the memory. The SessionStart `compact` hook (`scripts/reload-after-compact.sh`) re-injects both.
+Read `~/.local/state/chief-of-staff/state.md` at session start and after compaction. This skill and state are the memory. The SessionStart `compact` hook (`scripts/reload-after-compact.sh`) re-injects both.
 
 ## Charter
 
@@ -71,11 +71,11 @@ Delegate writers under vault `AGENTS.md`; spot-check diffs. Route transferable l
 
 ## State
 
-[state.md](state.md): one short line per open obligation, pointing at its issue, PR or thread. Update in the same turn; delete finished items, never annotate them. Budget: 10 KB (10,240 bytes). This vault is public: what may go in follows the root [AGENTS.md](../../../AGENTS.md#public-repository).
+State lives on this machine, outside the vault, in `~/.local/state/chief-of-staff/`: `state.md` and `cos-thread`. `state.md` holds one short line per open obligation, pointing at its issue, PR or thread. Update in the same turn; delete finished items, never annotate them. Budget: 10 KB (10,240 bytes). Lessons and knowledge still go to the vault and the owning repos through delegated writers; state holds only what is in flight.
 
 ## Handover
 
-The CoS thread ID lives only in `scripts/cos-thread`, read by the tools and brief. When Tobias asks, outgoing CoS commits the live roster, pending gates, questions and schedules, launches the successor in the vault root (`claudeAgent`/`claude-opus-5-5`, effort high, title "Chief of Staff", message `/chief-of-staff` plus old thread ID), then stops. Successor updates `scripts/cos-thread` and state, commits, recreates the 30-minute census bound to itself and deletes the old schedule. Send every live lead, idle ones included, `cos.py brief --short` to retarget reports. Answer reports after the handover commit in the old tail, then settle the old thread (Tobias, 2026-10-14).
+The CoS thread ID lives only in the state directory's `cos-thread`, read by the tools and brief. When Tobias asks, outgoing CoS writes the live roster, pending gates, questions and schedules to state, launches the successor in the vault root (`claudeAgent`/`claude-opus-5-5`, effort high, title "Chief of Staff", message `/chief-of-staff` plus old thread ID), then stops. Successor updates `cos-thread` and state, recreates the 30-minute census bound to itself and deletes the old schedule. Send every live lead, idle ones included, `cos.py brief --short` to retarget reports. Answer reports that arrive in the old tail after the handover, then settle the old thread (Tobias, 2026-10-14).
 
 ## Improve yourself
 

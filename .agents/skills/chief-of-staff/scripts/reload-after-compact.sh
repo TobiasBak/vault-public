@@ -26,7 +26,7 @@ fi
 
 header="Post-compaction reload for the chief of staff: these files are your memory; follow them."
 
-context="${header}"$'\n\n'"$(cat "$skill_dir/SKILL.md")"$'\n\n'"$(cat "$skill_dir/state.md")"
+context="${header}"$'\n\n'"$(cat "$skill_dir/SKILL.md")"$'\n\n'"$(cat "$HOME/.local/state/chief-of-staff/state.md")"
 
 jq -n --arg text "$context" \
   '{hookSpecificOutput:{hookEventName:"SessionStart",additionalContext:$text}}'
