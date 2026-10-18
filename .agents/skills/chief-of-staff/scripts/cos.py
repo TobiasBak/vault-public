@@ -591,7 +591,10 @@ query($owner: String!, $name: String!, $endCursor: String) {
         statusCheckRollup { contexts(first: 100) {
           pageInfo { hasNextPage }
           nodes {
-            ... on CheckRun { name status conclusion startedAt completedAt }
+            ... on CheckRun {
+              name status conclusion databaseId startedAt completedAt
+              checkSuite { app { slug } workflowRun { workflow { name } } }
+            }
             ... on StatusContext { context state createdAt }
           }
         } }
@@ -604,7 +607,10 @@ query($owner: String!, $name: String!, $endCursor: String) {
         statusCheckRollup { contexts(first: 100) {
           pageInfo { hasNextPage }
           nodes {
-            ... on CheckRun { name status conclusion startedAt completedAt }
+            ... on CheckRun {
+              name status conclusion databaseId startedAt completedAt
+              checkSuite { app { slug } workflowRun { workflow { name } } }
+            }
             ... on StatusContext { context state createdAt }
           }
         } }
@@ -623,18 +629,28 @@ def recorded_checks(commit):
     latest = {}
     for node in contexts["nodes"]:
         name = node.get("name") or node["context"]
-        at = node.get("startedAt") or node.get("createdAt") or ""
+        at = node.get("createdAt") or node.get("startedAt") or node.get("completedAt") or ""
         if "context" in node:
             state = node["state"].lower()
-        elif node["status"] != "COMPLETED":
-            state = "pending"
+            producer = ("status",)
+            source = "GitHub commit status"
         else:
-            state = (node["conclusion"] or "unknown").lower()
+            state = "pending" if node["status"] != "COMPLETED" else (node["conclusion"] or "unknown").lower()
+            suite = node.get("checkSuite") or {}
+            app = (suite.get("app") or {}).get("slug", "unknown-app")
+            workflow = ((suite.get("workflowRun") or {}).get("workflow") or {}).get("name", "")
+            producer = ("check-run", app, workflow)
+            source = f"GitHub check run {one_line(app + '/' + workflow)}"
+        order = (node.get("databaseId") or 0, at)
         check = {"name": name, "state": state, "at": node.get("completedAt") or at,
-                 "order": at, "source": "GitHub check/status"}
-        if name not in latest or at >= latest[name]["order"]:
-            latest[name] = check
-    return latest, contexts["pageInfo"]["hasNextPage"]
+                 "order": order, "source": source}
+        key = (name, producer)
+        if key not in latest or order >= latest[key]["order"]:
+            latest[key] = check
+    grouped = defaultdict(list)
+    for (name, _), check in latest.items():
+        grouped[name].append(check)
+    return dict(grouped), contexts["pageInfo"]["hasNextPage"]
 
 
 def read_git(root, *arguments):
@@ -652,11 +668,12 @@ def orderready_static(commits):
     cache = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "orderready/verdicts"
     directory = cache / ("static-" + hashlib.sha256(b"static").hexdigest())
     by_tree = defaultdict(list)
+    trees = {commit["tree"]["oid"] for commit in commits}
     for path in directory.glob("*.json"):
         if path.name == "last-pass.json":
             continue
         record = json.loads(path.read_text())
-        if record.get("tree") in {commit["tree"]["oid"] for commit in commits}:
+        if record.get("tree") in trees:
             by_tree[record["tree"]].append((path, record))
     advisory_url = "https://github.com/RustSec/advisory-db"
     cargo_home = Path(os.environ.get("CARGO_HOME") or Path.home() / ".cargo")
@@ -689,22 +706,23 @@ def orderready_static(commits):
 
 def print_main_health(repo, main, checks, required, prs, gaps):
     failed = {"failure", "error", "timed_out", "cancelled", "action_required", "startup_failure"}
-    relevant = {name: check for name, check in checks.items()
+    relevant = {name: evidence for name, evidence in checks.items()
                 if name in required or re.search(r"static|cargo[-_ /:]?deny", name, re.I)}
-    red = {name for name, check in relevant.items() if check["state"] in failed}
+    red = {name for name, evidence in relevant.items() if any(check["state"] in failed for check in evidence)}
     prefix = f"main-health {repo} main@{main['oid'][:12]}"
-    for name, check in sorted(relevant.items()):
-        state = "RED" if name in red else check["state"]
-        at = check["at"] or "unknown"
-        print(f"{prefix}: {state} {one_line(name)} since {at} (recorded result; earlier onset unknown) | {check['source']}")
+    for name, evidence in sorted(relevant.items()):
+        for check in evidence:
+            state = "RED" if check["state"] in failed else check["state"]
+            at = check["at"] or "unknown"
+            print(f"{prefix}: {state} {one_line(name)} since {at} (recorded result; earlier onset unknown) | {check['source']}")
     if not relevant:
         gaps.append("no recorded required/static result on main")
     for name in sorted(required - checks.keys()):
         gaps.append(f"required check {one_line(name)} has no result on main")
     groups = defaultdict(set)
     for number, pr_checks in prs:
-        for name, check in pr_checks.items():
-            if check["state"] in failed:
+        for name, evidence in pr_checks.items():
+            if any(check["state"] in failed for check in evidence):
                 groups[name].add(number)
     for name in sorted(red | groups.keys()):
         numbers = sorted(groups[name])
@@ -718,7 +736,7 @@ def print_main_health(repo, main, checks, required, prs, gaps):
 
 
 def main_health():
-    print("Main health: existing results only; timestamps are recorded failures, not continuous-red history.")
+    print("Main health: existing results only; timestamps date recorded results, not continuous-red history.")
     for repo in MAIN_HEALTH_REPOS:
         try:
             owner, name = repo.split("/")
@@ -751,14 +769,14 @@ def main_health():
                 found, truncated = recorded_checks(commit)
                 pr_checks.append((number, found))
                 if truncated or not found:
-                    gaps.append(f"PR #{number} check results {'incomplete' if truncated else 'absent'}")
+                    gaps.append(f"PR #{number} GitHub check results {'incomplete' if truncated else 'absent'}")
             if repo == "TobiasBak/orderready":
                 try:
                     static = orderready_static([main, *prs.values()])
                     for commit, found in [(main, checks), *((prs[number], found) for number, found in pr_checks)]:
                         check, gap = static[commit["oid"]]
                         if check:
-                            found["static"] = check
+                            found.setdefault("static", []).append(check)
                         elif commit is main:
                             gaps.append(gap)
                 except (OSError, ValueError, KeyError, TypeError):
