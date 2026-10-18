@@ -54,7 +54,7 @@ Brief messages to leads with `cos.py brief --short`. Merge per the working secti
 ## Holds
 
 - Test GUI stopped (Tobias OK 22:37; already exited). Relaunch for him 2026-10-18 signed in + real Gemini. Rule: his test runs always signed in + real Gemini (key ~/.keys/gemini.env); launcher = #272.
-- #278: #285 merged 5a01b95 (00:29Z): unsigned (#279); runbook docs/distribution.md (prod publish = Tobias). #292 decided 10-18: isolated new Firestore registry + tolerant readers (ignore unknown fields); Sol lead mcp:467b7b12. #301 = delete legacy registry, Tobias only. Tobias OK agent apply; platform#10 merged 42840e8 + #302 merged 1ee6ae8 (10-18); applied 4 add/0/0; #292 CLOSED (55m wall), runbook platform#11 merged d246150; lead settled.
+- #278: #285 merged 5a01b95 (00:29Z): unsigned (#279); runbook docs/distribution.md (prod publish = Tobias). #292 done: isolated registry + tolerant readers. #301 = delete legacy registry, Tobias only. platform#10+#302 merged, applied; runbook platform#11 merged d246150; lead settled.
 
 - Start later: orderready #202 after Windows lands, then fresh #103 attribution and #90 disposition; geometry #90/#78 and #25 consumer preview. Host lazy-mise-wrapper follow-up: Windows lead still owes an issue for 16 wrappers hanging under systemd.
 - CoS tooling: delegated writer to put the in-turn wait rule into `cos.py brief`; SKILL already has it, brief-text update not recorded done.
