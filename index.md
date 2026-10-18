@@ -59,7 +59,7 @@ Not exhaustive. Search with `rg`.
 All model-invoked; agents select relevant skills automatically:
 - `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
 - `theodore-kaczynski-nullifier`: agent-repo setup, selected measured feedback-loop costs, slow-gate tracing and AGENTS.md; improve product PR lead time, then stop ([tracing](skills/theodore-kaczynski-nullifier/references/tracing.md))
-- [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents ship several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md)
+- [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents ship several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md), [release catalog](skills/system-specs/references/release.md)
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
 - `unslop`: concise, natural prose
