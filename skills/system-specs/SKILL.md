@@ -16,6 +16,8 @@ Agents ship several times a day. So at any moment:
 
 A requirement that only holds when every component runs the same version is wrong.
 
+Newer versions win. Keep one source of truth, auto-update clients, and refuse versions below a minimum instead of supporting a long tail. Fix forward; never roll back data.
+
 ## Tolerate versions, never ambiguity
 
 Tolerance and hardening don't conflict. They live in different places:
