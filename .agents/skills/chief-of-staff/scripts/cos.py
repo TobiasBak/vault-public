@@ -5,8 +5,10 @@ from collections import Counter, defaultdict
 from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from html import escape
+import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import sqlite3
@@ -14,6 +16,7 @@ import statistics
 from string import Template
 import subprocess
 import sys
+import tomllib
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
@@ -577,6 +580,197 @@ def merged_pr_report(repositories, since, until):
     table(("Repository", "product", "infra", "total / error"), rows)
 
 
+MAIN_HEALTH_REPOS = ("TobiasBak/orderready", "TobiasBak/orderready-platform")
+HEALTH_QUERY = """
+query($owner: String!, $name: String!, $endCursor: String) {
+  repository(owner: $owner, name: $name) {
+    ref(qualifiedName: "refs/heads/main") {
+      branchProtectionRule { requiredStatusCheckContexts }
+      target { ... on Commit {
+        oid tree { oid }
+        statusCheckRollup { contexts(first: 100) {
+          pageInfo { hasNextPage }
+          nodes {
+            ... on CheckRun { name status conclusion startedAt completedAt }
+            ... on StatusContext { context state createdAt }
+          }
+        } }
+      } }
+    }
+    pullRequests(states: OPEN, first: 50, after: $endCursor) {
+      pageInfo { hasNextPage endCursor }
+      nodes { number commits(last: 1) { nodes { commit {
+        oid tree { oid }
+        statusCheckRollup { contexts(first: 100) {
+          pageInfo { hasNextPage }
+          nodes {
+            ... on CheckRun { name status conclusion startedAt completedAt }
+            ... on StatusContext { context state createdAt }
+          }
+        } }
+      } } } }
+    }
+  }
+}
+"""
+
+
+def recorded_checks(commit):
+    rollup = commit["statusCheckRollup"]
+    if rollup is None:
+        return {}, False
+    contexts = rollup["contexts"]
+    latest = {}
+    for node in contexts["nodes"]:
+        name = node.get("name") or node["context"]
+        at = node.get("startedAt") or node.get("createdAt") or ""
+        if "context" in node:
+            state = node["state"].lower()
+        elif node["status"] != "COMPLETED":
+            state = "pending"
+        else:
+            state = (node["conclusion"] or "unknown").lower()
+        check = {"name": name, "state": state, "at": node.get("completedAt") or at,
+                 "order": at, "source": "GitHub check/status"}
+        if name not in latest or at >= latest[name]["order"]:
+            latest[name] = check
+    return latest, contexts["pageInfo"]["hasNextPage"]
+
+
+def read_git(root, *arguments):
+    try:
+        result = subprocess.run(["git", "-C", str(root), *arguments], capture_output=True, text=True, timeout=5)
+    except (OSError, subprocess.TimeoutExpired):
+        raise ValueError("local Git evidence unavailable") from None
+    if result.returncode:
+        raise ValueError("exact commit unavailable locally")
+    return result.stdout.strip()
+
+
+def orderready_static(commits):
+    root = Path.home() / "code/orderready"
+    cache = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "orderready/verdicts"
+    directory = cache / ("static-" + hashlib.sha256(b"static").hexdigest())
+    by_tree = defaultdict(list)
+    for path in directory.glob("*.json"):
+        if path.name == "last-pass.json":
+            continue
+        record = json.loads(path.read_text())
+        if record.get("tree") in {commit["tree"]["oid"] for commit in commits}:
+            by_tree[record["tree"]].append((path, record))
+    advisory_url = "https://github.com/RustSec/advisory-db"
+    cargo_home = Path(os.environ.get("CARGO_HOME") or Path.home() / ".cargo")
+    revisions = set()
+    for database in (cargo_home / "advisory-dbs").glob("advisory-db-*"):
+        if read_git(database, "config", "--get", "remote.origin.url").rstrip("/").removesuffix(".git") == advisory_url:
+            revisions.add(read_git(database, "rev-parse", "HEAD"))
+    results = {}
+    for commit in commits:
+        sha = commit["oid"]
+        try:
+            config = tomllib.loads(read_git(root, "show", f"{sha}:deny.toml")).get("advisories", {})
+            if config.get("db-path") or config.get("db-urls", [advisory_url]) != [advisory_url]:
+                raise ValueError("custom advisory database is not observed")
+            if len(revisions) != 1:
+                raise ValueError("current advisory revision unavailable or ambiguous")
+            inputs = {f"advisory:{advisory_url}": next(iter(revisions))}
+            matches = [(path, record) for path, record in by_tree[commit["tree"]["oid"]]
+                       if {key: value for key, value in record["inputs"].items() if key.startswith("advisory:")} == inputs
+                       and record["verdict"] in {"pass", "fail"}]
+            if not matches:
+                raise ValueError("no static receipt for exact tree and current local advisory revision")
+            path, record = max(matches, key=lambda entry: entry[1]["created"])
+            results[sha] = ({"name": "static", "state": "failure" if record["verdict"] == "fail" else "success",
+                             "at": iso(datetime.fromtimestamp(record["created"], timezone.utc)), "source": str(path)}, None)
+        except (ValueError, KeyError, TypeError) as error:
+            results[sha] = (None, str(error) if isinstance(error, ValueError) else "invalid static receipt")
+    return results
+
+
+def print_main_health(repo, main, checks, required, prs, gaps):
+    failed = {"failure", "error", "timed_out", "cancelled", "action_required", "startup_failure"}
+    relevant = {name: check for name, check in checks.items()
+                if name in required or re.search(r"static|cargo[-_ /:]?deny", name, re.I)}
+    red = {name for name, check in relevant.items() if check["state"] in failed}
+    prefix = f"main-health {repo} main@{main['oid'][:12]}"
+    for name, check in sorted(relevant.items()):
+        state = "RED" if name in red else check["state"]
+        at = check["at"] or "unknown"
+        print(f"{prefix}: {state} {one_line(name)} since {at} (recorded result; earlier onset unknown) | {check['source']}")
+    if not relevant:
+        gaps.append("no recorded required/static result on main")
+    for name in sorted(required - checks.keys()):
+        gaps.append(f"required check {one_line(name)} has no result on main")
+    groups = defaultdict(set)
+    for number, pr_checks in prs:
+        for name, check in pr_checks.items():
+            if check["state"] in failed:
+                groups[name].add(number)
+    for name in sorted(red | groups.keys()):
+        numbers = sorted(groups[name])
+        detail = " ".join(f"#{number}" for number in numbers) or "none"
+        print(f"main-health {repo}: failing PRs {one_line(name)}={len(numbers)} | {detail}")
+        if name in red or len(numbers) >= 2:
+            reason = "main red" if name in red else "same check fails on multiple PRs"
+            print(f"SHARED BLOCKER {repo}: {one_line(name)} | {reason} | failing PRs={len(numbers)} {detail}")
+    for gap in dict.fromkeys(gaps):
+        print(f"GAP main-health {repo}: {gap}")
+
+
+def main_health():
+    print("Main health: existing results only; timestamps are recorded failures, not continuous-red history.")
+    for repo in MAIN_HEALTH_REPOS:
+        try:
+            owner, name = repo.split("/")
+            pages = gh_json(["api", "graphql", "--paginate", "--slurp", "-f", f"query={HEALTH_QUERY}",
+                             "-f", f"owner={owner}", "-f", f"name={name}"], timeout=30)
+            main = None
+            prs = {}
+            required = {"gate"} if repo == "TobiasBak/orderready" else set()
+            gaps = []
+            for page in pages:
+                if page.get("errors"):
+                    raise ValueError("GitHub main-health query failed")
+                repository = page["data"]["repository"]
+                branch = repository["ref"]
+                target = branch["target"]
+                if main and target["oid"] != main["oid"]:
+                    raise ValueError("main moved during census; retry")
+                main = target
+                protection = branch["branchProtectionRule"]
+                required.update((protection or {}).get("requiredStatusCheckContexts") or [])
+                for pr in repository["pullRequests"]["nodes"]:
+                    prs[pr["number"]] = pr["commits"]["nodes"][-1]["commit"]
+            if main is None:
+                raise ValueError("main result unavailable")
+            checks, truncated = recorded_checks(main)
+            if truncated:
+                gaps.append("main check list exceeds 100 results")
+            pr_checks = []
+            for number, commit in prs.items():
+                found, truncated = recorded_checks(commit)
+                pr_checks.append((number, found))
+                if truncated or not found:
+                    gaps.append(f"PR #{number} check results {'incomplete' if truncated else 'absent'}")
+            if repo == "TobiasBak/orderready":
+                try:
+                    static = orderready_static([main, *prs.values()])
+                    for commit, found in [(main, checks), *((prs[number], found) for number, found in pr_checks)]:
+                        check, gap = static[commit["oid"]]
+                        if check:
+                            found["static"] = check
+                        elif commit is main:
+                            gaps.append(gap)
+                except (OSError, ValueError, KeyError, TypeError):
+                    gaps.append("local static receipts unavailable or invalid")
+            else:
+                gaps.append("scripts/check.py records no durable main result; promotion Actions do not establish main health")
+            print_main_health(repo, main, checks, required, pr_checks, gaps)
+        except (ValueError, KeyError, TypeError, IndexError) as error:
+            reason = str(error) if isinstance(error, ValueError) else "invalid GitHub main-health response"
+            print(f"GAP main-health {repo}: {reason}")
+
+
 def stalled_queues(snapshot, now):
     for thread in snapshot.threads:
         if not snapshot.visible(thread) or snapshot.settled(thread) or thread in snapshot.running:
@@ -588,6 +782,7 @@ def stalled_queues(snapshot, now):
 
 
 def census(snapshot, now, repositories):
+    main_health()
     capacity(snapshot, repositories)
     items = list(stalled_queues(snapshot, now))
     state = STATE_DIR / "state.md"
@@ -844,7 +1039,7 @@ def main():
     commit_parser.add_argument("message", metavar="MSG")
     commit_parser.add_argument("paths", nargs="+", metavar="PATH")
     commands.add_parser(
-        "census", description="Print ready-issue capacity, unanswered reports, dead leads, unreported idle gates, unused child completions, stalled queues, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
+        "census", description="Print recorded main health and shared blockers, ready-issue capacity, unanswered reports, dead leads, unreported idle gates, unused child completions, stalled queues, queued messages, settle candidates and live runs. Oldest first; silence means no action. Report kinds and completion/usage candidates are heuristics.", allow_abbrev=False,
     )
     board = commands.add_parser(
         "board", description="Write the fixed-design board from T3 and state.md. Today is Europe/Copenhagen. Wait sums today's reports to their next CoS send, including pending waits ending at now or settlement; one reply may answer several reports. Dead-run time is clipped to today. Restart clusters have at least three distinct roots ending within ten seconds. Children count distinct tasks started today, including native subagents when stored. Done uses the latest report kind, not the status of a completed turn.", allow_abbrev=False,
