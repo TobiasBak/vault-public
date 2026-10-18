@@ -90,6 +90,8 @@ def load_data(db):
         sender = payload.get("senderThreadId")
         at = timestamp(created_at)
         if target == COS_THREAD_ID:
+            if sender is None:
+                continue
             if sender not in threads:
                 raise ValueError("A CoS report has no stored sender thread")
             incoming[sender].append((at, report_kind(payload.get("text", ""))))
