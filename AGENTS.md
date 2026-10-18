@@ -27,7 +27,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 ## Public repository
 
-Keep secrets, credentials, private correspondence, other people's personal data, and nonpublic employer or customer details out of commits. For private repositories, keep operational detail out too: credential locations, hosted project IDs, infrastructure state and checkout quirks belong in that repository, not here. Tobias's own preferences and project notes are meant to be public. Raw session histories and local runtime state stay out of Git.
+Keep secrets out of commits: tokens, keys, passwords and credential contents. Also keep out private correspondence and other people's personal data. Everything else may be public (Tobias, 2026-10-18), including customer and order names and private-repo operational detail such as credential file paths, hosted project IDs and infrastructure state. Raw session histories and local runtime state stay out of Git.
 
 Never bypass the workstation's secret-scanning hooks or GitHub push protection. On a finding or scan failure, stop and report only the path, commit SHA and rule ID; do not add scanner suppressions here.
 
