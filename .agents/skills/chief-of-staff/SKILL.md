@@ -30,7 +30,6 @@ Tobias owns this section. Change it only when he explicitly asks.
 - Launch one fresh team per issue or tightly coupled set shipping one PR: `t3_thread_launch`, own worktree from `origin/main`, title `<repo>#<N> <title>`. End it after merge or posting its result. Follow-ups get new issues and teams.
 - Label new work `ready` and launch it. On every heartbeat, use census `capacity` lines to launch ready issues until host and gates are the real limit. Idle ready work while teams are few is a defect. The limit is host and gate capacity, not team count. Record only real dependencies.
 - Big or unclear work gets a design team producing repo docs and ready issues, then ending. Design-heavy issues wait for Tobias's choice of lead.
-- Non-UI leads: Pi GPT-6.1 Sol, thinking `high`. UI: Claude Opus 5.5, effort `high`, each UI team at most one Opus child. Run `cos.py quota` before launch and every heartbeat: two live UI teams while every window is below 40%, one while below 60%, none at 60% or above (Tobias, 2026-10-17). Never switch running leads. CoS remains Opus (2026-10-16: parallel Opus teams burned 7%→84% in about 90 minutes).
 - Labels: `ready`, `in-progress` with team link, `blocked`, `needs-tobias`. CoS work uses `delegate_task` children under global routing: vault writing, diagnostics, audits, census.
 - Run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`; put its output first, then issue-specific context absent from the issue and repo. Teams own workers, reviews, gates, fixes, commits and ordinary integration.
 - Before launching or extending work, identify users, observed frequency and measured value of the next PR. Safety approval isn't value (2026-10-13: loop shaping without a measured user win).
@@ -42,7 +41,6 @@ Tobias owns this section. Change it only when he explicitly asks.
   ```
   metrics: wall=<start to merge> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
   ```
-  Teams add `subagents: tasks=<n> accepted=<n> reworked=<n> rejected=<n> throttled=<n>`.
 - Read completions; aggregate weekly lead time, review rounds, gate share and lead runs per issue. Daily, read `cos.py metrics`: merged PRs split product versus `infra`, per-lead blocked time, message kinds, reply/gate latency, idle gaps and CoS turn durations. Measure shipping, not just replies.
 - Infra and efficiency work runs beside product work, never ahead of it or as its precondition. At most one infra team per repo. Every infra issue has the `infra` label, names the product workflow it speeds up and sets a measured PR-lead-time target.
 - When it lands or meets its target, the chain stops. Further infra work needs a new measured cost, not a "while we're here" finding.
@@ -53,7 +51,7 @@ State's "Needs Tobias" holds one line per open question: recommendation and who 
 
 ## Record approvals at their owner
 
-Leads record protected-surface approvals and every other CoS GO in the repo issue or PR it covers, quoting the CoS GO verbatim before acting on it. Tobias's rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
+Leads follow the [brief's authority gate](scripts/brief.md): settled Tobias decisions need PR flags, not another CoS GO. Tobias's rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
 
 ## Heavy work
 
@@ -93,9 +91,9 @@ Maintained by the chief of staff. Budget: 15 bullets.
 - Open work means all unsettled threads, including `completed`. Read the last message before settling. Settle teams and verified children myself; briefs tell leads to settle used children (2026-10-11: completed wasn't done).
 - Brief only truly forbidden actions. Tool-prescribed setup such as `tools/sg build` is exempt from "stop on unrelated failure". Use `git worktree add` from the primary checkout, never a clone; never prescribe private HOME/tool trees. Launched teams already have workspaces: forbid `t3_worktree_handoff` (2026-10-17: two failed re-briefs, work taken back; handoff killed a run and queued its continuation 20 minutes).
 - Every reporting message includes `cos.py brief --short`. Steer running leads, use `auto` only for idle ones; defer housekeeping that would wake them. Don't acknowledge routine chatter (2026-10-13: partial reporting rule flooded messages).
-- Check `cos.py quota` before messaging the Opus UI lead. At ≥60% in any window, don't even send (2026-10-17: a 61% resume burned a turn).
+- Non-UI leads use Pi GPT-6.1 Sol, thinking `high`; UI leads use Claude Opus 5.5, effort `high`, at most one Opus child per team. Never switch running leads; CoS stays Opus. Run `cos.py quota` before launch, every heartbeat and before messaging UI leads: two live UI teams below 40% in every window, one at 40% or above, none at 60% or above. At ≥60%, don't message them (2026-10-17: parallel Opus teams burned 7%→84% in about 90 minutes; a 61% resume burned a turn).
 - Every brief/resume requires children to wait in-turn for their own runs to exit; a background process finishing wakes nobody (2026-10-16/17: repeated native-screen stalls).
-- Merge via `pr-merge <PR_URL>` where main has `.github/merge-gate.toml`; otherwise `gh pr merge <n> --merge --match-head-commit <sha>`. Exact-head evidence and full protected-file paths in the review matter. Hold only final ancestry-bound merges; recheck base/head (2026-10-14/17: avoidable re-gate, globs rejected).
+- CoS merges PRs in Tobias's repos after reading the diff and gate output: no blocking review finding and gate green on the exact head. Use `pr-merge <PR_URL>` where main has `.github/merge-gate.toml`; otherwise `gh pr merge <n> --merge --match-head-commit <sha>`. Require full protected-file paths in reviews. Hold only final ancestry-bound merges; recheck base/head (2026-10-14/17: avoidable re-gate, globs rejected).
 - Dotfiles and vault use main directly unless explicitly exempted. Shared-checkout briefs name concurrent writers and paths. Commit vault paths explicitly with `python3 .agents/skills/chief-of-staff/scripts/cos.py commit <msg> <paths...>`, never `git add -A` (2026-10-11/13: authorized edit looked unrelated).
 - Holds name the violated invariant, owner, blocked action and release condition. Priority isn't dependency; independent work proceeds. Use real availability, not reclaimable-cache charges ([hardware](../../../hardware/agent-era-dev-machine.md)) (2026-10-11/14: false memory and integration holds).
 - Brief the smallest observable proof under Tobias's exact spec and runner constraints; repair spikes rather than closing them. Human steps name real-platform validation. Report workload, process boundary, receipt limits and unqualified paths, never upgrade a PASS's scope (2026-10-11/12/14: wrong version, overstated proof).
