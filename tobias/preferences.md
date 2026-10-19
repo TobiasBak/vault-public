@@ -9,6 +9,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 - Prefer using applications in the browser when practical. A local background companion service is fine; use a native app as the fallback when browser support falls short.
 - Pi should stay vanilla: upstream defaults and built-in tools, no `pi-tools` or other third-party extensions, custom themes, keybindings, prompt templates, or tuning. Keep the shared global agent instructions and skills. Enable built-in codemode alongside the normal tools, not in codemode-only mode.
 - Bring him decisions that shape boundaries, architecture, data flow, topology, security, long-term coupling, product behavior, or irreversible tech choices, as a recommendation with evidence and tradeoffs. Make routine choices yourself. Reopen settled choices only on new evidence.
+- When an investigation finds a cause, fix it at its owner without asking (Tobias, 2026-10-19). Don't accept a symptom-level workaround or stop at a diagnosis; only a fix that itself changes one of the boundaries above comes back as a decision.
 - Progress updates contain decisions, blockers, and measured numbers. Put hashes, cgroup proofs, ownership maps, and other verification detail in artifact receipts, not chat. Cut ceremony and get to the first trustworthy result quickly.
 - He wants agent guidance and principles in vivid, memorable wording that invites judgment, not abstract caveat lists. When adapting strong source language, keep the exact phrasing that still applies; paraphrase only for correctness or scope.
 
