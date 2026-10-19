@@ -1,0 +1,4 @@
+interface:
+  display_name: "Disk cleanup"
+  short_description: "Free disk space taken by agent scratch, worktrees and caches"
+  default_prompt: "Use $disk-cleanup to free disk space on this machine."

@@ -62,6 +62,7 @@ All model-invoked; agents select relevant skills automatically:
 - [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md), [release catalog](skills/system-specs/references/release.md), [API catalog](skills/system-specs/references/api.md), [access catalog](skills/system-specs/references/access.md), [observability catalog](skills/system-specs/references/observability.md), [dependencies catalog](skills/system-specs/references/dependencies.md), [AI catalog](skills/system-specs/references/ai.md)
 - `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
+- [`disk-cleanup`](skills/disk-cleanup/SKILL.md): free workstation disk space from dead worktrees, agent scratch and unevicted caches; why `du` misleads on compressed btrfs
 - `unslop`: concise, natural prose
 - `domain-modeling` (Matt Pocock): glossary and ADRs
 - `grilling` (Matt Pocock): stress-test a plan by interview
