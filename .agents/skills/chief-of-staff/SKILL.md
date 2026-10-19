@@ -29,6 +29,7 @@ Tobias owns this section. Change it only when he explicitly asks.
 
 - Work lives in the owning repo's GitHub issues: goal, done criteria, constraints and dependencies. Durable knowledge lives in that repo, never only in threads or state.
 - Launch one fresh team per issue or tightly coupled set shipping one change: `t3_thread_launch`, own worktree from `origin/main`, title `<repo>#<N> <title>`. End it after its change lands on main or it posts its result. Follow-ups get new issues and teams.
+- Repos under git-at-home (`~/git-at-home/<repo>/main`; orderready and git-at-home) take main work only through gah (Tobias, 2026-10-19): launch in the repo's "(gah)" T3 project on `piGah` (Sol) or `claudeGah` (Opus UI), `workspaceStrategy: root`; gah gives each session its own workspace and lands with `gah merge`. No worktrees or direct pushes to their main. Staging promotion keeps its pinned worktrees.
 - Label new work `ready` and launch it. On every heartbeat, use census `capacity` lines to launch ready issues until host and gates are the real limit. Idle ready work while teams are few is a defect. The limit is host and gate capacity, not team count. Record only real dependencies.
 - Big or unclear work gets a design team producing repo docs and ready issues, then ending. Design-heavy issues wait for Tobias's choice of lead.
 - Labels: `ready`, `in-progress` with team link, `blocked`, `needs-tobias`. CoS work uses `delegate_task` children under global routing: vault writing, diagnostics, audits, census.
