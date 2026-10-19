@@ -4,7 +4,7 @@ Agents investigate ambiguous behavior through the running app, APIs, logs, state
 
 ## Landing
 
-Pre-push runs static checks only, then leads push straight to main. Agents choose and run relevant tests before pushing; tooling does not select touched tests. Strict staging runs the suites and secondary platforms. A rebase reruns static pre-push with content-keyed reuse. Main may be red on suites only staging runs; its landing agent fixes forward or reverts culprits. [Protected-surface review](code-review.md) runs before the push.
+Pre-push runs static checks only; leads choose tests and push straight to main. Strict staging runs suites and secondary platforms. Rebases rerun static pre-push with content-keyed reuse. Its landing agent fixes forward or reverts staging failures, which may remain on main. [Protected-surface review](code-review.md) precedes the push.
 
 ## Loop
 
