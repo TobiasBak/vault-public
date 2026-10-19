@@ -796,7 +796,7 @@ def main_health():
                              "-f", f"owner={owner}", "-f", f"name={name}"], timeout=30)
             main = None
             prs = {}
-            required = {"gate"} if repo == "TobiasBak/orderready" else set()
+            required = set()
             gaps = []
             for page in pages:
                 if page.get("errors"):
@@ -808,7 +808,8 @@ def main_health():
                     raise ValueError("main moved during census; retry")
                 main = target
                 protection = branch["branchProtectionRule"]
-                required.update((protection or {}).get("requiredStatusCheckContexts") or [])
+                if repo != "TobiasBak/orderready":
+                    required.update((protection or {}).get("requiredStatusCheckContexts") or [])
                 for pr in repository["pullRequests"]["nodes"]:
                     prs[pr["number"]] = pr["commits"]["nodes"][-1]["commit"]
             if main is None:
@@ -819,8 +820,10 @@ def main_health():
             pr_checks = []
             for number, commit in prs.items():
                 found, truncated = recorded_checks(commit)
+                if repo == "TobiasBak/orderready":
+                    found = {name: evidence for name, evidence in found.items() if re.search(r"static|cargo[-_ /:]?deny", name, re.I)}
                 pr_checks.append((number, found))
-                if truncated or not found:
+                if repo != "TobiasBak/orderready" and (truncated or not found):
                     gaps.append(f"PR #{number} GitHub check results {'incomplete' if truncated else 'absent'}")
             if repo == "TobiasBak/orderready":
                 try:

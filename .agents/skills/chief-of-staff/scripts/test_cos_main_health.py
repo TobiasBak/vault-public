@@ -16,7 +16,7 @@ REPO = "TobiasBak/orderready"
 
 
 def commit(state=None, checks=None):
-    nodes = checks if checks is not None else ([{"context": "gate", "state": state, "createdAt": AT}] if state else [])
+    nodes = checks if checks is not None else ([{"context": "static", "state": state, "createdAt": AT}] if state else [])
     return {"oid": "a" * 40, "tree": {"oid": "b" * 40}, "statusCheckRollup": {
         "contexts": {"nodes": nodes, "pageInfo": {"hasNextPage": False}},
     }}
@@ -42,8 +42,8 @@ class MainHealthTests(unittest.TestCase):
 
     def test_red_main_raises_without_any_pr(self):
         output = self.census_health(commit("FAILURE"))
-        self.assertIn(f"SHARED BLOCKER {REPO}: gate | main red | failing PRs=0", output)
-        self.assertIn(f"RED gate since {AT}", output)
+        self.assertIn(f"SHARED BLOCKER {REPO}: static | main red | failing PRs=0", output)
+        self.assertIn(f"RED static since {AT}", output)
 
     def test_green_main_and_pr_stay_silent(self):
         main = commit("SUCCESS")
@@ -55,7 +55,7 @@ class MainHealthTests(unittest.TestCase):
 
     def test_same_check_on_two_prs_raises_with_green_main(self):
         output = self.census_health(commit("SUCCESS"), [(12, commit("FAILURE")), (34, commit("FAILURE"))])
-        self.assertIn(f"SHARED BLOCKER {REPO}: gate | same check fails on multiple PRs | failing PRs=2 #12 #34", output)
+        self.assertIn(f"SHARED BLOCKER {REPO}: static | same check fails on multiple PRs | failing PRs=2 #12 #34", output)
         self.assertNotIn("SHARED BLOCKER", self.census_health(commit("SUCCESS"), [(12, commit("FAILURE"))]))
 
     def test_local_pass_cannot_hide_github_static_failures(self):

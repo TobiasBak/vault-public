@@ -1,6 +1,6 @@
 # Code review with agents
 
-Review should follow the change's risks. One agent with native repository and review tools is enough for most work; no orchestrator or telemetry store is needed.
+Require one independent review only for protected surfaces declared in the project's AGENTS.md. Run it in parallel with static pre-push, before pushing to main. It must have no blocking finding before the push. Other changes need no independent review. Review is an agent rule, not a GitHub status.
 
 ## Inputs
 
@@ -17,15 +17,15 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 
 ## Validation and review identity
 
-- The writer runs compilation and focused behavioral tests before requesting review of a Rust slice. Fix compiler and test failures first; give the reviewer the final tested source and receipts.
+- The writer chooses relevant behavioral checks and gives the reviewer the candidate revision, available results and untested scope. Static pre-push runs concurrently.
 - A clear review plus passing tests on byte-identical source counts as clear. Do not repeat review merely because previously unexecuted tests now pass.
-- Request another review only when source changed since the last clear review of that scope. Track the reviewed and tested source identities so this decision is mechanical.
+- Track the reviewed source identity. Fix blocking findings and validate the fixes without another independent review round.
 
 ## Reviewers
 
-A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Independent review pays off when failure is consequential, validation is weak, or fresh eyes can challenge assumptions. Start with one general reviewer and add specialists only for distinct risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.
+A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Independent review pays off when failure is consequential, validation is weak, or fresh eyes can challenge assumptions. Use the one protected-surface reviewer for the risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.
 
-**Set the blocking bar and a round cap before the first review.** An open-ended "find bugs" reviewer always finds another adversarial edge, and each "bounded" fix invites the next round.
+**Set the blocking bar before the review.** An open-ended "find bugs" reviewer always finds another adversarial edge, and each "bounded" fix invites the next round.
 - Define what blocks merge at the change's consequence. For dev tooling, that's bugs that break normal use. Hostile environments, adversarial timing, and unlisted inputs become PR-body follow-ups.
 - After a capped final round, a real blocker gets one minimal fix and a validation run, not another review.
 - When consecutive rounds find variants of one class, decide whether the class matters at all instead of patching variants.
