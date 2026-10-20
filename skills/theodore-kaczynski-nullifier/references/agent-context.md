@@ -22,6 +22,8 @@ Each fact has one home; everywhere else links to it or says nothing.
 
 ## Root AGENTS.md
 
+This is the current context format, not a chosen policy in itself. It keeps orientation, tradeoffs, task entrypoints, ownership, and authority limits easy to find without a large always-loaded manual. A replacement must preserve those answers and update its checks and consumers together.
+
 Exactly these sections, in this order:
 
 ```
@@ -83,14 +85,14 @@ A host that requires another instruction filename gets only a symlink to root `A
 ## Skills
 
 - Repo-local skills are allowed.
-- Each skill is self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills.
-- Within a skill, give each instruction one home and link to it instead of repeating it. Do not copy CLI `--help` or instructions already supplied by the target repository's root `AGENTS.md`.
-- Every path and command a skill names exists. The agent-context check covers skills.
+- Each skill is self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills. Name shared-tool and host dependencies; their active help and session instructions remain authoritative.
+- Within a skill, give each instruction one home and link to it instead of repeating it. Do not copy CLI `--help`, shared delivery policies, or instructions already supplied by the target repository's root `AGENTS.md`.
+- Every concrete path and command a skill names exists. The agent-context check validates mechanically resolvable references; relevance, duplication, and whether a procedure still earns its place require judgment on a representative task.
 - The description says when the skill applies.
 - When the CLI does a skill's whole procedure in one call, delete the skill or cut it to what remains.
 
 ## Pruning
 
-- A line stays only if a fresh agent fails a representative task without it.
-- When a check takes over a rule, delete the rule's line in the same change.
-- When a line keeps being violated, replace it with a check.
+- Chosen policies and real authority limits need no failure experiment. Other instructional lines stay only when they supply information a fresh agent needs on a representative task.
+- When a check takes over a rule, delete the rule's line in the same change, except the common-path reminder allowed above.
+- When a line keeps being violated, fix the owning structure or enforce the mechanically decidable pattern. Do not claim a syntax check enforces a semantic judgment.

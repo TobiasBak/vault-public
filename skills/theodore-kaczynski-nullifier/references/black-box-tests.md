@@ -45,7 +45,7 @@ corpus/<area>/<scenario>/
 ```
 
 - `covers` lists `<area>.<outcome>@<entry>` pairs. The outcome is what the user sees, never a test, function, or fixture.
-- `oracle` is the source of truth for the expected values: the derivation itself, a spec section, or a reference system and version. Never a path in this repo. Its prose is also where a case explains why the behavior is so.
+- `oracle` identifies the independent authority for the expected values: the derivation itself, a spec section, or a reference system and version. Include enough provenance to find and judge the source. A published contract in this repo is valid when its authority is independent of the code under test; an implementation path or behavior copied into prose is not. Its prose is also where a case explains why the behavior is so.
 - Fields: `kind`, `covers`, `oracle`, `tolerance`, `budget_ms`, `budget_basis`, and `relations` for relation cases. No others.
 
 ```
@@ -82,6 +82,16 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
   {"raised": {"code": "UNKNOWN_SKU", "entity": "Z9"}}
 ]
 ```
+
+## Evidence and authority
+
+| Evidence | Establishes | Does not establish |
+|---|---|---|
+| Static check acceptance | The candidate satisfies the implemented structural and metadata rules | Correct behavior, meaningful coverage, or an authoritative oracle |
+| Behavioral execution and readback | The observed response and effects for the checked inputs, environment, and scope | General correctness, real-service delivery from a fake, or the authority of expected values |
+| Judgment against the contract | The named source governs this behavior and the expected values follow from it | That the implementation actually produces those values without execution |
+
+Read the source and check each changed expectation against it. Record the relevant section, version, or derivation in the oracle; its presence and a `Behavior-Change:` trailer establish traceability, not truth. A file's location does not establish independence. A reference implementation that preserves a known bug is not authority for behavior the governing contract rejects. If authority is missing or conflicting, resolve the contract before accepting outputs.
 
 ## Expected output
 

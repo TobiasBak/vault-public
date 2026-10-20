@@ -1,6 +1,15 @@
 # Manifest
 
-Match a symptom to measured cost, then fix its owner. The order below is not a priority ranking.
+Use this branch of the [autonomy loop](../SKILL.md#the-loop) when a real workflow has a measured feedback cost. Fix its owner without weakening correctness or recovery. The patterns below are not a priority ranking.
+
+## Optimization loop
+
+1. **Measure** from harness session logs. Separate model, navigation, build, test, platform, admission, forwarding, conflict, landing, child, and user time. Include shared-tool waits.
+2. **Pick one outcome:** workflow, users, frequency, current cost, and cause to remove. Fix the largest measured recurring cost at its owner, never with an instruction agents must remember.
+3. **Check value:** a baseline and named cause justify one or two before-and-after trials under the same conditions. Speed-motivated migrations, watchers, enforcement systems, and standalone proof efforts need a trial showing value. Otherwise shelve them. A demonstrated autonomy gap or correctness, security, or data-loss bug can justify a scoped fix without a speed claim.
+4. **Measure again.** Stop at the measured target or when a one-line edit reaches its verdict, rebuild included, faster than a model turn. Further optimization needs a new measured cost.
+
+This work runs beside product work, never as its precondition.
 
 ## 1. Ask the whole question in one call
 
@@ -50,9 +59,9 @@ Symptom: "rebuilt again, no idea why." Fix: store the input details beside the k
 
 Symptom: a docs change triggers the full matrix. Fix: each job declares its inputs once; test selection and cache key both come from it. A path no job claims is an error.
 
-## 8. Relevant tests for the writer, full corpus on promotion
+## 8. Keep qualification out of the edit loop
 
-Symptom: full CI after every edit. Follow the [delivery policy](enforcement.md#delivery-policy). The writer chooses relevant tests; the landing check stays static.
+Symptom: full qualification after every edit. Select relevant cases for feedback; keep the [landing check static](enforcement.md#checks). Shared-tool and session policy own where full qualification runs, not a second policy in the repository CLI.
 
 ## 9. Budgets are visible
 
@@ -67,18 +76,14 @@ Symptom: passing output filling context. Fix: the [failure output](black-box-tes
 
 ## 11. Host-wide heavy-work admission
 
-Symptom: concurrent builds or VM runs slowing each other. Fix: integrate the CLI with [heavy-lease](control-cli.md#host-admission), including exclusive VM lanes and watcher busy skips. Never add a competing repo-local scheduler.
+Symptom: concurrent builds or VM runs slowing each other. Fix: integrate the CLI with [heavy-lease](control-cli.md#host-admission), using the resources and admission policy it owns. Never add a competing repo-local scheduler.
 
-## 12. Secondary platforms gate promotion, not the loop
+## 12. Avoid repeated platform setup
 
-Symptom: a secondary-platform run (e.g. the Windows VM) on every PR.
+Symptom: secondary-platform startup or compilation dominates feedback. Use the qualification boundary set by the active delivery policy. Reuse prepared environments and build compatible artifacts once where the platform contract permits it; do not prohibit a platform-native build needed for valid evidence.
 
-- Merge on primary-platform evidence; secondary platforms qualify the promotion.
-- Build on the primary and ship artifacts to the secondary. Never build on the secondary.
-- Platform-specific code sits behind one thin layer.
+Keep platform-specific code behind its owning boundary. Never substitute primary-platform success for a required secondary-platform result.
 
-## 13. Review only protected surfaces
+## 13. Coordination has an owner
 
-Symptom: routine changes wait on review, or fixes restart independent review rounds.
-
-Follow the [delivery and protected-surface review policy](enforcement.md#delivery-policy). Do not add another review or approval system to the repository CLI.
+Symptom: routine changes wait on invented approvals, or fixes restart unnecessary review rounds. Check the active delivery and review policy, measure the actual wait, and repair the owning integration. Do not add another review or approval system to the repository CLI.
