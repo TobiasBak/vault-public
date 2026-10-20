@@ -51,6 +51,7 @@ Adopt only what removes the chosen cost or repairs a broken contract. References
 
 | Job | Read |
 |---|---|
+| Changing this skill's scope or rules | [design-principles.md](references/design-principles.md) |
 | Choosing the slow pattern to fix | [manifest.md](references/manifest.md) |
 | Writing, changing, or migrating tests | [black-box-tests.md](references/black-box-tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
