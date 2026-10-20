@@ -1,11 +1,13 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Set up repositories for agents using shared infrastructure. Use when designing product verification or agent context, cutting a measured build, test, gate or platform-run wait, tracing slow feedback, or writing AGENTS.md.
+description: Build self-explanatory, hardened repositories that agents can change safely and verify. Use when designing agent-repo structure, product verification or agent context, cutting a measured build, test, gate or platform-run wait, tracing slow feedback, or writing AGENTS.md.
 ---
 
 # Theodore Kaczynski Nullifier
 
 Technology was never the problem. Waiting on it is.
+
+Build a repository a fresh agent can understand, change safely, and verify without human source review or repair. The codebase is its living documentation; prose keeps only what the executable system cannot adequately express. These are the [foundations](references/design-principles.md), not consequences of a particular tool.
 
 **Agent thinking is the only acceptable bottleneck.** A tool call slower than a model turn needs a reason. A turn spent on a question the repo could have answered in the previous call is waste.
 
@@ -51,7 +53,7 @@ Adopt only what removes the chosen cost or repairs a broken contract. References
 
 | Job | Read |
 |---|---|
-| Changing this skill's scope or rules | [design-principles.md](references/design-principles.md) |
+| Understanding the foundations or changing this skill | [design-principles.md](references/design-principles.md) |
 | Choosing the slow pattern to fix | [manifest.md](references/manifest.md) |
 | Writing, changing, or migrating tests | [black-box-tests.md](references/black-box-tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
@@ -70,5 +72,5 @@ Prove what you delivered, not every capability here:
 - **Enforcement:** the [landing-entrypoint proof](references/enforcement.md#proof), including candidate and metadata.
 - **Cache or watcher:** matching inputs reuse evidence; changed inputs reject it after forwarding or child integration. A watcher observes its own workspace.
 - **Edit loop:** a one-line edit reaches its verdict, rebuild included, faster than a model turn. Cache hits prove nothing here.
-- **Navigation or diagnostics:** a fresh agent given a real bug report finds, reproduces, and proves the fix; count turns before and after.
+- **Agent-repo setup or navigation:** a fresh agent given a real task finds the owning code, makes the change, and verifies behavior without hidden context or human repair. Count turns before and after when claiming a navigation improvement.
 - **Suite deletion:** the [replacement proof](references/black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop a migration, never authorize deletion.

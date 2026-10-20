@@ -1,4 +1,4 @@
 interface:
   display_name: "Theodore Kaczynski Nullifier"
-  short_description: "Fast product feedback on shared agent infrastructure"
-  default_prompt: "Use $theodore-kaczynski-nullifier for product-specific verification, agent context, measured feedback costs, or AGENTS.md. Reuse gah for workspaces, warm build state and landing, and heavy-lease for host admission. Fix the measured cost at its owner without rebuilding shared tooling per repo. Shorten the named product edit-to-main loop beside product work, then stop at the measured target."
+  short_description: "Self-explanatory repos and trustworthy agent output"
+  default_prompt: "Use $theodore-kaczynski-nullifier to build repositories a fresh agent can understand, change safely and verify without human source review or repair. Treat the codebase as living documentation and keep prose to what the executable system cannot adequately express. Build trust through structure, enforced boundaries and independent behavioral evidence. Reuse shared infrastructure, fix measured feedback costs at their owner beside product work, then stop at the measured target."
