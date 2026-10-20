@@ -22,6 +22,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 `skills/<name>/` holds Tobias's global agent skills; `.agents/skills/` holds vault-only ones. `.claude/skills` links to `.agents/skills` so Claude Code sees the vault-only ones too. `chief-of-staff` is the one skill only Tobias invokes; keep it that way. `scripts/install-skills.sh --fix` (or `.ps1 -Fix` on Windows) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles symlinks `~/.claude/skills` to it.
 
 - Every global skill has `SKILL.md` and `agents/openai.yaml`. All global skills are model-invoked: omit `disable-model-invocation` and `policy.allow_implicit_invocation`. Tobias wants agents to discover relevant skills without him remembering their names. Descriptions must say when the skill applies.
+- Keep each global skill self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills. Vault-wide deduplication stops at the skill boundary.
 - Skills that guide code changes end with a `Verification` section naming the behavioral check expected.
 - `domain-modeling`, `grill-with-docs`, `grilling`: vendored from Matt Pocock; refresh with `scripts/update-vendored-skills.sh`. Keep upstream content byte-identical except local invocation metadata; the updater removes `disable-model-invocation`. Never hand-edit their bodies. `frontend-design` is Anthropic's with local metadata and a `Verification` section. Adapted skills carry `SOURCE.md` and `LICENSE`.
 

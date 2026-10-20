@@ -19,11 +19,21 @@ Every adopted rule is a program that exits nonzero, or a CLI behavior that makes
 | Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, a case's oracle, a `Why:` trailer |
 | Prose only where allowed | Prose outside root `AGENTS.md`, skills, `--help`, case records, and exact published-contract paths; docs directories outside those paths; any README, input directories included; a published contract failing its machine check | The [owners and contract migration](agent-context.md#what-stays-out) |
 | Agent context shape | Root `AGENTS.md` over 80 lines, off its sections, or with unranked or more than five values; any other `AGENTS.md`; prompt files (including `.codex/`, `.pi/`) or command docs; a path or command in `AGENTS.md` or a skill that doesn't exist; a host instruction file that isn't a symlink to root `AGENTS.md` | The [shape and instruction migration](agent-context.md) |
-| Skill shape | No description of when it applies; repeating `--help`, `AGENTS.md`, or another skill; a whole procedure that is one CLI call | The [skill rules](agent-context.md#skills) |
+| Skill shape | No description of when it applies; an instructional file link escaping its skill directory; repeated instructions instead of one local home; copied `--help` or root `AGENTS.md` instructions; a whole procedure that is one CLI call | The [skill rules](agent-context.md#skills) |
 | One verification entrypoint | A tracked runnable file (interpreter-run scripts included) or task-runner target outside the CLI's exact allowlist; a shell alias or wrapper duplicating a CLI command | The [single entrypoint](control-cli.md#one-entrypoint) |
 | Budgets | A full corpus over budget | Make it faster, or raise the budget with its basis |
 
-The **gate** is the landing path invoking `<cli> check`, the single implementation of the repository's static checks. It never selects or runs cases. The [delivery policy](../../../tobias/preferences.md#delivery-and-releases) owns writer-chosen tests, review, landing authority, and promotion qualification. Do not implement a second delivery system here.
+The **gate** is the landing path invoking `<cli> check`, the single implementation of the repository's static checks. It never selects or runs cases. Follow the [delivery policy](#delivery-policy); do not implement a second delivery system in the repository CLI.
+
+## Delivery policy
+
+- The writer chooses and runs relevant behavioral tests, runs static pre-push checks, and lands straight to main. No main CI, published qualification, statuses, post-push reruns, or merge hop. A rebase reruns pre-push. In gah workspaces, `gah merge` runs the repository check and lands; never commit, branch, or push main with Git there.
+- Only repository-declared protected surfaces need one independent review, parallel with static pre-push and clear of blocking findings before landing. Give the reviewer intent, requirements, invariants, the base and candidate, diff, and validation evidence without the author's reasoning. Define blocking risks before review. Keep the candidate read-only; probes use disposable snapshots. Fix blockers and validate without another independent round. Record non-blocking findings as follow-ups.
+- Full suites and secondary platforms qualify the main→staging promotion PR, or the production promotion PR without staging. Any failure blocks promotion; main may be red on suites only promotion runs.
+- The promotion PR's opener spawns a landing agent and works with it until it lands. Find culprit merges, fix forward from their linked issues and PRs, and revert what cannot be fixed.
+- Staging is internal: agents may promote and deploy it without asking Tobias. Batch meaningful changes or team-testing needs, never every main merge.
+- Only Tobias merges production promotions. Agents may open them but never push, deploy, or publish production. For a production request, qualify the smallest candidate from the last qualified staging commit plus only required commits, then merge it back into main. New release automation, infrastructure, or proofs need Tobias's approval and never block that minimal deploy.
+- Efficiency and infrastructure work run beside product work, never as its precondition. Product gates get shared heavy-test slots first.
 
 ## Check targets
 

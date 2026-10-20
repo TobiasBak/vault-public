@@ -52,7 +52,7 @@ Symptom: a docs change triggers the full matrix. Fix: each job declares its inpu
 
 ## 8. Relevant tests for the writer, full corpus on promotion
 
-Symptom: full CI after every edit. Follow the [delivery policy](../../../tobias/preferences.md#delivery-and-releases). The writer chooses relevant tests; the landing check stays static.
+Symptom: full CI after every edit. Follow the [delivery policy](enforcement.md#delivery-policy). The writer chooses relevant tests; the landing check stays static.
 
 ## 9. Budgets are visible
 
@@ -81,4 +81,4 @@ Symptom: a secondary-platform run (e.g. the Windows VM) on every PR.
 
 Symptom: routine changes wait on review, or fixes restart independent review rounds.
 
-Follow the [review policy](../../../agents/code-review.md) and [delivery policy](../../../tobias/preferences.md#delivery-and-releases). Do not add another review or approval system to the repository CLI.
+Follow the [delivery and protected-surface review policy](enforcement.md#delivery-policy). Do not add another review or approval system to the repository CLI.

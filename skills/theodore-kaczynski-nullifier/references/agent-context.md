@@ -83,7 +83,8 @@ A host that requires another instruction filename gets only a symlink to root `A
 ## Skills
 
 - Repo-local skills are allowed.
-- Never repeat CLI `--help`, `AGENTS.md` lines, or another skill. Link to the home instead.
+- Each skill is self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills.
+- Within a skill, give each instruction one home and link to it instead of repeating it. Do not copy CLI `--help` or instructions already supplied by the target repository's root `AGENTS.md`.
 - Every path and command a skill names exists. The agent-context check covers skills.
 - The description says when the skill applies.
 - When the CLI does a skill's whole procedure in one call, delete the skill or cut it to what remains.

@@ -17,7 +17,7 @@ A command earns its place by answering a real repeated question. Adopt only what
 | `why <case>` | The [failure output](black-box-tests.md#failure-output) plus the `emit` command for the failing request. |
 | `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
 | `check` | Format, lint, types, enforcement rules. Never runs cases. |
-| `test [<case>...]` | Writer-invoked affected cases by default; `--full` for promotion qualification under the [delivery policy](../../../tobias/preferences.md#delivery-and-releases). |
+| `test [<case>...]` | Writer-invoked affected cases by default; `--full` for promotion qualification under the [delivery policy](enforcement.md#delivery-policy). |
 | `accept <case> --source "<truth>"` | Writes expected output and its oracle. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |
