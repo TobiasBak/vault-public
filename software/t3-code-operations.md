@@ -19,6 +19,6 @@ Observed 2026-10-13, nightly `0.0.46-nightly.20261013.3042`:
 
 ## Service restarts
 
-A service restart cancels running runs; leads do not resume automatically. On 2026-10-13, one restart killed 11 runs representing 2.7 hours of agent time.
+A service restart interrupts running runs and kills their in-flight tool calls, such as VM lanes and builds. On 2026-10-13, one restart killed 11 runs representing 2.7 hours of agent time. Since nightly `0.1.1-nightly.20261020.3411`, T3 starts a new run for each interrupted thread within seconds of startup (2026-10-20: three leads resumed 5 s after the restart), so the cost is the lost in-flight work, not the lead.
 
 Run `python3 .agents/skills/chief-of-staff/scripts/cos.py restart-check` from the vault root and restart only on exit 0. Otherwise hold the restart and tell Tobias what it would kill. [Dotfiles](../projects.md#dotfiles) owns service operations.
