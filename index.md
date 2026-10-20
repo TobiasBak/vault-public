@@ -27,7 +27,7 @@ Not exhaustive. Search with `rg`.
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, refactor equivalence, test pruning, team adoption
-- [agents/learning-from-feedback.md](agents/learning-from-feedback.md): memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
+- [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
 - [agents/coding-models.md](agents/coding-models.md): provider guidance, Sol vs Astra cost, model specifics, Codex/Pi/Claude Code/OpenCode host specifics

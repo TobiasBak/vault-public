@@ -2,6 +2,16 @@
 
 Agents and adaptive systems learn by changing reviewable external artifacts (notes, skills, examples, config, code), not weights. Keep raw evidence separate from derived lessons, and validate every lesson on more than the episode that produced it.
 
+## Preserve evidence strength and scope
+
+**A lesson must not become more certain or more general than the evidence that produced it.**
+
+Recording, summarizing, retrieving, or repeating a claim adds no evidence or authority. Preserve uncertainty and conditions that change how a future agent should act. An observation is not a proven cause; deciding what to require is a separate step from explaining what happened.
+
+For example, "the failure disappeared after disabling the cache" does not establish "the cache caused the failure" or justify "the cache must always stay disabled." Keep the observation and suspected cause distinct until evidence supports the causal claim.
+
+Explicit user decisions and preferences are authoritative within their stated scope, not hypotheses agents must validate experimentally.
+
 ## Storage types
 
 - **Raw episode:** immutable messages, tool calls, outputs, patches, and outcomes. Supports audit and re-extraction; it is not a lesson.
