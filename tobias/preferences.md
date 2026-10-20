@@ -1,6 +1,6 @@
 # Tobias's engineering preferences
 
-Weigh these heavily when they fit; repository reality and explicit project policy win. Confirmed through 2026-09-29.
+Weigh these heavily when they fit; repository reality and explicit project policy win.
 
 ## How Tobias works
 
@@ -48,7 +48,7 @@ This is the method he is growing toward, not a description of current habit:
 
 ## Stack
 
-- **Machine and tooling (2026-10-11):** the PC runs Omarchy (Arch). Keep infrastructure as code and declarative config; machine config lives in dotfiles. Install tools through mise (npm packages through pnpm). Follow [Omarchy agent operations](../software/omarchy-agent-operations.md) for packages, privilege and unprivileged safety checks. Project toolchains belong in the repo's `mise.toml`. Never use or propose Nix on workstations or in project toolchains (no flakes, `nix develop`, or Home Manager). Server serv01 stays NixOS; its config is in dotfiles' `nixos/`. No Windows or WSL targets on his machines or in project toolchains.
+- **Machine and tooling (2026-10-11):** the PC runs Omarchy (Arch). Keep infrastructure as code and declarative config; machine config lives in dotfiles. Install tools through mise (npm packages through pnpm). Follow [Omarchy agent operations](../software/omarchy-agent-operations.md) for packages, privilege and unprivileged safety checks. Project toolchains belong in the repo's `mise.toml`. Never use or propose Nix on workstations or in project toolchains (no flakes, `nix develop`, or Home Manager). Server serv01 stays NixOS; its config is in dotfiles' `nixos/`. Omarchy is the workstation target; required Windows checks run in the [isolated VM](../software/omarchy-windows-vm.md). No WSL toolchains.
 
 - **Python:** always [uv](https://docs.astral.sh/uv/) for versions, environments, dependencies, tools, and builds. Never pip, Poetry, Conda, or hand-made venvs in a uv project.
 - **TypeScript:** [TypeScript 7](../software/typescript.md). Prototypes may adopt prerelease tech aggressively; long-lived systems need compatibility checks and rollback.
@@ -60,15 +60,26 @@ This is the method he is growing toward, not a description of current habit:
 
 ## Testing and debugging
 
-- Match testing to consequence, lifetime, and risk. No elaborate test infrastructure for prototypes or low-risk Pi extensions. Test observable behavior, with expectations derived independently, never by repeating the implementation.
+- Match testing to consequence, lifetime, and risk. No elaborate test infrastructure for disposable prototypes. Test observable behavior, with expectations derived independently, never by repeating the implementation.
 - **Only black-box tests (2026-10-09):** a given input to the system must produce a specific output. No unit tests: agents get stuck on them and grow legacy and fallback paths to keep them passing. Static checks, linters and formatters are the only other verification. Make black-box tests fast rather than adding faster unit tests.
 - **Hard bug:** build the fastest repeatable signal for the exact symptom. Trace to the first incorrect state and the invariant owner. Minimize, change one variable at a time, keep the minimized case as a regression test at the real seam, and rerun the original scenario.
 - **Flaky bug:** raise and measure the reproduction rate through repetition, stress, narrowed timing windows, or pinned environment variables. Don't wait for full determinism.
 - **Parity scope (2026-10-17):** parity covers important business logic, not UI incidentals.
 - **Integration-heavy systems:** run the real app against realistic local black-box service doubles. Record requests and assert visible requests, state, and behavior instead of mocking internals.
-- **Product PRs gate on fast checks and touched tests; full suites gate the promotion PR.** Permanent rule for every project with users, decided 2026-10-14, revised 2026-10-16. PRs merge to main on a fast check plus the tests their change touches, with no new failures versus main. The repo's tooling selects tests from the diff; the agent may add tests, never drop them. A diff the tooling cannot map to specific tests (shared code, harness, dependency or budget changes) runs that code's own tests plus one smoke case per affected lane; the full suite waits for the promotion PR (revised 2026-10-17). Report failures already on main, but do not block on them. Main may be red on suites only the promotion PR runs. The full suite and secondary platforms (e.g., the Windows VM) run on the main→staging promotion PR; any failure blocks it. Whoever opens a promotion PR spawns a landing agent and works with it until the PR lands: the agent finds the culprit merges, fixes forward from their linked issues and PRs, and reverts what it cannot fix. Staging is internal; a promotion to staging lands without asking Tobias. No GO is needed to promote or deploy staging; batch main→staging PRs for meaningful merge batches or team testing needs, never every main merge, to conserve limited GitHub Actions minutes (Tobias, 2026-10-18). Production reaches users; only Tobias promotes it, and agents never push, promote or deploy it. Without staging, the full suite gates the production promotion PR the same way. Efficiency and infrastructure work runs beside product work, never as its precondition; product gates get any shared heavy test slot first.
-- **Order-integration native apps stay on Nuitka.** Tobias chose it over PyInstaller because it is safer (2026-10-07). Cut its ~40-minute Windows cold build with caching and artifact reuse, not by proposing another packager.
 - **Numeric limits are tripwires.** Measure before choosing a limit and keep the basis next to its definition. Remeasure when conditions change. A limit developers can hit is a limit they must see: every budget failure names the budget, the limit, and the ask. A silent budget is worse than no budget.
+
+## Delivery and releases
+
+Current policy (Tobias, 2026-10-19/20):
+
+- Run static pre-push checks, choose and run relevant behavioral tests, then push straight to main. No main CI, published qualification, statuses, post-push reruns or merge hop. A rebase reruns pre-push.
+- In a gah workspace, `gah merge` runs the repository's check and pushes main. Never commit, branch or push main with Git there.
+- Only repository-declared protected surfaces need one independent review. Run it in parallel with pre-push and clear blocking findings before pushing. Other changes need no independent review.
+- Full suites and secondary platforms run on the main→staging promotion PR, or the production promotion PR without staging. Any failure blocks that promotion. Main may be red on suites only promotion runs.
+- Whoever opens a promotion PR spawns a landing agent and works with it until it lands. The agent finds culprit merges, fixes forward from their linked issues and PRs, and reverts what it cannot fix.
+- Staging is internal: promote and deploy it without asking Tobias. Batch main→staging PRs for meaningful merge batches or team testing needs, never every main merge, to conserve GitHub Actions minutes.
+- Agents may open staging→production PRs; only Tobias merges them. Agents never push, deploy or publish production. For a production request, cut the smallest candidate from the last qualified staging commit plus only the commits it needs, qualify that candidate, and merge it back into main. New release automation, infrastructure or proofs need Tobias's explicit approval and never block that minimal deploy.
+- Efficiency and infrastructure work runs beside product work, never as its precondition. Product gates get shared heavy test slots first.
 
 ## Interests
 

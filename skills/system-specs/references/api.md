@@ -99,7 +99,7 @@ Enforcement: black-box cases: a failed delivery is retried, a duplicate is proce
 
 ### A11 Interfaces for agents
 
-MCP tools and CLIs that agents call follow the internal tier, plus errors that say how to fix the call, bounded output with a way to fetch more, and tool lists that are re-read, not cached.
+MCP tools and CLIs that agents call keep their declared A1 tier. Regardless of tier, they provide errors that say how to fix the call, bounded output with a way to fetch more, and tool lists that are re-read, not cached. Independently installed peers still negotiate through A12.
 
 Reason: agents act on error text and lose context to unbounded output; a cached tool list calls tools that changed.
 

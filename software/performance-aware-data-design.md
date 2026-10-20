@@ -40,9 +40,6 @@ children such as `__pycache__` appear, and directory size varies by filesystem;
 including either defeats the exclusion and churns cache keys. File size, mtime
 and executable bits can replace expensive content reads only when the cache's
 explicit trust contract permits metadata-preserving edits to go undetected.
-A toolchain-cache fix
-reproduced excluded-bytecode churn at artifact reuse before removing directory
-metadata from the fingerprint.
 
 Vet every reported number with the [benchmark checklist](../skills/benchmark-checklist/SKILL.md). Keep a representative benchmark or measured tripwire next to the behavioral tests when performance is a contract, but don't make noisy timings hard gates.
 

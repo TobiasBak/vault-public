@@ -4,7 +4,7 @@ Agents investigate ambiguous behavior through the running app, APIs, logs, state
 
 ## Landing
 
-Pre-push runs static checks only; leads choose tests and push straight to main. Strict staging runs suites and secondary platforms. Rebases rerun static pre-push with content-keyed reuse. Its landing agent fixes forward or reverts staging failures, which may remain on main. [Protected-surface review](code-review.md) precedes the push.
+Follow the [delivery policy](../tobias/preferences.md#delivery-and-releases): static-only pre-push, writer-chosen tests, then straight to main (`gah merge` in gah workspaces). Full suites and secondary platforms qualify promotions. [Independent review](code-review.md) is only for repository-declared protected surfaces.
 
 ## Loop
 
@@ -40,10 +40,10 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Jobs that must survive an agent turn
 
-- Start benchmarks, long test or mutation runs, and servers in their own unit: `systemd-run --user --unit=<name> --slice=app-t3code-agents.slice <cmd>`. First verify the slice with `systemctl --user list-units --type=slice | grep t3code`; if its name differs, use the real one.
-- Keep the unit in that slice so it stays under T3's memory cap rather than risking a desktop OOM. On Omarchy, 2026-10-11, its parent `app-t3code.slice` had `MemoryHigh=40%` / `MemoryMax=55%` (12.2 / 16.8 GiB). Omitting `--slice` escapes that cap. Follow the job with `systemctl --user status <name>` and `journalctl --user -u <name>`.
-- Use a service unit (`--unit`), never `systemd-run --scope`. A scope keeps the job in the caller's process tree. In a T3 restart on 2026-10-11, a scope job died 2s after its Pi parent while a sibling scope survived, so survival is luck.
-- `setsid`, `nohup` and `&` do not escape T3 session-scope cleanup, including when a new message restarts an idle thread. Every process in that scope dies.
+- Run heavy jobs through repository entrypoints using [host admission](../skills/theodore-kaczynski-nullifier/references/control-cli.md#host-admission). A separate systemd unit is not admission.
+- Start daemons and independent triggers with `heavy-lease isolate -- <command>`; acquire leases inside that isolated process. Isolation preserves foreground I/O and exit status, so use the harness's background-job mechanism when needed.
+- Verify the resulting service's cgroup and ancestor memory limits rather than copying old percentages. Follow it with `systemctl --user status <unit>` and `journalctl --user -u <unit>`.
+- `setsid`, `nohup`, `&` and a systemd scope do not establish independence from T3 session cleanup. Wait for process exit or file events, never fixed sleeps or poll loops.
 
 ## Expected crashes on Omarchy
 
@@ -65,7 +65,7 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Where agent verification time goes
 
-Measure from session logs, receipts and PR timelines before tuning test runtime. In order-integration on 2026-10-02 to 04, the biggest losses weren't test execution:
+Measure from session logs, receipts and PR timelines before tuning test runtime. A 2026-10-02 to 04 history review found the biggest losses outside test execution:
 
 - PRs sat ready overnight (10.2h) because owners lacked merge authority.
 - A dead hosted workflow burned 19 × 30-minute Windows jobs.
@@ -105,7 +105,7 @@ Keep tests that catch broken contracts or meaningful regressions across internal
 
 Compare base and candidate under the same tests. Record durable plans, HTTP exchanges and session writes; diff per test node and call index. List deliberate renames, removals and additions. Anything else is unexplained. Include normalized accessibility snapshots and screen diffs.
 
-Normalisation pitfalls, from order-integration M9:
+Normalisation pitfalls:
 
 - Under xdist, pytest temp paths gain `popen-gwN/`. Strip it, or compare runs that used the same worker mode.
 - Random IDs inside strings (`execution-<hex8>`, upload hash directories, UUIDs) need stable placeholders. Map UUIDs in order of appearance.

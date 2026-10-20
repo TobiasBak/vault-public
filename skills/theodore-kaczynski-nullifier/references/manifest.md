@@ -31,7 +31,7 @@ Symptom: every edit followed by build, test, read.
 
 - One watcher per worktree. On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
 - `<cli> status` returns the current tree's verdict, blocks while a run is in progress, never returns another tree's.
-- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the worktree or when idle; runs at low priority and takes a slot (§11).
+- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the worktree or when idle; runs under host admission (§11), skipping when busy.
 - Agents never call the build tool directly.
 
 ## 5. Never pay for a cold start twice
@@ -46,7 +46,7 @@ Symptom: "rebuilt again, no idea why." Fix: store the input details beside the k
 
 Symptom: a docs change triggers the full matrix. Fix: each job declares its inputs once; test selection and cache key both come from it. A path no job claims is an error.
 
-## 8. Touched cases for PRs, full corpus on promotion
+## 8. Selected tests for main, full corpus on promotion
 
 Symptom: full CI after every edit. Fix: the [gate policy](enforcement.md#checks).
 
@@ -61,9 +61,9 @@ Symptom: a step quietly got three times slower.
 
 Symptom: passing output filling context. Fix: the [failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.
 
-## 11. One heavy job per resource
+## 11. Host-wide heavy-work admission
 
-Symptom: concurrent builds or VM runs slowing each other. Fix: one slot per heavy resource (CPU, VM, accelerator), taken by the CLI; the watcher takes one too.
+Symptom: concurrent builds or VM runs slowing each other. Fix: integrate the CLI with [heavy-lease](control-cli.md#host-admission), including exclusive VM lanes and watcher busy skips. Never add a competing repo-local scheduler.
 
 ## 12. Secondary platforms gate promotion, not the loop
 
@@ -73,10 +73,8 @@ Symptom: a secondary-platform run (e.g. the Windows VM) on every PR.
 - Build on the primary and ship artifacts to the secondary. Never build on the secondary.
 - Platform-specific code sits behind one thin layer.
 
-## 13. Review blockers, not round counts
+## 13. Review only protected surfaces
 
-Symptom: a round cap stops the recheck of a blocking fix, or non-blocking findings restart review.
+Symptom: routine changes wait on review, or fixes restart independent review rounds.
 
-- One independent review. Only correctness, security, data loss, or a broken contract blocks.
-- A further round only rechecks a blocking fix and what it might break. Non-blocking findings become follow-ups, never another round.
-- Merge authority stays with the repo's designated owner.
+Follow the [landing gate](enforcement.md#checks) and [review policy](../../../agents/code-review.md): one independent review only for repository-declared protected surfaces. Set the blocking bar before review; validate blocking fixes without another independent round. Non-blocking findings become follow-ups. Landing authority stays with the repo's designated owner.

@@ -12,4 +12,4 @@ Use Omarchy's package and privilege paths, not raw Arch package tools or root-eq
 
 Observed on Tobias's PC, 2026-10-11: agents had no passwordless sudo, and `lsof` and `fuser` were absent. Brief checks that work as uid `tobias`: scan readable `/proc` links.
 
-Some daemons owned by Tobias were non-dumpable and unreadable even to him: `systemd --user`, `sd-pam`, `ssh-agent`, `gnome-keyring`, and speech-dispatcher's `sd_*` modules. Name these known exceptions as cleared in a cleanup brief rather than aborting on their unreadable links; unrelated unreadable processes still need a disposition.
+Some daemons owned by Tobias were non-dumpable and unreadable even to him: `systemd --user`, `sd-pam`, `ssh-agent`, `gnome-keyring`, and speech-dispatcher's `sd_*` modules. Treat these as expected access restrictions, not automatic proof that a deletion target is unused. Establish the target's ownership and activity through other evidence; unrelated unreadable processes still need a disposition.

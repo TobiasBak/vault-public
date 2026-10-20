@@ -27,14 +27,14 @@ Make domain semantics explicit and transport mechanics incidental. Pick the prot
 - **Retry safety:** a caller-supplied operation ID returns the original admission on exact retry and fails explicitly on conflicting reuse. A timeout must never leave the caller unsure whether a retry duplicates work.
 - **Live vs durable events:** live events are low-latency and may be lost; durable history supports replay. Document disconnect, overflow, ordering, cursor, and backpressure behavior. Advance cursors only on committed events and order by an authoritative sequence, not timestamps. Robust clients treat live events as a doorbell and reconcile from history pages.
 - **Errors:** declare expected domain failures per operation, with a stable tag, IDs, message, and status. Keep them distinct from transport, decode, and unexpected-status failures and from defects. Callers should never parse strings.
-- **Explicit clears:** preserving employee edits requires distinguishing an absent field from a marked `null`. Read the validated draft directly instead of remigrating it through sparse extraction payloads. Numeric-only lifecycle checks can miss this: a real review command preserved an edited price but changed an explicitly cleared price to zero because serialization discarded the null.
+- **Explicit clears:** preserving employee edits requires distinguishing an absent field from a marked `null`. Read the validated draft directly instead of remigrating it through sparse extraction payloads. Check explicit clears as well as numeric edits: dropping a null during serialization can silently turn a cleared value into a default.
 - **Executable intent:** updating a mutable draft does not revise an immutable execution plan. A decision command must return the plan for its final protected facts and invalidate approval of the old reference. Lifecycle checks should inspect the immediate plan response and reject the old reference, not rely on a later browser reload or automatic planning request to repair it.
 
 ## Privileged completion after authorization
 
 Enforce content-integrity invariants at the final write, not only the permission probe. Upload authorization can finish in one transaction while a privileged worker commits bytes later. Signed upload tokens also outlive the state that authorized them. Test a token issued before review and redeemed afterward, then compare downloaded bytes and review state.
 
-Supabase Storage v1.70.3 uses privileged upload completion that bypasses authenticated RLS. A pre-issued signed upsert token replaced a file after review; a write-once Storage version trigger closed it.
+[Supabase Storage](supabase.md#storage) is a concrete case: privileged completion can bypass authenticated RLS.
 
 ## Transports and extensions
 
@@ -45,6 +45,6 @@ Supabase Storage v1.70.3 uses privileged upload completion that bypasses authent
 
 A major version is the moment to remove transport leakage, duplicate concepts, aliases, and accidental coupling. Prefer a coherent breaking contract over compatibility paths, unless an external consumer or durable data requires them. Success means ordinary use is easier, misuse is harder, recovery is explicit, and all projections agree.
 
-When durable data does require it, rename persisted fields with a versioned upgrade, not kept keys: stamp a format number on write, upgrade older formats on read in one module, and refuse unknown versions. The model then carries only current names. The order-integration session files took this route (format 1 to 2) when `monitor_*` fields became `erp_*`.
+When durable data does require it, rename persisted fields with a versioned upgrade, not kept keys: stamp a format number on write, upgrade older formats on read in one module, and refuse unknown versions. The model then carries only current names.
 
 **Example:** OpenCode 2 generates server and clients from one typed `HttpApi`, flattens inputs, runs the embedded SDK through the real router, separates prompt admission from execution and live from durable events, and scopes plugins. ([migration](https://v2.opencode.ai/migrate-v1.md), [client](https://v2.opencode.ai/build/client.md), [SDK](https://v2.opencode.ai/build/sdk.md), [plugins](https://v2.opencode.ai/build/plugins.md))

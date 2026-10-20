@@ -88,7 +88,7 @@ Enforcement: a scheduled agent task whose only write access is the issue tracker
 
 ### O10 Agent first responder
 
-An incident agent takes each alert first. It reads telemetry, correlates the alert with deploy markers and flag flips, contains the problem with O11's actions, and writes the fix as a PR through main ([R6](release.md#r6-hotfixes-go-through-main)).
+An incident agent takes each alert first. It reads telemetry, correlates the alert with deploy markers and flag flips, contains the problem with O11's actions, and lands the fix through main, then prepares the qualified production candidate ([R6](release.md#r6-minimal-production-candidates)).
 
 Reason: an agent responds in seconds, at any hour.
 

@@ -1,6 +1,6 @@
 # Control CLI
 
-One entrypoint owns the recurring operations this repo needs. Agents never call the compiler, test runner, platform tooling, or package manager directly for anything it owns. Adopted cache, watcher, resource slots, budgets, and test selection live here.
+One entrypoint owns the recurring operations this repo needs. Agents never call the compiler, test runner, platform tooling, or package manager directly for anything it owns. Adopted cache, watcher, host-scheduler integration, budgets, and test selection live here.
 
 ## One entrypoint
 
@@ -38,11 +38,22 @@ A command earns its place by answering a real repeated question. Adopt only what
 ## Runs
 
 - Each run has an ID and its own disposable state (temp dirs, ports, fake data, VMs). Cleanup touches only what the run owns, never by process name.
-- Heavy work first takes a slot for its resource (CPU, VM, accelerator); the watcher competes for the same slots.
+- Heavy work uses [host admission](#host-admission), never a competing repo-local scheduler.
 - `env up` returns when `doctor` passes, not after a fixed delay. Anything over a few minutes runs in the background and returns a job ID for `wait`.
 - Verify what "dry-run" and "test" modes actually write or contact.
 - Feedback builds use a fast incremental profile; the cache key includes it. Whole-program optimization and single-unit codegen (e.g. `lto = "fat"`, `codegen-units = 1`) are for shipping and performance measurement only; in the edit loop they make a one-line change a full rebuild.
 - Compilation units follow the module dependency graph. If an edit costs the same rebuild wherever it lands, the unit is a monolith: split it along the graph, keeping cycles together. Lowering optimization is no fix when the corpus is compute-bound; it moves the cost into the run.
+
+## Host admission
+
+Repository entrypoints wrap Linux builds, full suites, gates and corpus/parity runs in `heavy-lease run --wait [--class gate|interactive|efficiency] [--weight K] -- <command>`. Admission is host-wide, with live memory headroom and kernel-owned resources; gate jobs go first, then FIFO within each class. Interactive is the default. Missing tooling fails loudly; CI stays unchanged.
+
+- VM lanes use `--exclusive win-vm`, consuming no weighted slots unless also weighted.
+- Watcher jobs use `--try`; log exit 2 as a busy skip, never a verification pass.
+- Start daemons and independent triggers through `heavy-lease isolate -- <command>`. Their heavy child work still needs admission.
+- Formatting, launcher self-builds, status, single-case runs and static checks do not lease.
+- Nested passthrough requires a matching live holder token and sufficient held resources. An inherited variable alone is not ownership.
+- Use `heavy-lease status --json` for resources and waiter admission reasons. Wait for process exit or file events, never fixed sleeps or poll loops.
 
 ## Mutation technique
 

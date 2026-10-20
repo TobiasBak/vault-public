@@ -9,7 +9,7 @@ A spec tells Tobias what the system must do and why, without code. Agents read i
 
 ## The world specs assume
 
-Agents merge several times a day, staging updates continuously, and production releases up to daily plus hotfixes. So at any moment:
+Agents merge several times a day, staging receives qualified batches, and production releases up to daily plus hotfixes. So at any moment:
 - Two or more versions of the code run against the same data and talk to each other: rolling deploys, workers that haven't restarted, migrations applied before or after the code that uses them.
 - Every boundary sees data written by both newer and older code than itself.
 - No human is around to fix a halted system by hand.

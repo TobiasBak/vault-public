@@ -23,10 +23,11 @@ Every adopted rule is a program that exits nonzero, or a CLI behavior that makes
 | One control entrypoint | A tracked runnable file (interpreter-run scripts included) or task-runner target outside the CLI's exact allowlist; a shell alias or wrapper duplicating a CLI command | The [single entrypoint](control-cli.md#one-entrypoint) |
 | Budgets | A full corpus over budget | Make it faster, or raise the budget with its basis |
 
-All checks have one implementation, `<cli> check`, and the gate is the git hooks calling it:
+All static checks have one implementation, `<cli> check`, called by the landing path. Git hooks provide pre-commit and pre-push entrypoints; gah invokes the repository check through `gah merge`:
 - **pre-commit:** every check needing no build, on the staged snapshot, never the working tree.
-- **pre-push:** the full static check plus touched cases on the pushed head (from cache when green), no new failures versus main, and the trailer guard on the pushed commits only. Selection is conservative; a change it can't map to cases (shared code, harness, dependencies, budgets) runs that code's own tests plus one smoke case per affected lane (each separately run job or platform the change feeds), never the full corpus. Failures already on main are reported, not blocking.
-- **Promotion PR:** the full corpus and secondary platforms, under the [product testing and promotion rule](../../../tobias/preferences.md#testing-and-debugging).
+- **pre-push:** the full static check and trailer guard on the pushed commits only. The writer chooses and runs relevant behavioral tests before landing; the hook does not select or run cases. A rebase reruns pre-push.
+- **Landing:** push straight to main after the checks. In a gah workspace, `gah merge` runs the repository's check and pushes main; never commit, branch or push main with Git there. Only repository-declared protected surfaces need one independent review, parallel with pre-push and clear of blocking findings before landing. Validate fixes without another independent round.
+- **Promotion PR:** the full corpus and secondary platforms; any failure blocks promotion. Main may be red on suites only promotion runs. The [delivery policy](../../../tobias/preferences.md#delivery-and-releases) owns staging batches, landing-agent responsibility and Tobias-only production promotion.
 
 A guard never re-judges commits already on the remote under newer rules. Hosted CI only where the repo already has it; never add it as part of this.
 

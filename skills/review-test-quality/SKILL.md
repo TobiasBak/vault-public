@@ -29,3 +29,7 @@ Run focused checks when they settle a dispute. A cheap vacuity probe: would the 
 ## Report
 
 Lead with the recommendation and the inspected scope. For material findings, give the test, file, class, protected or missing contract, reason, and action, grouping related assertions. Say what ran, what wasn't inspected, and any product question left open. Say when a cut is sound. Background: [testing with agents](../../agents/testing-with-agents.md#pruning-tests).
+
+## Verification
+
+After an authorized test change, run the focused retained or replacement checks against the real consumer boundary. Confirm they still detect the named contract failure, using an existing regression or a targeted fault when needed. Report what remains unverified; a passing suite alone does not prove sound pruning.

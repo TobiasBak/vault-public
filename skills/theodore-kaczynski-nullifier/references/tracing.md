@@ -6,13 +6,13 @@ Every feedback command (`check`, `test`, gate, watcher jobs, promotion runs) wri
 
 - Trace phases, steps, and cases, plus build units where the build tool exposes them.
 - Every span records its ID, parent, monotonic start and end, wall time, CPU user and system time, scheduler run delay (`schedstat` on Linux), exit status, cache hit or miss, and PID. Mark missing or not-applicable values as such, never as a measured zero.
-- Waits are spans too: [slot](manifest.md#11-one-heavy-job-per-resource) and lock acquisition, build locks, queueing, and waiting on background watchers. Record the holder's PID and command when known.
+- Waits are spans too: [host admission](control-cli.md#host-admission) and lock acquisition, build locks, queueing, and waiting on background watchers. Record the holder's PID and command when known.
 - Add an explicit gap span for wall time no activity or wait span covers. A parent phase alone doesn't explain its untraced time.
 - Record dependency edges across parallel work and waits, so the critical path follows what actually delayed the verdict, not just the longest span.
 
 ## Host context
 
-- At trace start and end, record load, slot holders, and background jobs (ours and others).
+- At trace start and end, record load, host-lease holders, and background jobs (ours and others).
 - Track overlap with background jobs during the run, including ones that start and finish between those snapshots. Mark an overlapped measurement as contaminated in the trace itself.
 
 ## Format

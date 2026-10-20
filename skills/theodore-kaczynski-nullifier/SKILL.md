@@ -11,7 +11,7 @@ Technology was never the problem. Waiting on it is.
 
 - **Published interface:** what outside users call: CLI, HTTP API, file-in/file-out contract, or a library's public API.
 - **Case:** one black-box test directory (input, expected output, `case.toml`). The **corpus** is all cases.
-- **Verdict:** pass, fail, or blocked for one tree. The **gate** is the git hooks running `<cli> check`.
+- **Verdict:** pass, fail, or blocked for one tree. The **gate** is the landing path running `<cli> check`, through Git hooks or `gah merge`.
 - **Approved path:** the allowed way to do what a check forbids. Every failure names it.
 - **Promotion PR:** the main→staging PR (main→production without staging). It runs the full corpus and secondary platforms.
 
@@ -37,7 +37,7 @@ Anything else belongs in the issue or PR, never the tree.
 
 ## The loop
 
-Aim at shorter PR lead time on a named product workflow, not faster tools for their own sake. This runs beside product work, never as its precondition.
+Aim at a shorter edit-to-main loop on a named product workflow, not faster tools for their own sake. This runs beside product work, never as its precondition.
 
 1. **Measure** from the harness's session logs; agents can't see their own time. Split time into model (request to response), tool by kind (build, test, platform, git, wait), and waiting on child agents or the user.
 2. **Pick one outcome:** the product workflow that gains and who uses it, how often it runs, the step where the time goes (e.g. pre-push), its current cost, and the cause you can remove. Fix the largest measured recurring cost where it originates (CLI, cache, harness, host tooling), never with an instruction agents must remember. Correctness, security, and data-loss bugs justify scoped fixes with no speed claim.

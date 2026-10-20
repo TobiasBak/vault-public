@@ -27,16 +27,9 @@ A lens (security, concurrency, data integrity, API compatibility, test adequacy)
 
 **Set the blocking bar before the review.** An open-ended "find bugs" reviewer always finds another adversarial edge, and each "bounded" fix invites the next round.
 - Define what blocks merge at the change's consequence. For dev tooling, that's bugs that break normal use. Hostile environments, adversarial timing, and unlisted inputs become PR-body follow-ups.
-- After a capped final round, a real blocker gets one minimal fix and a validation run, not another review.
-- When consecutive rounds find variants of one class, decide whether the class matters at all instead of patching variants.
-- When a round's findings are mostly defects introduced by the previous round's fix, stop patching: the design or its claimed guarantee is wrong. Narrow the guarantee or redesign before another review.
-
-On 2026-10-04, order-integration #276 (a verification CLI) and #277 (a native build cache) took 396 and 379 minutes. Review, fix and re-review took about 70% of each; CI drivers about 15%.
-- From the third round on, #276's findings were almost all defects introduced by the previous fix. One race "fix" made stop never converge under ordinary process churn and was reverted.
-- #277's scope was widened by the orchestrator's own checks between rounds, not by reviewers: compiler, linker and Node/npm hardening cost about 110 minutes. Its bar ("ambient-environment hardening doesn't gate") first appeared in the final qualification prompt, after five rounds.
-- Two qualifications started before review settled and were cancelled when the head moved.
-
-The orchestrator approved every extension as "bounded" and never set the bar. Order-integration now enforces tiers, bar and cap in its repo `review` skill (`.agents/skills/review`, PR #286); this note keeps only the cross-project lesson.
+- Fix real blockers and run targeted validation, not another independent review.
+- If a fix creates variants of the same failure, revisit the owning design or claimed guarantee rather than adding more local patches.
+- Don't widen the blocking scope during validation or start qualification against a candidate still being changed.
 
 Findings carry location, violated contract or risk, evidence, consequence, and confidence or open question. Start with search, language tooling, and tests. Add AST, semantic-graph, or trace tools only after recurring retrieval failures show the need.
 

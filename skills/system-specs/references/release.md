@@ -5,7 +5,7 @@ Scope: every change to production behavior, from merge to running on servers and
 Principles:
 - Git is the only path to production.
 - One combined version per build.
-- A production release is a human action by default. A project may opt into automatic promotion.
+- Only Tobias merges production promotions. Agents may prepare the PR, never push, deploy or publish production.
 - Data never rolls back. Code may roll back automatically.
 - Gates are enforced outside the agents that write the changes.
 
@@ -35,13 +35,13 @@ Reason: prevents deploying an untested or substituted build, and an agent shippi
 
 Enforcement: deploy and install steps reject unsigned or unknown digests; credentials are scoped to the pipeline.
 
-### R4 Continuous staging
+### R4 Qualified staging batches
 
-Main deploys to staging automatically whenever its gates pass. Staging runs the same artifacts, migrations and pipeline as production, has its own client update channel with internal machines as the earliest cohort, and holds synthetic or anonymized data, never customer personal data.
+Main→staging promotion PRs batch meaningful merges or team testing needs, never every main merge. Full suites and secondary platforms qualify the batch; any failure blocks promotion. Agents land and deploy qualified staging batches without asking Tobias. Staging runs the same artifacts, migrations and pipeline as production, has its own client update channel with internal machines as the earliest cohort, and holds synthetic or anonymized data, never customer personal data.
 
 Reason: staging is where Tobias playtests what's coming, and where the pipeline itself is exercised before production.
 
-Enforcement: the pipeline deploys staging and production from the same manifest; staging has no access to production data.
+Enforcement: promotion qualification binds the batch's commit and artifacts; the pipeline deploys staging and production from the same manifest; staging has no access to production data.
 
 ### R5 Human-promoted, at most daily
 
@@ -51,13 +51,13 @@ Reason: users shouldn't get an update every day, and the release decision belong
 
 Enforcement: the pipeline refuses a second ordinary promotion the same day; release notes are generated from the diff, and approval-class detection runs on it.
 
-### R6 Hotfixes go through main
+### R6 Minimal production candidates
 
-Only an incident or bug forces an extra release. The fix lands on main first, then takes a fast track: touched checks plus smoke tests, a short staging bake, and the normal staged production rollout. Never cherry-pick onto the release branch. A kill-switch flip (R14) is faster when a flag covers the problem.
+Only an incident or bug forces an extra release. For a production request, start from the last qualified staging commit and add only the commits needed for the requested behavior, not unrelated newest-main changes. Qualify that candidate and keep the normal staged production rollout. Merge the candidate back into main so staging can keep fast-forwarding. New release automation, infrastructure or proofs require Tobias's explicit approval and never block the minimal deploy. A kill-switch flip (R14) is faster when a flag covers the problem.
 
-Reason: a fix that skips main is erased by the next release. The fast track shortens waiting, never steps.
+Reason: the requested fix should not inherit unrelated main changes or disappear in the next release.
 
-Enforcement: the release branch accepts only promotions of commits already on main.
+Enforcement: promotion requires qualification of the exact candidate and Tobias's merge; candidate history is reintegrated into main.
 
 ## Rollout
 
