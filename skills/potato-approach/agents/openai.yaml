@@ -1,4 +1,4 @@
 interface:
   display_name: "Potato Approach"
   short_description: "Make the easiest change the correct one"
-  default_prompt: "Use $potato-approach to harden this codebase so agents make correct changes and can verify them."
+  default_prompt: "Use $potato-approach to make this codebase understandable, safe to change, observable and recoverable for a fresh agent. Judge existing behavior against the intended contract, prevent known mistakes, expose actual outcomes and support recovery from unforeseen failures."

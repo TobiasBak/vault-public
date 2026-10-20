@@ -7,13 +7,13 @@ Correct routine work shouldn't need the strongest model, repeated advice, or sup
 Tobias's rollout policy for a settled rule:
 
 1. Implement the check over the full agreed scope, existing violations included. Confirm it accepts the supported pattern and rejects the forbidden one.
-2. Wire it into pre-commit and CI as a failing requirement and verify that both propagate failure. Its failures are the repair inventory.
+2. Wire it into the repository's real landing gate as a failing requirement and verify that the entrypoint propagates failure. Its failures are the repair inventory.
 3. Repair the owning design and follow the effects through callers, tests, fixtures, and runtime behavior. Don't defer type coverage.
 4. Continue until the gate passes and the behavior works. Passing by deleting required behavior is not a repair.
 
 No migration baselines, per-file suppressions, warning-only modes, or narrowed scope. Fix a wrong check against the real contract; never weaken a correct one to fit the code. If you must stop, leave the gate enabled and failing and record the command, the remaining failures, and where to resume.
 
-The failing gate lives on the repair branch. Merge the gate and its full repair together; a red gate on a shared default branch blocks every other agent's commits, and a baseline merged to get green breaks the policy.
+The failing gate lives in the repair workspace. Land the gate and its full repair together; a red gate on a shared default branch blocks every other agent's commits, and a baseline merged to get green breaks the policy.
 
 ## Put the decision in the design
 
@@ -28,9 +28,21 @@ Start from a real correction. Identify what the engineer decided, what it protec
 A static check is a program that exits nonzero on violation, with no agent interpreting it. AGENTS.md, skills, and review prompts are not checks, and a CI job named after a rule doesn't implement it.
 
 - Use existing compilers, type checkers, linters, and dependency tools before writing custom checkers.
-- Keep one rule implementation, run by both the installed pre-commit hook (installed during normal setup) and CI (because hooks can be skipped).
+- Keep one rule implementation called by the real landing path, such as gah's configured check or Git hooks. Use CI only where the repository's policy already requires it.
 - Failures name the rule, the location, and the supported fix.
-- Demonstrate both rejection and acceptance through the real entrypoints. If CI hasn't run, say so. Don't claim a check blocks merges unless merge policy requires it.
+- Demonstrate both rejection and acceptance through the real entrypoints, and state which ran. Don't claim a check blocks landing unless landing policy requires it.
+
+## Prevent and recover
+
+Prevent known mistake classes through the owning API and checks, but also make unforeseen failures visible, contained, and repairable:
+
+- Represent incomplete and failed operations explicitly. Bound effects so one failed operation cannot silently corrupt unrelated work.
+- Provide recovery at the effect boundary. Make retries safe or expose the state needed to decide whether to retry; a Git revert cannot undo an external write, deletion, or sent message.
+- Preserve evidence needed for diagnosis and repair instead of hiding partial failure behind a success response or fallback.
+
+## Preserve the reason for constraints
+
+Keep the protected outcome and reason discoverable in the check's failure, behavioral oracle, or owning decision record. Reconsider the constraint when evidence shows its reason no longer holds; retire or replace obsolete mechanisms through an explicit policy decision. A failing check or inconvenient implementation is not evidence that a correct rule is obsolete. Keep an adopted rule enforced until that decision changes it.
 
 ## Cleanup
 

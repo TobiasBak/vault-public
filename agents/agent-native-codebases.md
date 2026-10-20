@@ -2,6 +2,8 @@
 
 An agent-native codebase stays understandable, changeable, and verifiable across fresh agent contexts. Every context starts from the repository and leaves its handoff there, so intent, ownership, invariants, unfinished work, and evidence must be recoverable without private human memory. Capability belongs to the whole system: model, prompt, context, state, tools, orchestration, permissions, evaluator, and feedback loop. Improving one layer alone can just move the failure somewhere else.
 
+The [design principles](../skills/theodore-kaczynski-nullifier/references/design-principles.md) set the goal: a fresh agent understands the system, changes it correctly, establishes actual outcomes, and recovers when reality disagrees. They require independent authority for correctness, inspectable runtime behavior, recoverable failure, and constraints whose reasons remain discoverable.
+
 ## Patch accretion is the main failure
 
 A narrow task rewards the smallest plausible change even when it adds a parallel path, duplicates a rule, blurs ownership, or tests only the symptom. Each such patch enlarges the next change's context, and slower verification pushes later agents toward even narrower patches. Cheap patches make later agent work progressively more expensive.

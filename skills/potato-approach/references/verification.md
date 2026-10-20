@@ -13,12 +13,20 @@ Principles that apply to any project:
 - Distinguish tool drift, stale map, and product regression. Never redefine expected results to hide a bug.
 - Update affected feature-map entries in the same change that alters behavior or navigation.
 
+## A self-explanatory running system
+
+Observability is an interface for agents, not just an incident add-on. Use inspectable state, structured logs, traces, and diagnostics to connect an operation to its effects, failures, and incomplete work. Preserve operation identities and causal links; collect evidence needed for diagnosis, excluding secrets and unnecessary personal data. A success log is not proof of an external effect: inspect authoritative state or read it back.
+
+When changing recovery, exercise a representative partial failure through the real interface, inspect what actually happened, and use the supported retry, resume, or repair path. Confirm it does not duplicate effects or report incomplete work as success. Scope this proof to the changed contract, not every imaginable failure.
+
 ## Fresh-agent handoff check
 
 Use it when judging readiness for independent work, not after every edit. Give a fresh agent a representative report, the repo, and normal tools, with no prior investigation. A rerun by the original agent only checks the commands. Then fix whatever it got stuck on:
 
 - couldn't find the feature: feature map or naming
 - couldn't start, reset, or inspect: tools
+- couldn't establish what happened: observable state and causal diagnostics
+- couldn't recover from relevant partial failure: explicit state and supported recovery
 - needed a repeated method: skill
 - repeated an architectural mistake: API or boundary
 - claimed unsupported success: checks and evidence

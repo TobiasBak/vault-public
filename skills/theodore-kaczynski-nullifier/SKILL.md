@@ -7,7 +7,7 @@ description: Build self-explanatory, hardened repositories that agents can chang
 
 Technology was never the problem. Waiting on it is.
 
-Build a repository a fresh agent can understand, change safely, and verify without human source review or repair. The codebase is its living documentation; prose keeps only what the executable system cannot adequately express. These are the [foundations](references/design-principles.md), not consequences of a particular tool.
+Build for fresh-agent autonomy: understanding the system, changing it correctly, establishing what actually happened, and recovering when reality disagrees. The codebase is its living documentation; prose keeps only what the executable system cannot adequately express. These are the [foundations](references/design-principles.md), not consequences of a particular tool.
 
 **Agent thinking is the only acceptable bottleneck.** A tool call slower than a model turn needs a reason. A turn spent on a question the repo could have answered in the previous call is waste.
 
@@ -72,5 +72,6 @@ Prove what you delivered, not every capability here:
 - **Enforcement:** the [landing-entrypoint proof](references/enforcement.md#proof), including candidate and metadata.
 - **Cache or watcher:** matching inputs reuse evidence; changed inputs reject it after forwarding or child integration. A watcher observes its own workspace.
 - **Edit loop:** a one-line edit reaches its verdict, rebuild included, faster than a model turn. Cache hits prove nothing here.
-- **Agent-repo setup or navigation:** a fresh agent given a real task finds the owning code, makes the change, and verifies behavior without hidden context or human repair. Count turns before and after when claiming a navigation improvement.
+- **Observability or recovery:** establish the changed path's actual outcome through diagnostics and readback. For changed recovery behavior, exercise a relevant partial failure and demonstrate supported repair without duplicated effects or false success.
+- **Agent-repo setup or navigation:** a fresh agent given a real task finds the owning code, makes the change, establishes the actual outcome, and uses supported recovery when needed, without hidden context or human repair. Count turns before and after when claiming a navigation improvement.
 - **Suite deletion:** the [replacement proof](references/black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop a migration, never authorize deletion.
