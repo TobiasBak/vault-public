@@ -1,4 +1,4 @@
 interface:
   display_name: "Theodore Kaczynski Nullifier"
-  short_description: "Set up repos for agents, cut measured waits, trace slow gates"
-  default_prompt: "Use $theodore-kaczynski-nullifier when setting up or restructuring a repo for agents, when cutting a measured build, test, CI, gate or platform-run wait is the chosen work, when tracing slow gates, or when writing AGENTS.md. Aim at shorter PR lead time on a named product workflow, beside product work. Stop at the measured target or when a one-line edit reaches its verdict faster than a model turn."
+  short_description: "Fast product feedback on shared agent infrastructure"
+  default_prompt: "Use $theodore-kaczynski-nullifier for product-specific verification, agent context, measured feedback costs, or AGENTS.md. Reuse gah for workspaces, warm build state and landing, and heavy-lease for host admission. Fix the measured cost at its owner without rebuilding shared tooling per repo. Shorten the named product edit-to-main loop beside product work, then stop at the measured target."

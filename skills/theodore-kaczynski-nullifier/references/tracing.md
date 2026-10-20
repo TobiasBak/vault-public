@@ -1,6 +1,8 @@
 # Verification tracing
 
-Every feedback command (`check`, `test`, gate, watcher jobs, promotion runs) writes one trace per verdict, stored beside the verdict under its ID. When a [cached verdict is reused](manifest.md#3-cache-verdicts), keep the original trace's identity; never present cached work as a new run.
+Once tracing is adopted, product feedback commands (`check`, `test`, watcher jobs, promotion runs) write one trace per verdict, stored beside the verdict under its ID. When a [cached verdict is reused](manifest.md#3-cache-verdicts), keep the original trace's identity; never present cached work as a new run.
+
+Trace each operation at its owner. gah owns forwarding and landing spans; heavy-lease owns admission diagnostics; the repository owns build, check, and case spans. Correlate their evidence in the edit-to-main measurement, without wrapping or reimplementing shared tools. A repository trace alone cannot explain waits outside its process boundary; mark unavailable platform detail as missing.
 
 ## Spans
 

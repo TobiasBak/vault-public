@@ -1,10 +1,10 @@
 # Black-box tests
 
-A test is an input at the published interface and a specified output. Nothing else is a test. Few cases, each covering as much as it can.
+A test is an input at the published interface and a specified output. Nothing else is a test. A **case** is one scenario directory with input, expected output, and `case.toml`; the **corpus** is all cases. Few cases, each covering as much as it can.
 
 ## The box
 
-- The box is the published interface. Nothing narrower; calling an internal module a "product" to test it is forbidden. A GUI is a thin shell over an API: the API is the box, and the GUI gets cases only for its own contract.
+- The box is the published interface: CLI, HTTP API, file-in/file-out contract, or a library's public API. Nothing narrower; calling an internal module a "product" to test it is forbidden. A GUI is a thin shell over an API: the API is the box, and the GUI gets cases only for its own contract.
 - **Input:** the request plus starting state: files, fake external services, clock, seeds.
 - **Output:** the response plus effects seen in the environment: files written, messages in a fake mailbox, rows in a fake external system.
 - Fakes replace external systems only, never the repo's own code. An external command is faked by a stub first on `PATH` that records its arguments and stdin; the record is the effect.
@@ -100,7 +100,7 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 - Calls the real `main` in-process with the same arguments; a subprocess only when process behavior is the contract.
 - One build and one warm environment for the whole selection. Each case gets its own temp dir, port, and fake state so cases run in parallel; parallelize when the selection overruns its budget.
 - Clock and randomness injected; no real sleeps; seeds printed on failure.
-- Runs the cases the diff affects under the [gate policy](enforcement.md#checks). If the full corpus fits the affected-case budget, always run it all and build no selection.
+- Runs affected cases by default when the writer invokes verification; the [landing check stays static](enforcement.md#checks). If the full corpus fits the affected-case budget, always run it all and build no selection.
 - Reports every case over budget. A hung case is killed at its budget and fails, naming its request.
 - Writes the verdict cache and feeds the watcher.
 

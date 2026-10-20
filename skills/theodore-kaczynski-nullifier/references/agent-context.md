@@ -9,7 +9,8 @@ Each fact has one home; everywhere else links to it or says nothing.
 | Knowledge | Home |
 |---|---|
 | Purpose, values, orientation, loop, boundaries | Root `AGENTS.md` |
-| Commands and flags | The CLI's `--help` |
+| Commands and flags | The owning tool's `--help` |
+| Workspace, scheduling, and landing procedure | Shared-tool help and session instructions, not repository prose |
 | Task steps the CLI doesn't perform | Skills |
 | Behaviors and entry points | `<cli> map`, built from case records |
 | Settled choices | A check, or one Boundaries line when no program can decide it |
@@ -39,9 +40,7 @@ Exactly these sections, in this order:
 ## Loop
 
 - <Commands for the adopted capabilities: behavior lookup, current-tree verdict, failure diagnosis. Omit any not adopted.>
-- Never sleep.
-- <Command for waiting on a job or verdict, only if background jobs are adopted.>
-- Batch independent reads into one call.
+- <Product job wait command, only if background jobs are adopted.>
 - Tests are black-box cases in `<corpus>/`. No unit tests. Extend an existing case before adding one. Expected-output changes need a `Behavior-Change:` trailer naming the source of truth.
 - No comments. A reason goes in a check's failure message, a case's oracle, or a `Why:` commit trailer.
 
@@ -63,7 +62,7 @@ Exactly these sections, in this order:
 ## What stays out
 
 - Rationale, history, generic advice, and descriptions of what the code does.
-- Command docs; `--help` owns them.
+- Command docs; `--help` owns them. Shared-platform procedures and global agent habits stay out too.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
 - Docs directories. Their contracts become checks and cases through [contract migration](#contract-migration). The one exception is a published contract file: one an outside consumer reads (an OpenAPI spec, a schema), kept at an exact path the gate lists.

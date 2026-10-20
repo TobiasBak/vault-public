@@ -1,10 +1,10 @@
-# Control CLI
+# Product verification CLI
 
-One entrypoint owns the recurring operations this repo needs. Agents never call the compiler, test runner, platform tooling, or package manager directly for anything it owns. Adopted cache, watcher, host-scheduler integration, budgets, and test selection live here.
+One entrypoint owns recurring product verification: checks, builds, cases, evidence, and diagnostics. Agents use it for operations it covers. Reuse shared tooling for workspace lifecycle, warm build-state forks, host admission, and landing; never wrap those commands just to put them behind this CLI.
 
 ## One entrypoint
 
-Once the CLI covers an operation, delete every script, Makefile or justfile target, `package.json` script, shell alias, and wrapper duplicating it. A wrapper around the CLI still duplicates it. The gate keeps an exact allowlist of runnable files (interpreter-run scripts included) and task-runner targets: the CLI's own code, published product entrypoints, and required tool hooks such as a git hook calling `<cli> check`.
+Once the CLI covers a verification operation, delete scripts, task-runner targets, aliases, and wrappers duplicating it. The gate keeps an exact allowlist of runnable files and targets, including interpreted scripts: the CLI's code, published product entrypoints, and required integration hooks. Shared-tool configuration is not a competing entrypoint. The configured landing check calls `<cli> check` directly; do not add a repo-local merge command.
 
 ## Commands
 
@@ -12,12 +12,12 @@ A command earns its place by answering a real repeated question. Adopt only what
 
 | Command | Does |
 |---|---|
-| `status` | Current tree's verdict, from cache or watcher. Blocks while a run for this tree is in progress. |
+| `status` | Current tree's verdict, from matching evidence or a workspace-local watcher. Blocks while a run for these inputs is in progress. |
 | `wait <job>` | Blocks until the job's verdict exists, then returns it. |
 | `why <case>` | The [failure output](black-box-tests.md#failure-output) plus the `emit` command for the failing request. |
 | `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
 | `check` | Format, lint, types, enforcement rules. Never runs cases. |
-| `test [<case>...]` | Affected cases by default; `--full` for the promotion PR ([gate policy](enforcement.md#checks)). |
+| `test [<case>...]` | Writer-invoked affected cases by default; `--full` for promotion qualification under the [delivery policy](../../../tobias/preferences.md#delivery-and-releases). |
 | `accept <case> --source "<truth>"` | Writes expected output and its oracle. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |
@@ -38,6 +38,7 @@ A command earns its place by answering a real repeated question. Adopt only what
 ## Runs
 
 - Each run has an ID and its own disposable state (temp dirs, ports, fake data, VMs). Cleanup touches only what the run owns, never by process name.
+- Watchers, compiler servers, and other source-reading services run in the workspace's mount namespace. gah presents different workspaces at the same path; a host-side daemon sees main there. Key live services by workspace identity, never canonical path alone. [Evidence keys](manifest.md#3-cache-verdicts) identify inputs, not workspaces.
 - Heavy work uses [host admission](#host-admission), never a competing repo-local scheduler.
 - `env up` returns when `doctor` passes, not after a fixed delay. Anything over a few minutes runs in the background and returns a job ID for `wait`.
 - Verify what "dry-run" and "test" modes actually write or contact.
@@ -46,14 +47,15 @@ A command earns its place by answering a real repeated question. Adopt only what
 
 ## Host admission
 
-Repository entrypoints wrap Linux builds, full suites, gates and corpus/parity runs in `heavy-lease run --wait [--class gate|interactive|efficiency] [--weight K] -- <command>`. Admission is host-wide, with live memory headroom and kernel-owned resources; gate jobs go first, then FIFO within each class. Interactive is the default. Missing tooling fails loudly; CI stays unchanged.
+heavy-lease owns admission policy and resources; its `--help` owns flags and diagnostics. Integration requirements:
 
-- VM lanes use `--exclusive win-vm`, consuming no weighted slots unless also weighted.
-- Watcher jobs use `--try`; log exit 2 as a busy skip, never a verification pass.
-- Start daemons and independent triggers through `heavy-lease isolate -- <command>`. Their heavy child work still needs admission.
-- Formatting, launcher self-builds, status, single-case runs and static checks do not lease.
-- Nested passthrough requires a matching live holder token and sufficient held resources. An inherited variable alone is not ownership.
-- Use `heavy-lease status --json` for resources and waiter admission reasons. Wait for process exit or file events, never fixed sleeps or poll loops.
+- Repository entrypoints lease Linux builds, full suites, gates and corpus/parity runs. Formatting, launcher self-builds, status, single-case runs and static checks do not lease.
+- VM runs claim the exclusive `win-vm` lane; request weighted resources only when needed too.
+- Watchers use nonblocking admission; a busy skip is never a verification pass.
+- Start daemons and independent triggers through `heavy-lease isolate`. Their heavy child work still needs admission.
+- Nested work requires a matching live holder token and sufficient held resources. An inherited variable alone is not ownership.
+
+Missing tooling fails loudly; CI stays unchanged. Wait for process exit or file events, never fixed sleeps or poll loops.
 
 ## Mutation technique
 

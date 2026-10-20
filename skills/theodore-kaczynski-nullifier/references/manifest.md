@@ -1,12 +1,12 @@
 # Manifest
 
-Common slow patterns, ordered by measured cost: the symptom, then the fix.
+Match a symptom to measured cost, then fix its owner. The order below is not a priority ranking.
 
 ## 1. Ask the whole question in one call
 
 Symptom: chains of `rg`, `tail`, `git log`, each its own turn.
 
-- Commands match the questions agents ask: "can this head merge", "why did this case fail", "what changed since the last green verdict". One call returns verdict, failing cases, first mismatch, and rerun command.
+- Product commands answer product questions: "why did this case fail", "what changed since the last green verdict". One call returns verdict, failing cases, first mismatch, and rerun command. Workspace and landing questions go to gah, not a second implementation.
 - A probe sequence that repeats across sessions is a missing command. Independent reads go in one call.
 - `<cli> map [area]` answers "where is this behavior" from case records, never a hand-written map.
 
@@ -18,25 +18,29 @@ Symptom: `sleep 540; tail log`. Fix: `<cli> wait <job>` returns the verdict when
 
 Symptom: rerunning a suite that already passed on the same tree.
 
-- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version. Inputs, not output bytes.
+- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version, and qualified execution environment. Inputs, not output bytes, current directory, or workspace ID.
 - The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. Cache key, watcher, and `Behavior-Change:` guard read this same set.
 - Value: verdict, actual-output hash, duration, producer.
-- Stored by content hash outside every worktree and build directory, shared by all agents, beyond any cleanup.
+- Stored by content hash outside disposable workspaces and build directories, shared by agents, beyond workspace cleanup.
 - Nondeterminism is a bug in the case or the system.
-- A new head whose diff touches none of a job's inputs reuses its verdict.
+- After forwarding or integrating child work, compare the resulting inputs before reusing evidence. A new head whose diff touches none of a job's inputs reuses its verdict. Warm artifacts and a successful landing check are not case verdicts.
 
 ## 4. Have the answer before the question
 
 Symptom: every edit followed by build, test, read.
 
-- One watcher per worktree. On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
+- One watcher per workspace, identified by workspace identity and running in its [mount namespace](control-cli.md#runs). On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
 - `<cli> status` returns the current tree's verdict, blocks while a run is in progress, never returns another tree's.
-- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the worktree or when idle; runs under host admission (§11), skipping when busy.
+- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the workspace or when idle; uses host admission (§11), skipping when busy.
 - Agents never call the build tool directly.
 
 ## 5. Never pay for a cold start twice
 
-Symptom: the same build, boot, or setup repeated across worktrees, parallel jobs, or runs. Fix: snapshot and resume, a warm pool, or a shared content-keyed cache. New worktrees start from an existing build cache. One long-lived environment per resource, not per run.
+Symptom: the same build, boot, or setup repeated across workspaces, parallel jobs, or runs.
+
+- Use gah's warm build-state forks; do not build a second workspace provisioner, main warmer, or artifact copier. The repository supplies its build command and incremental configuration.
+- Diagnose remaining cold starts at their owner. Use existing snapshot/resume or shared caches for external environments when the measured workflow needs them.
+- Share expensive immutable preparation, not mutable case state. Each case still owns its state.
 
 ## 6. Caches explain their misses
 
@@ -46,9 +50,9 @@ Symptom: "rebuilt again, no idea why." Fix: store the input details beside the k
 
 Symptom: a docs change triggers the full matrix. Fix: each job declares its inputs once; test selection and cache key both come from it. A path no job claims is an error.
 
-## 8. Selected tests for main, full corpus on promotion
+## 8. Relevant tests for the writer, full corpus on promotion
 
-Symptom: full CI after every edit. Fix: the [gate policy](enforcement.md#checks).
+Symptom: full CI after every edit. Follow the [delivery policy](../../../tobias/preferences.md#delivery-and-releases). The writer chooses relevant tests; the landing check stays static.
 
 ## 9. Budgets are visible
 
@@ -77,4 +81,4 @@ Symptom: a secondary-platform run (e.g. the Windows VM) on every PR.
 
 Symptom: routine changes wait on review, or fixes restart independent review rounds.
 
-Follow the [landing gate](enforcement.md#checks) and [review policy](../../../agents/code-review.md): one independent review only for repository-declared protected surfaces. Set the blocking bar before review; validate blocking fixes without another independent round. Non-blocking findings become follow-ups. Landing authority stays with the repo's designated owner.
+Follow the [review policy](../../../agents/code-review.md) and [delivery policy](../../../tobias/preferences.md#delivery-and-releases). Do not add another review or approval system to the repository CLI.
