@@ -8,6 +8,15 @@ Context engineering controls what the model sees at each inference. The **workin
 - Stored knowledge needs a retrieval route that fires before the decision. When improving an agent setup, inspect active instructions and triggers, not just reference notes.
 - Advertised context size is not usable size. Retrieval, multi-hop reasoning, and aggregation degrade before the window fills, and cached tokens still occupy attention.
 - Even a short irrelevant rule can constrain judgment. Optimize for useful information, not minimum tokens or maximum procedure.
+- Long-lived sessions get slower past ~300k context. 2026-10-20, Pi Sol 6.1 high, orderready, the same three routine tasks (two small implementations, one code-reading investigation) run by a fresh session per task, a lead at 200–310k and a lead at 380–480k:
+
+  | Variant | Model time | Wall time | Cache read | Requests | s/request |
+  |---|---|---|---|---|---|
+  | Fresh per task | 550 s | 831 s | 4.0M | 87 | 6 |
+  | Lead, 200–310k | 613 s | 880 s | 8.7M | 35 | 18 |
+  | Lead, 380–480k | 1,126 s | 1,300 s | 14.6M | 40 | 28 |
+
+  Leads batch work into fewer requests, so around 200k the cost is a wash; around 400k model time doubles. Quality did not drop: the long-lived lead's diffs were the smallest and were the ones landed. An earlier review-plus-test round (one run each) matched this: 141 s of model time fresh, 427 s at about 360k. Limits: one run per variant per task, the same host and time window, and task order differed between the leads and the fresh sessions.
 - Tobias prioritizes prefix caching (2026-10-11). Confirm context changes using actual prefix-cache usage and whole-task cost per successful result, separating warm-up from steady long runs. Neither a 97% cache hit rate nor fewer visible tokens alone proves a win; count cache churn, compaction and output too.
 
 ## State tiers
