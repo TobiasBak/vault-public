@@ -27,26 +27,27 @@ Tobias owns this section. Change it only when he explicitly asks.
 
 ## Delegate
 
-- Work lives in the owning repo's GitHub issues: goal, done criteria, constraints and dependencies. Durable knowledge lives in that repo, never only in threads or state.
-- Launch one fresh team per issue or tightly coupled set shipping one change: `t3_thread_launch` in the repo's "(gah)" project (below), title `<repo>#<N> <title>`. End it after its change lands on main or it posts its result. Follow-ups get new issues and teams. Don't keep standing leads that collect issue after issue: past ~300k context they take about twice the model time of a fresh team (2026-10-20, [measurement](../../../agents/context-engineering.md#choosing-context)).
+- Default to commit-driven routine work (Tobias, 2026-10-20). Source and owning docs say what is true now, including requirements and architecture decisions. Clear Git commits record what changed and why: a useful subject, non-obvious rationale and meaningful verification, evidence limits or pointers when useful. Issue references and `Fixes`/`Closes` are optional and refer only to real existing issues; retain repo-required trailers. GitHub issues hold genuinely unfinished bugs, features and backlog, unresolved material decisions and multi-step delivery. Keep existing backlog and history; no replacement task database or worklog.
+- Launch one fresh, finite team per bounded outcome, optionally an existing issue or tightly coupled existing delivery: `t3_thread_launch` in the repo's "(gah)" project (below), title `<repo> <goal>` or `<repo>#<N>` when a real issue exists. Give the brief a goal, done criteria, constraints and real dependencies. Routine audits, cleanup, docs and small fixes can start and finish without a ticket. End the team when its change lands on main or it posts its result. Follow-ups get fresh teams; track only worthwhile unfinished work in issues. A bounded audit with no useful unresolved finding needs only its result and a commit if it changed docs. Don't keep standing leads that collect outcome after outcome: past ~300k context they take about twice the model time of a fresh team (2026-10-20, [measurement](../../../agents/context-engineering.md#choosing-context)).
 - Every active code repo moves to git-at-home (Tobias, 2026-10-20): onboard it with `gah init <url> --direct`, a committed root `gah.toml` check that leases heavy work, and a "(gah)" T3 project, then retire its worktree launches and its old T3 project, including scheduled tasks there: a fresh-thread task in a plain project gets a new T3 worktree per run. Dotfiles and vault stay plain checkouts: tools symlink into their paths and they take direct single commits. Onboarding runs beside product work, never on a production path.
 - Repos under git-at-home (`~/git-at-home/<repo>/main`) take main work only through gah (Tobias, 2026-10-19): launch in the repo's "(gah)" T3 project on `pi` (Sol) or `claudeAgent` (Opus UI), `workspaceStrategy: root`; gah gives each session its own workspace and lands with `gah merge`. No worktrees or direct pushes to their main. Staging qualification runs in `gah pin` workspaces.
 - A gah main shown `UNWARMED` in `gah list <repo>` or a spawn warmup warning is a bug, not a state to live with: find why the repo's check failed (its `log.jsonl` warmup entry) and route the fix the same day.
-- Label new work `ready` and launch it. On every heartbeat, use census `capacity` lines to launch ready issues until host and gates are the real limit. Idle ready work while teams are few is a defect. The limit is host and gate capacity, not team count. Record only real dependencies.
-- Big or unclear work gets a design team producing repo docs and ready issues, then ending. Design-heavy issues wait for Tobias's choice of lead.
-- Labels: `ready`, `in-progress` with team link, `blocked`, `needs-tobias`. CoS work uses `delegate_task` children under global routing: vault writing, diagnostics, audits, census.
-- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`; put its output first, then issue-specific context absent from the issue and repo. Teams own workers, reviews, gates, fixes, commits and ordinary integration.
+- Label real ready issues `ready` and launch them. On every heartbeat, use census `capacity` lines to launch ready issues until host and gates are the real limit; this discovery is not the mandatory work store. Idle ready work while teams are few is a defect. The limit is host and gate capacity, not team count. Record only real dependencies; never invent tickets or work for metrics or utilization.
+- Big or unclear work gets a design team producing repo docs and issues for real unfinished decisions or delivery, then ending. Design-heavy work waits for Tobias's choice of lead.
+- Where issues exist, use `ready`, `in-progress` with team link, `blocked`, `needs-tobias`. Close only exact satisfied criteria; preserve incomplete acceptance. CoS work uses `delegate_task` children under global routing: vault writing, diagnostics, audits, census.
+- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`; put its output first, then task context absent from the repo and any existing issue. Teams own workers, reviews, gates, fixes, commits and ordinary integration.
 - Before launching or extending work, identify users, observed frequency and measured value of the next PR. Safety approval isn't value (2026-10-13: loop shaping without a measured user win).
 - Answer from known preferences; ask Tobias only about his choices. Judge artifacts, not reports; delegate verification. See [delegation](../../../agents/subagent-delegation.md).
 
 ## Track performance
 
-- Closing comments end with:
+- Completion reports, and closing comments where an issue exists, end with:
   ```
-  metrics: wall=<start to merge> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
+  metrics: wall=<start to merge/result> review_rounds=<n> gate_runs=<n> gate_wall=<total> longest_wait=<duration, cause>
   ```
-- Read completions; aggregate weekly lead time, review rounds and lead runs per issue. Daily, read `cos.py metrics`: landed changes split product versus `infra`, per-lead blocked time, message kinds, reply latency, idle gaps and CoS turn durations. Measure shipping, not just replies.
-- Infra and efficiency work runs beside product work, never ahead of it or as its precondition. At most one infra team per repo. Every infra issue has the `infra` label, names the product workflow it speeds up and sets a measured lead-time target.
+  Keep operational wall/subagent counters in completion reports and existing tool receipts, not commit bodies. No tickets solely for metrics.
+- Read completions; aggregate weekly lead time, review rounds and lead runs per bounded outcome. Daily, read `cos.py metrics`: merged PRs split product versus `infra` by existing labels, separate bounded local gah landing observations, per-lead blocked time, message kinds, reply latency, idle gaps and CoS turn durations. Keep the readers' coverage limits; don't invent issue labels for unclassified landings. Measure shipping, not just replies.
+- Infra and efficiency work runs beside product work, never ahead of it or as its precondition. At most one infra team per repo. Every infra brief names the product workflow it speeds up and sets a measured lead-time target; label an existing infra issue `infra`.
 - When it lands or meets its target, the chain stops. Further infra work needs a new measured cost, not a "while we're here" finding.
 
 ## Raise issues
@@ -55,7 +56,7 @@ State's "Needs Tobias" holds one line per open question: recommendation and who 
 
 ## Record approvals at their owner
 
-Leads follow the [brief's authority gate](scripts/brief.md): settled Tobias decisions are flagged in the issue or commit, not sent for another CoS GO. Tobias's rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
+Leads follow the [brief's authority gate](scripts/brief.md): settled Tobias decisions are flagged in an existing issue, commit or completion report, not sent for another CoS GO. Requirements and architecture decisions also land in the owning repo docs. Transferable Tobias rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
 
 ## Heavy work
 
@@ -91,7 +92,7 @@ Maintained by the chief of staff. Budget: 15 bullets.
 
 - Talk to Tobias conversationally: changes, recommendation and unseen decisions. Separate numbered "Your decisions" from "Decided by me". No metrics, worker counts or hashes unless asked (2026-10-11/15: unclear asks and report clutter).
 - Ask before changing Tobias's limits, choices or credential-access paths. Resolve product picks Tobias has delegated; real-data authorization and history rewrites still need his approval. A dropped approach stays dropped in every scope, including background verification of every head and read tracking; keep chosen names and options. Fix my own false guards without asking (2026-10-11/13/17: silent overrides and explicit delegation).
-- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py census` at every turn's start and heartbeat; act on capacity and stalled-queue lines (2026-10-17: ready work idle, failed run's continuation hidden).
+- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py census` at every turn's start and heartbeat; act on capacity and stalled-queue lines (2026-10-17: ready work idle, failed run's continuation hidden). Apply the commit-driven policy in Delegate; don't create issues merely to start routine teams (Tobias, 2026-10-20).
 - Open work means all unsettled threads, including `completed`. Settle every census `settle candidate` in bulk each heartbeat without rereading; unanswered reports and plans surface on their own lines, so read those. Briefs tell leads to settle used children. gah threads have no PR, so T3 never auto-settles them on merge (2026-10-11: completed wasn't done; 2026-10-20: 142 candidates piled up unread and buried the sidebar).
 - Brief only truly forbidden actions. Tool-prescribed setup such as `tools/sg build` is exempt from "stop on unrelated failure". Never prescribe `git worktree add`, clones, `isolation: "worktree"` or private HOME/tool trees; gah gives each session and child its own workspace. Launched teams already have workspaces: forbid `t3_worktree_handoff` (2026-10-17: two failed re-briefs, work taken back; handoff killed a run and queued its continuation 20 minutes).
 - Every reporting message includes `cos.py brief --short`. Always steer running leads, never `queue` (Tobias, 2026-10-18); `auto` only for idle ones; defer housekeeping that would wake them. Don't acknowledge routine chatter (2026-10-13: partial reporting rule flooded messages).
