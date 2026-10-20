@@ -24,7 +24,7 @@ from zoneinfo import ZoneInfo
 
 STATE_DIR = Path.home() / ".local/state/chief-of-staff"
 COS_THREAD_ID = (STATE_DIR / "cos-thread").read_text().strip()
-KINDS = ("go-request", "merge-ready", "done", "blocked", "tobias-decision", "other")
+KINDS = ("go-request", "merge-ready", "done", "blocked", "tobias-decision", "finding", "other")
 TABLES = {
     "orchestration_v2_projection_threads",
     "orchestration_v2_projection_messages",
@@ -277,7 +277,7 @@ def blocked_intervals(reports, runs, since, until):
 
 
 def report_kind(text):
-    typed = re.match(r"^\s*\[(go[_-]request|merge[_-]ready|done|blocked|tobias[_-]decision)\]", text, re.I)
+    typed = re.match(r"^\s*\[(go[_-]request|merge[_-]ready|done|blocked|tobias[_-]decision|finding)\]", text, re.I)
     return typed.group(1).lower().replace("_", "-") if typed else classify(text)
 
 

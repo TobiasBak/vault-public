@@ -344,7 +344,7 @@ class ReaderCliTests(unittest.TestCase):
         self.assertNotIn("irrelevant-history", output)
         messages = output.split("Lead messages\n")[1].split("Gate latency:")[0]
         for title in ("settled-reporter", "TOTAL"):
-            self.assertIn([title, "2", "1", "0", "1", "0", "0", "0", "1"],
+            self.assertIn([title, "2", "1", "0", "1", "0", "0", "0", "0", "1"],
                           [line.split() for line in messages.splitlines()])
         self.assertNotIn("prewindow-blocker", messages)
         self.assertRegex(output, r"prewindow-blocker\s+1\s+10.00m\s+1")
@@ -355,6 +355,30 @@ class ReaderCliTests(unittest.TestCase):
         self.assertRegex(landings, r"TOTAL \(local observations only\)\s+1")
         self.assertIn("not complete remote shipping", landings)
         self.assertIn("unclassified", landings)
+
+    def test_finding_is_counted_without_becoming_blocked_or_done(self):
+        self.thread("finder", "synthetic-finder")
+        self.message("finder", cos.COS_THREAD_ID, "2026-10-18T12:01:00Z",
+                     "[finding] The blocked check failed because its comparison was wrong; diagnosis is done.")
+        self.message("finder", cos.COS_THREAD_ID, "2026-10-18T12:02:00Z",
+                     "[finding] Diagnosis is done; the comparison used the wrong input.")
+        output = self.cli("metrics", "--since", AT, "--until", "2026-10-18T12:10:00Z")
+        messages = output.split("Lead messages\n")[1].split("Gate latency:")[0]
+        rows = [line.split() for line in messages.splitlines() if line.strip()]
+        self.assertEqual(rows[0], ["Lead", "sent", "go-request", "merge-ready", "done", "blocked",
+                                   "tobias-decision", "finding", "other", "CoS", "replies"])
+        for title in ("synthetic-finder", "TOTAL"):
+            self.assertIn([title, "2", "0", "0", "0", "0", "0", "2", "0", "0"], rows)
+        blocked = output.split("Blocked time:")[1].split("Idle-lead gaps:")[0]
+        self.assertNotIn("synthetic-finder", blocked)
+        self.assertIn(["TOTAL", "0", "0.000s", "0"], [line.split() for line in blocked.splitlines()])
+        with patch.object(cos, "MAIN_HEALTH_REPOS", ()):
+            census = self.cli("census")
+        reports = [line for line in census.splitlines() if "unanswered report" in line]
+        self.assertEqual(len(reports), 2)
+        for line in reports:
+            self.assertIn(" finding | synthetic-finder | finder send:auto", line)
+        self.assertNotIn("settle candidate", census)
 
     def static_fixture(self):
         root, main = self.owned("fixture", REPO)
