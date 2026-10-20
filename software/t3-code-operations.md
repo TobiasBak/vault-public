@@ -7,6 +7,7 @@ Keep T3 service restarts out of live work, and create secrets and webhook schedu
 - `t3_thread_list` with `projectId` reads other projects' threads, including subagents (verified 2026-10-11, nightly `0.0.46-nightly.20261010.2922`).
 - `t3_thread_send` works across projects. Use `mode: "steer"` for a running team; `auto` may queue instead. Use `auto` to start an idle thread. A queued report can wake an idle recipient; "no reply needed" still spends a turn (observed 2026-10-11/13).
 - `t3_thread_launch` prepares and binds the requested workspace before the team starts. Do not follow it with `t3_worktree_handoff`; that moves the calling thread. On 2026-10-17, a handoff terminated a run and its continuation remained queued for 20 minutes.
+- T3 auto-settles on PR merge or after `sidebarAutoSettleAfterDays` (default 3) of inactivity. gah threads sit on `main` with no branch, worktree or PR, so only the inactivity timer applies; settle them explicitly. The MCP preferences tool can't set the timer (2026-10-20).
 
 ## Secrets, webhooks and Connect
 
