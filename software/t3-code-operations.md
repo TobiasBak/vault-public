@@ -23,4 +23,6 @@ A service restart interrupts running runs and kills their in-flight tool calls, 
 
 Changing a provider instance's settings entry while the server runs closes that instance and its sessions without that continuation: the instance registry rebuilds changed entries live, and continuations are written only at shutdown (source, nightly 3411). Change a busy instance's config by stopping `t3code.service`, editing `~/.t3/userdata/settings.json`, and starting it again.
 
+Moving a running thread to another instance with `t3_thread_configure` fails its active run instead of resuming it (2026-10-20, Pi to Pi); restart the thread with a message. Idle threads switch cleanly. The new instance starts a new provider session, so under gah the thread lands in a fresh workspace and must be pointed back at its old one.
+
 Run `python3 .agents/skills/chief-of-staff/scripts/cos.py restart-check` from the vault root and restart only on exit 0. Otherwise hold the restart and tell Tobias what it would kill. [Dotfiles](../projects.md#dotfiles) owns service operations.
