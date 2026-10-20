@@ -27,7 +27,7 @@ Follow the skill's launch model: drive long-lived servers and UIs serially, and 
 
 - **Map drift** (wrong instructions): correct against source and observed behavior.
 - **Harness gap** (working behavior the helper can't drive): repair owned helpers and report others.
-- **Product regression:** keep the expected result, capture evidence, and report it. Never redefine expected behavior to hide a bug.
+- **Product regression:** keep the expected result, trace the failing boundary, and report the evidence-backed cause or the exact diagnostic blocker. First rule out a wrong check or environment. Never redefine expected behavior to hide a bug.
 
 Rerun every correction against the app.
 

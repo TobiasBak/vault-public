@@ -116,7 +116,7 @@ Read the source and check each changed expectation against it. Record the releva
 
 ## Failure output
 
-A failing case prints only: case path and behavior, the **first mismatch**, a small diff around it, the `.actual` path, and one command rerunning only this case. Passing cases print nothing.
+A failing case prints only: case path and behavior, the **first mismatch**, a small diff around it, the `.actual` path, and one command rerunning only this case. Passing cases print nothing. The `.actual` file is written before the comparison and survives the run, including failures, timeouts, and teardown.
 
 To localize without unit tests: `--emit=<stage>` dumps intermediate stages for diagnosis (never asserted on), and the reducer shrinks a failing input to a minimal one that extends a case.
 

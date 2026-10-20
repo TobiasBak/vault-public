@@ -74,6 +74,7 @@ Delegate read-only diagnosis at `high` after failure, stalls, rework, repeated s
 
 - Read team and child activity via `t3_thread_read` and `t3_thread_list` with `includeSubagents`. Pi's in-process workers need the [history helper](../review-agent-history/SKILL.md).
 - Return the failure, context at that moment, missing or misleading information, its owner and smallest fix. One incident remains isolated until independently repeated.
+- Every failure, RED gate or unexplained stall keeps a named diagnosis owner and next probe until explained; never settle it or relay RED as a final result. Before telling Tobias a cause is unknown, read the owner's latest activity, and keep the child's evidence limits and observation time (2026-10-20: told Tobias a cause was unestablished two minutes after the lead had reproduced it).
 - A fresh agent passing the reproduced case or a check catching it proves a fix; otherwise state records a hypothesis. Fix the owner in [placement order](../../../agents/agent-native-codebases.md), preferring tools over prose.
 
 ## Keep the vault

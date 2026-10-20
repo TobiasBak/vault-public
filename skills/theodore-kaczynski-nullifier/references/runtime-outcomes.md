@@ -23,6 +23,17 @@ If an answer is missing on the real task, fix that gap at its owner. Do not crea
 - Represent incomplete and uncertain effects explicitly. If an external owner cannot confirm an outcome, retain that uncertainty instead of reporting success or retrying blindly.
 - Keep diagnostics safe for the intended reader; never expose credentials or private payloads merely to make a failure easier to inspect.
 
+## Explain a failure
+
+Explain a failure before fixing, retrying, or handing it off.
+
+1. Read the first failing step and its raw evidence: the compared values, logs, exit status, and environment. If the evidence is missing, that gap is the first defect: fix capture at its owner before spending another scarce run.
+2. List the candidate causes: product, check or oracle, environment, missing evidence. Pick the cheapest observation that separates them, such as a host reproduction, a comparison on equivalent workloads, a bisection, or reading the installed code. State what each candidate predicts before running it.
+3. Fix the established cause at its owner. If the check was wrong, show the reproduction that proves it and keep the behavior it was meant to guard.
+4. If a limit blocks the deciding observation, keep diagnosing everything else. Hand off the evidence inspected, the remaining explanations, the next probe, and the exact missing authority or capability. "Remaining: diagnose" is not a result.
+
+Harnesses persist expected and actual values before asserting, export every assertion input with the run's evidence, and keep output when a run fails or times out. Before a new or changed harness drives an expensive or gated run, run its comparison logic on the cheapest host against a known pass and a deliberate failure, including zero, one, and many values where collections are compared.
+
 ## Repair at the effect boundary
 
 1. Read the current state and reconcile it with the intended outcome. Bound the affected operation and resources before changing anything.

@@ -16,7 +16,7 @@ Discover these yourself, and ask only about what you can't find:
 - what proves a result: visible state, responses, exit codes, persisted data, requests, traces
 - how to isolate runs (data dirs, profiles, ports, sessions), or else state a single-driver restriction
 
-Use a verification-owned instance with disposable state, never the user's live instance. If the checkout can't start, fix it or report the blocker. Don't write instructions against a broken base.
+Use a verification-owned instance with disposable state, never the user's live instance. If the checkout can't start, find out why, then fix it or report the cause and blocker. Don't write instructions against a broken base.
 
 ## Write the skill
 

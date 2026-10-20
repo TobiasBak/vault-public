@@ -25,14 +25,14 @@ Activity is file modification time. Skip anything written recently: other agents
 4. **Content-keyed caches with no eviction**, which rebuild on a miss:
    - `~/code/stepkit-geometry/.local/sg/parity/issue-54/agreement-v1/cache/`: about 19 GB apparent per entry. Keep the 2 newest.
    - `~/.cache/stepkit-studio/{binaries,control,runs,gate-controls,hook-dispatchers}/`: delete entries idle for more than 48 hours.
-5. **Evidence and nightly output:**
-   - `~/.local/share/orderready/evidence/*` idle for more than 72 hours, except `gate`.
+5. **Nightly output:**
    - `~/.local/share/stepkit-studio/nightly/windows/`: keep the 3 newest runs.
 6. **Package caches:** `docker system prune -af`, `uv cache prune`, `pnpm store prune`, `mise prune -y`.
 
 ## Leave alone
 
 - Steam games, `~/.windows/data.img` and `~/.local/state/win-vm/` (sparse VM images that use far less than their size), and `~/.t3/userdata/statev2.sqlite` (live T3 state).
+- Run evidence, such as `~/.local/share/orderready/evidence/`: it is what failures are diagnosed from, and Orderready forbids deleting it. Ask the owning repo for retention instead.
 - `~/.local/share/orderready/cache/sccache` (self-limiting) and its toolchain caches (`mamba`, `xwin`, `occt`).
 - The pacman cache and journal: small here, and they need root.
 
