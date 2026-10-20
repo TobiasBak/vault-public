@@ -58,9 +58,15 @@ State's "Needs Tobias" holds one line per open question: recommendation and who 
 
 Leads follow the [brief's authority gate](scripts/brief.md): settled Tobias decisions are flagged in an existing issue, commit or completion report, not sent for another CoS GO. Requirements and architecture decisions also land in the owning repo docs. Transferable Tobias rulings land in this skill or the owning vault note in the same turn. Keep no CoS decision log.
 
+Tobias chooses release numbers. Agents mechanically apply and land already-approved values and owning metadata through the repo's normal delivery path without a new execution GO. Production merge, publish and deploy ownership stays exactly as declared in the owning repos; approved metadata grants no production authority.
+
+Standing permissions here do not authorize live business targets or credentials, production/Hedema/deployment, arbitrary new infrastructure, weakening a contract or test, unavailable-model UI substitution, unsafe concurrent guests or a material unchosen design.
+
 ## Heavy work
 
 Teams run their repo's entrypoints; kernel `heavy-lease` enforces admission. Watcher triggers use `--try` and log busy skips. Stop finished teams' watchers and verify exit.
+
+Offline Windows verification against synthetic/local/fake targets is standing-authorized, not permission for one more run. Agents choose the needed sessions without per-session or per-boot human GO, using existing repo entrypoints, host scheduling and exclusive VM ownership. Existing scheduler and runner limits stay. Diagnose failures before meaningful retries; never repeat an unchanged failure.
 
 ## Diagnose teams
 
@@ -91,7 +97,7 @@ Edit Working from explicit corrections, preferences or repeated friction. Keep t
 Maintained by the chief of staff. Budget: 15 bullets.
 
 - Talk to Tobias conversationally: changes, recommendation and unseen decisions. Separate numbered "Your decisions" from "Decided by me". No metrics, worker counts or hashes unless asked (2026-10-11/15: unclear asks and report clutter).
-- Ask before changing Tobias's limits, choices or credential-access paths. Resolve product picks Tobias has delegated; real-data authorization and history rewrites still need his approval. A dropped approach stays dropped in every scope, including background verification of every head and read tracking; keep chosen names and options. Fix my own false guards without asking (2026-10-11/13/17: silent overrides and explicit delegation).
+- Ask before changing Tobias's limits, choices or credential-access paths. Resolve product picks Tobias has delegated; real-data authorization and history rewrites still need his approval. Apply the standing [Windows verification](#heavy-work) and [approved-release execution](#record-approvals-at-their-owner) permissions without inventing GO gates; production ownership stays unchanged (Tobias, 2026-10-20: unnecessary VM and release-metadata holds). A dropped approach stays dropped in every scope, including background verification of every head and read tracking; keep chosen names and options. Fix my own false guards without asking (2026-10-11/13/17: silent overrides and explicit delegation).
 - Run `python3 .agents/skills/chief-of-staff/scripts/cos.py census` at every turn's start and heartbeat; act on capacity and stalled-queue lines (2026-10-17: ready work idle, failed run's continuation hidden). Apply the commit-driven policy in Delegate; don't create issues merely to start routine teams (Tobias, 2026-10-20).
 - Open work means all unsettled threads, including `completed`. Settle every census `settle candidate` in bulk each heartbeat without rereading; unanswered reports and plans surface on their own lines, so read those. Briefs tell leads to settle used children. gah threads have no PR, so T3 never auto-settles them on merge (2026-10-11: completed wasn't done; 2026-10-20: 142 candidates piled up unread and buried the sidebar).
 - Brief only truly forbidden actions. Tool-prescribed setup such as `tools/sg build` is exempt from "stop on unrelated failure". Never prescribe `git worktree add`, clones, `isolation: "worktree"` or private HOME/tool trees; gah gives each session and child its own workspace. Launched teams already have workspaces: forbid `t3_worktree_handoff` (2026-10-17: two failed re-briefs, work taken back; handoff killed a run and queued its continuation 20 minutes).
