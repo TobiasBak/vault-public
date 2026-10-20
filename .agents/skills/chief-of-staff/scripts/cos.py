@@ -188,6 +188,7 @@ def report(data, path, since, until):
     threads, leads, incoming, outgoing, runs, child_completions = data
     print(f"Window: [{iso(since)}, {iso(until)}) UTC")
     print(f"Source: {path} (read-only snapshot)")
+    print(f"CoS-thread: {COS_THREAD_ID} | {threads.get(COS_THREAD_ID, (COS_THREAD_ID, {}))[0]}")
     print("Durations: s=seconds, m=minutes, h=hours; p90=nearest rank.")
     print("Kinds: explicit [kind] first, then PR URL + 40-hex SHA, Tobias decision, blocked, go request, done; keyword heuristics.")
     print("\nLead messages")
@@ -200,7 +201,8 @@ def report(data, path, since, until):
         reports = sorted((at, kind) for at, kind in incoming[lead] if since <= at < until)
         replies = sorted(at for at in outgoing[lead] if since <= at < until)
         counts = Counter(kind for _, kind in reports)
-        message_rows.append((title, len(reports), *(counts[kind] for kind in KINDS), len(replies)))
+        if reports or replies:
+            message_rows.append((title, len(reports), *(counts[kind] for kind in KINDS), len(replies)))
         lead_waits = []
         for at, _ in reports:
             reply_index = bisect.bisect_left(replies, at)
@@ -213,6 +215,7 @@ def report(data, path, since, until):
         for index in range(0, len(lead_waits), 8):
             batch = lead_waits[index:index + 8]
             gate_rows.append((title if index == 0 else "", f"{index + 1}-{index + len(batch)}", ", ".join(batch)))
+    message_rows.append(("TOTAL", *(sum(row[index] for row in message_rows) for index in range(1, len(KINDS) + 3))))
     table(("Lead", "sent", *KINDS, "CoS replies"), message_rows)
     print("\nGate latency: each report to the next CoS send to that lead within the window.")
     print("Reports are numbered chronologically per lead; one send can answer multiple reports.")
@@ -222,16 +225,27 @@ def report(data, path, since, until):
     print("\nBlocked time: each blocked report to the lead's next run start; clipped to the window.")
     print("Reports are summed separately; open intervals end at --until.")
     blocked_rows = []
+    blocked_totals = [0, 0, 0]
     for lead in leads:
         intervals, open_count = blocked_intervals(incoming[lead], runs[lead], since, until)
-        blocked_rows.append((threads[lead][0], len(intervals), duration(sum(intervals)), open_count))
+        if intervals:
+            blocked_rows.append((threads[lead][0], len(intervals), duration(sum(intervals)), open_count))
+            for index, value in enumerate((len(intervals), sum(intervals), open_count)):
+                blocked_totals[index] += value
+    blocked_rows.append(("TOTAL", blocked_totals[0], duration(blocked_totals[1]), blocked_totals[2]))
     table(("Lead", "reports", "blocked", "open"), blocked_rows)
     print("\nIdle-lead gaps: first completed direct-child run after a lead run ends to its next run start.")
     print("Overlapping lead runs are merged; gaps are clipped to the window; open gaps end at --until.")
     gap_rows = []
+    all_gaps = []
+    open_gaps = 0
     for lead in leads:
         gaps, open_count = idle_gaps(runs[lead], child_completions[lead], since, until)
-        gap_rows.append((threads[lead][0], len(gaps), duration(sum(gaps)), duration(max(gaps, default=0)), open_count))
+        if gaps:
+            gap_rows.append((threads[lead][0], len(gaps), duration(sum(gaps)), duration(max(gaps)), open_count))
+            all_gaps.extend(gaps)
+            open_gaps += open_count
+    gap_rows.append(("TOTAL", len(all_gaps), duration(sum(all_gaps)), duration(max(all_gaps, default=0)), open_gaps))
     table(("Lead", "count", "total", "max", "open"), gap_rows)
     cos_durations = []
     excluded = 0
@@ -462,6 +476,11 @@ def commit(message, paths):
     return 0
 
 
+def github_repository(url):
+    match = re.fullmatch(r"(?:https?://github\.com/|git@github\.com:|ssh://git@github\.com/)([^/\s]+/[^/\s]+?)(?:\.git)?/?", url, re.I)
+    return match[1] if match else None
+
+
 def github_repositories(project_roots):
     repositories = defaultdict(set)
     for project, root in project_roots.items():
@@ -478,9 +497,9 @@ def github_repositories(project_roots):
             fields = line.split()
             if len(fields) < 2:
                 continue
-            match = re.fullmatch(r"(?:https?://github\.com/|git@github\.com:|ssh://git@github\.com/)([^/\s]+/[^/\s]+?)(?:\.git)?/?", fields[1], re.I)
-            if match:
-                remotes.append((fields[0] != "origin", match[1]))
+            repo = github_repository(fields[1])
+            if repo:
+                remotes.append((fields[0] != "origin", repo))
         if remotes:
             repositories[min(remotes)[1]].add(project)
     return repositories
@@ -580,6 +599,87 @@ def merged_pr_report(repositories, since, until):
     table(("Repository", "product", "infra", "total / error"), rows)
 
 
+GAH_LOG_LIMIT = 4 * 1024 * 1024
+
+
+def gah_repositories():
+    registry = Path(os.environ.get("GAH_ROOT") or Path.home() / "git-at-home")
+    repositories, gaps = {}, []
+    for path in sorted(registry.glob("*/config.toml")):
+        try:
+            config = tomllib.loads(path.read_text())
+            if config.get("branch") != "main" or config.get("mode") != "direct":
+                continue
+            root = path.parent / "main"
+            repo = github_repository(read_git(root, "remote", "get-url", "origin"))
+            if repo is None:
+                raise ValueError("GitHub origin unavailable")
+            if repo in repositories:
+                raise ValueError("duplicate owned main root")
+            repositories[repo] = root
+        except (OSError, ValueError):
+            gaps.append(f"{path.parent}: owned direct-main root unavailable or invalid")
+    return repositories, gaps
+
+
+def gah_landings(root, since, until):
+    path = root.parent / "log.jsonl"
+    gaps, candidates, landings = [], {}, {}
+    try:
+        with path.open("rb") as stream:
+            size = stream.seek(0, os.SEEK_END)
+            if size > GAH_LOG_LIMIT:
+                stream.seek(size - GAH_LOG_LIMIT)
+                stream.readline(GAH_LOG_LIMIT)
+                gaps.append("log truncated to trailing 4 MiB")
+            else:
+                stream.seek(0)
+            for line in stream.read(GAH_LOG_LIMIT).splitlines():
+                try:
+                    row = json.loads(line)
+                    if row.get("op") != "merge":
+                        continue
+                    at = datetime.fromtimestamp(row["at"], timezone.utc)
+                    match = re.fullmatch(r"merged ([0-9a-f]{40})", row.get("result", ""))
+                    if match and since <= at < until:
+                        sha = match[1]
+                        if sha not in candidates or at > candidates[sha]["at"]:
+                            candidates[sha] = {"sha": sha, "at": at, "check_path": row.get("check_path")}
+                except (ValueError, TypeError, KeyError, AttributeError, OverflowError):
+                    gaps.append("malformed log rows excluded")
+        head = read_git(root, "rev-parse", "refs/heads/main")
+        for sha, row in candidates.items():
+            try:
+                read_git(root, "merge-base", "--is-ancestor", sha, head)
+            except ValueError:
+                gaps.append("non-ancestor or unavailable commits excluded")
+                continue
+            landings[sha] = row
+    except (OSError, ValueError):
+        gaps.append("local log or main ancestry unavailable")
+    return landings, list(dict.fromkeys(gaps))
+
+
+def gah_landing_report(since, until):
+    print("\nLOCAL GAH LANDING OBSERVATION")
+    print("Source: owned direct-main roots, existing per-repo log.jsonl (trailing 4 MiB each).")
+    print("Successful root merges only, in-window, deduplicated by repository/SHA, verified against local main ancestry.")
+    print("Best-effort local coverage only: not complete remote shipping, merged PRs, issue counts or production deployments.")
+    print("No authoritative issue-label classification: observed landings remain unclassified.")
+    repositories, gaps = gah_repositories()
+    rows, total = [], 0
+    for repo, root in sorted(repositories.items()):
+        landings, limits = gah_landings(root, since, until)
+        total += len(landings)
+        rows.append((repo, len(landings), str(root.parent / "log.jsonl"), "; ".join(limits) or "local log only"))
+    rows.append(("TOTAL (local observations only)", total, "", ""))
+    table(("Repository", "unclassified", "source", "coverage limits"), rows)
+    if not repositories:
+        gaps.append("no owned GitHub direct-main roots observed")
+    for gap in gaps:
+        print(f"GAP local gah coverage: {gap}")
+
+
 MAIN_HEALTH_REPOS = ("TobiasBak/orderready", "TobiasBak/orderready-platform")
 HEALTH_QUERY = """
 query($owner: String!, $name: String!, $endCursor: String) {
@@ -663,8 +763,9 @@ def read_git(root, *arguments):
     return result.stdout.strip()
 
 
-def orderready_static(commits):
-    root = Path.home() / "code/orderready"
+def orderready_static(commits, root):
+    if root is None:
+        raise ValueError("owned gah main root unavailable")
     cache = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "orderready/verdicts"
     directory = cache / ("static-" + hashlib.sha256(b"static").hexdigest())
     by_tree = defaultdict(list)
@@ -685,6 +786,8 @@ def orderready_static(commits):
     for commit in commits:
         sha = commit["oid"]
         try:
+            if read_git(root, "rev-parse", f"{sha}^{{tree}}") != commit["tree"]["oid"]:
+                raise ValueError("exact commit tree does not match observed tree")
             config = tomllib.loads(read_git(root, "show", f"{sha}:deny.toml")).get("advisories", {})
             if config.get("db-path") or config.get("db-urls", [advisory_url]) != [advisory_url]:
                 raise ValueError("custom advisory database is not observed")
@@ -707,10 +810,10 @@ def orderready_static(commits):
 PLATFORM_CHECKS = ("lint", "format", "types", "openapi", "promotion_config", "tests")
 
 
-def platform_main_check(sha):
+def platform_full_suite_check(sha):
     state_home = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state")
     path = state_home / "orderready-platform/checks" / f"{sha}.json"
-    context = f"scripts/check.py receipt for main@{sha[:12]}"
+    context = f"scripts/check.py full-suite receipt for main@{sha[:12]}"
     try:
         record = json.loads(path.read_text())
     except FileNotFoundError:
@@ -756,10 +859,13 @@ def platform_main_check(sha):
         return None, f"{context}: {reason} | {path}"
 
 
-def print_main_health(repo, main, checks, required, prs, gaps):
+def landing_check(name):
+    return bool(re.search(r"static|cargo[-_ /:]?deny", name, re.I))
+
+
+def print_main_health(repo, main, checks, required, prs, gaps, landing=None):
     failed = {"failure", "error", "timed_out", "cancelled", "action_required", "startup_failure"}
-    relevant = {name: evidence for name, evidence in checks.items()
-                if name in required or re.search(r"static|cargo[-_ /:]?deny", name, re.I)}
+    relevant = {name: evidence for name, evidence in checks.items() if name in required or landing_check(name)}
     red = {name for name, evidence in relevant.items() if any(check["state"] in failed for check in evidence)}
     prefix = f"main-health {repo} main@{main['oid'][:12]}"
     for name, evidence in sorted(relevant.items()):
@@ -767,7 +873,9 @@ def print_main_health(repo, main, checks, required, prs, gaps):
             state = "RED" if check["state"] in failed else check["state"]
             at = check["at"] or "unknown"
             print(f"{prefix}: {state} {one_line(name)} since {at} (recorded result; earlier onset unknown) | {check['source']}")
-    if not relevant:
+    if landing:
+        print(f"MAIN LANDING {repo} main@{main['oid'][:12]}: configured landing check completed | {landing}")
+    if not relevant and not landing:
         gaps.append("no recorded required/static result on main")
     for name in sorted(required - checks.keys()):
         gaps.append(f"required check {one_line(name)} has no result on main")
@@ -787,8 +895,24 @@ def print_main_health(repo, main, checks, required, prs, gaps):
         print(f"GAP main-health {repo}: {gap}")
 
 
+def print_promotion_health(repo, main, checks, gap=None, ref="main"):
+    prefix = f"PROMOTION/FULL-SUITE {repo} {ref}@{main['oid'][:12]}"
+    print(f"{prefix}: not required on main; production health unknown.")
+    if not checks:
+        print(f"{prefix}: unobserved | {gap or 'no recorded qualification result'}")
+    for name, evidence in sorted(checks.items()):
+        for check in evidence:
+            print(f"{prefix}: {check['state']} {one_line(name)} since {check['at'] or 'unknown'} | {check['source']}")
+    if gap and checks:
+        print(f"GAP promotion/full-suite {repo}: {gap}")
+
+
 def main_health():
-    print("Main health: existing results only; timestamps date recorded results, not continuous-red history.")
+    print("MAIN LANDING evidence: existing static results and local configured-check observations only; no new checks run.")
+    print("Timestamps date recorded results, not continuous-red history. Full suites qualify promotion, not main landing.")
+    roots, root_gaps = gah_repositories()
+    for gap in root_gaps:
+        print(f"GAP local gah coverage: {gap}")
     for repo in MAIN_HEALTH_REPOS:
         try:
             owner, name = repo.split("/")
@@ -808,8 +932,8 @@ def main_health():
                     raise ValueError("main moved during census; retry")
                 main = target
                 protection = branch["branchProtectionRule"]
-                if repo != "TobiasBak/orderready":
-                    required.update((protection or {}).get("requiredStatusCheckContexts") or [])
+                required.update(name for name in (protection or {}).get("requiredStatusCheckContexts") or []
+                                if landing_check(name))
                 for pr in repository["pullRequests"]["nodes"]:
                     prs[pr["number"]] = pr["commits"]["nodes"][-1]["commit"]
             if main is None:
@@ -820,14 +944,16 @@ def main_health():
             pr_checks = []
             for number, commit in prs.items():
                 found, truncated = recorded_checks(commit)
-                if repo == "TobiasBak/orderready":
-                    found = {name: evidence for name, evidence in found.items() if re.search(r"static|cargo[-_ /:]?deny", name, re.I)}
+                other = {name: evidence for name, evidence in found.items() if not landing_check(name)}
+                if other:
+                    print_promotion_health(repo, commit, other, ref=f"PR #{number}")
+                found = {name: evidence for name, evidence in found.items() if landing_check(name)}
                 pr_checks.append((number, found))
-                if repo != "TobiasBak/orderready" and (truncated or not found):
-                    gaps.append(f"PR #{number} GitHub check results {'incomplete' if truncated else 'absent'}")
+                if truncated:
+                    gaps.append(f"PR #{number} GitHub check results incomplete")
             if repo == "TobiasBak/orderready":
                 try:
-                    static = orderready_static([main, *prs.values()])
+                    static = orderready_static([main, *prs.values()], roots.get(repo))
                     for commit, found in [(main, checks), *((prs[number], found) for number, found in pr_checks)]:
                         check, gap = static[commit["oid"]]
                         if check:
@@ -836,14 +962,29 @@ def main_health():
                             gaps.append(gap)
                 except (OSError, ValueError, KeyError, TypeError):
                     gaps.append("local static receipts unavailable or invalid")
-            else:
-                required.add("scripts/check.py")
-                check, gap = platform_main_check(main["oid"])
+            promotion = {name: evidence for name, evidence in checks.items() if not landing_check(name)}
+            promotion_gap = None
+            if repo == "TobiasBak/orderready-platform":
+                check, promotion_gap = platform_full_suite_check(main["oid"])
                 if check:
-                    checks.setdefault(check["name"], []).append(check)
-                else:
-                    gaps.append(gap)
-            print_main_health(repo, main, checks, required, pr_checks, gaps)
+                    promotion.setdefault(check["name"], []).append(check)
+            landing = None
+            root = roots.get(repo)
+            if root is not None:
+                observations, limits = gah_landings(root, datetime.min.replace(tzinfo=timezone.utc), datetime.now(timezone.utc))
+                row = observations.get(main["oid"])
+                if row and row["check_path"] in {"fast-path", "rechecked"}:
+                    try:
+                        if read_git(root, "rev-parse", f"{main['oid']}^{{tree}}") != main["tree"]["oid"]:
+                            raise ValueError("exact tree mismatch")
+                        config = tomllib.loads(read_git(root, "show", f"{main['oid']}:gah.toml"))
+                        if isinstance(config.get("check"), str) and config["check"].strip():
+                            landing = f"{root.parent / 'log.jsonl'} at {iso(row['at'])}, {row['check_path']}; exact commit/tree; not full-suite evidence"
+                    except (ValueError, OSError):
+                        gaps.append("configured landing-check definition unavailable for exact main tree")
+                gaps.extend(f"local gah coverage: {limit}" for limit in limits)
+            print_main_health(repo, main, checks, required, pr_checks, gaps, landing)
+            print_promotion_health(repo, main, promotion, promotion_gap)
         except (ValueError, KeyError, TypeError, IndexError) as error:
             reason = str(error) if isinstance(error, ValueError) else "invalid GitHub main-health response"
             print(f"GAP main-health {repo}: {reason}")
@@ -1328,7 +1469,7 @@ def main():
     )
     board.add_argument("--out", type=Path, default=Path("/tmp/cos-board.html"), metavar="PATH")
     metrics = commands.add_parser(
-        "metrics", description="Measure CoS messages, next-send delays, blocked time, idle-lead gaps and turn durations from local T3 V2 SQLite, plus merged product/infra PRs from GitHub's current labels.",
+        "metrics", description="Measure CoS messages, next-send delays, blocked time, idle-lead gaps and turn durations from local T3 V2 SQLite, plus merged product/infra PRs from GitHub's current labels and separate bounded local gah landing observations.",
         epilog="Window is [since, until). ISO timestamps need a timezone. Defaults: first CoS report/run to now. No message text is printed.", allow_abbrev=False,
     )
     metrics.add_argument("--since", type=timestamp, metavar="ISO")
@@ -1365,6 +1506,7 @@ def main():
                 raise ValueError("--since must be earlier than --until")
             report(data, STORE_PATH, since, until)
             merged_pr_report(github_repositories(project_roots), since, until)
+            gah_landing_report(since, until)
     except subprocess.CalledProcessError as error:
         print(f"cos: git {error.cmd[1]} failed (exit {error.returncode}); stopped", file=sys.stderr)
         return error.returncode

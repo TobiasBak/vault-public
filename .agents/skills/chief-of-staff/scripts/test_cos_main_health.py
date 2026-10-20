@@ -2,7 +2,11 @@ import contextlib
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
+import sqlite3
+import subprocess
+import sys
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -36,7 +40,7 @@ class MainHealthTests(unittest.TestCase):
     def census_health(self, main, prs=(), static=None):
         evidence = static or {main["oid"]: (None, "no static receipt")}
         out = io.StringIO()
-        with patch.object(cos, "MAIN_HEALTH_REPOS", (REPO,)), patch.object(cos, "gh_json", return_value=[page(main, prs)]), patch.object(cos, "orderready_static", return_value=evidence), contextlib.redirect_stdout(out):
+        with patch.object(cos, "gah_repositories", return_value=({}, [])), patch.object(cos, "MAIN_HEALTH_REPOS", (REPO,)), patch.object(cos, "gh_json", return_value=[page(main, prs)]), patch.object(cos, "orderready_static", return_value=evidence), contextlib.redirect_stdout(out):
             cos.main_health()
         return out.getvalue()
 
@@ -114,46 +118,11 @@ class MainHealthTests(unittest.TestCase):
         self.assertNotIn("SHARED BLOCKER", self.census_health(commit(checks=checks)))
         response = page(commit(checks=checks[:1]))
         response["data"]["repository"]["ref"]["branchProtectionRule"] = {"requiredStatusCheckContexts": ["static"]}
-        with patch.object(cos, "MAIN_HEALTH_REPOS", ("TobiasBak/orderready-platform",)), patch.object(cos, "gh_json", return_value=[response]), contextlib.redirect_stdout(io.StringIO()) as out:
+        with patch.object(cos, "gah_repositories", return_value=({}, [])), patch.object(cos, "MAIN_HEALTH_REPOS", ("TobiasBak/orderready-platform",)), patch.object(cos, "gh_json", return_value=[response]), contextlib.redirect_stdout(io.StringIO()) as out:
             cos.main_health()
         self.assertIn("SHARED BLOCKER TobiasBak/orderready-platform: static", out.getvalue())
 
-    def test_static_receipts_require_exact_tree_and_current_advisory(self):
-        with tempfile.TemporaryDirectory() as tmp:
-            home = Path(tmp)
-            directory = home / ".cache/orderready/verdicts" / ("static-" + hashlib.sha256(b"static").hexdigest())
-            directory.mkdir(parents=True)
-            (home / ".cargo/advisory-dbs/advisory-db-fixture").mkdir(parents=True)
-            main = commit()
-            for name, tree, revision, verdict, created in [
-                ("unrelated", "other-tree", "current", "fail", 30),
-                ("old-advisory", main["tree"]["oid"], "old", "pass", 20),
-                ("current", main["tree"]["oid"], "current", "fail", 10),
-            ]:
-                (directory / f"{name}.json").write_text(json.dumps({
-                    "tree": tree, "verdict": verdict, "created": created,
-                    "inputs": {"advisory:https://github.com/RustSec/advisory-db": revision},
-                }))
-
-            def git(root, *args):
-                if args[0] == "config":
-                    return "https://github.com/RustSec/advisory-db"
-                if args[0] == "rev-parse":
-                    return "current"
-                return "[advisories]\n"
-
-            with patch.object(Path, "home", return_value=home), patch.dict("os.environ", {"XDG_CACHE_HOME": "", "CARGO_HOME": ""}), patch.object(cos, "read_git", side_effect=git):
-                found, gap = cos.orderready_static([main])[main["oid"]]
-                self.assertIsNone(gap)
-                self.assertEqual(found["state"], "failure")
-                self.assertIn("current.json", found["source"])
-                (directory / "current.json").unlink()
-                found, gap = cos.orderready_static([main])[main["oid"]]
-                self.assertIsNone(found)
-                self.assertIn("current local advisory revision", gap)
-
-
-class PlatformMainHealthTests(unittest.TestCase):
+class PlatformQualificationTests(unittest.TestCase):
     repo = "TobiasBak/orderready-platform"
     sha = "a" * 40
 
@@ -174,7 +143,7 @@ class PlatformMainHealthTests(unittest.TestCase):
             if receipt is not None:
                 path.parent.mkdir(parents=True)
                 path.write_text(json.dumps(receipt))
-            with patch.object(Path, "home", return_value=home), patch.dict("os.environ", {"XDG_STATE_HOME": str(state) if xdg else ""}), patch.object(cos, "MAIN_HEALTH_REPOS", (self.repo,)), patch.object(cos, "gh_json", return_value=[page(commit())]), patch.object(cos.subprocess, "run", side_effect=AssertionError("census must only read receipts")), contextlib.redirect_stdout(io.StringIO()) as out:
+            with patch.object(Path, "home", return_value=home), patch.dict("os.environ", {"XDG_STATE_HOME": str(state) if xdg else ""}), patch.object(cos, "gah_repositories", return_value=({}, [])), patch.object(cos, "MAIN_HEALTH_REPOS", (self.repo,)), patch.object(cos, "gh_json", return_value=[page(commit())]), patch.object(cos.subprocess, "run", side_effect=AssertionError("census must only read receipts")), contextlib.redirect_stdout(io.StringIO()) as out:
                 cos.main_health()
             return out.getvalue()
 
@@ -182,19 +151,20 @@ class PlatformMainHealthTests(unittest.TestCase):
         for xdg in (True, False):
             with self.subTest(xdg=xdg):
                 output = self.census_health(self.receipt(), xdg=xdg)
-                self.assertIn(f"main-health {self.repo} main@{self.sha[:12]}: success scripts/check.py", output)
-                self.assertNotIn("GAP", output)
+                self.assertIn(f"PROMOTION/FULL-SUITE {self.repo} main@{self.sha[:12]}: success scripts/check.py", output)
+                self.assertIn("not required on main; production health unknown", output)
                 self.assertNotIn("SHARED BLOCKER", output)
 
-    def test_failed_checks_raise_shared_blocker(self):
+    def test_full_suite_failure_is_visible_but_does_not_make_main_red(self):
         receipt = self.receipt()
         receipt["result"] = "failed"
         receipt["checks"]["lint"] = {"status": "failed", "exit_code": 1}
         receipt["checks"]["tests"] = {"status": "failed", "exit_code": None, "error": "OSError"}
         output = self.census_health(receipt)
-        self.assertIn("RED scripts/check.py", output)
+        self.assertIn(f"PROMOTION/FULL-SUITE {self.repo} main@{self.sha[:12]}: failure scripts/check.py", output)
         self.assertIn("failed checks: lint, tests", output)
-        self.assertIn(f"SHARED BLOCKER {self.repo}: scripts/check.py | main red", output)
+        self.assertNotIn("SHARED BLOCKER", output)
+        self.assertNotIn("main red", output)
         self.assertNotIn("success", output)
 
     def test_running_is_pending(self):
@@ -205,11 +175,13 @@ class PlatformMainHealthTests(unittest.TestCase):
         self.assertIn("pending scripts/check.py", output)
         self.assertNotIn("success", output)
         self.assertNotIn("SHARED BLOCKER", output)
-        self.assertNotIn("GAP", output)
+        self.assertIn("not required on main", output)
 
-    def test_missing_receipt_is_gap(self):
+    def test_missing_full_suite_is_unobserved_not_required_on_main(self):
         output = self.census_health(None)
-        self.assertIn(f"GAP main-health {self.repo}: missing scripts/check.py receipt for main@{self.sha[:12]}", output)
+        self.assertIn(f"PROMOTION/FULL-SUITE {self.repo} main@{self.sha[:12]}: unobserved", output)
+        self.assertIn("not required on main", output)
+        self.assertNotIn(f"GAP main-health {self.repo}: missing scripts/check.py", output)
         self.assertNotIn("success", output)
 
     def test_stale_receipt_never_establishes_current_main_health(self):
@@ -218,8 +190,8 @@ class PlatformMainHealthTests(unittest.TestCase):
         for file_sha in (self.sha, stale["head_sha"]):
             with self.subTest(file_sha=file_sha):
                 output = self.census_health(stale, file_sha=file_sha)
-                self.assertIn(f"GAP main-health {self.repo}", output)
-                self.assertIn("stale SHA" if file_sha == self.sha else "missing scripts/check.py receipt", output)
+                self.assertIn(f"PROMOTION/FULL-SUITE {self.repo} main@{self.sha[:12]}: unobserved", output)
+                self.assertIn("stale SHA" if file_sha == self.sha else "missing scripts/check.py full-suite receipt", output)
                 self.assertNotIn("success", output)
 
     def test_invalid_receipts_cannot_report_green_or_leak_field_contents(self):
@@ -240,9 +212,192 @@ class PlatformMainHealthTests(unittest.TestCase):
                 receipt = self.receipt()
                 mutate(receipt)
                 output = self.census_health(receipt)
-                self.assertIn(f"GAP main-health {self.repo}", output)
+                self.assertIn(f"PROMOTION/FULL-SUITE {self.repo} main@{self.sha[:12]}: unobserved", output)
                 self.assertNotIn("success", output)
                 self.assertNotIn("do-not-print-this", output)
+
+
+class ReaderCliTests(unittest.TestCase):
+    def setUp(self):
+        temporary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary.cleanup)
+        self.home = Path(temporary.name)
+        self.state = self.home / ".local/state/chief-of-staff"
+        self.state.mkdir(parents=True)
+        (self.state / "state.md").write_text("")
+        self.store = self.home / "synthetic.sqlite"
+        self.db = sqlite3.connect(self.store)
+        self.addCleanup(self.db.close)
+        self.db.executescript("""
+            CREATE TABLE orchestration_v2_projection_threads (thread_id, title, payload_json);
+            CREATE TABLE orchestration_v2_projection_messages
+                (thread_id, created_at, payload_json, role, message_id, run_id, streaming);
+            CREATE TABLE orchestration_v2_projection_runs
+                (run_id, thread_id, status, completed_at, payload_json, requested_at);
+            CREATE TABLE projection_projects (project_id, title, workspace_root, deleted_at);
+            CREATE TABLE orchestration_v2_projection_context_transfers
+                (source_thread_id, target_thread_id, target_run_id, payload_json, type, status);
+            CREATE TABLE orchestration_v2_projection_subagents (subagent_id, thread_id, child_thread_id, started_at);
+        """)
+        self.thread(cos.COS_THREAD_ID, "fixture-chief")
+        self.health = {}
+
+    def git(self, root, *args):
+        environment = {**os.environ, "GIT_AUTHOR_NAME": "Fixture", "GIT_AUTHOR_EMAIL": "fixture@example.invalid",
+                       "GIT_COMMITTER_NAME": "Fixture", "GIT_COMMITTER_EMAIL": "fixture@example.invalid"}
+        return subprocess.run(["git", "-C", str(root), *args], env=environment,
+                              check=True, capture_output=True, text=True).stdout.strip()
+
+    def repository(self, path, remote, marker="owned"):
+        path.mkdir(parents=True)
+        self.git(path, "init", "-q", "-b", "main")
+        (path / "deny.toml").write_text("[advisories]\n")
+        (path / "gah.toml").write_text('check = "synthetic-static-check"\n')
+        (path / "fixture.txt").write_text(marker)
+        self.git(path, "add", ".")
+        tree = self.git(path, "write-tree")
+        sha = self.git(path, "commit-tree", tree, "-m", "Synthetic reader fixture")
+        self.git(path, "update-ref", "refs/heads/main", sha)
+        self.git(path, "remote", "add", "origin", remote)
+        result = commit()
+        result.update(oid=sha, tree={"oid": tree})
+        return result
+
+    def owned(self, name, repo):
+        root = self.home / "git-at-home" / name / "main"
+        result = self.repository(root, f"https://github.com/{repo}.git")
+        (root.parent / "config.toml").write_text('branch = "main"\nmode = "direct"\n')
+        self.log(root, [{"op": "merge", "at": cos.timestamp(AT).timestamp(),
+                         "result": f"merged {result['oid']}", "check_path": "fast-path"}])
+        self.db.execute("INSERT INTO projection_projects VALUES (?, ?, ?, NULL)", (name, name, str(root)))
+        self.health[repo] = result
+        return root, result
+
+    def log(self, root, rows):
+        (root.parent / "log.jsonl").write_text("".join(json.dumps(row) + "\n" for row in rows))
+
+    def thread(self, thread, title, **payload):
+        payload = {"projectId": "fixture", "createdAt": AT, "updatedAt": AT, **payload}
+        self.db.execute("INSERT INTO orchestration_v2_projection_threads VALUES (?, ?, ?)",
+                        (thread, title, json.dumps(payload)))
+
+    def message(self, sender, target, at, text):
+        self.db.execute("INSERT INTO orchestration_v2_projection_messages VALUES (?, ?, ?, 'user', ?, NULL, 0)",
+                        (target, at, json.dumps({"senderThreadId": sender, "text": text}),
+                         f"thread-send:cos-synthetic-{sender}-{at}"))
+
+    def stored_run(self, thread, start, end):
+        self.db.execute("INSERT INTO orchestration_v2_projection_runs VALUES (?, ?, 'completed', ?, ?, ?)",
+                        (f"run-{thread}", thread, end, json.dumps({"startedAt": start}), start))
+
+    def cli(self, *arguments):
+        self.db.commit()
+
+        def github(args, **kwargs):
+            if args[0] == "issue":
+                return []
+            if any(arg.startswith("search=") for arg in args):
+                return [{"data": {"search": {"issueCount": 0, "nodes": []}}}]
+            name = next(arg.removeprefix("name=") for arg in args if arg.startswith("name="))
+            repo = next(repo for repo in self.health if repo.split("/")[1] == name)
+            response = page(self.health[repo])
+            # Even a legacy full-suite context must not invent a main-suite obligation.
+            response["data"]["repository"]["ref"]["branchProtectionRule"] = {
+                "requiredStatusCheckContexts": ["full-suite"]}
+            return [response]
+
+        with patch.object(Path, "home", return_value=self.home), patch.dict(os.environ, {
+            "GAH_ROOT": str(self.home / "git-at-home"), "XDG_CACHE_HOME": "", "XDG_STATE_HOME": "", "CARGO_HOME": "",
+        }), patch.object(cos, "STATE_DIR", self.state), patch.object(cos, "STORE_PATH", self.store), patch.object(cos, "gh_json", side_effect=github), patch.object(cos, "slow_steps"), patch.object(sys, "argv", ["cos.py", *arguments]), contextlib.redirect_stdout(io.StringIO()) as out:
+            self.assertEqual(cos.main(), 0)
+        return out.getvalue()
+
+    def test_metrics_show_typed_activity_and_local_landings_without_historical_noise(self):
+        root, main = self.owned("fixture", "Example/reader-fixture")
+        child_sha = main["oid"]
+        failed_sha = self.git(root, "commit-tree", main["tree"]["oid"], "-p", child_sha, "-m", "Synthetic intermediate")
+        main["oid"] = self.git(root, "commit-tree", main["tree"]["oid"], "-p", failed_sha, "-m", "Synthetic main landing")
+        self.git(root, "update-ref", "refs/heads/main", main["oid"])
+        detached = self.git(root, "commit-tree", main["tree"]["oid"], "-m", "Unlanded synthetic fixture")
+        at = cos.timestamp("2026-10-18T12:01:00Z").timestamp()
+        self.log(root, [
+            {"op": "merge", "at": at, "result": result, "check_path": "fast-path"}
+            for result in [f"merged {main['oid']}", f"merged {main['oid']}",
+                           f"error: rejected {failed_sha}", f"landed {child_sha} on fixture's line",
+                           "opened https://example.invalid/pull/1", "updated https://example.invalid/pull/1",
+                           f"merged {detached}"]
+        ])
+        self.thread("reporter", "settled-reporter", settledAt=AT)
+        self.thread("historical", "irrelevant-history")
+        self.thread("blocker", "prewindow-blocker")
+        self.thread("idle", "prewindow-idle")
+        self.thread("child", "synthetic-child", lineage={"parentThreadId": "idle", "relationshipToParent": "subagent"})
+        self.message("reporter", cos.COS_THREAD_ID, "2026-10-18T12:01:00Z", "[done] synthetic")
+        self.message("reporter", cos.COS_THREAD_ID, "2026-10-18T12:02:00Z", "[go_request] synthetic")
+        self.message(cos.COS_THREAD_ID, "reporter", "2026-10-18T12:03:00Z", "synthetic reply")
+        self.message("historical", cos.COS_THREAD_ID, "2026-10-17T12:00:00Z", "[done] synthetic")
+        self.message("blocker", cos.COS_THREAD_ID, "2026-10-18T11:30:00Z", "[blocked] synthetic")
+        self.stored_run("idle", "2026-10-18T11:00:00Z", "2026-10-18T11:20:00Z")
+        self.stored_run("child", "2026-10-18T11:25:00Z", "2026-10-18T11:40:00Z")
+        output = self.cli("metrics", "--since", AT, "--until", "2026-10-18T12:10:00Z")
+        self.assertIn(f"CoS-thread: {cos.COS_THREAD_ID} | fixture-chief", output)
+        self.assertNotIn("irrelevant-history", output)
+        messages = output.split("Lead messages\n")[1].split("Gate latency:")[0]
+        for title in ("settled-reporter", "TOTAL"):
+            self.assertIn([title, "2", "1", "0", "1", "0", "0", "0", "1"],
+                          [line.split() for line in messages.splitlines()])
+        self.assertNotIn("prewindow-blocker", messages)
+        self.assertRegex(output, r"prewindow-blocker\s+1\s+10.00m\s+1")
+        self.assertRegex(output, r"prewindow-idle\s+1\s+10.00m\s+10.00m\s+1")
+        prs, landings = output.split("Merged PRs:")[1].split("LOCAL GAH LANDING OBSERVATION")
+        self.assertRegex(prs, r"TOTAL\s+0\s+0\s+0")
+        self.assertRegex(landings, r"Example/reader-fixture\s+1\s+")
+        self.assertRegex(landings, r"TOTAL \(local observations only\)\s+1")
+        self.assertIn("not complete remote shipping", landings)
+        self.assertIn("unclassified", landings)
+
+    def static_fixture(self):
+        root, main = self.owned("fixture", REPO)
+        retired = self.home / "code/orderready"
+        self.repository(retired, f"https://github.com/{REPO}.git", marker="retired")
+        with self.assertRaises(ValueError):
+            cos.read_git(retired, "show", f"{main['oid']}:deny.toml")
+        advisory = self.home / ".cargo/advisory-dbs/advisory-db-fixture"
+        revision = self.repository(advisory, "https://github.com/RustSec/advisory-db")["oid"]
+        directory = self.home / ".cache/orderready/verdicts" / ("static-" + hashlib.sha256(b"static").hexdigest())
+        directory.mkdir(parents=True)
+        record = {"tree": main["tree"]["oid"], "verdict": "pass", "created": cos.timestamp(AT).timestamp(),
+                  "inputs": {"advisory:https://github.com/RustSec/advisory-db": revision}}
+        path = directory / "current.json"
+        path.write_text(json.dumps(record))
+        return main, path, record
+
+    def test_census_reads_owned_exact_static_tree_and_keeps_promotion_unobserved(self):
+        main, _, _ = self.static_fixture()
+        self.owned("platform-fixture", cos.MAIN_HEALTH_REPOS[1])
+        output = self.cli("census")
+        self.assertIn(f"main-health {REPO} main@{main['oid'][:12]}: success static", output)
+        self.assertEqual(output.count(": configured landing check completed"), 2)
+        self.assertIn("exact commit/tree; not full-suite evidence", output)
+        self.assertEqual(output.count(": unobserved |"), 2)
+        self.assertIn("not required on main; production health unknown", output)
+        self.assertNotIn("SHARED BLOCKER", output)
+        self.assertNotIn("GAP main-health", output)
+        self.assertNotIn("required check full-suite", output)
+
+    def test_census_rejects_wrong_tree_or_advisory_but_preserves_exact_static_failure(self):
+        main, path, record = self.static_fixture()
+        with patch.object(cos, "MAIN_HEALTH_REPOS", (REPO,)):
+            for field, value in [("tree", "unrelated-tree"), ("inputs", {"advisory:https://github.com/RustSec/advisory-db": "old"})]:
+                with self.subTest(field=field):
+                    path.write_text(json.dumps({**record, field: value}))
+                    output = self.cli("census")
+                    self.assertIn("no static receipt for exact tree and current local advisory revision", output)
+                    self.assertNotIn(": success static", output)
+            path.write_text(json.dumps({**record, "verdict": "fail"}))
+            output = self.cli("census")
+            self.assertIn(f"SHARED BLOCKER {REPO}: static | main red", output)
+            self.assertIn(f"main-health {REPO} main@{main['oid'][:12]}: RED static", output)
 
 
 if __name__ == "__main__":
