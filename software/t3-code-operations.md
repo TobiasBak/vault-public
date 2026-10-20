@@ -21,4 +21,6 @@ Observed 2026-10-13, nightly `0.0.46-nightly.20261013.3042`:
 
 A service restart interrupts running runs and kills their in-flight tool calls, such as VM lanes and builds. On 2026-10-13, one restart killed 11 runs representing 2.7 hours of agent time. Since nightly `0.1.1-nightly.20261020.3411`, T3 starts a new run for each interrupted thread within seconds of startup (2026-10-20: three leads resumed 5 s after the restart), so the cost is the lost in-flight work, not the lead.
 
+Changing a provider instance's settings entry while the server runs closes that instance and its sessions without that continuation: the instance registry rebuilds changed entries live, and continuations are written only at shutdown (source, nightly 3411). Change a busy instance's config by stopping `t3code.service`, editing `~/.t3/userdata/settings.json`, and starting it again.
+
 Run `python3 .agents/skills/chief-of-staff/scripts/cos.py restart-check` from the vault root and restart only on exit 0. Otherwise hold the restart and tell Tobias what it would kill. [Dotfiles](../projects.md#dotfiles) owns service operations.
