@@ -1,6 +1,6 @@
 # T3 Code operations
 
-Keep T3 service restarts out of live work, and create secrets and webhook schedules in their owning thread. [Delegation](../agents/subagent-delegation.md#t3-code-feedback) owns agent coordination and completion semantics.
+Keep T3 service restarts out of live work, update T3 only by hand with the gah patch reapplied, and create secrets and webhook schedules in their owning thread. [Delegation](../agents/subagent-delegation.md#t3-code-feedback) owns agent coordination and completion semantics.
 
 ## Threads and workspaces
 
@@ -16,6 +16,18 @@ Observed 2026-10-13, nightly `0.0.46-nightly.20261013.3042`:
 - `request_secret` cards appear only in the requesting thread; Pi's call timed out. A saved `secretRef` is single-use and usable only in the thread that saved it. Both `schedule_task` and `update_scheduled_task` rejected cross-thread references.
 - For the Sol-owned webhook workaround, the lead created the schedule disabled, then attached `signature.secret` from a private file at call time, never echoed. Never put the secret in a brief, chat, tracked file or report.
 - A schedule's `webhookUrl` needs T3 Connect. On Tobias's headless `t3code.service`, there was no app toggle: run `t3 connect link` under a pty (`script -qfc`), accept the relay-client install with `y`, have Tobias open the printed URL on this PC, then restart safely. Verify with `t3 connect status` that the environment link is provisioned.
+
+## Updating T3
+
+T3 never updates automatically; Tobias turned the 05:00 timer off on 2026-10-21. Updates run only when he asks. The installed service binary is a local build with gah's launch patch (`t3/gah-launch.patch` in the git-at-home repo). An official update replaces it, and then every `delegate_task` child in a gah repo is refused at its first turn. On 2026-10-21 the 05:00 update did this, and review delegations hung for hours before the gah-pi proxy learned to exit with Pi.
+
+1. Run the restart check below. Then start the update through dotfiles' `t3code-update.service`. Note the new `activeVersion` in `~/.t3/runtime/service-state.json`.
+2. Clone upstream `pingdotgg/t3code` at tag `v<version>` under `~/.cache/agent-tmp/`. Run `git apply` with the patch. If it fails, port the patch and land the new `t3/gah-launch.patch` with `gah merge`. Either way, run the focused tests: `vp test run` on `gahLaunchContext.test.ts` and the Pi adapter test (107 tests at 3438).
+3. Stamp `<version>` into the `version` field of `apps/{server,desktop,web}` and `packages/{contracts,provider-core}` `package.json`. Then run `pnpm install --frozen-lockfile`.
+4. Build with `node apps/server/scripts/cli.ts build-exe` under `heavy-lease`, using a minimal environment: `PATH`, `HOME`, and the three public keys in `~/.local/state/t3-gah/build-inputs.json` (relay URL, Clerk publishable key, CLI OAuth client ID; never copy them into tracked files). Also set `T3CODE_TELEMETRY_CHANNEL=dev`, `T3CODE_TELEMETRY_ENABLED=false`, `T3CODE_OTEL_SDK_DISABLED=true`, and empty `T3CODE_RELAY_CLIENT_OTLP_TRACES_{URL,DATASET,TOKEN}`. The result is `apps/server/dist-exe/t3`.
+5. Put the built `t3` beside reflink copies of the installed version's `client/`, `node_modules/` and `resource-monitor/`. The binary fails with `Cannot find module` without them. Compare `--version`, `--help`, `connect --help` and `connect status --json` with the installed binary in a fresh `HOME` and `T3CODE_HOME`; outputs must match byte for byte.
+6. Swap the binary at `~/.t3/runtime/versions/<version>/t3` with the service stopped. Run the restart through `heavy-lease isolate` with `GAH_WORKSPACE` and `GAH_ROOT` unset, so the restart cannot kill the installer. Confirm the running exe's checksum.
+7. Verify from a gah workspace: delegate a trivial Pi child and check that `gah status` reports it as a subagent of the leader.
 
 ## Service restarts
 
