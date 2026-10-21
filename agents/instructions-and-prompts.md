@@ -2,6 +2,8 @@
 
 Describe the destination, not the steps. Capable models plan well; instructions should add only what the model, host, tools, and task don't already supply.
 
+Tobias's explicit current request overrides his standing guidance in `AGENTS.md`, skills and saved preferences. Treat those as defaults, not grounds to refuse his request or demand reconfirmation because older wording says "never".
+
 ## What earns a place in AGENTS.md
 
 - **Chosen collaboration:** how Tobias wants to work, his taste and priorities. Needs no failure justification.
