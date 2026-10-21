@@ -60,7 +60,7 @@ This is the method he is growing toward, not a description of current habit:
 
 ## Testing and debugging
 
-- [Verification latency](../agents/verification-latency.md) owns Tobias's speed goal for individual agents and swarms, including shared compute and live Rust UI directions.
+- [Verification latency](../agents/verification-latency.md) owns Tobias's speed goal for individual agents and swarms, including shared-compute research.
 - Match testing to consequence, lifetime, and risk. No elaborate test infrastructure for disposable prototypes. Test observable behavior, with expectations derived independently, never by repeating the implementation.
 - **Only black-box tests (2026-10-09):** a given input to the system must produce a specific output. No unit tests: agents get stuck on them and grow legacy and fallback paths to keep them passing. Static checks, linters and formatters are the only other verification. Make black-box tests fast rather than adding faster unit tests.
 - **Hard bug:** build the fastest repeatable signal for the exact symptom. Trace to the first incorrect state and the invariant owner. Minimize, change one variable at a time, keep the minimized case as a regression test at the real seam, and rerun the original scenario.

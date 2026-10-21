@@ -18,13 +18,15 @@ Build on gah's copy-on-write workspaces, inherited build outputs and stable sour
 
 Share immutable preparation, compatible artifacts and exact-input proofs; join identical in-flight work. Keep each execution's mutable state isolated. Evaluate sharing by how much sooner an individual agent gets its verdict under load, not how many jobs can be admitted. More agents should not imply proportionally more compiler processes, test environments or copies of the same work.
 
-## Rust UI development like a game engine
+## Parked: Rust UI development like a game engine
 
-Explore keeping the native application and an interesting UI scenario alive while delivering changed Rust code at explicit reload boundaries. Preserve or reconstruct valid state instead of rebuilding, relaunching and navigating back after every edit. This is actual code hot-patching, not necessarily a new presentation language.
+Tobias does not want to explore live Rust UI development as the route to the verification-latency goal. UI testing and browser automation are not established critical-path bottlenecks for this effort. Retain this research as background, not work to start; required behavioral tests still follow the changed contract and delivery policy.
+
+The idea is to keep the native application and an interesting UI scenario alive while delivering changed Rust code at explicit reload boundaries. Preserve or reconstruct valid state instead of rebuilding, relaunching and navigating back after every edit. This is actual code hot-patching, not necessarily a new presentation language.
 
 [Dioxus Subsecond and ThinLink](https://github.com/DioxusLabs/dioxus/blob/main/packages/subsecond/subsecond/src/lib.rs) provide a concrete precedent: changed code, object-file differences, dynamic dependency linking and jump-table dispatch. The source inspected on 2026-10-21 documents tip-crate-only patching, thread-local restrictions and incompatible struct layouts requiring state reconstruction. Do not assume arbitrary workspace edits, live callbacks or native handles survive a patch safely.
 
-Judge a pilot by a real UI change reaching its behavioral and rendered verdict, not merely by the patch loading. Preserve ordinary exact-build and native-platform qualification. This direction is interesting to Tobias; adoption and product/runtime boundary changes remain undecided.
+Any future pilot must measure a real UI change reaching its behavioral and rendered verdict, not merely the patch loading. Preserve ordinary exact-build and native-platform qualification.
 
 ## Research directions for shared verification
 
