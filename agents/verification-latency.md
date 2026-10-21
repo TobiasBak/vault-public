@@ -18,6 +18,10 @@ Build on gah's copy-on-write workspaces, inherited build outputs and stable sour
 
 Share immutable preparation, compatible artifacts and exact-input proofs; join identical in-flight work. Keep each execution's mutable state isolated. Evaluate sharing by how much sooner an individual agent gets its verdict under load, not how many jobs can be admitted. More agents should not imply proportionally more compiler processes, test environments or copies of the same work.
 
+Do not build a verification runner framework in every repository. Share execution and evidence mechanics; keep product-specific checks, required-test selection, fixtures and oracles at their product owner. Whether the shared implementation belongs in gah or a separate tool is an architectural choice, not a reason to duplicate it.
+
+Prefer Linux scheduling runnable work over adding userspace capacity queues. Exact-key duplicate suppression and one writer per mutable build state are correctness constraints, not CPU scheduling. Do not bake existing slot counts, weights or memory estimates into a new verifier as necessities. Measure their effect and any memory-safety need before retaining, changing or removing them at the host owner. Hardware limits are not an explanation for uninvestigated waits or wasted compute.
+
 ## Parked: Rust UI development like a game engine
 
 Tobias does not want to explore live Rust UI development as the route to the verification-latency goal. UI testing and browser automation are not established critical-path bottlenecks for this effort. Retain this research as background, not work to start; required behavioral tests still follow the changed contract and delivery policy.
