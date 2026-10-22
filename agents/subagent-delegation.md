@@ -13,6 +13,12 @@ Route by task shape, not prompt length. The relevant dimensions are localization
 
 Split by dependencies, ownership, and independently testable behavior, not by file count. Keep tightly coupled files with one worker. Use vertical slices for implementation and horizontal fan-out for read-only mapping, gathering, and mechanical work on isolated partitions. A unit is too small when setup dominates and too large when it needs the parent's full context recreated.
 
+## Context lifespan
+
+Keep ownership across fresh contexts, not one conversation across an entire migration. Each child gets one concrete outcome, a validation boundary and a stop condition. At a milestone, scope expansion or growing context, checkpoint and start a fresh child from the reduced handoff. Do not keep adding phases through steering or auto-resuming an aging child.
+
+[Dotfiles](../projects.md#dotfiles) owns the shared global instructions and checkpoint budget. Parent and child must enforce it; neither waits for Tobias to notice context rot. A checkpoint is unfinished work with an explicit next action, not a delivery claim. Preserve live job ownership and confirm the old writer has stopped before replacing it. The [continuation checkpoint](context-engineering.md#continuation) defines the durable state to carry forward.
+
 ## Handoff
 
 State the goal and deliverable, the minimum context with exact evidence locations, decisions already approved, permissions and side-effect limits, success criteria, output shape, and when to stop or escalate. Let the child choose its own procedure. Pass reduced inputs, not the parent transcript, and get back a compact result or an artifact reference.

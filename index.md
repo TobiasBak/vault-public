@@ -24,7 +24,7 @@ Not exhaustive. Search with `rg`.
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image
-- [agents/subagent-delegation.md](agents/subagent-delegation.md): model routing and effort, when and how to split work, handoffs, one writer
+- [agents/subagent-delegation.md](agents/subagent-delegation.md): model routing and effort, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, refactor equivalence, test pruning, team adoption
