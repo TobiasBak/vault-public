@@ -21,7 +21,7 @@ Types are erased. Treat HTTP, DB, file, env, queue, user, and model data as untr
 - **Build:** Vite for a plain client app; a meta-framework (Next, Nuxt, SvelteKit) when routing, server, and rendering should share one authority. No redundant peer build layers.
 - **Server:** one HTTP framework per service. An adapter pairing like NestJS on Fastify is one layer.
 - **API:** tRPC for a co-evolving TS client and server; REST plus OpenAPI for public or polyglot consumers.
-- **Data:** one migration and data-access authority.
+- **Data:** one migration and data-access authority. [SQL-file type inference](sql-type-inference.md) is an alternative to an ORM query language.
 - **State:** separate server-state caching from local client state.
 - **Quality:** tests, browser tests, static analysis, and formatting stay distinct. One formatter, one package manager, one lockfile.
 

@@ -44,6 +44,7 @@ Not exhaustive. Search with `rg`.
 - [software/performance-aware-data-design.md](software/performance-aware-data-design.md): when data layout dominates hot paths
 - [software/cargo-target-cache.md](software/cargo-target-cache.md): shared Cargo target freshness hazards and safe A/B builds
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
+- [software/sql-type-inference.md](software/sql-type-inference.md): typed SQL-file imports, colinhacks demo, what it does and does not establish
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime
 - [software/ocr.md](software/ocr.md): Indra OCR candidate, local CPU operation, commercial-license restrictions and vendor benchmark conditions
