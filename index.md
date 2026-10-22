@@ -4,6 +4,7 @@ Not exhaustive. Search with `rg`.
 
 - [AGENTS.md](AGENTS.md): how to use and maintain this vault
 - [projects.md](projects.md): public repository routes (Dotfiles, T3 Code)
+- [topics-to-explore.md](topics-to-explore.md): open topics for future exploration
 
 ## Tobias
 
