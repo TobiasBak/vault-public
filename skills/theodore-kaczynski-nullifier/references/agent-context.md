@@ -59,7 +59,7 @@ Exactly these sections, in this order:
 - At most 80 lines.
 - Values settle tradeoffs no rule foresaw: ranked, at most five, each naming what it beats (`1. Correct output: beats speed.`). A value that never wins a tradeoff is a slogan; delete it. A value a program can check also becomes a check; the line stays for cases the check can't decide.
 - Areas use the corpus area names.
-- Boundaries hold only what an agent can't learn from code, `--help`, or a check failure before it does damage (`Never deploy to production; only Tobias does.`).
+- Boundaries hold only what an agent can't learn from code, `--help`, or a check failure before it does damage (`Deploy or roll back production only when Tobias explicitly instructs that action.`).
 
 ## What stays out
 

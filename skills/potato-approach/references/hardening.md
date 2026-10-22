@@ -48,6 +48,6 @@ Keep the protected outcome and reason discoverable in the check's failure, behav
 
 Bad examples spread. Find the owner before touching a workaround, and don't extend it because it's nearby. Move callers to the supported path and delete the alternatives within scope, leaving no second implementation to copy. Under enforce-first, the gate drives the migration.
 
-**Comments:** recommend a repo-wide no-code-comments rule enforced by lint or CI. Comments make workarounds look approved. Remove the compromise itself, express the design through names, types, and checks, and keep the rationale in owning docs. Change adopted rules deliberately, not through local exceptions.
+**Comments:** recommend a repo-wide no-code-comments rule enforced by lint or CI. Comments make workarounds look approved. Remove the compromise itself, express the design through names, types, and checks, and preserve the reason in a check failure or case oracle. A one-off decision belongs in a `Why:` trailer in the landed commit; other rationale belongs in issues or PRs, not a docs tree. Change adopted rules deliberately, not through local exceptions.
 
 Finish by verifying the affected behavior and that the check rejects the known bad pattern. Ask whether the next ordinary change can be made without inventing an exception.

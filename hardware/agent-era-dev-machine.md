@@ -49,13 +49,9 @@ Wired 2.5GbE has a raw ceiling of 312.5 MB/s; 10GbE has 1,250 MB/s, before overh
 
 ## What makes a deal good
 
-Compare delivered, usable configurations: VAT/import costs, delivery, missing parts, required upgrades, warranty and return shipping. Verify the exact variant can reach Denmark; follow [shopping preferences](../tobias/shopping.md).
+Use [hardware-deal-check](../skills/hardware-deal-check/SKILL.md) to find and assess offers delivered in Denmark; it owns Tobias's price ceilings, landed-cost and electricity arithmetic, evidence requirements and purchase-safety limits. [Shopping preferences](../tobias/shopping.md) owns general suitability.
 
-For always-on boxes, annual kWh is `(idle watts × annual idle hours + load watts × annual load hours) / 1000`. Multiply by the actual delivered tariff. Use measured wall power and explicit operating assumptions; cheap enterprise hardware can lose on idle energy and noise.
-
-Research public shops, price-comparison and price-history sites, public used marketplaces and vendor specifications. Use price history rather than a seller's crossed-out price. Separate new, refurbished and private-used baselines. Require both an approved capacity/price ceiling and evidence of a market discount. Missing history or compatibility produces a research lead, not a buy alert.
-
-Use [hardware-deal-check](../skills/hardware-deal-check/SKILL.md) to find and assess offers delivered in Denmark; it owns Tobias's price ceilings, arithmetic and research limits. Recheck stock, price and delivery before recommending a purchase. Never bypass captchas, paywalls or access controls, log into accounts, contact sellers, buy, bid or reserve. Every purchase needs Tobias's explicit approval. Keep private sellers' personal details and private-listing URLs in the in-session report, never in tracked files; do not maintain vault price databases or histories.
+Cheap enterprise hardware can lose on idle energy and noise. Separate new, refurbished and private-used baselines: a low purchase price alone proves neither a suitable machine nor a market discount.
 
 Reject Macs for development. Consider a Mac as a CI box only when a project needs macOS verdicts. Apple Silicon's ARM VMs do not supply the required x86 Omarchy/Wayland and Windows environments.
 

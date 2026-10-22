@@ -1,6 +1,6 @@
 ---
 name: create-verification-skill
-description: Create a project-local verification skill and feature map that drive the real app. Use when a project needs a reusable verification or control workflow and lacks tested instructions for launching and exercising the real app.
+description: Create a project-local verification skill and case-derived feature map that drive the real app. Use when a project needs a reusable verification or control workflow and lacks tested instructions for launching and exercising the real app.
 ---
 
 # Create a verification skill
@@ -31,10 +31,12 @@ Default to `.agents/skills/verify-<app>/` unless the project has its own convent
 
 Shipped helpers must be executable and documented. Command definitions stay in their executable owners. Don't trust a mode's name: check what "dry-run" or "test" mode actually writes or contacts.
 
-## Seed the feature map
+## Derive the feature map from cases
 
-Add `features/README.md` plus feature files covering a few important workflows. Each entry gives what the feature does, how users reach it (including entry points that change behavior), starting state, how to drive it, the observable proof, and gotchas. Shared setup stays in the skill. For the shape, see the fictional [example](references/feature-map-example/README.md); don't copy its commands.
+The product CLI's `map [area]` generates behavior, entry points and covering cases from the case records. Never add a handwritten feature map or README. Reuse the repository's case schema, runner and map command; if they are missing, establish the first real scenario and derive its navigation from that record rather than creating a second authority.
+
+A case records the user-visible outcomes and entry points it covers, its input and starting state, expected output and effects, an independent oracle, and its measured budget. Each behavior-and-entry-point pair has one covering case. Extend an existing scenario before adding another; different starting states remain isolated. Commands stay in executable owners. The skill holds only task steps the CLI cannot perform.
 
 ## Verification
 
-Run the generated instructions end to end: launch, doctor, at least one mapped feature, cleanup. Confirm the proof survives cleanup and nothing owned by the run remains. Fix and rerun failed steps; a skill never run against the app is a draft. Report what passed and what's blocked. Point to `$maintain-verification-skill` for upkeep.
+Run the generated instructions end to end: launch, doctor, find a behavior with the generated map, execute its covering case through the published interface, read back its effects, and clean up. Confirm the map reflects the case records without a separately maintained feature file. Confirm the proof survives cleanup and nothing owned by the run remains. Fix and rerun failed steps; a skill never run against the app is a draft. Report what passed and what's blocked. Point to `$maintain-verification-skill` for upkeep.

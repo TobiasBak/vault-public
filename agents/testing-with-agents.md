@@ -21,7 +21,7 @@ Check authoritative state, not success messages. Derive expectations independent
 
 [Verification latency](verification-latency.md) owns the end-to-end speed target and shared-compute research directions.
 
-Keep a control CLI for launch, reset, interaction, inspection and cleanup, plus a feature map linking workflows to observable results. Store both in the project's verification skill. Use `create-verification-skill` and `maintain-verification-skill`. Blocked or incomplete runs never pass.
+Keep a control CLI for launch, reset, interaction, inspection and cleanup. Its feature map is generated from case records linking behaviors and entry points to observable results, never a handwritten map or README. Commands stay in executable owners; the project's verification skill keeps only task steps the CLI cannot perform. Use `create-verification-skill` and `maintain-verification-skill`. Blocked or incomplete runs never pass.
 
 **Fresh-agent handoff check:** can an agent reproduce, fix and verify a representative report with normal tools and no coaching? Friction identifies the owner:
 

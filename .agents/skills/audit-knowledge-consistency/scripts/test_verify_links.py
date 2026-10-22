@@ -21,18 +21,25 @@ class VerifyLinksTests(unittest.TestCase):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8")
 
-    def run_verifier(self):
+    def run_verifier(self, *arguments):
         result = subprocess.run(
-            [sys.executable, str(VERIFIER), "--vault", str(self.root), "--json"],
+            [sys.executable, str(VERIFIER), "--vault", str(self.root), "--json", *arguments],
             capture_output=True,
             text=True,
         )
         self.assertEqual(result.stderr, "")
         return result.returncode, json.loads(result.stdout)
 
-    def test_hidden_targets_and_directories_resolve_without_scanning_hidden_notes(self):
+    def run_verifier_error(self, *arguments):
+        return subprocess.run(
+            [sys.executable, str(VERIFIER), "--vault", str(self.root), "--json", *arguments],
+            capture_output=True,
+            text=True,
+        )
+
+    def test_hidden_targets_and_directories_resolve(self):
         self.write("Guide.md", "# Guide\n")
-        self.write(".agents/skills/demo/SKILL.md", "# Skill\n## Usage\n[[Absent hidden note]]\n")
+        self.write(".agents/skills/demo/SKILL.md", "# Skill\n## Usage\n")
         self.write(".agents/skills/demo/references.md", "# References\nA receipt. ^receipt\n")
         (self.root / "resources").mkdir()
         self.write(
@@ -48,9 +55,55 @@ class VerifyLinksTests(unittest.TestCase):
 
         self.assertEqual(code, 0)
         self.assertEqual(report["issues"], [])
-        self.assertEqual(report["counts"]["files"], 3)
+        self.assertEqual(report["counts"]["files"], 5)
         self.assertEqual(report["counts"]["wikilinks"], 1)
         self.assertEqual(report["counts"]["valid"], 5)
+
+    def test_broken_link_inside_agents_note_is_reported(self):
+        self.write("Guide.md", "# Guide\n")
+        self.write(
+            ".agents/skills/demo/SKILL.md",
+            "# Skill\n[Guide](../../../Guide.md)\n[Broken](./absent.md)\n[[Absent hidden note]]\n",
+        )
+
+        code, report = self.run_verifier()
+
+        self.assertEqual(code, 1)
+        self.assertEqual(
+            [(issue["code"], issue["source"], issue["line"], issue["target"]) for issue in report["issues"]],
+            [
+                ("missing-file", ".agents/skills/demo/SKILL.md", 3, "./absent.md"),
+                ("missing-note", ".agents/skills/demo/SKILL.md", 4, "Absent hidden note"),
+            ],
+        )
+        self.assertEqual(report["counts"]["markdown_links"], 2)
+        self.assertEqual(report["counts"]["wikilinks"], 1)
+        self.assertEqual(report["counts"]["valid"], 1)
+
+    def test_explicit_agents_scope_scans_only_that_hidden_directory(self):
+        self.write("Guide.md", "[Broken](absent.md)\n")
+        self.write(".agents/skills/demo/SKILL.md", "[Absent](./absent.md)\n")
+
+        code, report = self.run_verifier("--scope", ".agents/skills/demo")
+
+        self.assertEqual(code, 1)
+        self.assertEqual(report["counts"]["files"], 1)
+        self.assertEqual([issue["source"] for issue in report["issues"]], [".agents/skills/demo/SKILL.md"])
+
+    def test_hidden_runtime_state_is_never_scanned_or_selectable(self):
+        self.write("Guide.md", "# Guide\n")
+        self.write(".git/cache.md", "[Absent](absent.md)\n")
+        self.write(".pi-subagents/raw-session.md", "[Absent](absent.md)\n")
+
+        code, report = self.run_verifier()
+
+        self.assertEqual(code, 0)
+        self.assertEqual(report["counts"]["files"], 2)
+        self.assertEqual(report["counts"]["markdown_links"], 0)
+
+        rejected = self.run_verifier_error("--scope", ".pi-subagents")
+        self.assertEqual(rejected.returncode, 2)
+        self.assertIn("scope contains no scanned Markdown files", rejected.stderr)
 
     def test_missing_hidden_files_directories_and_anchors_report_the_source(self):
         self.write(".agents/skills/demo/SKILL.md", "# Skill\n## Usage\n")

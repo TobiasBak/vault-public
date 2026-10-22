@@ -1,6 +1,6 @@
 # Verification tooling
 
-Successive agents need to operate the same app and collect comparable evidence. A **control CLI** runs stable operations (start, readiness, reset, exercise, inspect, stop). A **feature map** connects user reports to those operations: what each feature does, how users reach it, and what result proves it worked. The project's verification skill explains the choices. Build them with `$create-verification-skill` and keep them honest with `$maintain-verification-skill`.
+Successive agents need to operate the same app and collect comparable evidence. A **control CLI** runs stable operations (start, readiness, reset, exercise, inspect, stop). The product CLI generates its **feature map** from case records: user-visible behavior, published entry points and covering cases. Never maintain a parallel map or README. The project's verification skill holds task steps the CLI cannot perform. Build them with `$create-verification-skill` and keep them honest with `$maintain-verification-skill`.
 
 Principles that apply to any project:
 
@@ -11,7 +11,7 @@ Principles that apply to any project:
 - A failed prerequisite or incomplete check never looks like success.
 - Keep revision, scenario, fixture, and config with the evidence. Derive expectations from the product contract, and note what a test double can't prove.
 - Distinguish tool drift, stale map, and product regression. Never redefine expected results to hide a bug.
-- Update affected feature-map entries in the same change that alters behavior or navigation.
+- Update the authoritative case records in the same change that alters behavior or entry points, then regenerate the map.
 
 ## A self-explanatory running system
 

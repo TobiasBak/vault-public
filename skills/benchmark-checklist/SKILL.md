@@ -5,7 +5,7 @@ description: Vet a performance measurement before reporting or acting on it, cov
 
 # Benchmark checklist
 
-Match the evidence to the decision. For exploratory screening, use the existing harness and 1–2 runs per side; check correctness and that the work happened (questions 4 and 7), inspect the output, and label the result provisional. Do not harden the harness or replicate every idea before it shows a useful signal. Follow [scout, then confirm](../../agents/autoresearch.md#fast-loops-first-tobias-2026-10-12).
+Match the evidence to the decision. For exploratory screening, use the existing harness and 1–2 runs per side; check correctness and that the work happened (questions 4 and 7), inspect the output, and label the result provisional. Do not harden the harness or replicate every idea before it shows a useful signal.
 
 For adoption decisions and confirmed performance claims, answer every question with run evidence, not guesses about the code. A user-requested ballpark may use one run if questions 4 and 7 pass and the report says it is one run.
 

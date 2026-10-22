@@ -2,10 +2,11 @@
 """Verify internal links in a Markdown knowledge vault.
 
 Checks Obsidian wikilinks, relative Markdown links, headings, and block references.
-External URLs are counted but deliberately not fetched. Only visible Markdown
-sources are scanned; explicit targets can be hidden files or directories. Fenced
-or indented code, inline code, HTML comments, and Obsidian comments are excluded
-from link extraction.
+External URLs are counted but deliberately not fetched. Every maintained Markdown
+source is scanned, including vault-only skills under .agents; hidden runtime
+state (.git, tool caches, raw sessions) is not. Explicit link targets can be any
+hidden file or directory. Fenced or indented code, inline code, HTML comments,
+and Obsidian comments are excluded from link extraction.
 """
 
 from __future__ import annotations
@@ -23,6 +24,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 DEFAULT_EXCLUDED_NAMES = {"node_modules", "__pycache__"}
+SCANNED_HIDDEN_ROOTS = {".agents"}
 SETEXT_UNDERLINE = re.compile(r"^ {0,3}(=+|-+)[ \t]*$")
 BLOCK_ID = re.compile(r"(?:^|[ \t])\^([A-Za-z0-9-]+)[ \t]*$")
 REFERENCE_DEF = re.compile(r"^ {0,3}\[([^\]\n]+)\]:[ \t]*(.*)$", re.MULTILINE)
@@ -237,8 +239,11 @@ def read_note(path: Path, root: Path) -> Note:
 
 def path_is_excluded(relative: Path, extra: list[str]) -> bool:
     parts = relative.parts
-    if any(part.startswith(".") or part in DEFAULT_EXCLUDED_NAMES for part in parts):
-        return True
+    for index, part in enumerate(parts):
+        if part in DEFAULT_EXCLUDED_NAMES:
+            return True
+        if part.startswith(".") and not (index == 0 and part in SCANNED_HIDDEN_ROOTS):
+            return True
     rel = relative.as_posix().strip("/")
     for item in extra:
         normalized = item.strip("/")
@@ -272,10 +277,10 @@ def discover_files(root: Path, extra_excludes: list[str]) -> list[Path]:
     return sorted(files)
 
 
-def resolve_scopes(root: Path, scopes: list[str], visible_markdown: list[Path]) -> list[Path]:
+def resolve_scopes(root: Path, scopes: list[str], scannable_markdown: list[Path]) -> list[Path]:
     if not scopes:
-        return visible_markdown
-    allowed = set(visible_markdown)
+        return scannable_markdown
+    allowed = set(scannable_markdown)
     selected: set[Path] = set()
     for raw in scopes:
         candidate = (root / raw).resolve()
@@ -288,7 +293,7 @@ def resolve_scopes(root: Path, scopes: list[str], visible_markdown: list[Path]) 
                 selected.add(candidate)
             continue
         if candidate.is_dir():
-            selected.update(path for path in visible_markdown if candidate == path.parent or candidate in path.parents)
+            selected.update(path for path in scannable_markdown if candidate == path.parent or candidate in path.parents)
             continue
         raise ValueError(f"scope does not exist: {raw}")
     return sorted(selected)
@@ -571,10 +576,10 @@ def extract_markdown_links(original: str, masked: str, occupied: list[tuple[int,
 
 
 class Verifier:
-    def __init__(self, root: Path, source_paths: list[Path], all_visible_files: list[Path]):
+    def __init__(self, root: Path, source_paths: list[Path], known_files: list[Path]):
         self.root = root
         self.source_paths = source_paths
-        self.all_visible_files = all_visible_files
+        self.known_files = known_files
         self.issues: list[Issue] = []
         self.counts = {
             "files": len(source_paths),
@@ -593,14 +598,14 @@ class Verifier:
         self.path_casefold: dict[str, list[str]] = {}
         self.stems: dict[str, list[str]] = {}
         self.stems_casefold: dict[str, list[str]] = {}
-        self.visible_paths = {nfc(relative_posix(path, root)): path for path in all_visible_files}
-        self.visible_paths_casefold: dict[str, list[str]] = {}
-        for relative in self.visible_paths:
-            self.visible_paths_casefold.setdefault(relative.casefold(), []).append(relative)
+        self.known_paths = {nfc(relative_posix(path, root)): path for path in known_files}
+        self.known_paths_casefold: dict[str, list[str]] = {}
+        for relative in self.known_paths:
+            self.known_paths_casefold.setdefault(relative.casefold(), []).append(relative)
         self._build_notes()
 
     def _build_notes(self) -> None:
-        for path in (item for item in self.all_visible_files if item.suffix.lower() == ".md"):
+        for path in (item for item in self.known_files if item.suffix.lower() == ".md"):
             relative = nfc(relative_posix(path, self.root))
             try:
                 note = read_note(path, self.root)
@@ -770,7 +775,7 @@ class Verifier:
         if not Path(relative).suffix:
             alternatives.append(relative + ".md")
         for item in alternatives:
-            path = self.visible_paths.get(item, self.root / item)
+            path = self.known_paths.get(item, self.root / item)
             if path.is_file() or path.is_dir():
                 path = path.resolve()
                 if not path.is_relative_to(self.root):
@@ -778,10 +783,10 @@ class Verifier:
                 return path, None, [], unquote(parsed.fragment)
         matches: list[str] = []
         for item in alternatives:
-            matches.extend(self.visible_paths_casefold.get(item.casefold(), []))
+            matches.extend(self.known_paths_casefold.get(item.casefold(), []))
         matches = sorted(set(matches))
         if len(matches) == 1:
-            return self.visible_paths[matches[0]], "case", matches, unquote(parsed.fragment)
+            return self.known_paths[matches[0]], "case", matches, unquote(parsed.fragment)
         if len(matches) > 1:
             return None, "ambiguous", matches, unquote(parsed.fragment)
         return None, "missing", [], unquote(parsed.fragment)
@@ -877,7 +882,7 @@ def render_human(report: dict) -> None:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Verify internal Markdown and Obsidian links")
     parser.add_argument("--vault", help="vault root; defaults to nearest ancestor containing AGENTS.md")
-    parser.add_argument("--scope", action="append", default=[], help="relative file or directory to scan; repeatable")
+    parser.add_argument("--scope", action="append", default=[], help="relative file or directory to scan, including a hidden .agents skill directory; repeatable")
     parser.add_argument("--exclude", action="append", default=[], help="additional relative path or directory name to exclude")
     parser.add_argument("--json", action="store_true", help="emit JSON only")
     args = parser.parse_args(argv)
@@ -902,7 +907,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"error: {exc}", file=sys.stderr)
         return 2
     if not sources:
-        print("error: scope contains no visible Markdown files", file=sys.stderr)
+        print("error: scope contains no scanned Markdown files", file=sys.stderr)
         return 2
 
     report = Verifier(root, sources, all_files).run()

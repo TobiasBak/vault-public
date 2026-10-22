@@ -25,7 +25,7 @@ When correcting an agent, put the knowledge in the strongest place that fits, in
 
 1. **Codebase:** change the structure, API, or data model so the mistake can't be expressed.
 2. **Static checks:** compiler, type, lint, or dependency checks that fail with a nonzero exit in pre-commit and CI. Markdown is never a static check.
-3. **Rules plus focused review agents:** for rules that need judgment. A required review gates acceptance, but it is not a guarantee. See [code review](code-review.md).
+3. **Rules plus focused review agents:** for rules that need judgment on repository-declared protected surfaces. Required independent review follows [code review](code-review.md); do not turn every judgment rule into a new review gate.
 4. **Skills:** reusable methods that need judgment, such as debugging, performance work, or verification.
 5. **Human-enforced style guides:** the weakest form. Treat review findings as signals that structure or checks are missing.
 

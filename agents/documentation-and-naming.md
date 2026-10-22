@@ -2,19 +2,17 @@
 
 Code owns behavior; tests and examples express intended behavior. Prose keeps only what those can't express. Spend the saved effort on names, types, boundaries, and tests.
 
-## What prose keeps
+## Where knowledge lives
 
-- **Rationale:** why this design, which alternatives were rejected, and what would justify revisiting it.
-- **Invariants and hazards** that ordinary execution doesn't make visible.
-- **Domain language:** one preferred term per concept across names, types, APIs, tests, and UI. When glossary and code disagree, fix the model drift. A definition that can't separate real boundary cases can't constrain anything yet.
-- **Navigation:** short maps to the authoritative module, test, ADR, or runbook.
-- **External contracts:** integrations, organizational constraints, user expectations.
+- **Rationale:** first in a check's failure or a case's oracle. A one-off decision no program can check gets a `Why:` trailer in the final landed commit. Other decisions, rationale and ADRs belong in issues or PRs, not a docs tree.
+- **Invariants:** types and checks. A consequential hazard that cannot be checked gets one root `AGENTS.md` boundary line.
+- **Domain language:** one preferred term per concept across names, types, APIs, cases and UI. Fix model drift rather than maintaining a parallel glossary that disagrees with the code.
+- **Navigation:** the product CLI's map, generated from case records. No handwritten feature map or file inventory.
+- **External contracts:** the smallest machine-checked published form its outside consumer needs, at an exact gate-listed path.
 
-Everything else drifts. That includes control-flow narration, repeated signatures, file inventories, and copied commands. Setup and validation commands belong in manifests, scripts, task runners, and CI. Add a prose route only when agents repeatedly choose wrong and a clearer executable entrypoint can't prevent it.
+Repository prose stays in root `AGENTS.md`, skills, CLI `--help`, case records and those published contracts. No README or docs tree. Commands stay in executable owners; skills keep only task steps the CLI cannot perform. See [Theodore's context ownership](../skills/theodore-kaczynski-nullifier/references/agent-context.md).
 
-Write an ADR only for decisions that are hard to reverse, surprising, and real tradeoffs. Record the choice and the reason.
-
-**Comments:** Tobias prefers a repo-wide no-comments rule enforced by lint or CI. A comment explaining a workaround teaches the next agent to copy it. Fix the boundary or add a check instead. Rationale goes in linked docs.
+**Comments:** Tobias prefers a repo-wide no-comments rule enforced by lint or CI. A comment explaining a workaround teaches the next agent to copy it. Fix the boundary or add a check instead; preserve the reason at its owner above.
 
 ## Code as a search surface
 
@@ -26,6 +24,6 @@ Agents navigate by lexical search, narrow reads, and refined searches. Plain sea
 - Use precise signatures and domain types: they answer usage questions without opening implementations, and compiler errors point to the next authority. `Any`-shaped boundaries force multi-file inference.
 - Delete obsolete paths. A path that must stay but must not be used needs a locally visible marker.
 
-Repository context files should be query maps: preferred terms, ownership boundaries, the authoritative module per concept, and hazards that are unsafe to discover late. Their terms must also appear in filenames, symbols, and errors so the trail continues once the context file leaves the window. Root guidance points to narrower context; it doesn't preload subsystems.
+Root `AGENTS.md` provides orientation and authority boundaries; executable maps and names provide detailed navigation. Use the same terms in filenames, symbols and errors so retrieval still works after the context file leaves the window. Do not preload subsystem inventories or add nested instruction files.
 
 Modem's [experiments](https://modem.dev/blog/how-coding-agents-read-your-code) found that weaker models gain most from discoverable code. They changed naming, typing, comments, and structure together, so no single rule's effect is isolated.

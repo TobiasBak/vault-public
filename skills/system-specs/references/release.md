@@ -5,7 +5,7 @@ Scope: every change to production behavior, from merge to running on servers and
 Principles:
 - Git is the only path to production.
 - One combined version per build.
-- Only Tobias merges production promotions. Agents may prepare the PR, never push, deploy or publish production.
+- Agents may prepare production changes. They merge, deploy, publish or roll back production only on Tobias's explicit instruction for that action, never autonomously.
 - Data never rolls back. Code may roll back automatically.
 - Gates are enforced outside the agents that write the changes.
 
@@ -29,7 +29,7 @@ Enforcement: the build stamps the version; the pipeline writes the manifest and 
 
 ### R3 Built once, signed, verified
 
-Each release is built once from its commit, signed, and verified before every deploy or install. The same artifact moves through every stage. Agents have no production credentials and can't waive gates. Reproducible builds and SBOMs wait until a customer or regulator asks.
+Each release is built once from its commit, signed, and verified before every deploy or install. The same artifact moves through every stage. Production write credentials stay in the pipeline. Agents may invoke production operations only on Tobias's explicit instruction and can't waive gates. Reproducible builds and SBOMs wait until a customer or regulator asks.
 
 Reason: prevents deploying an untested or substituted build, and an agent shipping its own unverified change.
 
@@ -43,13 +43,13 @@ Reason: staging is where Tobias playtests what's coming, and where the pipeline 
 
 Enforcement: promotion qualification binds the batch's commit and artifacts; the pipeline deploys staging and production from the same manifest; staging has no access to production data.
 
-### R5 Human-promoted, at most daily
+### R5 Human-authorized, at most daily
 
-Tobias promotes staging to production after playtesting. At most one ordinary release a day, typically less. A release carries server and clients together under one version. Generated release notes list the merged changes and highlight approval-class changes: a minimum-version bump, a destructive [D5](data.md#d5-two-step-destructive-changes) step, auth, payment and infrastructure.
+Tobias decides when staging goes to production after playtesting; an agent may execute the promotion only on his explicit instruction. At most one ordinary release a day, typically less. A release carries server and clients together under one version. Generated release notes list the merged changes and highlight approval-class changes: a minimum-version bump, a destructive [D5](data.md#d5-two-step-destructive-changes) step, auth, payment and infrastructure.
 
 Reason: users shouldn't get an update every day, and the release decision belongs to a human who has seen the build. One promotion a day is cheap.
 
-Enforcement: the pipeline refuses a second ordinary promotion the same day; release notes are generated from the diff, and approval-class detection runs on it.
+Enforcement: agent-triggered promotion requires Tobias's explicit instruction; the pipeline refuses a second ordinary promotion the same day. Release notes are generated from the diff, and approval-class detection runs on it.
 
 ### R6 Minimal production candidates
 
@@ -57,7 +57,7 @@ Only an incident or bug forces an extra release. For a production request, start
 
 Reason: the requested fix should not inherit unrelated main changes or disappear in the next release.
 
-Enforcement: promotion requires qualification of the exact candidate and Tobias's merge; candidate history is reintegrated into main.
+Enforcement: promotion requires qualification of the exact candidate and Tobias's merge or explicit instruction for an agent to execute it; candidate history is reintegrated into main.
 
 ## Rollout
 
@@ -83,7 +83,7 @@ When a stage fails, the server reverts to the previous build and the client roll
 
 Reason: the data catalog keeps the previous server build compatible, so reverting code is the fastest safe mitigation. Same-version or downgraded client builds strand users.
 
-Enforcement: the rollout controller performs the abort; the update feed only offers versions above the installed one.
+Enforcement: the rollout controller performs the abort as part of the authorized rollout; this grants no autonomous rollback authority to an incident agent. The update feed only offers versions above the installed one.
 
 ### R10 Staged client rollout
 

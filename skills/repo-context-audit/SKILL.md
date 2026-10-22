@@ -19,7 +19,7 @@ No topic, such as commit rules, generated files, or testing, is a mandatory cate
 
 ## Knowledge and retrieval
 
-Look for competing authorities, implementation copied into prose, and useful rationale that is hard to find. Code owns behavior; docs keep intent, rationale, contracts, and terms. Follow the repo's existing doc conventions. To test retrieval, run searches drawn from real tasks, errors, and domain terms, and check whether they reach the owner. Fix the route that fails. One narrow search proves nothing missing, and this audit isn't a code refactor.
+Look for competing authorities, implementation copied into prose, and useful rationale that is hard to find. Code owns behavior; checks and case oracles preserve enforceable reasons. One-off rationale goes in a landed `Why:` trailer; other decisions and rationale go in issues or PRs. In-tree prose belongs only in root `AGENTS.md`, skills, CLI `--help`, case records and approved published contracts, not a parallel README or docs tree. To test retrieval, run searches drawn from real tasks, errors, and domain terms, and check whether they reach the owner. Fix the route that fails. One narrow search proves nothing missing, and this audit isn't a code refactor.
 
 ## Recommendations
 

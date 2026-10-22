@@ -34,7 +34,7 @@ Tobias's willingness-to-pay choices, 2026-10-13; not benchmark-derived or proof 
 | 64GB / 2TB fallback, exact CPU still required | 15,000 | 10,000 |
 | 96GB / 2TB, AMD Ryzen 9 9950X | 21,000 | 14,000 |
 
-The P620 used ceiling is before the extra operating-cost adjustment below. A 64GB fallback is a separate capacity qualification, not an assumed upgrade path. Do not invent ceilings for other configurations or change these from benchmarks. General hardware rationale lives in [agent-era development hardware](../../hardware/agent-era-dev-machine.md); Denmark suitability follows [shopping preferences](../../tobias/shopping.md).
+The P620 used ceiling is before the extra operating-cost adjustment below. A 64GB fallback is a separate capacity qualification, not an assumed upgrade path. Do not invent ceilings for other configurations or change these from benchmarks.
 
 ## Hard filters
 

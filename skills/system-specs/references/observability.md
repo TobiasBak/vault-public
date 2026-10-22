@@ -5,7 +5,7 @@ Scope: telemetry, what counts as broken, alerting, incident response, learning f
 Principles:
 - Agents are the first readers of telemetry and the first responders. Humans are the escalation.
 - Broken means users can't complete their journeys, not that a machine metric crossed a line.
-- Agents in production act only through reversible, pre-approved actions and never touch data.
+- Agents diagnose production autonomously. Production mutations require Tobias's explicit instruction for the action and never bypass data or release safeguards.
 - Every incident leaves behind a check that would have caught it.
 
 ## Telemetry
@@ -62,7 +62,7 @@ Enforcement: journey targets and burn-rate alerts are defined in git (O4); R8 an
 
 ### O7 Two alert levels
 
-Page: customers are affected and the incident agent hasn't contained it within the product's set time, or data or security is involved. Digest: everything else, daily, linking issues. No severity scales beyond these.
+Page: customers are affected and containment needs Tobias's instruction or hasn't succeeded within the product's set time, or data or security is involved. Digest: everything else, daily, linking issues. No severity scales beyond these.
 
 Reason: anything not worth waking a human for belongs in the digest.
 
@@ -88,23 +88,23 @@ Enforcement: a scheduled agent task whose only write access is the issue tracker
 
 ### O10 Agent first responder
 
-An incident agent takes each alert first. It reads telemetry, correlates the alert with deploy markers and flag flips, contains the problem with O11's actions, and lands the fix through main, then prepares the qualified production candidate ([R6](release.md#r6-minimal-production-candidates)).
+An incident agent takes each alert first. It reads telemetry, correlates the alert with deploy markers and flag flips, proposes containment under O11, and lands the fix through main, then prepares the qualified production candidate ([R6](release.md#r6-minimal-production-candidates)). It executes a production action only when Tobias explicitly instructs it.
 
 Reason: an agent responds in seconds, at any hour.
 
-Enforcement: alerts route to the incident agent; its credentials cover only telemetry, O11's actions and opening PRs.
+Enforcement: alerts route to the incident agent; standing credentials allow telemetry reads and opening PRs. Production operations remain in the pipeline and require Tobias's explicit instruction.
 
-### O11 Pre-approved actions
+### O11 Explicitly authorized actions
 
-Without asking, the incident agent may revert the server to the previous build ([R9](release.md#r9-automatic-abort)), halt a client rollout, turn a kill switch off, freeze releases, add capacity, and quarantine records ([D6](data.md#d6-quarantine-undecodable-records)). It never changes or restores data, raises the minimum version, deletes anything, or changes permissions or secrets, except revoking a leaked credential.
+On Tobias's explicit instruction for the action, the incident agent may revert the server to the previous build ([R9](release.md#r9-automatic-abort)), halt a client rollout, turn a kill switch off, freeze releases, add capacity, quarantine records ([D6](data.md#d6-quarantine-undecodable-records)), or revoke a leaked credential. An incident or this catalog is not standing permission to act. This containment interface never changes or restores data, raises the minimum version, deletes anything, or changes permissions or secrets apart from the explicitly requested leaked-credential revocation.
 
-Reason: everything allowed can be undone, and nothing allowed touches data.
+Reason: reversibility limits damage but does not grant production authority.
 
-Enforcement: each action is a separate pipeline operation the agent's credentials can call; nothing else is callable.
+Enforcement: each action is a scoped pipeline operation requiring Tobias's explicit instruction; the agent has no direct production write credentials.
 
 ### O12 Incident agent guardrails
 
-One agent owns each incident. Every action goes to the incident record and the [security log](access.md#s16-security-log). An action that doesn't improve the affected journeys within minutes is undone and the agent pages. After a few actions without improvement, it stops and pages.
+One agent owns each incident. Every action goes to the incident record and the [security log](access.md#s16-security-log). If an authorized action doesn't improve the affected journeys within minutes, the agent pages with the evidence and a proposed recovery. It needs Tobias's explicit instruction before undoing or taking another production action. The rollout controller's automatic abort remains part of the authorized rollout, not an agent decision.
 
 Reason: an agent flailing in production makes incidents worse.
 

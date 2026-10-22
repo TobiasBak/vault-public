@@ -31,10 +31,10 @@ win-vm down                                   # stop only an instance started by
 
 ## Disposable runs
 
-Use a disposable baseline clone for work that must not persist, such as installs, users, hosts-file edits, trusted CAs or SYSTEM tasks. VM lanes acquire the host scheduler's exclusive resource through their repository entrypoint:
+Use a disposable baseline clone for work that must not persist, such as installs, users, hosts-file edits, trusted CAs or SYSTEM tasks. `win-vm up` and `win-vm run --ephemeral` own host admission, including the exclusive `win-vm` resource and guest-memory check. Call them directly, without an outer host lease; choose `--class gate` for qualification, `interactive` for ordinary work or `efficiency` for background research.
 
 ```bash
-heavy-lease run --wait --exclusive win-vm -- win-vm run --ephemeral -- ./lane.sh
+win-vm run --class gate --ephemeral -- ./lane.sh
 ```
 
 - The clone starts from the pinned, stopped baseline. Persistent storage and the host shared folder are not mounted into it; guest writes are discarded at teardown.
