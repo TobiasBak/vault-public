@@ -27,7 +27,7 @@ Not exhaustive. Search with `rg`.
 - [agents/subagent-delegation.md](agents/subagent-delegation.md): who may delegate (coordinators and large-project leads only), whole-outcome splits, model routing and effort, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
-- [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, fresh-agent handoff, refactor equivalence, test pruning, team adoption
+- [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
 - [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, shared compute and compiler/runtime research; live Rust UI is parked
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system

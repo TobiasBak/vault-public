@@ -19,9 +19,9 @@ Observability is an interface for agents, not just an incident add-on. Use inspe
 
 When changing recovery, exercise a representative partial failure through the real interface, inspect what actually happened, and use the supported retry, resume, or repair path. Confirm it does not duplicate effects or report incomplete work as success. Scope this proof to the changed contract, not every imaginable failure.
 
-## Fresh-agent handoff check
+## Handoff check
 
-Use it when judging readiness for independent work, not after every edit. Give a fresh agent a representative report, the repo, and normal tools, with no prior investigation. A rerun by the original agent only checks the commands. Then fix whatever it got stuck on:
+Use it when judging readiness for independent work, not after every edit. Read real agent sessions on representative reports in the repo; don't stage a fresh agent. Fix whatever they got stuck on or needed coaching for:
 
 - couldn't find the feature: feature map or naming
 - couldn't start, reset, or inspect: tools

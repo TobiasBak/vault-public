@@ -73,8 +73,8 @@ References define adopted capabilities, not a to-do list:
 Prove what you delivered, not every capability here:
 - **Changed contract:** the [proof procedure](references/control-cli.md#proof), with expectations checked against their independent authority.
 - **Runtime understanding or recovery:** the [outcome proof](references/runtime-outcomes.md#proof), including relevant partial failure when recovery changes.
-- **Agent-repo setup, navigation, or skill behavior:** a fresh agent uses the changed guidance on a representative task, finds the owning code, makes the change, establishes the actual outcome, and uses supported recovery when needed, without hidden context or human repair. Count turns before and after when claiming a navigation improvement.
-- **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, and a fresh agent names its cause from that evidence without a rerun.
+- **Agent-repo setup, navigation, or skill behavior:** run the changed guidance on a representative task yourself: the searches and commands it names reach the owning code, the change and its outcome check work, and supported recovery runs when needed. Don't stage a fresh agent; real sessions after landing are the remaining test. Claim a navigation improvement only from turn counts in real sessions before and after.
+- **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, enough to name its cause without a rerun.
 - **Speedup:** before-and-after numbers for the targeted cost on the chosen workflow, including process boundary and conditions.
 - **Tracing:** a real run writes valid Chrome Trace JSON; an injected step delay appears as the top critical-path change in `<cli> trace`.
 - **Enforcement:** the [landing-entrypoint proof](references/enforcement.md#proof), including candidate and metadata. It proves the implemented check, not semantic correctness beyond it.

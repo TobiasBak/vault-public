@@ -34,7 +34,7 @@ Layers: global instructions carry the compact character; the request sets outcom
 
 ## Pressure tests
 
-Use these to check that the partnership changes behavior, in fresh sessions with the normal instruction stack and without giving the agent the expected answer. Judge task success separately from relationship quality. Before editing guidance, classify each miss as a spec gap, a retrieval failure, a compliance failure, or a test defect. Don't change wording after one ambiguous miss.
+When the top agent Tobias talks to changes partnership guidance, use these to check that it changes behavior, in fresh sessions with the normal instruction stack and without giving the agent the expected answer. Judge task success separately from relationship quality. Before editing guidance, classify each miss as a spec gap, a retrieval failure, a compliance failure, or a test defect. Don't change wording after one ambiguous miss.
 
 | Situation | Desired behavior |
 |---|---|

@@ -18,9 +18,11 @@ Each delegate does the same job as a primary agent: it owns one whole outcome en
 
 ## Context lifespan
 
-Keep ownership across fresh contexts, not one conversation across an entire migration. Each child gets one concrete outcome, a validation boundary and a stop condition. At a milestone, scope expansion or growing context, checkpoint and start a fresh child from the reduced handoff. Do not keep adding phases through steering or auto-resuming an aging child.
+Each delegate gets one whole outcome, a validation boundary and a stop condition, and keeps it to the end. Follow-up outcomes get a fresh delegate; never add phases by steering or auto-resuming a finished one.
 
-[Dotfiles](../projects.md#dotfiles) owns the shared global instructions and checkpoint budget. Parent and child must enforce it; neither waits for Tobias to notice context rot. A checkpoint is unfinished work with an explicit next action, not a delivery claim. Preserve live job ownership and confirm the old writer has stopped before replacing it. The [continuation checkpoint](context-engineering.md#continuation) defines the durable state to carry forward.
+**30-minute notice** (Tobias, 2026-10-24, replacing the 2026-10-22 forced checkpoint and restart): a subagent still running after 30 minutes sends its parent one short note: elapsed time, what is taking it, and whether the outcome is bigger than briefed. Then it keeps working. The parent treats the note as a diagnosis trigger, not a restart: read the subagent's activity, fix a root cause (a stuck loop, a slow gate or lock wait, a retried failure) at its owner, or record that the outcome was sized too large. Let a healthy subagent finish. CoS teams are top-level threads, not subagents; the census covers them. [Dotfiles](../projects.md#dotfiles) owns the global rule.
+
+When a delegate stops unfinished, its [continuation checkpoint](context-engineering.md#continuation) is unfinished work with an explicit next action, not a delivery claim. Preserve live job ownership and confirm the old writer has stopped before replacing it.
 
 ## Handoff
 

@@ -23,7 +23,7 @@ Check authoritative state, not success messages. Derive expectations independent
 
 Keep a control CLI for launch, reset, interaction, inspection and cleanup. Its feature map is generated from case records linking behaviors and entry points to observable results, never a handwritten map or README. Commands stay in executable owners; the project's verification skill keeps only task steps the CLI cannot perform. Use `create-verification-skill` and `maintain-verification-skill`. Blocked or incomplete runs never pass.
 
-**Fresh-agent handoff check:** can an agent reproduce, fix and verify a representative report with normal tools and no coaching? Friction identifies the owner:
+**Handoff check:** in real sessions, can agents reproduce, fix and verify a representative report with normal tools and no coaching? Read those sessions; don't stage fresh agents for it (Tobias, 2026-10-24). Friction identifies the owner:
 
 - couldn't find the feature: feature map or naming
 - couldn't set up or inspect: tools
