@@ -1512,7 +1512,7 @@ def main():
         print(f"cos: git {error.cmd[1]} failed (exit {error.returncode}); stopped", file=sys.stderr)
         return error.returncode
     except (OSError, sqlite3.Error, ValueError, KeyError, TypeError) as error:
-        print(f"cos: {type(error).__name__}; check the read-only T3 store, state.md and output path; use --help", file=sys.stderr)
+        print(f"cos: {type(error).__name__}: {error}; check the read-only T3 store, state.md and output path; use --help", file=sys.stderr)
         return 1
     return 0
 
