@@ -35,7 +35,7 @@ Tobias owns this section. Change it only when he explicitly asks.
 - Label real ready issues `ready` and launch them. On every heartbeat, use census `capacity` lines to launch ready issues until host and gates are the real limit; this discovery is not the mandatory work store. Idle ready work while teams are few is a defect. The limit is host and gate capacity, not team count. Record only real dependencies; never invent tickets or work for metrics or utilization.
 - Big or unclear work gets a design team producing repo docs and issues for real unfinished decisions or delivery, then ending. Design-heavy work waits for Tobias's choice of lead.
 - Where issues exist, use `ready`, `in-progress` with team link, `blocked`, `needs-tobias`. Close only exact satisfied criteria; preserve incomplete acceptance. CoS work uses `delegate_task` children under global routing: vault writing, diagnostics, audits, census.
-- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`; put its output first, then task context absent from the repo and any existing issue. Teams own workers, reviews, gates, fixes, commits and ordinary integration.
+- Run `python3 .agents/skills/chief-of-staff/scripts/cos.py brief`; put its output first, then task context absent from the repo and any existing issue. Teams do their own work and own declared reviews, gates, fixes, commits and ordinary integration.
 - Before launching or extending work, identify users, observed frequency and measured value of the next PR. Safety approval isn't value (2026-10-13: loop shaping without a measured user win).
 - Answer from known preferences; ask Tobias only about his choices. Judge artifacts, not reports; delegate verification. See [delegation](../../../agents/subagent-delegation.md).
 

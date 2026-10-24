@@ -23,7 +23,7 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 
 ## Reviewers
 
-A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Independent review pays off when failure is consequential, validation is weak, or fresh eyes can challenge assumptions. Use the one protected-surface reviewer for the risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.
+A lens (security, concurrency, data integrity, API compatibility, test adequacy) needn't be a separate agent. Use the one protected-surface reviewer for the risks in the diff. Reviewers may run tools and tests, but only in disposable snapshots; the candidate stays read-only.
 
 **Set the blocking bar before the review.** An open-ended "find bugs" reviewer always finds another adversarial edge, and each "bounded" fix invites the next round.
 - Define what blocks merge at the change's consequence. For dev tooling, that's bugs that break normal use. Hostile environments, adversarial timing, and unlisted inputs become PR-body follow-ups.

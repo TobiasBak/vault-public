@@ -1,17 +1,20 @@
 # Subagent delegation
 
-Delegate bounded, independently useful outcomes when parallelism, context isolation, independent verification, or a cheaper worker model outweighs startup and coordination cost. Keep coordination and context-heavy judgment with the orchestrator, and tightly coupled execution with one worker. Specialize by responsibility and context, not by reasoning step. Follow [compute routing](#compute-routing) for model roles and effort.
+One primary agent does its whole task itself: reading, research, exploration, design, implementation, tests and verification (Tobias, 2026-10-24: agents were spawning far too many subagents). Frontier compaction loses little; partial briefs and rebuilt understanding lose more. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](#compute-routing) for model roles and effort.
 
-## When and how to split
+## Who divides
 
-Route by task shape, not prompt length. The relevant dimensions are localization uncertainty, dependency breadth, unresolved tradeoffs, blast radius, verification strength, parallel separability, and how much context exploration would burn.
+- **Coordinators:** the top agent Tobias talks to that runs other agents, such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md).
+- **Large-project leads:** top agents owning several independent outcomes, more than one agent can carry.
+- **Everyone else:** no subagents. The only exception is the independent review a repository declares for protected surfaces ([code review](code-review.md)). A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest subagents (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
 
-- Known local work with focused validation: one executor, no further splitting.
-- A bounded subsystem change: one handoff may pay off.
-- Cross-cutting or high-risk work: read-only mapping in parallel, then synthesis, one writer, and fresh validation.
+## How to split
+
+Each delegate does the same job as a primary agent: it owns one whole outcome end to end, does everything itself and never delegates further. Never hand out research, exploration, mapping or review slices, and never split one chosen design across agents.
+
+- Split by dependencies, ownership and independently testable behavior, not by file count. Keep tightly coupled files with one owner.
 - Broad migrations: serial validated milestones, never fan-out writers.
-
-Split by dependencies, ownership, and independently testable behavior, not by file count. Keep tightly coupled files with one worker. Use vertical slices for implementation and horizontal fan-out for read-only mapping, gathering, and mechanical work on isolated partitions. A unit is too small when setup dominates and too large when it needs the parent's full context recreated.
+- A unit is too small when setup dominates and too large when it needs the parent's full context recreated.
 
 ## Context lifespan
 
@@ -52,15 +55,15 @@ T3 Code's `delegate_task` inherits the parent's provider unless the call selects
 Tobias's default model routing, revised 2026-10-17. His explicit current request overrides these defaults under [instruction precedence](instructions-and-prompts.md):
 
 - **Team leads:** non-UI leads use Pi GPT-6.1 Sol at thinking `high`; UI leads use Claude Opus 5.5 at effort `high`. The chief of staff remains Opus. Its [lead brief](../.agents/skills/chief-of-staff/scripts/brief.md) owns team-specific delegation, authority gates and reporting; its [skill](../.agents/skills/chief-of-staff/SKILL.md) owns quota admission. Never switch running leads mid-task. Outside UI work, never delegate Opus as a child, designer or researcher.
-- **Pi GPT-6.1 Sol, thinking `high`:** default for non-UI delegated work: execution, implementation, research, exploration, test runs, audits, and review. Explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}`; never inherit the leader's provider or model, and never use Codex CLI for Sol. Keep `high` over `medium` (Tobias, 2026-10-20): on one fresh run of a routine review plus a test change, `medium` cut model time 141→96 s but missed a valid review note that `high` caught. UI design, implementation and review default to `{"providerInstanceId":"claudeAgent","model":"claude-opus-5-5","options":{"effort":"high"}}`. T3's `pi` and `claudeAgent` instances run through `gah-pi` and `gah-claude`, so under git-at-home the same targets give each child its own workspace on the leader's line. UI agents load `frontend-design` and judge the UI critically from real app-window screenshots, never host-desktop captures. Give children full access; put limits like "read-only" in the task. Only project-declared protected surfaces require a separate child's independent review under this routing; trust artifacts, not done reports.
+- **Pi GPT-6.1 Sol, thinking `high`:** default for non-UI leads and delegated outcomes. Explicitly target `{"providerInstanceId":"pi","model":"openai-codex/gpt-6.1-sol","options":{"thinking":"high"}}`; never inherit the leader's provider or model, and never use Codex CLI for Sol. Keep `high` over `medium` (Tobias, 2026-10-20): on one fresh run of a routine review plus a test change, `medium` cut model time 141→96 s but missed a valid review note that `high` caught. UI design, implementation and review default to `{"providerInstanceId":"claudeAgent","model":"claude-opus-5-5","options":{"effort":"high"}}`. T3's `pi` and `claudeAgent` instances run through `gah-pi` and `gah-claude`, so under git-at-home the same targets give each child its own workspace on the leader's line. UI agents load `frontend-design` and judge the UI critically from real app-window screenshots, never host-desktop captures. Give children full access; put limits like "read-only" in the task. Only project-declared protected surfaces require a separate child's independent review under this routing; trust artifacts, not done reports.
 - **OpenCode Space Bunny:** stop using it entirely. See the [trial finding](coding-models.md#current-choice).
-- **Claude Haiku 5.5:** retired (Tobias, 2026-10-12). Research and exploration go to Sol; the dotfiles routing hook denies Haiku and Space Bunny targets.
+- **Claude Haiku 5.5:** retired (Tobias, 2026-10-12). The dotfiles routing hook denies Haiku and Space Bunny targets.
 
 Plan-gate decision (Tobias, 2026-10-13): all gates that day were approved, the conditions mostly restated existing rules, and the waits cost 30 minutes to 2.5 hours.
 
-Brief workers with a concrete design, not a menu of architectural choices. Children may split execution further; design questions go back to the top-level lead.
+Brief workers with a concrete design, not a menu of architectural choices. Delegates never split further; design questions go back to the lead.
 
-Routing can need enforcement: Claude parents in T3 followed the host's native-tool preference over prose and selected `Agent`. [Dotfiles](../projects.md#dotfiles) owns the shared global instructions and Claude routing hook; keep enforcement aligned with this policy.
+Routing can need enforcement: Claude parents in T3 followed the host's native-tool preference over prose and selected `Agent`. The hook denies it and tells the agent to do the work itself. [Dotfiles](../projects.md#dotfiles) owns the shared global instructions and Claude routing hook; keep enforcement aligned with this policy.
 
 ## T3 Code feedback
 
