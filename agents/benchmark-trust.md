@@ -4,6 +4,8 @@ A score is evidence about a specific task set, revision, harness, access policy,
 
 Public benchmarks, and indexes built from them such as Artificial Analysis and vendor tables, are contaminated and benchmaxxed. Models score well on the benched suites and do much worse outside them. Never choose a model or effort level from public scores; use them to find candidates, then decide from local held-out tasks on real work.
 
+recheck-after: 2026-10-24
+
 ## Distinct failures
 
 Don't lump these together as "poisoning":

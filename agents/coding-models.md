@@ -38,7 +38,7 @@ Per million tokens, Standard with ≤272K input: Sol $2 input / $0.10 cached / $
 
 Trust price ratios, not public-index capability gaps ([benchmark trust](benchmark-trust.md)). Compare model-plus-effort configurations; credit rates don't determine subscription limits.
 
-Checked 2026-10-08: on the same supported model, Codex Fast consumes included subscription allowance at 2.5x Standard, purchased credits and Enterprise pay-as-you-go at 2x. API keys follow API tier pricing. Hold effort fixed: billing multipliers aren't speedups. ([speed](https://developers.openai.com/codex/agent-configuration/speed), [pricing](https://learn.chatgpt.com/docs/pricing))
+Checked 2026-10-24: on the same supported model, Codex Fast consumes included subscription allowance at 2.5x Standard and purchased credits or Enterprise pay-as-you-go at 2x. Ultrafast (Astra and Sol; Pro $500 and eligible Enterprise/Edu) consumes them at 8x and 6x. API keys follow API tier pricing. Hold effort fixed: billing multipliers aren't speedups. ([speed](https://developers.openai.com/codex/agent-configuration/speed), [pricing](https://learn.chatgpt.com/docs/pricing))
 
 ## Choosing a setup
 
@@ -59,7 +59,7 @@ Built-in Pi codemode looked useful for latency and cost, not fully correct task 
 
 ## Model specifics
 
-- **Sol:** tools require Responses; Chat Completions works without tools. 1.05M context, US/EU residency, no Fast with EU residency. Beta Responses [multi-agent orchestration](https://developers.openai.com/api/docs/guides/responses-multi-agent) is separate from Codex host tools.
+- **Sol:** tools require Responses; Chat Completions works without tools. 1.05M context, US/EU residency including Fast and Ultrafast (checked 2026-10-24). Beta Responses [multi-agent orchestration](https://developers.openai.com/api/docs/guides/responses-multi-agent) is separate from Codex host tools.
 - **Opus 5.5:** set effort, don't prompt "think harder". Progress reports can end turns mid-work; verify completion. Adaptive thinking is always on; clients must request/render between-tool updates in thinking blocks. Prior turns affect thinking, so change instructions/tools append-only. ([API notes](https://platform.claude.com/docs/en/models/opus-5-5/whats-new-opus-5-5))
 - **Fable 5.1:** low effort searches less; explicitly require retrieval for current facts.
 
@@ -115,7 +115,7 @@ Verified Pi 1.0.0, 2026-10-03. Config files: `configs/pi/settings.json`, shared 
 
 - **Verbosity:** `openai-codex-responses` defaults to `text.verbosity: "low"`; no documented general Pi verbosity setting. Don't copy Codex's `model_verbosity`. `hideThinkingBlock` hides terminal reasoning, not execution/billing. Response verbosity and effort are separate.
 - [Codemode coordination](orchestration.md#programmatic-tool-calling).
-- **T3 usage gap:** nightly `0.0.46-nightly.20261003.2610` runs Pi but Usage scanner/contract/charts omit it; OpenAI-backed Pi work isn't Codex CLI transcript usage. Sum assistant `message.usage` categories and `cost.total` in `~/.pi/agent/sessions/` JSONL per session/across children. Costs are estimates, not verified bills. Native `/session` shows session usage/cost. ([T3 Usage](https://github.com/pingdotgg/t3code/blob/8ed276c246b6/docs/user/usage.md), [Pi usage](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/usage.md))
+- **Usage:** T3 Usage reads Pi sessions from `~/.pi/agent/sessions` or `PI_CODING_AGENT_SESSION_DIR` (checked 2026-10-24). For manual totals, sum assistant `message.usage` categories and `cost.total` in the session JSONL, including children. Costs are estimates, not verified bills. Native `/session` shows session usage/cost. ([T3 Usage](https://github.com/pingdotgg/t3code/blob/main/docs/user/usage.md), [Pi usage](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/usage.md))
 
 - **`pi --print` blocks on open stdin.** Non-TTY stdin is read to EOF and prepended to the prompt. In agent shells stdin can be a socket that never closes, so print mode hangs silently with no output or session file. Run `pi --print ... < /dev/null` from scripts (Pi 1.4.0, 2026-10-24).
 - **OpenRouter models:** change a catalog model with `providers.openrouter.modelOverrides`; a `models` entry with the same ID replaces it and drops catalog `thinkingLevelMap`, image input and compat flags (developer role, reasoning replay). `compat.openRouterRouting` is sent verbatim as `provider`; Pi sends `x-session-id` to OpenRouter by default. [OpenRouter routing](../software/openrouter.md).
