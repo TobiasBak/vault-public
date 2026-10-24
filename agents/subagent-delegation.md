@@ -20,7 +20,7 @@ Each delegate does the same job as a primary agent: it owns one whole outcome en
 
 Each delegate gets one whole outcome, a validation boundary and a stop condition, and keeps it to the end. Follow-up outcomes get a fresh delegate; never add phases by steering or auto-resuming a finished one.
 
-**30-minute notice** (Tobias, 2026-10-24, replacing the 2026-10-22 forced checkpoint and restart): a subagent still running after 30 minutes sends its parent one short note: elapsed time, what is taking it, and whether the outcome is bigger than briefed. Then it keeps working. The parent treats the note as a diagnosis trigger, not a restart: read the subagent's activity, fix a root cause (a stuck loop, a slow gate or lock wait, a retried failure) at its owner, or record that the outcome was sized too large. Let a healthy subagent finish. CoS teams are top-level threads, not subagents; the census covers them. [Dotfiles](../projects.md#dotfiles) owns the global rule.
+**30-minute notice** (Tobias, 2026-10-24, replacing the 2026-10-22 forced checkpoint and restart): T3 tells the parent once when a `delegate_task` child has run 30 minutes, through git-at-home's local `t3/delegate-notice.patch`. The notice tells the parent to find why from the child's activity and not restart a healthy task, so instructions don't repeat it. CoS teams are top-level threads and get no notice; the census covers them.
 
 When a delegate stops unfinished, its [continuation checkpoint](context-engineering.md#continuation) is unfinished work with an explicit next action, not a delivery claim. Preserve live job ownership and confirm the old writer has stopped before replacing it.
 
