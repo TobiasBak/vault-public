@@ -1,6 +1,6 @@
 # Omarchy Windows VM
 
-Agents may use Tobias's Omarchy Windows VM for staging checks (Tobias, 2026-10-11). Its RAM counts against host admission. Use `win-vm`, not Omarchy's RDP-coupled launcher; stop only the VM instance your work owns.
+Agents may use Tobias's Omarchy Windows VM for staging checks (Tobias, 2026-10-11). Use `win-vm`, not Omarchy's RDP-coupled launcher; stop only the VM instance your work owns.
 
 [Dotfiles](../projects.md#dotfiles) owns installation, guest bootstrap, baseline configuration and the lifecycle helper. Start with its `AGENTS.md` and `agents/windows-vm/README.md`, then the installed command's `--help`. Do not recreate setup recipes or baseline identities here. System changes follow [Omarchy's privilege rules](omarchy-agent-operations.md#packages-and-privilege), never Docker-based installation of host files.
 
@@ -33,10 +33,10 @@ win-vm down                                   # stop only an instance started by
 
 ## Disposable runs
 
-Use a disposable baseline clone for work that must not persist, such as installs, users, hosts-file edits, trusted CAs or SYSTEM tasks. `win-vm up` and `win-vm run --ephemeral` own host admission, including the exclusive `win-vm` resource and guest-memory check. Call them directly, without an outer host lease; choose `--class gate` for qualification, `interactive` for ordinary work or `efficiency` for background research.
+Use a disposable baseline clone for work that must not persist, such as installs, users, hosts-file edits, trusted CAs or SYSTEM tasks. `win-vm up` and `win-vm run --ephemeral` hold `win-vm`'s device lock for the command's lifetime, so concurrent owners wait instead of failing. Call them directly, without an outer wrapper. There is no memory or headroom check; the kernel shares CPU and memory (checked 2026-10-24). `--class` is accepted and ignored.
 
 ```bash
-win-vm run --class gate --ephemeral -- ./lane.sh
+win-vm run --ephemeral -- ./lane.sh
 ```
 
 - The clone starts from the pinned, stopped baseline. Persistent storage and the host shared folder are not mounted into it; guest writes are discarded at teardown.
