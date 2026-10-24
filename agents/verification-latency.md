@@ -14,7 +14,7 @@ Faster staging and production qualification is also a goal. Measure those comple
 
 ## Build on shared warm state
 
-Build on gah's copy-on-write workspaces, inherited build outputs and stable source paths rather than creating another workspace provisioner or target copier. The repository owns incremental builds and product verification; heavy-lease owns host admission. See the [feedback optimization loop](../skills/theodore-kaczynski-nullifier/references/manifest.md) for established mechanisms and [remote execution boundaries](../hardware/agent-era-dev-machine.md#make-extra-machines-execute-work).
+Build on gah's copy-on-write workspaces, inherited build outputs and stable source paths rather than creating another workspace provisioner or target copier. The repository owns incremental builds and product verification; the kernel shares host CPU and memory, with no host admission (Tobias, 2026-10-23). See the [feedback optimization loop](../skills/theodore-kaczynski-nullifier/references/manifest.md) for established mechanisms and [remote execution boundaries](../hardware/agent-era-dev-machine.md#make-extra-machines-execute-work).
 
 Share immutable preparation, compatible artifacts and exact-input proofs; join identical in-flight work. Keep each execution's mutable state isolated. Evaluate sharing by how much sooner an individual agent gets its verdict under load, not how many jobs can be admitted. More agents should not imply proportionally more compiler processes, test environments or copies of the same work.
 

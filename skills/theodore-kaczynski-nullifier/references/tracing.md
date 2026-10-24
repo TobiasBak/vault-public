@@ -2,13 +2,13 @@
 
 Once tracing is adopted, product feedback commands (`check`, `test`, watcher jobs, promotion runs) write one trace per verdict, stored beside the verdict under its ID. When a [cached verdict is reused](manifest.md#3-cache-verdicts), keep the original trace's identity; never present cached work as a new run.
 
-Trace each operation at its owner. gah owns forwarding and landing spans; heavy-lease owns admission diagnostics; the repository owns build, check, and case spans. Correlate their evidence in the edit-to-main measurement, without wrapping or reimplementing shared tools. A repository trace alone cannot explain waits outside its process boundary; mark unavailable platform detail as missing.
+Trace each operation at its owner. gah owns forwarding and landing spans; the repository owns build, check, and case spans. Correlate their evidence in the edit-to-main measurement, without wrapping or reimplementing shared tools. A repository trace alone cannot explain waits outside its process boundary; mark unavailable platform detail as missing.
 
 ## Spans
 
 - Trace phases, steps, and cases, plus build units where the build tool exposes them.
 - Every span records its ID, parent, monotonic start and end, wall time, CPU user and system time, scheduler run delay (`schedstat` on Linux), exit status, cache hit or miss, and PID. Mark missing or not-applicable values as such, never as a measured zero.
-- Waits are spans too: [host admission](control-cli.md#host-admission) and lock acquisition, build locks, queueing, and waiting on background watchers. Record the holder's PID and command when known.
+- Waits are spans too: [exclusive-resource](control-cli.md#shared-resources) lock acquisition, build locks, queueing, and waiting on background watchers. Record the holder's PID and command when known.
 - Add an explicit gap span for wall time no activity or wait span covers. A parent phase alone doesn't explain its untraced time.
 - Record dependency edges across parallel work and waits, so the critical path follows what actually delayed the verdict, not just the longest span.
 

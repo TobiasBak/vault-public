@@ -64,7 +64,7 @@ Standing permissions here do not authorize live business targets or credentials,
 
 ## Heavy work
 
-Teams run their repo's entrypoints; kernel `heavy-lease` enforces admission. Watcher triggers use `--try` and log busy skips. Stop finished teams' watchers and verify exit.
+Teams run their repo's entrypoints directly; there is no host admission (Tobias, 2026-10-23). Watcher triggers skip and log when their exclusive resource is busy. Stop finished teams' watchers and verify exit.
 
 Offline Windows verification against synthetic/local/fake targets is standing-authorized, not permission for one more run. Agents choose the needed sessions without per-session or per-boot human GO, using existing repo entrypoints, host scheduling and exclusive VM ownership. Existing scheduler and runner limits stay. Diagnose failures before meaningful retries; never repeat an unchanged failure.
 

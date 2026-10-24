@@ -42,8 +42,8 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Jobs that must survive an agent turn
 
-- Run heavy jobs through repository entrypoints using [host admission](../skills/theodore-kaczynski-nullifier/references/control-cli.md#host-admission). A separate systemd unit is not admission.
-- Start daemons and independent triggers with `heavy-lease isolate -- <command>`; acquire leases inside that isolated process. Isolation preserves foreground I/O and exit status, so use the harness's background-job mechanism when needed.
+- Run heavy jobs directly through repository entrypoints; there is no host admission ([shared resources](../skills/theodore-kaczynski-nullifier/references/control-cli.md#shared-resources)).
+- Start daemons and independent triggers in their own user unit, `systemd-run --user --slice=app.slice --collect -- <command>`, so they outlive the caller's gah session scope; take any exclusive lock inside it.
 - Verify the resulting service's cgroup and ancestor memory limits rather than copying old percentages. Follow it with `systemctl --user status <unit>` and `journalctl --user -u <unit>`.
 - `setsid`, `nohup`, `&` and a systemd scope do not establish independence from T3 session cleanup. Wait for process exit or file events, never fixed sleeps or poll loops.
 

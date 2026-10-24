@@ -74,9 +74,9 @@ Symptom: a step quietly got three times slower.
 
 Symptom: passing output filling context. Fix: the [failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.
 
-## 11. Host-wide heavy-work admission
+## 11. Host-wide heavy work
 
-Symptom: concurrent builds or VM runs slowing each other. Fix: integrate the CLI with [heavy-lease](control-cli.md#host-admission), using the resources and admission policy it owns. Never add a competing repo-local scheduler.
+Symptom: concurrent builds or VM runs slowing each other. Fix: let the kernel share CPU and memory and lock only exclusive resources through their owner ([shared resources](control-cli.md#shared-resources)). Never add a repo-local scheduler.
 
 ## 12. Avoid repeated platform setup
 

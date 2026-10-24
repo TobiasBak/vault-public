@@ -20,10 +20,10 @@ A missing answer is a task gap to fix at its owner, not a reason to build every 
 
 ## Ownership
 
-Use the shared platform for workspaces, warm state, scheduling, and landing. Build only the product-specific feedback it cannot provide.
+Use the shared platform for workspaces, warm state and landing. Build only the product-specific feedback it cannot provide.
 
 - **gah:** workspace isolation, forwarding, conflicts, child integration, warm build-state forks, and landing through the repository check. Its help and session instructions own the procedure.
-- **heavy-lease:** host admission. Repository entrypoints [integrate admission](references/control-cli.md#host-admission), never implement another scheduler.
+- **The kernel:** CPU and memory sharing. There is no host admission; entrypoints run commands directly and [lock only exclusive resources](references/control-cli.md#shared-resources) through their owning tool, never another scheduler.
 - **The repository:** published contract, product state and recovery boundaries, verification inputs, cases, static checks, incremental builds, and diagnostics. Recurring verification goes through a [product verification CLI](references/control-cli.md); product operations stay at their owning interface.
 
 Shared-tool help and active session instructions own delivery and authority policies. Self-contained guidance identifies these dependencies without copying their playbooks. Warm state and a clean merge are not behavioral proof; reuse evidence only when its [inputs still match](references/manifest.md#3-cache-verdicts).

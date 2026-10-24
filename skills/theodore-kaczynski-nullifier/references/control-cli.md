@@ -39,19 +39,19 @@ A command earns its place by answering a real repeated question. Adopt only what
 
 - Each run has an ID and its own disposable state (temp dirs, ports, fake data, VMs). Cleanup touches only what the run owns, never by process name.
 - Watchers, compiler servers, and other source-reading services run in the workspace's mount namespace. gah presents different workspaces at the same path; a host-side daemon sees main there. Key live services by workspace identity, never canonical path alone. [Evidence keys](manifest.md#3-cache-verdicts) identify inputs, not workspaces.
-- Heavy work uses [host admission](#host-admission), never a competing repo-local scheduler.
+- Heavy work runs directly under [shared resources](#shared-resources), never a repo-local scheduler.
 - `env up` returns when `doctor` passes, not after a fixed delay. Anything over a few minutes runs in the background and returns a job ID for `wait`.
 - Verify what "dry-run" and "test" modes actually write or contact.
 - Feedback builds use a fast incremental profile; the cache key includes it. Whole-program optimization and single-unit codegen (e.g. `lto = "fat"`, `codegen-units = 1`) are for shipping and performance measurement only; in the edit loop they make a one-line change a full rebuild.
 - Compilation units follow the module dependency graph. If an edit costs the same rebuild wherever it lands, the unit is a monolith: split it along the graph, keeping cycles together. Lowering optimization is no fix when the corpus is compute-bound; it moves the cost into the run.
 
-## Host admission
+## Shared resources
 
-heavy-lease owns resource policy, classes, lanes, isolation, nested ownership, flags, and diagnostics. Discover them from its active help and session instructions; do not freeze a second policy here or implement a repo-local scheduler.
+There is no host admission: the kernel shares CPU and memory, and repository entrypoints run commands directly. Never add a repo-local scheduler, pool or memory-headroom wait.
 
-Repository entrypoints declare the resources their work needs and acquire admission under that policy. Foreground work waits for admission; opportunistic watchers skip when busy and report no new evidence. Long-lived services use the shared tool's supported isolation, and child work uses its ownership protocol rather than trusting an inherited variable.
+A resource only one user may hold at a time, such as a VM device, is locked by its owning tool. Foreground work waits for that owner; opportunistic watchers skip when it is busy and report no new evidence. Long-lived services and independent triggers run in their own systemd user unit (`systemd-run --user`), so they outlive the caller's session scope; take any exclusive lock inside that unit.
 
-Missing required admission is blocked, never a pass. Wait for process exit or file events, never fixed sleeps or poll loops.
+Missing required exclusive access is blocked, never a pass. Wait for process exit or file events, never fixed sleeps or poll loops.
 
 ## Mutation technique
 
