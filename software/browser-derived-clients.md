@@ -2,6 +2,8 @@
 
 A browser trace reveals the HTTP requests behind an interaction. A narrow client built on them replaces repeated UI driving with a stable local interface, which is faster and simpler for agents. This works if the site permits access and the flow doesn't depend on browser-only security state.
 
+recheck-after: 2027-01-24
+
 ## From interaction to client
 
 1. **Record one bounded flow** in a clean context: start capture, do one action, stop. Record variants (logged in or out, two locations) separately. Playwright can [observe network](https://playwright.dev/docs/network) and [record HAR](https://playwright.dev/docs/api/class-browser#browser-new-context-option-record-har). DevTools, CDP, a proxy, or reading page HTML and JS work too, and are often quicker for simple anonymous JSON.

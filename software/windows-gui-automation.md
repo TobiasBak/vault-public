@@ -2,6 +2,8 @@
 
 Start from the accessibility tree, not pixels. Microsoft UI Automation (UIA) exposes windows and controls as a live tree of properties and patterns ([overview](https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-treeoverview)). Every UIA tool can automate only what the app exposes. For an owned app with opaque custom controls, add UIA providers or automation peers rather than image recognition.
 
+recheck-after: 2027-01-24
+
 ## Tool choice (July 2026)
 
 | Need | Use |

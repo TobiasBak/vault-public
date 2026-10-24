@@ -13,9 +13,11 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 - Never record project work in the vault: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository. The chief of staff keeps its operational state outside the vault, in `~/.local/state/chief-of-staff/`. [projects.md](projects.md) holds only routes to public repositories: path, remote, branch and where to start. Private repositories are never listed. Update it only when a route changes.
 - Lead with the conclusion. Prefer rules and short bullets to narrative. Drop hedges and "X does not mean Y" unless the misreading is likely and costly.
 - Date only volatile facts such as versions, prices, and availability. Keep sources only where authority or exact numbers matter. For optimizations, keep baseline, change, effect, and conditions.
+- A note built on facts someone else owns carries a line `recheck-after: YYYY-MM-DD` near the top: prices and model catalogs, host and CLI behavior, vendor terms, benchmark and licensing claims. Guidance is provisional, so the line marks when to re-derive the fact instead of following the note. Expiry never means the note was wrong, and it is never a reason to delete it.
 - Use kebab-case filenames, relative Markdown links, and no frontmatter. Keep [index.md](index.md) in sync when adding, moving, or removing notes.
 - Compress, merge, and restructure freely. When notes contradict, fix them from the best evidence; ask Tobias only when the answer is his preference.
 - Check links after moving things: `python .agents/skills/audit-knowledge-consistency/scripts/verify_links.py --vault .`
+- Check dated facts before relying on a note: `python .agents/skills/audit-knowledge-consistency/scripts/verify_staleness.py --vault .`. A note past its `recheck-after` gets the fact re-derived now, then either the claim corrected or the date moved. A malformed or duplicated line fails the check, because a broken date silently disables the reminder.
 
 ## Skills
 

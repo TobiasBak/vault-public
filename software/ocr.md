@@ -1,5 +1,7 @@
 # OCR engines
 
+recheck-after: 2027-01-24
+
 ## Indra OCR
 
 Consider Datalab's **Indra OCR** for high-volume CPU document intake from clean printed scans or PDFs when line boxes, layout blocks and reading order matter. Benchmark it on representative documents before adopting it. Avoid it for handwriting, degraded scans or complex tables, and clear the model license before commercial use.

@@ -1,5 +1,7 @@
 # Measuring Pi throughput
 
+recheck-after: 2026-11-24
+
 - Tibo's [2026-10-05 announcement](https://x.com/thsottiaux/status/2107158998495748264), 19:20 CEST: ~50% faster default subscription GPT-6 Astra/GPT-6.1 Sol across Sign in With ChatGPT products/partners, including Pi/OpenCode; no changes needed, rollout within two hours. [Follow-up](https://x.com/thsottiaux/status/2107159119107146237): "Reaching 50 TPS instead of 30TPS". Not paid API/Fast-toggle claims; TPS method/percentile unspecified. Compare local subscription requests, not API benchmarks.
 - **Effective request TPS, not pure decode:** `message.usage.output` / seconds from `message.timestamp` to enclosing entry `timestamp`. Pi 1.0.0/1.0.3 stamp messages before sending, entries on `message_end`. Includes queue/prefill, reasoning, transport retries, generation; excludes preceding tools. Output already includes reasoning; don't add twice. Input = `input + cacheRead + cacheWrite`. No first-token times/explicit backend tiers; estimated cost suggests but cannot prove tiers.
 - **2026-10-05:** 16,270 successful Sol requests, October 3–5: new 40–50.6 effective-TPS upper tail in 15 sessions from ~18:00 UTC; earlier ceiling ~33. Consistent with partial ~50% rollout, not causal/universal proof. The original evidence and scripts were lost in the Omarchy move; figures retain the original analysis.

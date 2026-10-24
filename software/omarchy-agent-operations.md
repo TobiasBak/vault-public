@@ -2,6 +2,8 @@
 
 Use Omarchy's package and privilege paths, not raw Arch package tools or root-equivalent groups. Read the installed `omarchy` skill, including Privilege Escalation, before system changes. [Dotfiles](../projects.md#dotfiles) owns machine configuration.
 
+recheck-after: 2027-01-24
+
 ## Packages and privilege
 
 - System packages go through `omarchy pkg add`, never raw `pacman` or `yay`. Agents have no terminal for sudo: run `pkexec /usr/share/omarchy/bin/omarchy-pkg-add <pkgs>` in the background so Tobias can approve the desktop polkit dialog. Do not hand him a command to paste.

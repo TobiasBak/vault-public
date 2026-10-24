@@ -2,6 +2,8 @@
 
 TypeScript 7 (the native Go compiler and language service, stable 2026-07-08) is the default for new TypeScript work. Faster compiler feedback means more agent iterations per time budget. Sources: [announcement](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/), [typescript-go](https://github.com/microsoft/typescript-go), [compat changes](https://github.com/microsoft/typescript-go/blob/main/CHANGES.md); recheck them before consequential upgrades.
 
+recheck-after: 2027-01-24
+
 ## Adoption boundaries
 
 - No stable programmatic compiler API in 7.0, so tools that embed compiler internals need an explicit decision.

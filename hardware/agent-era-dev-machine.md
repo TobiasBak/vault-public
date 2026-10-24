@@ -2,6 +2,8 @@
 
 For cloud-served coding agents, buy local build capacity, not an AI accelerator. Size each box for simultaneous gates, persistent watchers and VMs; chat-thread count is not a hardware specification. Extra machines help only when teams or gate execution actually move to them.
 
+recheck-after: 2027-01-24
+
 ## Measure before shopping
 
 - Separate model latency, gate execution and admission waiting. Preserve workload, compiler version, cache state, concurrency, process boundary and errors beside every measurement.

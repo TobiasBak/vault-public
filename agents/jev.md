@@ -12,6 +12,8 @@ Checked 2026-09-20. Jev is a text-only decision model: software sends a shared s
 - **Calibration is not correctness:** 80% predictions come true about 80% of the time overall. A model that always predicts the base rate is calibrated and useless. Confidence describes the shape of the distribution, not a verification. Set thresholds from labeled examples of your own workload.
 - **Launch claims:** 193.6× speed and 444.6× cost come from TypeSafe's own workflows, the self-described high end, against Astra and Fable reference answers. "Zero hallucination" is a schema guarantee, not an accuracy figure.
 
+recheck-after: 2027-01-24
+
 ## Fit
 
 - **Strong:** document workflows such as interpreting requests and checking extracted fields against the source. TypeSafe's [cascade](https://docs.typesafe.ai/cookbooks/sde_cascade) has Jev verify each field and escalate suspicious ones to a reasoning model.

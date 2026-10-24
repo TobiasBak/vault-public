@@ -2,6 +2,8 @@
 
 OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider guidance, not Tobias's [team-routing policy](subagent-delegation.md#compute-routing) or local measurements.
 
+recheck-after: 2026-11-24
+
 ## Current choice
 
 Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.

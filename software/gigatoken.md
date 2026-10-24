@@ -1,5 +1,7 @@
 # Gigatoken
 
+recheck-after: 2027-01-24
+
 [Gigatoken](https://github.com/marcelroed/gigatoken) (MIT, Rust with Python bindings, announced 2026-07-21) runs existing Hugging Face and `tiktoken` tokenizer definitions much faster. It suits bulk dataset preprocessing; it's not a new tokenizer.
 
 **Why it's fast:**

@@ -2,6 +2,8 @@
 
 One primary agent does its whole task itself: reading, research, exploration, design, implementation, tests and verification (Tobias, 2026-10-24: agents were spawning far too many subagents). Frontier compaction loses little; partial briefs and rebuilt understanding lose more. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](#compute-routing) for model roles and effort.
 
+recheck-after: 2027-01-24
+
 ## Who divides
 
 - **Coordinators:** the top agent Tobias talks to that runs other agents, such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md).

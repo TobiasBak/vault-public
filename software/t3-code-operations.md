@@ -2,6 +2,8 @@
 
 Keep T3 service restarts out of live work, update T3 only by hand with the gah patch reapplied, and create secrets and webhook schedules in their owning thread. [Delegation](../agents/subagent-delegation.md#t3-code-feedback) owns agent coordination and completion semantics.
 
+recheck-after: 2026-11-24
+
 ## Threads and workspaces
 
 - `t3_thread_list` with `projectId` reads other projects' threads, including subagents (verified 2026-10-11, nightly `0.0.46-nightly.20261010.2922`).

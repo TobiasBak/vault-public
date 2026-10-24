@@ -1,5 +1,7 @@
 # Cloudflare
 
+recheck-after: 2027-01-24
+
 ## API tokens
 
 - Give Tobias a token as a policy document, not dashboard click paths. The token page regroups and renames permissions, but permission-group IDs stay stable. The dashboard's token summary exports any token as an API JSON body or a Terraform `cloudflare_account_token`, and either form can recreate it.

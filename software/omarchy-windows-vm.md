@@ -4,6 +4,8 @@ Agents may use Tobias's Omarchy Windows VM for staging checks (Tobias, 2026-10-1
 
 [Dotfiles](../projects.md#dotfiles) owns installation, guest bootstrap, baseline configuration and the lifecycle helper. Start with its `AGENTS.md` and `agents/windows-vm/README.md`, then the installed command's `--help`. Do not recreate setup recipes or baseline identities here. System changes follow [Omarchy's privilege rules](omarchy-agent-operations.md#packages-and-privilege), never Docker-based installation of host files.
 
+recheck-after: 2027-01-24
+
 ## Driving it: `win-vm`
 
 The live command follows `~/.dotfiles/agents/windows-vm/win-vm`. It reaches the guest over SSH and runs GUI work inside the configured user's desktop session.

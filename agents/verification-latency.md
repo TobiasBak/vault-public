@@ -4,6 +4,8 @@ Tobias's goal: an agent can verify a meaningful edit in **under 60 seconds**, in
 
 Faster staging and production qualification is also a goal. Measure those complete paths separately; a fast development verdict does not satisfy missing release obligations. The [delivery policy](../tobias/preferences.md#delivery-and-releases) still governs which checks run at each boundary. This is a target, not an achieved result or a decision to build a particular architecture.
 
+recheck-after: 2027-01-24
+
 ## Measure the whole wait
 
 - Time verification request to returned verdict, including launcher preparation, admission, local locks, static checks, compile/link, test setup, execution and evidence publication. Also record last relevant edit to verdict availability so watchers and precomputation cannot hide work outside the timer.

@@ -2,6 +2,8 @@
 
 Prompting shapes one interaction, [context engineering](context-engineering.md) shapes what each inference sees, and orchestration controls execution across interactions. Add explicit graphs or loops only when routing, state, evaluation, or recovery needs more than a provider-native agent loop. See [subagent delegation](subagent-delegation.md).
 
+recheck-after: 2027-01-24
+
 ## Loops and graphs
 
 "Loop engineering" ([Osmani](https://addyosmani.com/blog/loop-engineering/)) and "graph engineering" ([LangChain](https://www.langchain.com/blog/3-years-of-graph-engineering-with-langgraph)) are 2026 labels for old concerns.

@@ -2,6 +2,8 @@
 
 Checked 2026-10-24 on DeepSeek V4.1 Flash 1017 with direct API probes; the routing rules are general, the prices are volatile.
 
+recheck-after: 2026-11-24
+
 ## Prices
 
 - **Listed prices already include provider discounts.** `pricing.discount: 0.82` beside $0.054 means $0.30 list, 82% off, charged now. Promotions end without notice.

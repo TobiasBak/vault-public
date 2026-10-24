@@ -1,5 +1,7 @@
 # Supabase
 
+recheck-after: 2027-01-24
+
 ## CLI
 
 - Supabase CLI 2.116 (October 2026) runs `config push` through its TypeScript port, which reads `supabase/config.toml` from the current directory and ignores `--workdir`. It validates every `[remotes.*]` `project_id` against `^[a-z]{20}$`, so placeholder ids in the repository config fail with "Invalid config for remotes.<name>.project_id" even when `--workdir` points at a rendered config. Run hosted commands with the rendered workdir as cwd.

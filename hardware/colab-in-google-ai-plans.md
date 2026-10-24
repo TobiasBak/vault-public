@@ -9,6 +9,8 @@ Paid Google AI plans include Colab compute at no extra cost, announced on [Googl
 - **Rates:** standalone Colab Pro is $9.99 for 100 units. Units burn per hour while a runtime is connected, even when it's idle; L4 costs about 3 units an hour. The current rate for each runtime is in Colab's Resources panel.
 - **Kaggle:** a Pro account raises Kaggle's GPU quota to 45 hours a week.
 
+recheck-after: 2027-01-24
+
 ## Runtime rules
 
 From the [Colab FAQ](https://research.google.com/colaboratory/faq.html):
