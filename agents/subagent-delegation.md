@@ -11,6 +11,18 @@ recheck-after: 2027-01-24
 - **Broken or important work stays with the agent Tobias talks to** (Tobias, 2026-10-24): it does the work itself, coordinator or not. Sol 6.1 is too slow for it.
 - **Everyone else:** no subagents. The only exception is the independent review a repository declares for protected surfaces ([code review](code-review.md)). A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest subagents (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
 
+## When a specialist earns its own context
+
+Anthropic's Applied AI team, on several enterprise deployments (2026-10-22): one model in one context window running an open-ended tool loop, with procedure in skills and hard limits in tools, beat both one-prompt designs and orchestrator-subagent designs on quality, usually at lower cost and latency. Its three conditions for keeping a subagent match this note: the single loop measurably degrades from context bloat, tasks need parallel fresh contexts that can be discarded, or tool choice and instructions conflict. Routers, planners, intent classifiers and per-team domain agents fold in instead, because shared context beats lossy summaries and each hop re-sends degraded detail ("telephone game"). One customer measured roughly 2x faster runtime on a single loop, and Anthropic's own failure list — subagent sprawl, frankenprompt, evals overfitted per team, latency — is [Conway's law](https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop) in an agent tree. Rigid multi-agent structure is also what blocked migrations to a capable new model.
+
+A fresh context per task is not a subagent: a new top-level session keeps one whole task in one window at no handoff cost ([context engineering](context-engineering.md)). Delegation is for outcomes that run beside the caller, not for shortening its window.
+
+**Folding an existing specialist:** build the task-completion eval first — one end-to-end set owned centrally plus small sets shipped with each skill, ten golden examples is enough — then fold the highest-use one, turning its prompt into a skill and its API calls into tools. Merge specialists that chain on each other's output, touch the same data or are usually called together.
+
+- Grade the final message; while an orchestrator exists also track routing accuracy, and afterwards whether the right skill or tool was chosen.
+- Keep a specialist as a tool the main loop calls, with a shared response schema and the main agent verifying its conclusion against real data. Full handoff only when it must talk to the user directly; otherwise it is a skill plus tools.
+- Read which tasks flipped, not just the total, and run each more than once. In Anthropic's sample support agent one fold lowered latency and broke a passing chain: the main agent answered from an order-lookup tool without asking the shipping specialist for the delivery date. It showed up in one run of two.
+
 ## How to split
 
 Each delegate does the same job as a primary agent: it owns one whole outcome end to end, does everything itself and never delegates further. Never hand out research, exploration, mapping or review slices, and never split one chosen design across agents.

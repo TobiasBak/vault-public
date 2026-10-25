@@ -11,6 +11,18 @@ recheck-after: 2027-01-24
 - **Loop:** progress over time. It needs a trigger, goal, durable state, context refresh, action, evaluator, recovery, budget, and finish or escalate rules. Repetition is worthless when the evaluator can't tell improvement from confident drift. [Autoresearch](autoresearch.md) is the strong form.
 - **Graph:** execution topology. Nodes are code, model calls, tools, or agents; edges are sequence, routing, parallelism, joins, cycles, and human gates. Fixed graphs fit repeatable work with real dependencies or authority boundaries. Open-ended exploration needs a capable agent and a thin contract.
 
+A fixed graph is a bet that the model can't route for itself. Anthropic's Applied AI team reports that bet failing on current models (2026-10-22): orchestrator-subagent trees and intent-classifier pipelines mostly did work the model no longer needed, and each new model let more decision-making move out of the harness. The single loop it recommends — one model, one context window, batched parallel tool calls, the model writing and revising its plan in context, turn and cost budgets plus write gates in the harness — is the [subagent rule](subagent-delegation.md) applied to structure. Skills carry ordering and domain procedure, tools carry validation, approval gates and mid-conversation lookups, and code handles mechanical parts inside tools.
+
+## Tool surface
+
+Tool definitions are always-on context, so they degrade decisions the way a long prompt does.
+
+- Group tools by user intent, not one per API; Anthropic sees tool choice degrade past roughly 30–50 definitions in the prompt (2026-10-22, vendor rule of thumb, unmeasured locally).
+- Defer definitions behind tool search and load them on demand. [Claude Code's ToolSearch](#programmatic-tool-calling) defers MCP definitions only, not execution or results.
+- Put hard preconditions inside the tool: if Y needs X's output, Y checks for it and returns an instruction the model can act on.
+- [Access](../skills/system-specs/references/access.md) is checked inside the tool, which returns a plain refusal the model reads; that serves users with different permissions from one loop instead of an agent per permission level.
+- Reference material belongs behind a search or lookup tool or as a skill's reference file. Code must not retrieve it and paste it into a prompt.
+
 ## Programmatic tool calling
 
 PTC lets the model write code that calls tools and reduces their results before anything returns to context. Keep four layers apart:

@@ -39,5 +39,6 @@ Record benchmark and task revision, model snapshot, effort, scaffold, budget, to
 - Record agent latency separately from coordination, validation, and judging. Hold post-run validators and judges until measured agents finish; report coordinator stalls as batch delay rather than model slowness. Afterward, run independent grades concurrently unless an observed host or account constraint requires a cap.
 - Separate streaming liveness from artifact retention. Valid updates omitted from logs must still refresh inactivity detection.
 - Count native compaction usage and inspect nested programmatic tool events. Assistant-message accounting alone misses compaction cost and can hide nested agent invocations.
+- Comparing architectures (one loop vs subagents): report which tasks flipped, not only the total, and run each task more than once. Anthropic's own fold lowered latency while silently dropping a passing step, visible in one run of two (2026-10-22). Net wins hide lost capabilities the score can't show.
 
 See also: [autoresearch](autoresearch.md) for producing the measurements, [testing with agents](testing-with-agents.md).

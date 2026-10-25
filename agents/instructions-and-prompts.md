@@ -8,7 +8,7 @@ Tobias's explicit current request overrides his standing guidance in `AGENTS.md`
 
 - **Chosen collaboration:** how Tobias wants to work, his taste and priorities. Needs no failure justification.
 - **Local facts:** authority boundaries, external contracts, and hazards the agent can't discover in time.
-- **Corrective coaching:** a current, observed gap. Failures of older models or imaginable mistakes don't count.
+- **Corrective coaching:** a current, observed gap. Failures of older models or imaginable mistakes don't count. Anthropic cut Claude Code's system prompt by over 80% for advanced models, a chunk of it rules written for earlier models plus progressively disclosed skills and tools (2026-10-22). Audit instructions against the model that reads them, not the one they were written for.
 
 There's no mandatory inventory of commit rules, test reminders, or engineering maxims. Delete unneeded coaching outright; don't replace it with hooks, reviewers, or checklists. Keep chosen character and consequential distinctions, and cut their repeated explanation. Revisit when the model, host, or work changes.
 
