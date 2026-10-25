@@ -1,6 +1,6 @@
 # Verification in under one minute
 
-Tobias's goal: an agent can verify a meaningful edit in **under 60 seconds**, including static checks, compilation and the necessary behavioral tests. Optimize time to a trustworthy verdict for both a single agent and agents sharing limited hardware. Higher fleet throughput alone is not success.
+Tobias's goal: an agent can verify a meaningful edit in **under 60 seconds**, including static checks, compilation and the necessary behavioral tests. Optimize time to a trustworthy verdict for both a single agent and agents sharing limited hardware. Those agents are independent top-level agents working their own tasks, not one task fanned out across workers ([subagent delegation](subagent-delegation.md)); higher fleet throughput alone is not success.
 
 Faster staging and production qualification is also a goal. Measure those complete paths separately; a fast development verdict does not satisfy missing release obligations. The [delivery policy](../tobias/preferences.md#delivery-and-releases) still governs which checks run at each boundary. This is a target, not an achieved result or a decision to build a particular architecture.
 

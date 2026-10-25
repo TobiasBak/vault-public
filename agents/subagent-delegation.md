@@ -1,6 +1,6 @@
 # Subagent delegation
 
-One primary agent does its whole task itself: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Frontier compaction loses little; partial briefs and rebuilt understanding lose more. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](compute-routing.md) for model roles and effort.
+One primary agent does its whole task itself: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Both the harness's compaction and a handoff brief are summaries. Compaction summarizes work that was already done and keeps the trajectory behind it; a brief is written before the work, so it cannot contain what the parent has not yet discovered. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](compute-routing.md) for model roles and effort.
 
 recheck-after: 2027-01-24
 
