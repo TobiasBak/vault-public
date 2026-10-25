@@ -15,6 +15,7 @@ status=0
 python3 "$skill/verify_links.py" --vault . || status=1
 python3 scripts/check-skills.py || status=1
 python3 scripts/check-duplicate-authority.py || status=1
+python3 scripts/check-context-shape.py || status=1
 # Expiry on its own is reported, not an error; only a malformed or duplicated
 # marker exits non-zero.
 python3 "$skill/verify_staleness.py" --vault . || status=1
