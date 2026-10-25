@@ -41,6 +41,7 @@ Checked 2026-10-24: Codex Fast consumes included subscription allowance at 2.5x 
 
 - Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [benchmark trust](benchmark-trust.md). Measure correctness, architectural fit, corrective turns, time, and cost per successful task.
 - Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). The [current routing policy](subagent-delegation.md#compute-routing) owns effort choices, not provider defaults or benchmark arms.
+- Judge a cheap or free arm by whole-task cost, never by token price: in a free-tier trial about 40% of tasks came back wrong, and the lead's rework outweighed the tokens saved. Passing checks never established equivalence to the reference fix ([feedback](learning-from-feedback.md)).
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
 
