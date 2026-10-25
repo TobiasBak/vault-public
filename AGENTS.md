@@ -28,7 +28,7 @@ Notes that change how a future agent decides or acts: findings, corrections, pre
 - A global skill is self-contained, and a skill guiding code changes ends with a `Verification` section naming the behavioral check expected. Its shape is checked, so a missing description, a flag on a model-invoked skill, a link escaping a global skill, or `SOURCE.md` without `LICENSE` fails the commit.
 - Installing, and refreshing a vendored skill, is `scripts/install-skills.sh --help` and `scripts/update-vendored-skills.sh --help`; the scripts own the flags and the vendored list.
 
-**Check.** `scripts/check-vault` runs the link, staleness and outbound-link checks. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
+**Check.** `scripts/check-vault` runs the vault's checks: links, staleness, a note's outbound link, skill shape, duplicate authority, and the shape of this file and the index. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
 
 ## Boundaries
 

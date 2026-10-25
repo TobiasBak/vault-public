@@ -1,34 +1,28 @@
 ---
 name: audit-knowledge-consistency
-description: Find and fix duplicated or contradictory knowledge and broken links in this vault. Use when asked to check consistency, deduplicate, reconcile contradictions, or consolidate notes.
+description: Find and fix duplicated or contradictory knowledge in a note collection. Use when asked to check consistency, deduplicate, reconcile contradictions, consolidate notes, or audit an instruction file against the knowledge it governs.
 ---
 
 # Audit knowledge consistency
 
-The goal is one coherent body of knowledge. A note's age is not a finding by itself: undated evergreen notes are fine. A dated fact past its `recheck-after` is a finding, because it now tells agents to re-derive before relying on it rather than asserting something false.
+The goal is one coherent body of knowledge. Age is not a finding by itself: an undated evergreen note is fine. A dated fact past its recheck date is a finding, because it now instructs a reader to re-derive rather than assert.
 
-## Run
+## Judgment
 
-1. Baseline the links (wikilinks, Markdown links, headings, anchors; external URLs aren't fetched):
-   ```bash
-   python "$SKILL_DIR/scripts/verify_links.py" --vault "$VAULT_ROOT" --json
-   ```
-2. List the dated facts due for recheck:
-   ```bash
-   python "$SKILL_DIR/scripts/verify_staleness.py" --vault "$VAULT_ROOT" --json
-   ```
-   For each expired note, re-derive the fact from its source and then either correct the claim or move the date. Fix a malformed or duplicated `recheck-after` line by hand; its exit code is a real failure, not a reminder.
-3. Check the instruction files against everything else. `AGENTS.md` must not restate a rule a skill or note owns: run
-   ```bash
-   python "$VAULT_ROOT/scripts/check-duplicate-authority.py"
-   ```
-   for the verbatim class, then read each remaining line and ask which agent reads it, at which moment, and what breaks if it is deleted. A line whose reader never has that file open moves to that reader's owner; the same holds for `index.md` against the notes. `scripts/check-skills.py` covers skill shape.
-4. Search every in-scope note for overlapping claims. Classify each candidate:
-   - **Duplicate:** the same reusable claim in two places with no distinct purpose. Merge into the clearest owning note, keep unique qualifiers and links, rewrite rather than append, and repoint links. A short orientation line in the index is not a duplicate.
-   - **Scoped difference:** different versions, dates, environments, or scopes. Make the scope explicit in the notes; it isn't a conflict.
-   - **Contradiction:** both can't be true under the same scope. Resolve it from the strongest evidence (explicit supersession by the same authority, verified source, current repo state). Recency alone proves nothing. If the answer is Tobias's preference and the evidence doesn't settle it, ask him.
-5. Rerun both checks, search for leftover old wording, and report the changed notes and any open questions.
+Run the collection's own checks first and fix what they report. A check settles mechanics; everything below it needs a reader.
+
+For each expired note, re-derive the fact from its source, then either correct the claim or move the date. Never move a date without re-deriving: a fresh date over an unverified fact hides the rot.
+
+For an instruction file, give every line a reader, a moment, and a consequence: which agent reads it, at which point in their work, and what breaks if the line goes. A line whose reader never has that file open belongs at that moment's owner, and the file keeps a pointer or nothing.
+
+Then search the notes for overlapping claims and classify each candidate:
+
+- **Duplicate:** the same reusable claim twice with no distinct purpose. Merge into the clearest owner, keep unique qualifiers, rewrite rather than append.
+- **Scoped difference:** different versions, dates, environments or scopes. Make the scope explicit; it is not a conflict.
+- **Contradiction:** both cannot hold in the same scope. Resolve from the strongest evidence: explicit supersession by the same authority, a verified source, current state. Recency alone proves nothing.
+
+Report what changed and every open question, including a duplicate whose answer is the owner's preference rather than a fact.
 
 ## Verification
 
-`verify_links.py` reports no issues and `verify_staleness.py` reports no malformed lines. Expired notes left in place are reported with the reason, never silently dropped.
+Every reported failure is either fixed or stated with its reason. No expired note keeps a moved date without a re-derived fact behind it.
