@@ -17,7 +17,7 @@ A fixed graph is a bet that the model can't route for itself. Anthropic's Applie
 
 Tool definitions are always-on context, so they degrade decisions the way a long prompt does.
 
-- Group tools by user intent, not one per API; Anthropic sees tool choice degrade past roughly 30–50 definitions in the prompt (2026-10-22, vendor rule of thumb, unmeasured locally).
+- Group tools by user intent, not one per API; Anthropic sees tool choice degrade past roughly 30–50 definitions in the prompt (2026-10-22, vendor rule of thumb, unmeasured locally — and a threshold tied to the current model generation, so re-check it rather than inheriting it).
 - Defer definitions behind tool search and load them on demand. [Claude Code's ToolSearch](#programmatic-tool-calling) defers MCP definitions only, not execution or results.
 - Put hard preconditions inside the tool: if Y needs X's output, Y checks for it and returns an instruction the model can act on.
 - [Access](../skills/system-specs/references/access.md) is checked inside the tool, which returns a plain refusal the model reads; that serves users with different permissions from one loop instead of an agent per permission level.

@@ -31,7 +31,7 @@ Don't lump these together as "poisoning":
 4. Public historical benchmarks, after leakage and grading review.
 5. Leaderboards and vendor summaries, for discovery only.
 
-Record benchmark and task revision, model snapshot, effort, scaffold, budget, tools, network policy, Git-history state, image, verifier revision, pass rate, cost, latency, and exclusions. Prefer paired runs and cost per successful task. Inspect both passing and failing trajectories for answer retrieval and grader loopholes. Rebaseline after any model, harness, image, access, or evaluator change.
+Record benchmark and task revision, model snapshot, effort, scaffold, budget, tools, network policy, Git-history state, image, verifier revision, pass rate, cost, latency, and exclusions. Prefer paired runs and cost per successful task. A result measured on a superseded model generation is history for architecture decisions: keep the mechanism it exposes, drop the number. Inspect both passing and failing trajectories for answer retrieval and grader loopholes. Rebaseline after any model, harness, image, access, or evaluator change.
 
 ## Harness measurement traps
 
