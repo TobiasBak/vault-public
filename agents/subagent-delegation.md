@@ -1,15 +1,18 @@
 # Subagent delegation
 
-One primary agent does its whole task itself: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Both the harness's compaction and a handoff brief are summaries. Compaction summarizes work that was already done and keeps the trajectory behind it; a brief is written before the work, so it cannot contain what the parent has not yet discovered. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](compute-routing.md) for model roles and effort.
+An agent does its own work: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Both the harness's compaction and a handoff brief are summaries. Compaction summarizes work that was already done and keeps the trajectory behind it; a brief is written before the work, so it cannot contain what the parent has not yet discovered. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](compute-routing.md) for model roles and effort.
 
 recheck-after: 2027-01-24
 
 ## Who divides
 
-- **Coordinators:** the top agent Tobias talks to that runs other agents, such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md).
-- **Large-project leads:** top agents owning several independent outcomes, more than one agent can carry.
+Tobias, 2026-10-25: agents do their own work by preference, but any top-level agent whose large task divides into independent packages may delegate them to a strong model, and each delegate does all of its package itself. He never wants explorer-style agents; bounded review agents are fine.
+
+- **Top-level agents with a large, divisible task:** packages that are independent and testable on their own. Coordinators such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md) work this way by design.
 - **Broken or important work stays with the agent Tobias talks to** (Tobias, 2026-10-24): it does the work itself, coordinator or not. An agent working directly with Tobias is judged on responsiveness as well as model quality (Tobias, 2026-10-25): its latency is part of its fitness, so choose a conversational agent for the pace of the conversation, not only the score. Delegation is what buys capability without spending that responsiveness, not a way to reuse the same model everywhere.
-- **Everyone else:** no subagents. The only exception is the independent review a repository declares for protected surfaces ([code review](code-review.md)). A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest subagents (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
+- **Delegates:** never delegate further.
+- **Never:** explorer, research, search or mapping agents. A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest them (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
+- **Always allowed:** a bounded review agent, one independent reviewer with a stated scope and a finished change. Protected surfaces a repository declares require one ([code review](code-review.md)).
 
 ## When a specialist earns its own context
 
@@ -22,7 +25,7 @@ Scope: that is advice for one product agent serving many users, its anecdotes ar
 - **The deciding variable:** separable breadth (independent paths compressed back, as in search) versus interdependent work making shared decisions. Capability moves the boundary toward one loop.
 - **Cognition's rule** (2025-06) — share context and full agent traces, never parallel multi-agents — is argued from decisions rather than model ability, so it still holds.
 
-Bloat is a cost curve, not an IQ curve ([context engineering](context-engineering.md)), so a large window alone doesn't justify splitting: a subagent pays its own tokens and nested loop. A fresh context per task is also not a subagent — a new top-level session keeps one task in one window at no handoff cost. The declared-surface review is the deliberate exception, refused the author's narrative on purpose ([code review](code-review.md)).
+Bloat is a cost curve, not an IQ curve ([context engineering](context-engineering.md)), so a large window alone doesn't justify splitting: a subagent pays its own tokens and nested loop. A fresh context per task is also not a subagent — a new top-level session keeps one task in one window at no handoff cost. A bounded review is the deliberate exception, refused the author's narrative on purpose ([code review](code-review.md)).
 
 **Folding a specialist:** build the task-completion eval first (one central end-to-end set plus small per-skill sets; ten golden examples is enough), then fold the highest-use one, turning its prompt into a skill and its API calls into tools. Merge specialists that chain on each other's output, touch the same data or are usually called together.
 
@@ -32,7 +35,7 @@ Bloat is a cost curve, not an IQ curve ([context engineering](context-engineerin
 
 ## How to split
 
-Each delegate does the same job as a primary agent: it owns one whole outcome end to end, does everything itself and never delegates further. Never hand out research, exploration, mapping or review slices, and never split one chosen design across agents.
+Each delegate does the same job as a primary agent: it owns one whole outcome end to end, does everything itself and never delegates further. Never hand out research, exploration or mapping slices, and never split one chosen design across agents.
 
 - Split by dependencies, ownership and independently testable behavior, not by file count. Keep tightly coupled files with one owner.
 - Broad migrations: serial validated milestones, never fan-out writers.

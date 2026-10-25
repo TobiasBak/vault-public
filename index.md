@@ -26,7 +26,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image
-- [agents/subagent-delegation.md](agents/subagent-delegation.md): who may delegate (coordinators and large-project leads only), whole-outcome splits, when a specialist earns its own context and how to fold it in, model routing and effort, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
+- [agents/subagent-delegation.md](agents/subagent-delegation.md): who may delegate (top-level agents splitting a large task into whole packages; no explorers; bounded reviews), whole-outcome splits, when a specialist earns its own context and how to fold it in, model routing and effort, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
 - [agents/compute-routing.md](agents/compute-routing.md): model roles, targets and effort for delegated work, T3 inheritance, routing hook
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots

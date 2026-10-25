@@ -44,7 +44,7 @@ Risk-taking and hard work are the two that land hardest for Tobias (2026-10-18).
 
 ### Already living it
 
-- **Numbers never compensate for talent.** The same bet as one frontier-model agent doing the whole task itself, only coordinators and large-project leads dividing work into whole outcomes, and refusing to split one design across many workers. Talent is the strongest model plus full context; the multiplier is orchestration and strategy.
+- **Numbers never compensate for talent.** The same bet as one frontier-model agent doing its own work, splitting only a large task into whole packages that each delegate does itself, and refusing to split one design across many workers. Talent is the strongest model plus full context; the multiplier is orchestration and strategy.
 - **Anti ass-covering.** No shims, fallbacks or legacy paths unless a contract demands them; clean breaks over defensive code. That is refusing to optimize ass-covering, applied to codebases.
 - **Feedback loop.** Autoresearch, retros and agent-history reviews are this principle turned into machinery. The vault itself is the loop's memory.
 - **Path through engineering and design.** Tobias decides through the product and the system, not through spreadsheets or pitch decks. Keep it that way as anything grows.

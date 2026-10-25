@@ -9,7 +9,7 @@ Keep the project's verification skill, case records and generated feature map ho
 
 ## Scope
 
-Find the verification skill, authoritative case records and product CLI's `map [area]`; ask if ownership is ambiguous. If the workflow is missing, use `$create-verification-skill`. The map is generated from case records, never maintained as a README or feature-file tree. Edit only the skill, case navigation metadata and owned verification helpers or map generator; never product code or expected results to hide a regression. Use one writer and one live driver. For broad maps, delegate read-only source inspection by behavior.
+Find the verification skill, authoritative case records and product CLI's `map [area]`; ask if ownership is ambiguous. If the workflow is missing, use `$create-verification-skill`. The map is generated from case records, never maintained as a README or feature-file tree. Edit only the skill, case navigation metadata and owned verification helpers or map generator; never product code or expected results to hide a regression. Use one writer and one live driver.
 
 ## Check against source
 
