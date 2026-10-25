@@ -50,7 +50,8 @@ fi
 
 if [ ${#stale[@]} -gt 0 ]; then
     printf 'stale note edited: %s\n' "${stale[@]}" >&2
-    printf 'Re-derive its dated facts, then move its recheck-after date. Do not just bump the date.\n' >&2
+    printf 'Re-derive its dated facts, then move its recheck-after date. Count from the last real\n' >&2
+    printf 'check, never from the edit: a bumped date behind an unverified fact hides the rot.\n' >&2
     status=1
 fi
 
