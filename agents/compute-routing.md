@@ -4,7 +4,7 @@ Model roles, targets and effort for delegated work. Tobias's explicit current re
 
 recheck-after: 2027-01-24
 
-Keep the execution contract (permissions, tools, limits, output) separate from model routing. Within the default roles below, judge delegation by correctness, latency, cost per success including retries, duplication, and recovery from failed children.
+Keep the execution contract (permissions, tools, limits, output) separate from model routing; [subagent delegation](subagent-delegation.md) owns how to judge the result.
 
 T3 Code's `delegate_task` inherits the parent's provider unless the call selects `target.providerInstanceId` or `target.driverKind`. Keeping the provider and model unchanged also preserves model options. This describes host behavior, not permission to inherit Opus for delegated work. Explicitly select the worker provider and model under Tobias's policy below. Explain unexpected routing from the recorded call's target and the parent's provider at call time, not just the current thread config or a model-name prefix.
 
