@@ -8,12 +8,6 @@ Source: [@InvestInAssets, 2026-10-17](https://x.com/InvestInAssets/status/211139
 
 Risk-taking and hard work are the two that land hardest for Tobias (2026-10-18). Without them he sees himself going nowhere. Everything else in this note supports these two.
 
-> There's a tremendous bias against taking risks. Everyone is trying to optimize their ass-covering.
-
-> Work like hell. You just have to put in 80 to 100 hour weeks every week. This improves the odds of success.
-
-> When something is important enough, you do it even if the odds are not in your favor.
-
 ## The principles
 
 **Taking risk**

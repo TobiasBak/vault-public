@@ -21,15 +21,7 @@ Agents copy the code they read. Types, APIs, boundaries, and accepted examples t
 - Pair every restriction with a usable alternative: an obvious location, a supported API, and an example worth copying. Checks reject the wrong way; interfaces make the right way easy. When agents keep fighting a boundary, fix the supported path before adding instructions.
 - Comments that justify a workaround make it look approved. Fix the design instead (see [documentation and naming](documentation-and-naming.md)).
 
-When correcting an agent, put the knowledge in the strongest place that fits, in this order:
-
-1. **Codebase:** change the structure, API, or data model so the mistake can't be expressed.
-2. **Static checks:** compiler, type, lint, or dependency checks that fail with a nonzero exit in pre-commit and CI. Markdown is never a static check.
-3. **Rules plus focused review agents:** for rules that need judgment on repository-declared protected surfaces. Required independent review follows [code review](code-review.md); do not turn every judgment rule into a new review gate.
-4. **Skills:** reusable methods that need judgment, such as debugging, performance work, or verification.
-5. **Human-enforced style guides:** the weakest form. Treat review findings as signals that structure or checks are missing.
-
-The same ladder orders knowledge about agent behavior, and prose sits at the bottom. A habit written in AGENTS.md is the weakest form; a failing check is stronger; a config deny rule binds harder still, because it holds whatever the agent believes. Two exemplars: the vault's link and staleness checks run as a commit hook rather than as a remembered step, and the dotfiles routing hook denies model targets that prose had already ruled out ([routing](compute-routing.md)). A rule that keeps needing reminders is a missing mechanism.
+The [potato-approach skill](../skills/potato-approach/SKILL.md) owns the order in which a correction goes into codebase structure, static checks, judgment rules, skills, or human-enforced style guides; prose sits at the bottom of it. Two exemplars: the vault's link and staleness checks run as a commit hook rather than as a remembered step, and the dotfiles routing hook denies model targets that prose had already ruled out ([routing](compute-routing.md)). A rule that keeps needing reminders is a missing mechanism.
 
 **Enforce first, repair end to end** (Tobias's rollout policy). Enable a settled rule over its full scope immediately and let existing violations fail; the failing gate is the work inventory. No baselines, suppressions, warning-only modes, or deferred type coverage. If work stops, leave the gate enabled and failing and record what remains. Unfinished repair is an acceptable handoff; false green is not.
 

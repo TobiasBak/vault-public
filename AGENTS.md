@@ -4,31 +4,28 @@ Tobias's public knowledge bank. It exists for agents: they retrieve from it and 
 
 ## Purpose
 
-Notes that change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures. Not a project log, not a tutorial, not a restatement of what a lookup already answers.
+Notes that change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures.
 
 ## Values
 
-1. **Transferable knowledge beats completeness.** A note earns its place by changing a decision. Routine activity, generic advice and cheap-to-look-up facts never land.
+1. **Transferable knowledge beats completeness.** A note earns its place by changing a decision.
 2. **One home per idea beats restating.** Search first, edit the owning note, link instead of copying.
-3. **Mechanisms beat reminders.** A failing check first, then config, then a sentence. A rule that keeps needing a reminder is a missing mechanism.
+3. **Mechanisms beat reminders.** A failing check first, then config, then a sentence.
 4. **Pointers beat an exhaustive index.** One line per note, plus `rg`.
 
 ## Loop
 
-**Find.** Start at [index.md](index.md), then search with `rg`; the index is deliberately incomplete. [projects.md](projects.md) routes to repositories, which own their own implementation detail.
+**Find.** Start at [index.md](index.md), then search with `rg`.
 
-**Write.** Lead with the conclusion: rules and short bullets, no hedges, and an "X does not mean Y" only where the misreading would be costly. Date only volatile facts, and keep a source where authority or an exact number matters; for an optimization keep baseline, change, effect, conditions. File a note by its reader, not its subject; [index.md](index.md) states what each directory owns. Kebab-case filenames, relative Markdown links, no frontmatter, and a line in [index.md](index.md) when a note appears, moves or goes. Compress, merge and restructure freely; when notes contradict, fix them from the best evidence, and ask Tobias only when the answer is his preference.
+**Write.** Lead with the conclusion: rules and short bullets, no hedges, and an "X does not mean Y" only where the misreading would be costly. Date volatile facts and keep a source where authority or an exact number matters; for an optimization keep baseline, change, effect, conditions. File a note by its reader, not its subject: kebab-case filenames, relative Markdown links, no frontmatter, and a line in [index.md](index.md) when a note appears, moves or goes. Compress, merge and delete freely; when notes contradict, fix them from the best evidence, and ask Tobias only when the answer is his preference. Every note links to at least one other note.
 
-- A note built on facts someone else owns carries `recheck-after: YYYY-MM-DD` near the top: prices, model catalogs, host and CLI behaviour, vendor terms, benchmarks, licenses. Count the date from when the fact was last checked, never from the edit that adds it.
-- Deleting knowledge about a specific instance? Move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection in config wherever it can be one: a deny rule outlives prose, and the note only explains why the rule exists.
-- Every note links to at least one other note, so a reader can move sideways instead of walking back to the index.
+A note built on facts someone else owns carries `recheck-after: YYYY-MM-DD` near the top: prices, model catalogs, host and CLI behaviour, vendor terms, benchmarks, licenses. Count the date from when the fact was last checked, never from the edit that adds it.
 
-**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, which `.claude/skills` links to. `chief-of-staff` is the one skill only Tobias invokes, which is why only it keeps `disable-model-invocation`; keep it that way.
+Deleting knowledge about an instance: move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection as a config rule wherever it can be one; the note only explains why the rule exists.
 
-- A global skill is self-contained, and a skill guiding code changes ends with a `Verification` section naming the behavioral check expected. Its shape is checked, so a missing description, a flag on a model-invoked skill, a link escaping a global skill, or `SOURCE.md` without `LICENSE` fails the commit.
-- Installing, and refreshing a vendored skill, is `scripts/install-skills.sh --help` and `scripts/update-vendored-skills.sh --help`; the scripts own the flags and the vendored list.
+**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, linked from `.claude/skills`, and only `chief-of-staff` keeps `disable-model-invocation` because only Tobias invokes it. Installing, and refreshing a vendored skill, is `scripts/install-skills.sh --help` and `scripts/update-vendored-skills.sh --help`; the scripts own the flags and the vendored list.
 
-**Check.** `scripts/check-vault` runs the vault's checks: links, staleness, a note's outbound link, skill shape, duplicate authority, and the shape of this file and the index. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
+**Check.** `scripts/check-vault` runs links, staleness, a note's outbound link, skill shape, duplicate authority, and the shape of this file and the index. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
 
 ## Boundaries
 

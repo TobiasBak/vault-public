@@ -6,11 +6,9 @@ Architecture is the consequential structure that makes a system fit its requirem
 
 It is when changing it would materially alter several components, state ownership, contracts, deployment, recovery, safety boundaries, or long-term coupling. Examples: a local worker vs a remote service, separating probabilistic output from authoritative state, or deciding who owns an external side effect. A class name or local algorithm is implementation design.
 
-Questions architecture answers: What forces shape the system? What are the parts and what does each own? Where is authoritative state and who may change it? How do data and control cross boundaries? How is it deployed, observed, and recovered? Which quality wins, at what cost, and what would invalidate the choice?
-
 ## Styles are dimensions, not categories
 
-Real systems combine them: layered, modular monolith, client-server, pipeline, ports and adapters, workers, event-driven, microservices (independent deploys and state, at distributed-systems cost). One system can be a pipeline in control flow, use ports and adapters at ERP boundaries, run on supervised workers, and ship as one install. Name the dimensions that explain real decisions.
+Real systems combine them, and microservices are only one point: independent deploys and state, bought with distributed-systems cost. One system can be a pipeline in control flow, use ports and adapters at ERP boundaries, run on supervised workers and ship as one install. Name the dimensions that explain real decisions, not a category.
 
 ## Explaining a decision
 

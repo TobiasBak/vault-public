@@ -4,15 +4,7 @@
 
 `Effect<Success, Error, Requirements>` is a lazy, immutable description of a computation. Unlike `Promise`, it exposes expected failures and required services, and its runtime distinguishes defects and interruption from expected errors. Compose effects throughout an area and run them at the edges; scattered Promise conversion defeats the point.
 
-It unifies:
-- typed errors and dependency services
-- structured concurrency, interruption, and bounded parallelism
-- retries, schedules, timeouts, and cancellation
-- safe resource cleanup
-- streams and Schema validation
-- config, caching, logs, metrics, and tracing
-
-The value lies in consistent semantics across these concerns, not in any one feature.
+Its value is one set of semantics across errors, dependencies, concurrency, resources, retries and observability — not any single feature.
 
 ## When to use it
 
