@@ -464,7 +464,7 @@ def quota():
         print(f"opus_ui_team: wait ({limited[0]} at {limited[1]:g}%)")
     else:
         teams = 1 if any(utilization >= 40 for _, utilization, _ in windows) else 2
-        print(f"opus_ui_team: allowed (max {teams} live, 1 Opus child per team)")
+        print(f"opus_ui_team: allowed (max {teams} live, no Opus children)")
     return 0
 
 
@@ -1456,7 +1456,7 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     brief = commands.add_parser("brief", description="Print the one-source team-brief preamble.", allow_abbrev=False)
     brief.add_argument("--short", action="store_true", help="Print only the report-trigger restatement.")
-    commands.add_parser("quota", description="Print Claude plan utilization and the live Opus UI team limit: two while every window is below 40%, one at 40% or above, none at 60% or above. Each team runs at most one Opus child. Non-UI leads always use Sol; check UI quota before launching and on every heartbeat.", allow_abbrev=False)
+    commands.add_parser("quota", description="Print Claude plan utilization and the live Opus UI team limit: two while every window is below 40%, one at 40% or above, none at 60% or above. Teams spawn no Opus children. Non-UI leads always use Sol; check UI quota before launching and on every heartbeat.", allow_abbrev=False)
     restart = commands.add_parser("restart-check", description="Refuse a T3 restart while runs outside CoS and its children are running.", allow_abbrev=False)
     restart.add_argument("--self", dest="caller", metavar="THREAD", help="Exempt the calling thread; T3 resumes it after the restart.")
     commit_parser = commands.add_parser("commit", description="Commit only named paths, pull/rebase with autostash, then push once.", allow_abbrev=False)

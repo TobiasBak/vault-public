@@ -6,13 +6,13 @@ recheck-after: 2027-01-24
 
 ## Who divides
 
-Tobias, 2026-10-25: agents do their own work by preference, but any top-level agent whose large task divides into independent packages may delegate them to a strong model, and each delegate does all of its package itself. He never wants explorer-style agents; bounded review agents are fine.
+Tobias, 2026-10-25: agents do their own work by preference, but any top-level agent whose large task divides into independent packages may delegate them to a strong model, and each delegate does all of its package itself. He never wants explorer-style agents; review subagents are fine. No subagent runs on Opus: there is no quota for it.
 
 - **Top-level agents with a large, divisible task:** packages that are independent and testable on their own. Coordinators such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md) work this way by design.
 - **Broken or important work stays with the agent Tobias talks to** (Tobias, 2026-10-24): it does the work itself, coordinator or not. An agent working directly with Tobias is judged on responsiveness as well as model quality (Tobias, 2026-10-25): its latency is part of its fitness, so choose a conversational agent for the pace of the conversation, not only the score. Delegation is what buys capability without spending that responsiveness, not a way to reuse the same model everywhere.
 - **Delegates:** never delegate further.
 - **Never:** explorer, research, search or mapping agents. A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest them (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
-- **Always allowed:** a bounded review agent, one independent reviewer with a stated scope and a finished change. Protected surfaces a repository declares require one ([code review](code-review.md)).
+- **Always allowed:** review subagents, each with a stated scope and blocking bar, reporting findings without delegating further. Protected surfaces a repository declares require one, and open-ended review/fix loops stay out ([code review](code-review.md#reviewers)).
 
 ## When a specialist earns its own context
 
@@ -25,7 +25,7 @@ Scope: advice for one product agent serving many users, from unnamed anecdotes; 
 - **The deciding variable:** separable breadth (independent paths compressed back, as in search) versus interdependent work making shared decisions. Capability moves the boundary toward one loop.
 - **Cognition's rule** (2025-06), share context and full traces and never run parallel multi-agents, argues from decisions, not model ability, so it still holds.
 
-Bloat is a cost curve, not an IQ curve ([context engineering](context-engineering.md)), so a large window alone doesn't justify splitting: a subagent pays its own tokens and nested loop. A fresh context per task is also not a subagent — a new top-level session keeps one task in one window at no handoff cost. A bounded review is the deliberate exception, refused the author's narrative on purpose ([code review](code-review.md)).
+Bloat is a cost curve, not an IQ curve ([context engineering](context-engineering.md)), so a large window alone doesn't justify splitting: a subagent pays its own tokens and nested loop. A fresh context per task is also not a subagent — a new top-level session keeps one task in one window at no handoff cost. A review subagent is the deliberate exception, refused the author's narrative on purpose ([code review](code-review.md)).
 
 **Folding a specialist:** build a task-completion eval first (ten golden examples is enough), then fold the most-used specialist, turning its prompt into a skill and its API calls into tools, and merge specialists that chain, share data or are called together. A kept specialist is a tool the main loop calls with a shared response schema, not a handoff. Read which tasks flipped, not the total ([benchmark trust](benchmark-trust.md)).
 
