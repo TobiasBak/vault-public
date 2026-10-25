@@ -22,6 +22,8 @@ Each fact has one home; everywhere else links to it or says nothing.
 
 ## Root AGENTS.md
 
+Before a line stays, name its reader, the moment they read it, and what breaks if it is deleted. A line whose reader never has this file open — a skill rule needed while editing a skill, a directory map needed while filing a note, a charter line a skill already owns — belongs at that moment's owner, and this file keeps a pointer or nothing. Adopting or rewriting the file is an audit of every line, not a reformat: a line that restates another file's rule is a second authority, not a reminder.
+
 This is the current context format, not a chosen policy in itself. It keeps orientation, tradeoffs, task entrypoints, ownership, and authority limits easy to find without a large always-loaded manual. A replacement must preserve those answers and update its checks and consumers together.
 
 Exactly these sections, in this order:
