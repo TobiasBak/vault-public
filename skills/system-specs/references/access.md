@@ -58,7 +58,7 @@ A generated test calls every route with a role that lacks its permission and exp
 
 Reason: one test covers every new endpoint without anyone writing a case.
 
-Enforcement: the sweep reads the route list and runs in CI.
+Enforcement: the sweep reads the route list and runs before landing route changes and on every promotion.
 
 ## Tenancy
 
@@ -150,7 +150,7 @@ Enforcement: the authorization and sign-in modules write the log, so callers can
 
 ### S17 Secrets
 
-Git holds secret names; values live in a secret manager or are encrypted in git (sops). Every secret rotates without downtime, with old and new valid during a switch-over window. Secret scanning runs in pre-commit and CI.
+Git holds secret names; values live in a secret manager or are encrypted in git (sops). Every secret rotates without downtime, with old and new valid during a switch-over window. Secret scanning runs in pre-push and on promotion.
 
 Reason: [R1](release.md#r1-everything-goes-through-git) puts config in git, but a plaintext secret there is leaked to everyone with read access.
 

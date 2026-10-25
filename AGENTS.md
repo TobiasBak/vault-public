@@ -23,7 +23,7 @@ A note built on facts someone else owns carries `recheck-after: YYYY-MM-DD` near
 
 Deleting knowledge about an instance: move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection as a config rule wherever it can be one; the note only explains why the rule exists.
 
-**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, linked from `.claude/skills`, and only `chief-of-staff` keeps `disable-model-invocation` because only Tobias invokes it. Installing, and refreshing a vendored skill, is `scripts/install-skills.sh --help` and `scripts/update-vendored-skills.sh --help`; the scripts own the flags and the vendored list.
+**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, linked from `.claude/skills`, and only `chief-of-staff` keeps `disable-model-invocation` because only Tobias invokes it. Installing is `scripts/install-skills.sh --help`; the script owns the flags.
 
 **Check.** `scripts/check-vault` runs links, staleness, a note's outbound link, skill shape, duplicate authority, and the shape of this file and the index. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
 

@@ -111,11 +111,11 @@ Enforcement: the deploy pipeline runs migrations before rollout; a static check 
 
 ### D12 Compatibility gate
 
-CI compares the schema and stored formats with the last release and classifies every change as additive or destructive. A destructive change is blocked unless D5's conditions hold. A black-box case runs the new code on data written by the previous release, and the previous release on data written by the new code.
+A pre-push check compares the schema and stored formats with the last release and classifies every change as additive or destructive. A destructive change is blocked unless D5's conditions hold. A black-box case runs the new code on data written by the previous release, and the previous release on data written by the new code.
 
-Reason: an agent will rename a field in one PR; review won't catch every one.
+Reason: an agent will rename a field in one change; review won't catch every one.
 
-Enforcement: the check and case run in pre-commit and CI.
+Enforcement: the check and case run in pre-push and on promotion.
 
 ## Clients and versions
 

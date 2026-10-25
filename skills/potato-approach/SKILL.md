@@ -22,7 +22,7 @@ For a correction or settled decision, use the strongest place that fits:
 
 1. Codebase structure and examples, so the mistake can't be expressed.
 2. Executable static checks in the repository's real landing gate. Markdown is never a check.
-3. Repository rules enforced by focused review agents.
+3. Judgment rules checked by the review the repository declares for its protected surfaces.
 4. Skills, for methods that need judgment.
 5. Human-enforced style guides.
 

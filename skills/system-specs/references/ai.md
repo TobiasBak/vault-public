@@ -19,11 +19,11 @@ Enforcement: model calls take prompts and model IDs only from typed definitions 
 
 ### M2 Evals gate changes
 
-Each AI feature has an eval set of representative inputs with graded expected outcomes. It runs in CI on every prompt, model or tool change; a score below the last release blocks the merge. Deterministic graders first, model-graded rubrics only where needed. Incidents add eval cases ([O15](observability.md#o15-incidents-close-with-a-check)) with personal values removed.
+Each AI feature has an eval set of representative inputs with graded expected outcomes. An agent changing a prompt, model or tool runs that feature's eval before landing, and promotion runs every eval; a score below the last release blocks either. Deterministic graders first, model-graded rubrics only where needed. Incidents add eval cases ([O15](observability.md#o15-incidents-close-with-a-check)) with personal values removed.
 
 Reason: without evals, nobody knows whether a change made the feature better or worse.
 
-Enforcement: the eval run is a CI gate on changes to AI definitions.
+Enforcement: the eval runs before landing changes to AI definitions and qualifies every promotion.
 
 ### M3 Pinned models
 

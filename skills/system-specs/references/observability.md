@@ -40,7 +40,7 @@ Events are typed structs. Alerts, journey targets, dashboards and saved queries 
 
 Reason: a broken alert fails silently, and you find out during the incident.
 
-Enforcement: CI checks every query against the event schema.
+Enforcement: a pre-push check validates every query against the event schema.
 
 ### O5 Client telemetry
 
@@ -92,7 +92,7 @@ An incident agent takes each alert first. It reads telemetry, correlates the ale
 
 Reason: an agent responds in seconds, at any hour.
 
-Enforcement: alerts route to the incident agent; standing credentials allow telemetry reads and opening PRs. Production operations remain in the pipeline and require Tobias's explicit instruction.
+Enforcement: alerts route to the incident agent; standing credentials allow telemetry reads and landing fixes on main through the normal gates. Production operations remain in the pipeline and require Tobias's explicit instruction.
 
 ### O11 Explicitly authorized actions
 
@@ -130,7 +130,7 @@ Enforcement: the status page reads incident state; customer messages are drafts 
 
 ### O15 Incidents close with a check
 
-Every incident gets an automatic record: a timeline from alerts, deploys and actions, the cause, and the fix PR. The fix PR includes a black-box case, built from telemetry with personal values replaced, that fails before the fix and passes after. When a case can't reproduce the cause, as with infrastructure failures, a static check or monitoring rule takes its place. The incident closes only when that case or check exists.
+Every incident gets an automatic record: a timeline from alerts, deploys and actions, the cause, and the fix commit. The fix includes a black-box case, built from telemetry with personal values replaced, that fails before the fix and passes after. When a case can't reproduce the cause, as with infrastructure failures, a static check or monitoring rule takes its place. The incident closes only when that case or check exists.
 
 Reason: the system gets harder to break every week, not just fixed.
 

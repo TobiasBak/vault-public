@@ -1,0 +1,1 @@
+Adapted from Matt Pocock's [grilling skill](https://github.com/mattpocock/skills/tree/main/skills/productivity/grilling), vendored 2026-10-02. Local changes: model-invoked discovery, Codex metadata, and facts looked up by the agent itself instead of a dispatched sub-agent. Locally maintained; review upstream changes by hand. MIT notice in `LICENSE`.

@@ -37,15 +37,15 @@ Rust types define the contract. The schema (OpenAPI for HTTP, JSON Schema for JS
 
 Reason: a hand-written spec drifts from the code; a shared type turns a storage refactor into an API break.
 
-Enforcement: CI fails when the committed schema differs from the generated one; a static check rejects storage types in API signatures.
+Enforcement: a pre-push check fails when the committed schema differs from the generated one; a static check rejects storage types in API signatures.
 
 ### A4 Breaking-change gate
 
-CI diffs the generated schema against the last release. Breaking: removing or renaming a field, making a field required or adding a required request field, changing a type or default, narrowing accepted values, removing or repurposing an error code, and adding nulls or weakening a presence guarantee. Safe: adding optional request fields, response fields, endpoints and error codes. Changes to ordering, permissions or side effects are breaking too; the schema can't show them, so cross-version black-box cases cover them. Internal breaking changes take [D5](data.md#d5-two-step-destructive-changes)'s two steps; external ones need a new major (A5).
+A pre-push check diffs the generated schema against the last release. Breaking: removing or renaming a field, making a field required or adding a required request field, changing a type or default, narrowing accepted values, removing or repurposing an error code, and adding nulls or weakening a presence guarantee. Safe: adding optional request fields, response fields, endpoints and error codes. Changes to ordering, permissions or side effects are breaking too; the schema can't show them, so cross-version black-box cases cover them. Internal breaking changes take [D5](data.md#d5-two-step-destructive-changes)'s two steps; external ones need a new major (A5).
 
-Reason: an agent will rename a field in one PR, and review won't catch every one.
+Reason: an agent will rename a field in one change, and review won't catch every one.
 
-Enforcement: the schema diff in pre-commit and CI; a black-box case runs the previous release's client against the new server.
+Enforcement: the schema diff in pre-push and on promotion; a black-box case runs the previous release's client against the new server.
 
 ### A5 External versions and retirement
 
@@ -145,4 +145,4 @@ Recorded real sessions replay as black-box cases. A hostile fake peer sends malf
 
 Reason: protocol bugs show up at the edges real peers hit only in production.
 
-Enforcement: these cases run in CI.
+Enforcement: these cases run before landing protocol changes and qualify every promotion.

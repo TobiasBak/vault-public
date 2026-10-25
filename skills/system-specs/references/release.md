@@ -121,7 +121,7 @@ Enforcement: black-box case: an old build's tab hits a new server, keeps its inp
 
 ### R14 Flags
 
-Flags separate deploying code from users seeing it: gradual exposure and kill switches. Flag values live in git and the server delivers them to clients at runtime; a flip goes through a fast config path, staged and logged. Every flag has an owner and expiry. An expired flag fails the build and forces a cleanup PR; it never flips itself in production. Kill switches are a separate, permanent category with periodic review. Work that belongs together ships together; half-built work is never visible to users.
+Flags separate deploying code from users seeing it: gradual exposure and kill switches. Flag values live in git and the server delivers them to clients at runtime; a flip goes through a fast config path, staged and logged. Every flag has an owner and expiry. An expired flag fails the build and forces a cleanup; it never flips itself in production. Kill switches are a separate, permanent category with periodic review. Work that belongs together ships together; half-built work is never visible to users.
 
 Reason: flags turn a bad feature off in seconds instead of a release plus client updates. Every flag doubles code paths, and agents copy what they read, so stale flags spread.
 
