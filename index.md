@@ -86,6 +86,6 @@ All model-invoked; agents select relevant skills automatically:
 
 ## Vault-only skills (`.agents/skills/`)
 
-- `audit-knowledge-consistency`: find and fix duplicate or contradictory knowledge, and verify links
-- `review-agent-history`: mine Pi and Codex histories for reusable knowledge
-- `chief-of-staff` (Tobias-invoked only): Tobias's single point of contact; delegates to team threads, raises issues without blocking, diagnoses teams, keeps the vault. Its state lives outside the vault, in `~/.local/state/chief-of-staff/`.
+- [`audit-knowledge-consistency`](.agents/skills/audit-knowledge-consistency/SKILL.md): find and fix duplicate or contradictory knowledge, and verify links
+- [`review-agent-history`](.agents/skills/review-agent-history/SKILL.md): mine Pi and Codex histories for reusable knowledge
+- [`chief-of-staff`](.agents/skills/chief-of-staff/SKILL.md) (Tobias-invoked only): Tobias's single point of contact; delegates to team threads, raises issues without blocking, diagnoses teams, keeps the vault. Its state lives outside the vault, in `~/.local/state/chief-of-staff/`.
