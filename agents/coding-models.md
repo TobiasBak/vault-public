@@ -1,12 +1,12 @@
 # Coding models
 
-OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider guidance, not Tobias's [team-routing policy](subagent-delegation.md#compute-routing) or local measurements.
+OpenAI checked 2026-09-29, Anthropic 2026-09-26. The table reflects provider guidance, not Tobias's [team-routing policy](subagent-delegation.md#compute-routing) or local measurements. Host mechanics — version pins, compaction windows, updater gaps — live in [harness operations](harness-operations.md).
 
 recheck-after: 2026-11-24
 
 ## Current choice
 
-Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](#pi-specifics). [Dotfiles](../projects.md#dotfiles) owns installed config.
+Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](harness-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
 **Space Bunny is retired** (Tobias, 2026-10-13); use the [team-routing policy](subagent-delegation.md#compute-routing). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
 
@@ -99,58 +99,10 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - **API:** tools require Responses. No `none`/`minimal` effort, `temperature`, `top_p`, `logprobs`. [`configuration_update`](https://developers.openai.com/api/docs/guides/reasoning#change-reasoning-mid-conversation) changes effort while preserving cache. [Async tools](https://developers.openai.com/api/docs/guides/async-tool-calling)/WebSocket [steering](https://developers.openai.com/api/docs/guides/steering) require host support; steering doesn't cancel started tools.
 - **Interruptions:** [misalignment monitoring](https://developers.openai.com/api/docs/guides/safety-checks/misalignment-monitoring) can flag legitimate work. Don't retry `misalignment_policy_violation` as transient; AGENTS.md edits cannot remove it.
 
-## Host specifics
+## Free-model trials
 
-### Codex specifics
+Cheap and free models, kept as evidence against re-trying what already failed: one `opencode run` per model on two small public dotfiles fixes with a test check (mise options; retire a Pi extension), six concurrent, 20-minute cap, transcripts and diffs read against the merged fix. The original transcripts and diffs are unavailable on this host (checked 2026-10-20); the results retain the original analysis.
 
-- **Usage:** [TypeScript SDK](https://github.com/openai/codex/blob/main/sdk/typescript/src/events.ts) reports tokens on `turn.completed`, not billed dollars. [App-server](https://learn.chatgpt.com/docs/app-server): `thread/tokenUsage/updated`, account-wide `account/rateLimits/read`, aggregate `account/usage/read`. Record model, effort, requested speed tier, per-turn usage; account snapshots can't attribute concurrent clients, nor API-equivalent costs reconstruct subscription quota. Checked 2026-10-08: [`RateLimitWindow`](https://github.com/openai/codex/blob/main/codex-rs/app-server-protocol/src/protocol/v2/account.rs) rounds core float `used_percent` to integer. Before/after quota uncertainty is nearly ±1 percentage point, before delayed/concurrent updates. Use only large aggregate comparisons, not exact turn charges. Fields vary by version.
-- **Context:** `features.context_management.experimental_mode` defaults off; requires ChatGPT Plus/Pro/Pro Lite sign-in, not API keys, custom providers, temporary structured threads ([config](https://learn.chatgpt.com/docs/config-file/config-reference), [changelog](https://learn.chatgpt.com/docs/changelog)). Local CLI 0.153.4 had it disabled, 2026-09-05. Separate native cross-session memories are disabled in vault `.codex/config.toml`.
-- **Subagent host behavior:** [default/worker/explorer](https://learn.chatgpt.com/docs/agent-configuration/subagents) inherit parent model/effort unless custom agent files override. Configure workers under Tobias's [routing policy](subagent-delegation.md#compute-routing); inheritance is not model selection.
-- **pnpm 11 updates:** `pnpm add -g <package>@latest` can silently retain old releases due to release-age gating. Compare `pnpm view <package> dist-tags.latest`; verify executable afterward. Explicit versions install that release; unless strict gating, pnpm records version-scoped `minimumReleaseAgeExclude` globally. Preserve dotfiles' per-tool install-script policy.
-- **Backend:** managed app-server daemon has its own pinned package; CLI updates don't update it, so newer CLIs can show old model pickers. Check `codex app-server daemon version`, not only `codex --version`. `codex app-server daemon update --from-cli --yes` pins installed CLI package and restarts daemon, potentially interrupting sessions. `codex app-server daemon update` restores production updates. [Dotfiles](../projects.md#dotfiles) owns installation policy.
-
-### Pi specifics
-
-Verified Pi 1.0.0, 2026-10-03. Config files: `configs/pi/settings.json`, shared `APPEND_SYSTEM.md` in [dotfiles](../projects.md#dotfiles).
-
-- **Verbosity:** `openai-codex-responses` defaults to `text.verbosity: "low"`; no documented general Pi verbosity setting. Don't copy Codex's `model_verbosity`. `hideThinkingBlock` hides terminal reasoning, not execution/billing. Response verbosity and effort are separate.
-- [Codemode coordination](orchestration.md#programmatic-tool-calling).
-- **Usage:** T3 Usage reads Pi sessions from `~/.pi/agent/sessions` or `PI_CODING_AGENT_SESSION_DIR` (checked 2026-10-24). For manual totals, sum assistant `message.usage` categories and `cost.total` in the session JSONL, including children. Costs are estimates, not verified bills. Native `/session` shows session usage/cost. ([T3 Usage](https://github.com/pingdotgg/t3code/blob/main/docs/user/usage.md), [Pi usage](https://github.com/earendil-works/pi/blob/main/packages/coding-agent/docs/usage.md))
-
-- **`pi --print` blocks on open stdin.** Non-TTY stdin is read to EOF and prepended to the prompt. In agent shells stdin can be a socket that never closes, so print mode hangs silently with no output or session file. Run `pi --print ... < /dev/null` from scripts (Pi 1.4.0, 2026-10-24).
-- **OpenRouter models:** change a catalog model with `providers.openrouter.modelOverrides`; a `models` entry with the same ID replaces it and drops catalog `thinkingLevelMap`, image input and compat flags (developer role, reasoning replay). `compat.openRouterRouting` is sent verbatim as `provider`; Pi sends `x-session-id` to OpenRouter by default. [OpenRouter routing](../software/openrouter.md).
-- [Pi throughput](pi-throughput.md): effective-TPS measurement, subscription rollout claims, local observations.
-
-### Claude Code specifics
-
-Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings-reference)). [Dotfiles](../projects.md#dotfiles) shares global AGENTS.md and `~/.agents/skills` across Claude, Codex, and Pi.
-
-- **Response length:** `verbose`/`viewMode` affect transcript tool output only. No `model_verbosity`; built-in `Concise` output style shortens responses without reducing work.
-- **Attribution:** default commit `Co-Authored-By` and PR footer; `attribution: false` (2.1.281+) removes both.
-- **Effort:** Opus 5.5's host default is `medium`, not Tobias's routing choice. It ignores top-level user `effortLevel`; set per-model `modelSettings` or `/effort` according to the [team-routing policy](subagent-delegation.md#compute-routing).
-- **Context:** Advertise native 1M context to avoid premature wrap-up, but bound compaction per model. Tobias, 2026-10-22: restore Opus 5.5's 433K compaction window, triggering around 400K, as a trial favoring continuity over the prior 200K window that triggered around 167K. Haiku 5.5 stays at 100K, triggering ~67–74K. Dotfiles sets `modelSettings.<model>.autoCompactWindow` by canonical name, matching dated and `[1m]` spellings. The earlier 200K trial measured top-level T3 Opus leaders, 1,388 steady requests before vs 1,293 after (same accounting, process-start split, ~4 active leader-hours each): mean prompt per request 192K→101K (−48%; −46% counting compaction input), P90 325K→154K, output per request unchanged; compactions 1→22, about 4.2M overhead tokens against roughly 118M fewer prompt tokens. Repeated file reads in the 10 requests after a compaction: 46/220. Limits: 5 h after the change, a different work mix, fewer leaders; no comparative task-quality or productivity measurement. Sonnet has no override. Set windows ~33K above the intended trigger: 20K output reserve plus ~13K buffer. Haiku compacted mid-turn too. `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` caps all Claude models and larger compaction windows at 200K. Removing an environment setting does not change an already-running service's inherited environment; follow the [restart procedure](../software/t3-code-operations.md#service-restarts), not an assumed pending restart. Uncapped Opus, Sonnet, and Haiku 5.5 report `contextWindow: 1000000`; the context selector merely toggles `[1m]`. Native children resolve their own model settings; T3 children read the same user settings in separate sessions. Approved roles come from the [team-routing policy](subagent-delegation.md#compute-routing), not these host mechanics. Verified 2.1.296, 2026-10-11. ([context](https://code.claude.com/docs/en/model-config#extended-context), [subagent compaction](https://code.claude.com/docs/en/sub-agents#auto-compaction))
-- **Discovery:** reads `~/.claude/CLAUDE.md`, `~/.claude/skills`, not `~/.agents/skills`; project AGENTS.md only without CLAUDE.md. T3 loads user/project/local settings.
-- **Auto memory:** defaults on, creates unreviewed `~/.claude/projects` store; disabled to keep vault the sole knowledge store.
-
-### OpenCode specifics
-
-Tobias wants v2 in T3, not v1. Verified 2026-10-03: nightly `0.0.46-nightly.20261003.2610` supports [2.0.18+](https://github.com/pingdotgg/t3code/releases/tag/v0.0.46-nightly.20261003.2610).
-
-- **Binary:** T3 `opencode` uses `~/.local/share/pnpm/bin/opencode`, `@opencode/cli` 2.0.22; dotfiles bootstrap owns installs/updates. Removed separate `~/.local/share/t3code-opencode` v1; don't recreate.
-- **Updater failure:** T3 installed v2 without required postinstall: `opencode --version` exited "postinstall script was not run". Repair with [pnpm build permission](https://opencode.ai/v2/docs). On pnpm 11.13.1, persist `allowBuilds: {"@opencode/cli": true}` in `~/.local/share/pnpm/global/v11/pnpm-workspace.yaml`, not global `config.yaml`; verified normal global installs run postinstall without extra flag. Refresh T3 provider afterward: the live snapshot caches failures even after executable repair.
-- **Migration:** v1/v2 share database; never run side by side. Snapshot before first v2 startup; credentials/supported config carry over. ([guide](https://opencode.ai/v2/docs/migrate-v1/))
-- **OpenCode access (Tobias, 2026-10-22):** paid OpenCode models are allowed. Tobias has a Go subscription and wants to use it through Pi.
-- **Go DeepSeek privacy, checked 2026-10-24:** Go serves DeepSeek V4.1 Flash and V4 Pro from DeepSeek (requires the Global region in workspace privacy settings) under a monthly-renewed ZDR agreement, stated valid through 2026-10-31; Go lists no training and 0-day retention. DeepSeek's own API trains on prompts. Recheck after the agreement date.
-- **Free models:** rotate weekly. Space Bunny is retired regardless of retention; see [current choice](#current-choice).
-- **Free-model data policies, checked 2026-10-12:** [OpenCode's current model docs](https://github.com/anomalyco/opencode/blob/c57c448d31c390880e06493f81b91a2c92536ad9/services/www/src/docs/content/console/models.mdx#privacy) state the following. These are provider claims, not an independent audit. `opencode models --verbose` is unsupported in v2; checked `opencode models` and the [live Zen catalog](https://opencode.ai/zen/v1/models) for model IDs.
-  - **Space Bunny Free (retired), LongCat 2.5 Preview Free, Step 5 Preview Free:** explicitly zero retention and no use of data for model training.
-  - **Big Pickle, Exo Free, MiMo-V2.6-Flash Free, MiMo-V2.5 Free, Ling 3.1 Flash Free, Ling 3.0 Flash Fin Free:** exceptions to the general zero-retention/no-training policy. Collected data may be used to improve the model during the free period; no retention duration is given.
-  - **Nemotron 3 Ultra Free, Nemotron 3.5 Lightning Free:** NVIDIA trial endpoints log use for security and product/service improvement; improvement session data is not linked to identity or a persistent identifier. Do not submit personal or confidential data. No retention duration is given.
-  - **Muse Spark 1.3 Contributor Free:** permission to train future Meta models on prompts and completions in exchange for discounted pricing; no retention duration is given.
-  - **Muse Spark 1.2 Contributor Free:** listed in the live Zen catalog but not separately covered in the current model docs. [OpenCode's Go privacy table](https://github.com/anomalyco/opencode/blob/c57c448d31c390880e06493f81b91a2c92536ad9/services/www/src/docs/content/console/go.mdx#privacy) says the 1.2 Contributor model uses data for training and is not ZDR; it does not separately state Zen-free terms.
-  - **Jev 1.13 Free:** listed in the current docs and live catalog. The current docs state a general zero-retention/no-training policy without a Jev exception, but [v2 Zen's privacy section](https://github.com/anomalyco/opencode/blob/4617210822bdbb31e5749751afbfb4584ccedac8/packages/web/src/content/docs/zen.mdx#privacy) says Jev inputs are not used for training and data is retained under TypeSafe AI's privacy policy. The docs disagree on retention; do not claim unqualified ZDR for Jev.
-
-#### Free-model bake-off, 2026-10-12
 
 One `opencode run` per model on two small public dotfiles fixes with a test check (mise options; retire a Pi extension), six concurrent, 20-minute cap; transcripts and diffs read against the merged fix. Original transcripts and diffs are unavailable on this host (checked 2026-10-20); the results below retain the original analysis.
 
@@ -158,8 +110,3 @@ One `opencode run` per model on two small public dotfiles fixes with a test chec
 - **Avoid:** Nemotron 3.5 Lightning (failed both, littered debug files, claimed success), Nemotron 3 Ultra (hardcoded, timed out flailing), Step 5 Preview (passed, then spent 10 minutes repairing its own throwaway harness). Ling 3.1 Flash works but is slow and hit upstream 429s. Exo Free was already deprecated.
 - **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Passing checks and a confident report did not establish equivalence to the reference. This historical trial grants no routing or review-policy exception.
 - **Space Bunny round 2** (dotfiles 9ff2c91, win-vm reboot recovery across commands with lease ownership; two runs, 347/288 s): both passed the fix's hidden tests and `./verify`, investigated first, stayed in scope, and wrote their own tests. Both still introduced a lock race the reference doesn't have, caught only by extra probes. Run 1 skips recovery when its shared-to-exclusive upgrade fails, then executes in the stale clone. Run 2 lets `status` run unleased and delete a freshly leased clone and container. Run 2 also ended without a final report. These failures preceded its retirement; they do not justify using it for narrower tasks.
-- `opencode run` can exit 1 after a clean finish (cancelled web search); judge by the check, not the exit code.
-
-## Retired DeepSeek Codex experiment
-
-Don't recreate Codex → OpenCode Go → DeepSeek. Removed 2026-10-03: `codex_deepseek_go` T3 provider, separate Codex config, model catalog, credential helper. Standard Codex/native OpenCode remain independent. The original session archive is unavailable on this host (checked 2026-10-20).
