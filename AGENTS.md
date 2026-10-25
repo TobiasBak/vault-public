@@ -17,6 +17,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 - Use kebab-case filenames, relative Markdown links, and no frontmatter. Keep [index.md](index.md) in sync when adding, moving, or removing notes.
 - Compress, merge, and restructure freely. When notes contradict, fix them from the best evidence; ask Tobias only when the answer is his preference.
 - Check links after moving things: `python .agents/skills/audit-knowledge-consistency/scripts/verify_links.py --vault .`
+- `scripts/check-vault` runs both checks. It is this repository's commit hook (`ln -sf ../../scripts/check-vault .git/hooks/pre-commit`, which the workstation secret scanner chains after itself); it fails a commit that edits a note still past its recheck date.
 - Check dated facts before relying on a note: `python .agents/skills/audit-knowledge-consistency/scripts/verify_staleness.py --vault .`. A note past its `recheck-after` gets the fact re-derived now, then either the claim corrected or the date moved. A malformed or duplicated line fails the check, because a broken date silently disables the reminder.
 
 ## Skills

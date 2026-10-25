@@ -2,13 +2,13 @@
 
 Start from the accessibility tree, not pixels. Microsoft UI Automation (UIA) exposes windows and controls as a live tree of properties and patterns ([overview](https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-treeoverview)). Every UIA tool can automate only what the app exposes. For an owned app with opaque custom controls, add UIA providers or automation peers rather than image recognition.
 
-recheck-after: 2026-10-24
+recheck-after: 2026-11-25
 
-## Tool choice (July 2026)
+## Tool choice (July 2026, CLI checked 2026-10-25)
 
 | Need | Use |
 |---|---|
-| Agent exploration, shell scripts, smoke tests, bounded production flows | **[WinApp CLI](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md)**: inspect and search the tree as JSON, screenshot, invoke, set and read values, wait with exit codes, real-input fallback. Young (0.5.0); verify on the real app. |
+| Agent exploration, shell scripts, smoke tests, bounded production flows | **[WinApp CLI](https://github.com/microsoft/winappCli/blob/c0578fcf5a2a1e3e7e5002e4521c446fb549365f/docs/ui-automation.md)**: inspect and search the tree as JSON, screenshot, invoke, set and read values, wait with exit codes, real-input fallback. 0.7.1 as of 2026-10-25, still short of 1.0; the command surface keeps growing (`winapp ui --help`), so verify on the real app. |
 | Code-first .NET test suite | **FlaUI**: UIA2 and UIA3 wrappers. UIA2 still helps with some WinForms quirks. |
 | Python, mixed Win32 and UIA | **pywinauto**: separate backends and input fallback. Its UIA backend can't see custom properties. |
 | No-code record-and-replay, business RPA | **Power Automate Desktop**: recorder plus selector repository (UIA, MSAA, text, image). |

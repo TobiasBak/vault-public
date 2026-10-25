@@ -4,7 +4,9 @@ A score is evidence about a specific task set, revision, harness, access policy,
 
 Public benchmarks, and indexes built from them such as Artificial Analysis and vendor tables, are contaminated and benchmaxxed. Models score well on the benched suites and do much worse outside them. Never choose a model or effort level from public scores; use them to find candidates, then decide from local held-out tasks on real work.
 
-recheck-after: 2026-10-24
+Checked 2026-10-25: both calls below still stand — the SWE-Bench Pro image report is open, and DeepSWE's README confirms v1.1 grading through Harbor's separate verifier environment.
+
+recheck-after: 2026-11-25
 
 ## Distinct failures
 

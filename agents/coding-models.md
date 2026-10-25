@@ -8,8 +8,6 @@ recheck-after: 2026-11-24
 
 Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](pi-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
-**Space Bunny is retired** (Tobias, 2026-10-13); use the [team-routing policy](subagent-delegation.md#compute-routing). In the 2026-10-12/13 trial, about 10 of ~23 Space Bunny tasks came back wrong: missed requirements, an incomplete invalidation model, a self-wake polling loop for process ownership, and earlier added races. Leads caught all of them, but the rework cost outweighed the free tokens.
-
 Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment, not a routing exception. Follow the [team-routing policy](subagent-delegation.md#compute-routing) for permitted roles. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
 
 ## Effort guidance
@@ -98,7 +96,6 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 
 Kept to avoid re-running what already failed, not as a ranking. One `opencode run` per model, two small public dotfiles fixes with a test check, six concurrent, 20-minute cap; diffs read against the merged fix. One pass each on tasks nobody has checked for representativeness, and the transcripts are gone (checked 2026-10-20) — treat every result below as a recollection, not data.
 
-- **Initial results, not current routing:** Space Bunny (best investigation, honest report; 197/101 s), Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research). Space Bunny is now retired; see [current choice](#current-choice).
+- **Initial results, not current routing:** Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research).
 - **Avoid:** Nemotron 3.5 Lightning (failed both, littered debug files, claimed success), Nemotron 3 Ultra (hardcoded, timed out flailing), Step 5 Preview (passed, then spent 10 minutes repairing its own throwaway harness). Ling 3.1 Flash works but is slow and hit upstream 429s. Exo Free was already deprecated.
 - **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Passing checks and a confident report did not establish equivalence to the reference. This historical trial grants no routing or review-policy exception.
-- **Space Bunny round 2** (two runs on dotfiles 9ff2c91): both investigated first, passed the hidden tests and `./verify`, and still introduced a lock race the reference doesn't have — caught only by extra probes.
