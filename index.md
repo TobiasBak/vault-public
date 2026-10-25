@@ -2,6 +2,8 @@
 
 Not exhaustive. Search with `rg`.
 
+Where a note goes: `agents/` how an agent should behave and what its harness does · `software/` facts about systems, tools and APIs · `hardware/` machines, compute and buying them · `tobias/` preferences, working style and open threads · `skills/` global skills, `.agents/skills/` vault-only ones · root holds only the routers and the landing page.
+
 - [AGENTS.md](AGENTS.md): how to use and maintain this vault
 - [projects.md](projects.md): public repository routes (Dotfiles, T3 Code)
 - [topics-to-explore.md](topics-to-explore.md): open topics for future exploration
