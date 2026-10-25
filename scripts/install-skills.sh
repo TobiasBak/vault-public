@@ -4,6 +4,24 @@
 # Override with SKILLS_TARGETS="dir1:dir2". Without --fix, mismatches are errors.
 set -euo pipefail
 
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  cat <<'EOF'
+Usage: scripts/install-skills.sh [--fix] [--help]
+
+Link every skills/<name>/ into each agent skill directory, so Codex, Pi and
+Claude Code discover them by name.
+
+  --fix    Replace links that point elsewhere or shadow an install. Without it,
+           any mismatch is an error and nothing is changed.
+  --help   Print this.
+
+Targets default to ~/.agents/skills, which Codex and Pi read; dotfiles links
+~/.claude/skills to it. Override with SKILLS_TARGETS="dir1:dir2".
+On Windows the call is forwarded to scripts/install-skills.ps1 -Fix.
+EOF
+  exit 0
+fi
+
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_ROOT="$REPO_ROOT/skills"
 

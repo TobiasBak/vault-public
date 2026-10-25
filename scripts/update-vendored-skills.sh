@@ -10,6 +10,22 @@ declare -A UPSTREAM=(
   [grill-with-docs]=skills/engineering/grill-with-docs
   [grilling]=skills/productivity/grilling
 )
+if [[ "${1:-}" == "--help" || "${1:-}" == "-h" ]]; then
+  cat <<EOF
+Usage: scripts/update-vendored-skills.sh [--force] [--help]
+
+Re-copy the vendored skills from their upstream and keep the local invocation
+metadata. Vendored: ${!UPSTREAM[*]}.
+
+  --force  Overwrite even when the vendored directories have uncommitted changes.
+  --help   Print this.
+
+Each skill keeps its agents/openai.yaml, loses any disable-model-invocation line,
+and gains upstream LICENSE. Review the diff before committing.
+EOF
+  exit 0
+fi
+
 PATHS=(); SPARSE=(/LICENSE)
 for name in "${!UPSTREAM[@]}"; do PATHS+=("skills/$name"); SPARSE+=("/${UPSTREAM[$name]}"); done
 

@@ -67,22 +67,22 @@ Not exhaustive. Search with `rg`.
 ## Global skills (`skills/`)
 
 All model-invoked; agents select relevant skills automatically:
-- `potato-approach`: make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): fresh-agent autonomy: understand, change, establish outcomes, recover; shared tools own execution mechanics ([design principles](skills/theodore-kaczynski-nullifier/references/design-principles.md), [runtime outcomes and recovery](skills/theodore-kaczynski-nullifier/references/runtime-outcomes.md), [tracing](skills/theodore-kaczynski-nullifier/references/tracing.md))
-- [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md), [release catalog](skills/system-specs/references/release.md), [API catalog](skills/system-specs/references/api.md), [access catalog](skills/system-specs/references/access.md), [observability catalog](skills/system-specs/references/observability.md), [dependencies catalog](skills/system-specs/references/dependencies.md), [AI catalog](skills/system-specs/references/ai.md)
-- `benchmark-checklist` (adapted from pstack): vet a performance number before reporting it
-- [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
-- [`disk-cleanup`](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
-- `unslop`: concise, natural prose
-- `domain-modeling` (Matt Pocock): glossary and ADRs
-- `grilling` (Matt Pocock): stress-test a plan by interview
-- `frontend-design` (Anthropic): distinctive, intentional visual design
-- `grill-with-docs` (Matt Pocock): grilling plus domain docs
-- `maintainability-audit`: how easily fresh agents can change the source
-- `repo-context-audit`: which instructions and docs earn their place
-- `retro`: repo improvements from session friction
-- `review-test-quality`: keep, rewrite, or delete tests
-- `create-verification-skill`, `maintain-verification-skill` (adapted from pstack): project verification skills and feature maps
+- [`potato-approach`](skills/potato-approach/SKILL.md): make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
+- [[`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md)](skills/theodore-kaczynski-nullifier/SKILL.md): fresh-agent autonomy: understand, change, establish outcomes, recover; shared tools own execution mechanics ([design principles](skills/theodore-kaczynski-nullifier/references/design-principles.md), [runtime outcomes and recovery](skills/theodore-kaczynski-nullifier/references/runtime-outcomes.md), [tracing](skills/theodore-kaczynski-nullifier/references/tracing.md))
+- [[`system-specs`](skills/system-specs/SKILL.md)](skills/system-specs/SKILL.md): requirement specs for systems agents change several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md), [release catalog](skills/system-specs/references/release.md), [API catalog](skills/system-specs/references/api.md), [access catalog](skills/system-specs/references/access.md), [observability catalog](skills/system-specs/references/observability.md), [dependencies catalog](skills/system-specs/references/dependencies.md), [AI catalog](skills/system-specs/references/ai.md)
+- [`benchmark-checklist`](skills/benchmark-checklist/SKILL.md) (adapted from pstack): vet a performance number before reporting it
+- [[`hardware-deal-check`](skills/hardware-deal-check/SKILL.md)](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
+- [[`disk-cleanup`](skills/disk-cleanup/SKILL.md)](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
+- [`unslop`](skills/unslop/SKILL.md): concise, natural prose
+- [`domain-modeling`](skills/domain-modeling/SKILL.md) (Matt Pocock): glossary and ADRs
+- [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
+- [`frontend-design`](skills/frontend-design/SKILL.md) (Anthropic): distinctive, intentional visual design
+- [`grill-with-docs`](skills/grill-with-docs/SKILL.md) (Matt Pocock): grilling plus domain docs
+- [`maintainability-audit`](skills/maintainability-audit/SKILL.md): how easily fresh agents can change the source
+- [`repo-context-audit`](skills/repo-context-audit/SKILL.md): which instructions and docs earn their place
+- [`retro`](skills/retro/SKILL.md): repo improvements from session friction
+- [`review-test-quality`](skills/review-test-quality/SKILL.md): keep, rewrite, or delete tests
+- [`create-verification-skill`](skills/create-verification-skill/SKILL.md), [`maintain-verification-skill`](skills/maintain-verification-skill/SKILL.md) (adapted from pstack): project verification skills and feature maps
 
 ## Vault-only skills (`.agents/skills/`)
 

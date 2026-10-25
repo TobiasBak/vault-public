@@ -23,11 +23,10 @@ Notes that change how a future agent decides or acts: findings, corrections, pre
 - Deleting knowledge about a specific instance? Move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection in config wherever it can be one: a deny rule outlives prose, and the note only explains why the rule exists.
 - Every note links to at least one other note, so a reader can move sideways instead of walking back to the index.
 
-**Skills.** `skills/<name>/` holds the global skills and is their source of truth; `.agents/skills/` holds vault-only ones, which `.claude/skills` links to. `chief-of-staff` is the one skill only Tobias invokes; keep it that way. `scripts/install-skills.sh --fix` (`.ps1 -Fix`) links every global skill into `~/.agents/skills`, which Codex and Pi read; dotfiles links each into `~/.claude/skills`.
+**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, which `.claude/skills` links to. `chief-of-staff` is the one skill only Tobias invokes; keep it that way.
 
-- Every global skill has `SKILL.md` and `agents/openai.yaml`, stays model-invoked (omit `disable-model-invocation` and `policy.allow_implicit_invocation`), and its description says when it applies. Tobias wants agents to find relevant skills without remembering their names.
-- Skills that guide code changes end with a `Verification` section naming the behavioral check expected.
-- `domain-modeling`, `grill-with-docs` and `grilling` are vendored from Matt Pocock: refresh them with `scripts/update-vendored-skills.sh`, keep the bodies byte-identical except local invocation metadata, and never hand-edit. `frontend-design` is Anthropic's with local metadata and a `Verification` section; `unslop` is adapted from Lauren Tan's pstack. Adapted skills carry `SOURCE.md` and `LICENSE`.
+- Each skill is self-contained: its `SKILL.md` owns the description, which says when the skill applies, and its invocation metadata, so it stays model-invoked (no `disable-model-invocation`, no `policy.allow_implicit_invocation`). `agents/openai.yaml` carries host metadata. Adapted skills carry `SOURCE.md` and `LICENSE`, and a skill that guides code changes ends with a `Verification` section naming the behavioral check expected.
+- Installing, and refreshing a vendored skill, is `scripts/install-skills.sh --help` and `scripts/update-vendored-skills.sh --help`; the scripts own the flags and the vendored list.
 
 **Check.** `scripts/check-vault` runs the link, staleness and outbound-link checks. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
 
