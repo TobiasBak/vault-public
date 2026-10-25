@@ -10,6 +10,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 
 - Save what would change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures. Skip routine activity, generic advice, and anything cheap to look up again.
 - One idea, one home. Search first, edit the owning note, and link instead of restating.
+- File a note by its reader, not its subject: `agents/` for how an agent should behave and what its harness does, `software/` for facts about systems and tools, `hardware/` and `tobias/` for their own. Every note links to at least one other note, so a reader can traverse sideways.
 - Never record project work in the vault: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository. The chief of staff keeps its operational state outside the vault, in `~/.local/state/chief-of-staff/`. [projects.md](projects.md) holds only routes to public repositories: path, remote, branch and where to start. Private repositories are never listed. Update it only when a route changes.
 - Lead with the conclusion. Prefer rules and short bullets to narrative. Drop hedges and "X does not mean Y" unless the misreading is likely and costly.
 - Date only volatile facts such as versions, prices, and availability. Keep sources only where authority or exact numbers matter. For optimizations, keep baseline, change, effect, and conditions.

@@ -19,3 +19,5 @@ Manage tokens in Terraform/OpenTofu only when the project already manages Cloudf
 ## Access
 
 - An Access application whose `destinations` are Workers must have no `domain`; Cloudflare rejects one with error 12130. Drift checks on such apps compare name, type, destinations and policies, never `domain`.
+
+See also: [Supabase](supabase.md), [API design](api-design.md).

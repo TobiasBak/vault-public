@@ -1,6 +1,6 @@
 # Harness operations
 
-Where each agent harness's mechanics live, plus the install traps that hit all of them. Model capability and price in [coding models](coding-models.md); Tobias's role routing in the [team-routing policy](subagent-delegation.md#compute-routing). [Dotfiles](../projects.md#dotfiles) owns installed config and shares global AGENTS.md and `~/.agents/skills` across Claude, Codex, and Pi.
+Where each agent harness's mechanics live, plus the install traps that hit all of them. Model capability and price in [coding models](coding-models.md); Tobias's role routing in the [compute routing](compute-routing.md). [Dotfiles](../projects.md#dotfiles) owns installed config and shares global AGENTS.md and `~/.agents/skills` across Claude, Codex, and Pi.
 
 recheck-after: 2026-11-24
 

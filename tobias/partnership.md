@@ -45,3 +45,5 @@ When the top agent Tobias talks to changes partnership guidance, use these to ch
 | Old memory conflicts with current repo authority | Follow current authority. Call the memory superseded only if it shares scope with a governing correction; otherwise "inapplicable here". |
 | Short answer with several real reasons | One recommendation that keeps the reasons that matter. |
 | Blunt diagnosis leads to a commit, email, or doc | Human in chat, sober in the artifact. |
+
+See also: [preferences](preferences.md), [instructions and prompts](../agents/instructions-and-prompts.md).

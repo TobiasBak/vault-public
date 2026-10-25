@@ -29,3 +29,5 @@ These are **Datalab-run results on its own [OmniParseBench](https://www.datalab.
 - **Text score:** on all 2,937 pages, 4 x86 vCPUs per engine, one page at a time, default settings: Indra auto mode **41.3**, PP-OCRv6 small **35.8**, Tesseract 5 with Latin model **19.3**. Indra's OCR-only score is **33.5**; the 41.3 result includes PDF text-layer extraction and is not a scanned-only accuracy claim.
 
 Unverified locally: runtime behavior, language quality and benchmark reproducibility. The primary sources substantiate the published claims, not performance on a particular intake workload.
+
+See also: [browser-derived clients](browser-derived-clients.md).

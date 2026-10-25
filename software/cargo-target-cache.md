@@ -8,3 +8,5 @@ Cargo fingerprints workspace (path) members without their filesystem paths and j
 If tree B has the same package names and source mtimes older than tree A's last build, Cargo can report `Fresh` and give B A's binary. Preserved snapshot mtimes, `cp -p`, archive extraction, or an older checkout can trigger this.
 - Observed on 2026-10-14: a verdict was cached for the wrong tree; another worktree's palette mutation failed three cases, and a 0.08 s "build" produced a stale app.
 - A second observation that day invalidated a baseline/candidate comparison: both binaries had the same SHA, the candidate log said `Fresh`, and DWARF `comp_dir` pointed at the baseline tree.
+
+See also: [verification latency](../agents/verification-latency.md).

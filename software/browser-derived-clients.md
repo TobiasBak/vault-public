@@ -57,3 +57,5 @@ All four weekly papers are national or chain-wide, need no browser at runtime, a
 | Føtex | Salling `/v1/leaflet-offers?brands=foetex`, or iPaper `staticSettings.pageTexts` | The Salling feed doesn't match the paper and includes personalized items (flagged). It needs an approved developer token, not the first-party one. The iPaper fallback is OCR-like and unreliable. Robots disallow both. |
 
 Combined output must report per-source completeness, location scope, classification basis, and whether previous prices are available. Stop if an endpoint adds auth.
+
+See also: [OCR](ocr.md), [shopping](../tobias/shopping.md).

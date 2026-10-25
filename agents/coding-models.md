@@ -1,14 +1,14 @@
 # Coding models
 
-OpenAI checked 2026-09-29, Anthropic 2026-09-26. Effort guidance is the provider's own; Tobias's [team-routing policy](subagent-delegation.md#compute-routing) owns the choices, and no local number here outranks it. Host mechanics — version pins, compaction windows, updater gaps — live in [harness operations](harness-operations.md).
+OpenAI checked 2026-09-29, Anthropic 2026-09-26. Effort guidance is the provider's own; Tobias's [compute routing](compute-routing.md) owns the choices, and no local number here outranks it. Host mechanics — version pins, compaction windows, updater gaps — live in [harness operations](harness-operations.md).
 
 recheck-after: 2026-11-24
 
 ## Current choice
 
-Follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](pi-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
+Follow Tobias's [compute routing](compute-routing.md) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](pi-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
-Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment, not a routing exception. Follow the [team-routing policy](subagent-delegation.md#compute-routing) for permitted roles. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
+Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment, not a routing exception. Follow the [compute routing](compute-routing.md) for permitted roles. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
 
 ## Effort guidance
 
@@ -40,7 +40,7 @@ Checked 2026-10-24: Codex Fast consumes included subscription allowance at 2.5x 
 ## Choosing a setup
 
 - Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [benchmark trust](benchmark-trust.md). Measure correctness, architectural fit, corrective turns, time, and cost per successful task.
-- Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). The [current routing policy](subagent-delegation.md#compute-routing) owns effort choices, not provider defaults or benchmark arms.
+- Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). The [compute routing](compute-routing.md) owns effort choices, not provider defaults or benchmark arms.
 - Judge a cheap or free arm by whole-task cost, never by token price: in a free-tier trial about 40% of tasks came back wrong, and the lead's rework outweighed the tokens saved. Passing checks never established equivalence to the reference fix ([feedback](learning-from-feedback.md)).
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
@@ -82,10 +82,10 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - Easy set: all perfect; Haiku `low` through `xhigh`, Luna `medium`.
 - Haiku's `medium` miss: changed 7/9 sites, claimed "all seven". Luna below `xhigh`: import closure stopped at 3–5/24 files, empty review, bug line 6 lines off, required format broken twice.
 - No request exceeded 100K. Haiku prompts reached 97K at `xhigh`; Claude Code base prompt ~23K vs Pi ~6K. Three reps per cell on synthetic tasks of unknown representativeness: trust direction, not decimals.
-- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark arms are experiments, not approved delegation roles; follow Tobias's [team-routing policy](subagent-delegation.md#compute-routing). Luna's 272K tier is more forgiving; no tested task approached it.
+- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark arms are experiments, not approved delegation roles; follow Tobias's [compute routing](compute-routing.md). Luna's 272K tier is more forgiving; no tested task approached it.
 - **Base prompts must be far below 100K.** A T3/OpenCode setup's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts ~30% more tokens than 4.5's. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API:** adaptive thinking only; effort `low`–`max`, default `medium`. Anthropic warns of early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, occasional empty replies at `xhigh`. Claude Code harness prompt is ~17–25K before the task.
-- **Routing:** retired from delegation (Tobias, 2026-10-12); see the [team-routing policy](subagent-delegation.md#compute-routing).
+- **Routing:** retired from delegation (Tobias, 2026-10-12); see the [compute routing](compute-routing.md).
 
 ### Astra specifics
 

@@ -21,3 +21,5 @@ tokens = tok.encode_files(gt.TextFileSource(["data.txt"], separator=b"<|endoftex
 ```
 
 Install with `uv add gigatoken`. Run `uv run gigatoken bench --validate` on representative data to check throughput and output agreement.
+
+See also: [context engineering](../agents/context-engineering.md), [performance-aware data design](performance-aware-data-design.md).

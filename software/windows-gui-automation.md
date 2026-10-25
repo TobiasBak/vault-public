@@ -53,3 +53,5 @@ tscon.exe (Get-Process -Id $PID).SessionId /dest:console
 ```
 
 For a reusable shortcut, set the target to `powershell.exe -NoProfile -WindowStyle Hidden -Command "$id=(Get-Process -Id $PID).SessionId; tscon.exe $id /dest:console"` and tick Advanced → Run as administrator. UAC approval is still required. ([tscon](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/tscon))
+
+See also: [Omarchy Windows VM](omarchy-windows-vm.md).

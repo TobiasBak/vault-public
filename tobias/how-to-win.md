@@ -81,3 +81,5 @@ Risk-taking and hard work are the two that land hardest for Tobias (2026-10-18).
 Add dated entries: what was tried, what changed in practice, which principle held up and which didn't.
 
 - **2026-10-18:** Risk-taking and hard work picked as the core; see Core.
+
+See also: [preferences](preferences.md), [partnership](partnership.md).

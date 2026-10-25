@@ -42,3 +42,5 @@ Skills Autoresearch owns the live policy (`program.md`), and SWE Benchmarking is
 - **Steering:** confirm and ablate positive mechanisms, give near misses only bounded follow-up, calibrate repeated invalidity, and switch mechanism after repeated non-improvement.
 - **Exhaustion:** exhausting a family or epoch justifies a new mechanism, tool, evaluator, or successor epoch. It doesn't mean the project is done. Don't reopen a closed family without new grounds.
 - A frontier advance is a validated quality or Pareto gain, or better search capability. Docs, audits, and Git churn are not research gains.
+
+See also: [benchmark trust](benchmark-trust.md), [verification latency](verification-latency.md).

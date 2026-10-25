@@ -25,3 +25,5 @@ The [Colab CLI](https://developers.googleblog.com/introducing-the-google-colab-c
 
 - Commands: `colab new --gpu <type>`, `exec` (Python, a script or a notebook; reuses the live runtime), `download`, `log` (exports `.ipynb` or `.jsonl`), `repl`, `console` and `stop`.
 - It ships `COLAB_SKILL.md`, a skill file that coding agents such as Claude Code and Codex can use.
+
+See also: [agent-era dev machine](agent-era-dev-machine.md).

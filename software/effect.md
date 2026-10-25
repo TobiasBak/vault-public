@@ -33,3 +33,5 @@ Adopt it around one genuinely hard workflow, exercise real timeout, cancel, retr
 - fp-ts: FP abstractions without the runtime
 
 Effect coexists with React, Next, Hono, Fastify, Prisma, Drizzle, and TanStack Query.
+
+See also: [TypeScript](typescript.md).

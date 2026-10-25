@@ -23,3 +23,5 @@ recheck-after: 2026-11-24
 - **Quantization labels are self-reported.** DeepSeek V4/V4.1 ship MXFP4 experts with FP8 elsewhere; `fp8` endpoints serve the experts losslessly upcast, `mxfp4` matches the shipped expert format, plain `fp4` is ambiguous.
 - **Speed stats need an API key.** `/api/v1/models/<id>/endpoints` returns `throughput_last_30m` and `latency_last_30m` at p50/p75/p90/p99 (no p95) only when authenticated; unauthenticated they are null. Throughput percentiles count from the fast end, so p90 is the slow tail. p90 throughput ran about half of p50 on nearly every endpoint, so p50 floors already exclude the bad tails; p90 adds noise on low-volume endpoints.
 - **Routing cannot depend on thinking level.** Pi sends its thinking level as `reasoning.effort` on the same model ID; every DeepSeek V4.1 endpoint lists `reasoning_effort`, so `require_parameters` filters nothing, and speed stats have only one `text_generation` workload.
+
+See also: [coding models](../agents/coding-models.md), [Pi operations](../agents/pi-operations.md).
