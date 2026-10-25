@@ -19,7 +19,7 @@ Start at [index.md](index.md), then search with `rg`; the index is not exhaustiv
 - Compress, merge, and restructure freely. When notes contradict, fix them from the best evidence; ask Tobias only when the answer is his preference.
 - Deleting knowledge about a specific instance? Move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection in config wherever it can be one: a deny rule or failing check outlives prose, and the note only explains why the rule exists.
 - Check links after moving things: `python .agents/skills/audit-knowledge-consistency/scripts/verify_links.py --vault .`
-- `scripts/check-vault` runs both checks. It is this repository's commit hook (`ln -sf ../../scripts/check-vault .git/hooks/pre-commit`, which the workstation secret scanner chains after itself); it fails a commit that edits a note still past its recheck date.
+- `scripts/check-vault` runs both checks. It is this repository's commit hook (`ln -sf ../../scripts/check-vault .git/hooks/pre-commit`, which the workstation secret scanner chains after itself); it fails a commit that edits a note still past its recheck date, or adds a knowledge note that links to no other note.
 - Check dated facts before relying on a note: `python .agents/skills/audit-knowledge-consistency/scripts/verify_staleness.py --vault .`. A note past its `recheck-after` gets the fact re-derived now, then either the claim corrected or the date moved. A malformed or duplicated line fails the check, because a broken date silently disables the reminder.
 
 ## Skills

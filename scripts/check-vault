@@ -30,6 +30,24 @@ while IFS= read -r -d '' file; do
     [[ "$due" < "$today" ]] && stale+=("$file (due $due)")
 done < <(git diff --cached --name-only --diff-filter=d -z -- '*.md')
 
+# A knowledge note must link to at least one other note, so a reader can
+# traverse sideways instead of returning to the index. Repo-root routers link
+# outward by design and are exempt.
+lonely=()
+while IFS= read -r -d '' file; do
+    [ -f "$file" ] || continue
+    case "$file" in
+        skills/*|.agents/*|index.md|projects.md|AGENTS.md|README.md) continue ;;
+    esac
+    grep -qE '\]\([^)]*\.md' "$file" || lonely+=("$file")
+done < <(git diff --cached --name-only --diff-filter=d -z -- '*.md')
+
+if [ ${#lonely[@]} -gt 0 ]; then
+    printf 'note links to no other note: %s\n' "${lonely[@]}" >&2
+    printf 'Add a See also line to the notes a reader would need next.\n' >&2
+    status=1
+fi
+
 if [ ${#stale[@]} -gt 0 ]; then
     printf 'stale note edited: %s\n' "${stale[@]}" >&2
     printf 'Re-derive its dated facts, then move its recheck-after date. Do not just bump the date.\n' >&2
