@@ -8,7 +8,7 @@ recheck-after: 2027-01-24
 
 - **Coordinators:** the top agent Tobias talks to that runs other agents, such as the [chief of staff](../.agents/skills/chief-of-staff/SKILL.md).
 - **Large-project leads:** top agents owning several independent outcomes, more than one agent can carry.
-- **Broken or important work stays with the agent Tobias talks to** (Tobias, 2026-10-24): it does the work itself, coordinator or not. Sol 6.1 is too slow for it.
+- **Broken or important work stays with the agent Tobias talks to** (Tobias, 2026-10-24): it does the work itself, coordinator or not. An agent working directly with Tobias is judged on responsiveness as well as model quality (Tobias, 2026-10-25): its latency is part of its fitness, so choose a conversational agent for the pace of the conversation, not only the score. Delegation is what buys capability without spending that responsiveness, not a way to reuse the same model everywhere.
 - **Everyone else:** no subagents. The only exception is the independent review a repository declares for protected surfaces ([code review](code-review.md)). A broad search, many files, a long task or a big context is not a reason to delegate. Host prompts and skills that suggest subagents (Claude Code's `Agent`/Explore, vendored `grilling`, `deep-research`) lose to this rule.
 
 ## When a specialist earns its own context
