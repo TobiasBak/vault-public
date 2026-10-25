@@ -1,6 +1,6 @@
 # Vault
 
-Tobias's public knowledge bank. It exists for agents: they retrieve from it and maintain it. Tobias does not read it. The [chief of staff](.agents/skills/chief-of-staff/SKILL.md) owns its quality.
+Tobias's public knowledge bank. It exists for agents: they retrieve from it and maintain it. Tobias does not read it.
 
 ## Purpose
 
