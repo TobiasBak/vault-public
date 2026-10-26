@@ -48,7 +48,10 @@ def read_markers(path: Path, root: Path) -> tuple[list[Marker], str | None]:
     for match in MARKER.finditer(text):
         value = match.group(1)
         line = text.count("\n", 0, match.start()) + 1
-        parsed = date.fromisoformat(value) if ISO_DATE.match(value) else None
+        try:
+            parsed = date.fromisoformat(value) if ISO_DATE.match(value) else None
+        except ValueError:
+            parsed = None
         markers.append(Marker(relative_posix(path, root), line, value, parsed))
     return markers, None
 

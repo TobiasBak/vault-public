@@ -59,6 +59,15 @@ class VerifyStalenessTests(unittest.TestCase):
         self.assertEqual(report["malformed"][0]["source"], "broken.md")
         self.assertEqual(report["counts"]["marked"], 0)
 
+    def test_impossible_calendar_date_is_reported_as_malformed(self):
+        self.write("broken.md", "# Broken\n\nrecheck-after: 2026-02-30\n")
+
+        code, report = self.run_verifier("--as-of", "2026-10-24")
+
+        self.assertEqual(code, 1)
+        self.assertEqual(report["malformed"][0]["source"], "broken.md")
+        self.assertIn("2026-02-30", report["malformed"][0]["reason"])
+
     def test_duplicate_marker_fails(self):
         self.write("twice.md", "# Twice\n\nrecheck-after: 2027-01-01\n\nrecheck-after: 2028-01-01\n")
 

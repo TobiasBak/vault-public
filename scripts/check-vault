@@ -2,13 +2,32 @@
 # Vault checks: broken internal links, malformed recheck markers, and notes that
 # are edited while still past their recheck date.
 #
-# Run it directly, or install it as this repository's commit hook (the
+# Run it directly for the working tree, with --staged for the index, or install
+# it as this repository's commit hook (the
 # workstation secret scanner runs first and chains to it):
 #   ln -sf ../../scripts/check-vault .git/hooks/pre-commit
 set -uo pipefail
 
 root=$(git rev-parse --show-toplevel) || exit 1
 cd "$root" || exit 1
+
+if [[ ${1:-} == --staged || ${0##*/} == pre-commit ]]; then
+    git_dir=$(git rev-parse --absolute-git-dir) || exit 1
+    git_index=$(git rev-parse --path-format=absolute --git-path index) || exit 1
+    snapshot=$(mktemp -d "${TMPDIR:-/tmp}/vault-check.XXXXXXXX") || exit 1
+    trap 'rm -rf -- "$snapshot"' EXIT
+    cp -- "$git_index" "$snapshot/index" || exit 1
+    mkdir "$snapshot/tree" || exit 1
+    GIT_INDEX_FILE="$snapshot/index" git checkout-index --all --prefix="$snapshot/tree/" || exit 1
+    GIT_DIR="$git_dir" GIT_INDEX_FILE="$snapshot/index" GIT_WORK_TREE="$snapshot/tree" \
+        bash "$snapshot/tree/scripts/check-vault"
+    exit $?
+fi
+
+if [[ $# -ne 0 ]]; then
+    printf 'Usage: scripts/check-vault [--staged]\n' >&2
+    exit 2
+fi
 status=0
 
 python3 scripts/verify_links.py --vault . || status=1
