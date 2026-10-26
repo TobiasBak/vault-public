@@ -13,4 +13,3 @@ When there's no brief or existing design system (both take precedence):
 Compare structurally different alternatives inside the real product with real data. Isolated mock routes hide composition problems. Rendered output is the authority: run the app and inspect target viewports and interaction states, because source review can't reveal weak hierarchy, overflow, contrast, or bloat.
 
 - The model-invoked skill is [`frontend-design`](../skills/frontend-design/SKILL.md).
-- `swe-benchmarking/setup/DESIGN.md` (black-first, no cards) applies only to that product.

@@ -18,5 +18,5 @@ recheck-after: 2027-01-24
 
 - **Strong:** document workflows such as interpreting requests and checking extracted fields against the source. TypeSafe's [cascade](https://docs.typesafe.ai/cookbooks/sde_cascade) has Jev verify each field and escalate suspicious ones to a reasoning model.
 - **Feature discovery:** TypeSafe's [example](https://docs.typesafe.ai/cookbooks/autoresearch_feature_discovery) has an LLM propose questions, Jev convert text to features, and CatBoost learn from them. That links to [autoresearch](autoresearch.md) and [outcome-based learning](learning-from-feedback.md#outcome-based-learning), whose accepted outcomes can test whether Jev's judgments predict real corrections.
-- **Weak:** Poly Executor's numeric market models. Returning probabilities isn't an edge over sequence models.
+- **Weak:** numeric market models. Returning probabilities isn't an edge over sequence models.
 - **Coding agents:** plausible for relevance checks and routing. Never use it as ground truth for promoting changes.

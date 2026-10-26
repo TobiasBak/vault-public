@@ -1,6 +1,6 @@
 # Product verification CLI
 
-One entrypoint owns recurring product verification: checks, builds, cases, evidence, and diagnostics. Agents use it for operations it covers. Reuse shared tooling for workspace lifecycle, warm build-state forks, host admission, and landing; never wrap those commands just to put them behind this CLI.
+One entrypoint owns recurring product verification: checks, builds, cases, evidence, and diagnostics. Agents use it for operations it covers. Reuse shared tooling for workspace lifecycle, warm build-state forks and landing; never wrap those commands just to put them behind this CLI.
 
 ## One entrypoint
 

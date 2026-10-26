@@ -6,7 +6,7 @@ Checked 2.1.287 on 2026-10-02 and 2.1.296 on 2026-10-11 ([settings](https://code
 
 recheck-after: 2026-11-24
 
-Checked 2.1.287, 2026-10-02 ([settings](https://code.claude.com/docs/en/settings-reference)). [Dotfiles](../projects.md#dotfiles) shares global AGENTS.md and `~/.agents/skills` across Claude, Codex, and Pi.
+[Dotfiles](../projects.md#dotfiles) manages global instructions and skill links for Claude, Codex, and Pi.
 
 - **Response length:** `verbose`/`viewMode` affect transcript tool output only. No `model_verbosity`; built-in `Concise` output style shortens responses without reducing work.
 - **Attribution:** default commit `Co-Authored-By` and PR footer; `attribution: false` (2.1.281+) removes both.

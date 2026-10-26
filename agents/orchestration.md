@@ -15,13 +15,13 @@ A fixed graph of *model decisions* is a different bet: that the model can't rout
 
 ## Tool surface
 
-Tool definitions are always-on context, so they degrade decisions the way a long prompt does.
+Tool definitions consume context. Measure whether a particular tool surface makes selection less reliable; size alone does not establish a quality loss.
 
 - Group tools by user intent, not one per API; Anthropic sees tool choice degrade past roughly 30–50 definitions in the prompt (2026-10-22, vendor rule of thumb, unmeasured locally — and a threshold tied to the current model generation, so re-check it rather than inheriting it).
 - Defer definitions behind tool search and load them on demand. [Claude Code's ToolSearch](#programmatic-tool-calling) defers MCP definitions only, not execution or results.
 - Put hard preconditions inside the tool: if Y needs X's output, Y checks for it and returns an instruction the model can act on.
 - [Access](../skills/system-specs/references/access.md) is checked inside the tool, which returns a plain refusal the model reads; that serves users with different permissions from one loop instead of an agent per permission level.
-- Reference material belongs behind a search or lookup tool or as a skill's reference file. Code must not retrieve it and paste it into a prompt.
+- Keep reference material retrievable through search, lookup tools or skill references, rather than loading it all into every prompt.
 
 ## Programmatic tool calling
 

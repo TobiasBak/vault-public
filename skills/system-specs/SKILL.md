@@ -7,16 +7,11 @@ description: Write, extend, or check requirement specs that let Tobias understan
 
 A spec tells Tobias what the system must do and why, without code. Agents read it to implement and check against it.
 
-## The world specs assume
+## Version boundaries
 
-Agents merge several times a day, staging receives qualified batches, and production releases up to daily plus hotfixes. So at any moment:
-- Two or more versions of the code run against the same data and talk to each other: rolling deploys, workers that haven't restarted, migrations applied before or after the code that uses them.
-- Every boundary sees data written by both newer and older code than itself.
-- No human is around to fix a halted system by hand.
+When deployments, workers, migrations or clients can run at different versions, specify how they coexist with shared data and messages. A requirement that assumes all components change simultaneously is wrong for that system. Do not impose version-skew machinery where the system has no such boundary.
 
-A requirement that only holds when every component runs the same version is wrong.
-
-Newer versions win. Keep one source of truth, auto-update clients, and refuse versions below a minimum instead of supporting a long tail. Fix forward; never roll back data.
+Where the project adopts a newer-versions-win policy, keep one source of truth, update controlled clients, and refuse versions below its minimum instead of supporting a long tail. Fix forward; never roll back data.
 
 ## Tolerate versions, never ambiguity
 
@@ -35,7 +30,7 @@ Tolerance and hardening don't conflict. They live in different places:
 
 ## Requirement catalogs
 
-General requirements every system meets unless its spec says otherwise:
+Catalogs of candidate requirements. Choose what fits the system, its actual consumers and the authorized scope; they are not requirements until adopted:
 
 | Domain | Catalog |
 |---|---|
@@ -47,12 +42,12 @@ General requirements every system meets unless its spec says otherwise:
 | Dependencies and supply chain | [dependencies.md](references/dependencies.md) |
 | AI in the product | [ai.md](references/ai.md) |
 
-A project's spec adopts catalog requirements by ID and adds its own.
+A project's spec can adopt catalog requirements by ID and add its own. Check each requirement's implementation assumptions, including language and deployment model, before adopting it.
 
 ## Auditing a repo
 
-1. Read the project's spec if it has one; otherwise every catalog applies.
-2. Mark each requirement met (cite the enforcing type, check or case), gap (what's missing and the cheapest enforcement), or not applicable (why, such as no external API).
+1. Read the project's spec if it has one. Otherwise select relevant catalog candidates from the actual system and requested audit; do not treat them as existing obligations.
+2. Mark adopted requirements met (cite the enforcing type, check or case), gap (what's missing and the cheapest enforcement), or not applicable. Report unadopted candidates as recommendations, not violations.
 3. Rank gaps by how likely they are to break production, not by count.
 4. Report; change code only when asked.
 

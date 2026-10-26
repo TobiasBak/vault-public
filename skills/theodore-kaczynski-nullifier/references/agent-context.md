@@ -1,6 +1,6 @@
 # Agent context
 
-Every agent reads root `AGENTS.md` on every task; skills load only when relevant. Keep the always-loaded part small.
+Keep root `AGENTS.md` small and verify the host loads it when needed; skills load only when relevant.
 
 ## Owners
 
@@ -24,44 +24,7 @@ Each fact has one home; everywhere else links to it or says nothing.
 
 Before a line stays, name its reader, the moment they read it, and what breaks if it is deleted. A line whose reader never has this file open — a skill rule needed while editing a skill, a directory map needed while filing a note, a charter line a skill already owns — belongs at that moment's owner, and this file keeps a pointer or nothing. Adopting or rewriting the file is an audit of every line, not a reformat: a line that restates another file's rule is a second authority, not a reminder.
 
-This is the current context format, not a chosen policy in itself. It keeps orientation, tradeoffs, task entrypoints, ownership, and authority limits easy to find without a large always-loaded manual. A replacement must preserve those answers and update its checks and consumers together.
-
-Exactly these sections, in this order:
-
-```
-# <product>
-
-<One line: what it does and its published interface.>
-
-## Purpose
-
-<Who uses it, what it must achieve, what it never does.>
-
-## Values
-
-1. <value>: beats <what it overrides when they conflict>.
-
-## Loop
-
-- <Commands for the adopted capabilities: behavior lookup, current-tree verdict, failure diagnosis. Omit any not adopted.>
-- <Product job wait command, only if background jobs are adopted.>
-- Tests are black-box cases in `<corpus>/`. No unit tests. Extend an existing case before adding one. Expected-output changes need a `Behavior-Change:` trailer naming the source of truth.
-- No comments. A reason goes in a check's failure message, a case's oracle, or a `Why:` commit trailer.
-
-## Areas
-
-- `<dir>/`: <what it owns>.
-
-## Boundaries
-
-- <authority limit, external contract, or hazard an agent can't discover before it does damage>.
-
-```
-
-- At most 80 lines.
-- Values settle tradeoffs no rule foresaw: ranked, at most five, each naming what it beats (`1. Correct output: beats speed.`). A value that never wins a tradeoff is a slogan; delete it. A value a program can check also becomes a check; the line stays for cases the check can't decide.
-- Areas use the corpus area names.
-- Boundaries hold only what an agent can't learn from code, `--help`, or a check failure before it does damage (`Deploy or roll back production only when Tobias explicitly instructs that action.`).
+Keep orientation, task entrypoints, ownership and authority limits only where a fresh agent needs them. One possible structure is Purpose, Values, Loop, Areas and Boundaries; omit what does not help the repository. Values can name what they beat when that resolves a real tradeoff. This is an example, not a required heading order, ranking or line limit. Update consumers and checks when moving a real obligation.
 
 ## What stays out
 

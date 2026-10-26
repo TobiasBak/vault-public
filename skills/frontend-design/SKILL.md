@@ -6,15 +6,15 @@ license: Complete terms in LICENSE
 
 # Frontend Design
 
-Approach this as the design lead at a design studio known for giving every client a distinct visual identity that is not mistaken for anyone else's. This client has already rejected proposals that felt cliché or templated, and is paying for a distinctive point of view: make deliberate, opinionated choices about palette, typography, and layout that are specific to this brief, and take aesthetic risk if justified.
+Make deliberate choices about palette, typography and layout that fit the product and brief. Avoid generic defaults without imposing a new visual identity on an existing design system.
 
 ## Ground your designs in the subject matter
 
-If the brief does not identify what the product or subject matter is, identify it yourself before designing, and confirm with the client. You can come up with one concrete subject, the design's audience, and the design's primary job, as a proposal. If there's any information in your memory about the client's preferences or context about what they're building, use that as a hint. The subject's industry, subject matter, materials, and vernacular are where distinctive visual choices come from — a design for a toy for girls aged 8–11 will be very aesthetically different from a dashboard for financial analysts. Build with the brief's real content and subject matter throughout.
+Identify the product, audience and primary job from the request and available context. Make a reasonable choice when the brief leaves them open; ask only when missing information blocks the design. The subject's industry, materials and vernacular inform the visual choices. Build with real content and subject matter throughout.
 
 ## Design principles
 
-For web designs, the hero is the first thing viewers will see. Open with the most characteristic thing in the subject's world, in the form that is most appropriate: a headline, an image, an animation, a live demo, an interactive moment, or other treatments. Be deliberate with your choice: a big number with a small label, supporting stats, and a gradient accent is the default treatment, so only use it if that's truly the best option.
+When a web page needs a hero, make its opening characteristic of the subject: a headline, image, animation, live demo or interaction. A dashboard or tool may need its working controls first instead. Don't add a decorative metric or gradient by default.
 
 Typography carries the personality of the page. You don't need a different typeface for display or headline text and body content: use one family or two, and if two, make them clearly distinct.
 
@@ -44,13 +44,7 @@ For calibration, AI-generated design right now clusters around some traits:
 
 All traits are legitimate for some briefs, but they are defaults rather than choices, and they appear regardless of subject. Where the brief pins down a visual direction, follow it exactly — the brief's own words always win, including when it asks for one of these looks. Where it leaves an axis free, don't spend that freedom on one of these defaults. As with a hired human designer, there's often a careful balance between doing what you're good at and taking each project as a chance to experiment and learn.
 
-Work in two passes. First, brainstorm a short design plan based on the client's design brief: create a compact token system with color, type, layout, and principles.
-- Color: describe the core base palette as 4–6 named hex values.
-- Type: the typefaces and their roles.
-- Layout: a layout concept, using one-sentence prose descriptions and ASCII wireframes to ideate and compare. Include alignment guidance; should the content be left aligned, center aligned, justified?
-- Principles: the high-level guidance for what makes this page unique.
-
-Then review that plan against the brief before building: if any part of it reads like the generic default you would produce for any similar page (work through a similar prompt to see if you arrive somewhere similar) rather than a choice made for this specific brief — revise that part, say what you changed and why. Only after you've confirmed the relative uniqueness of your design plan should you start to write the code, following the revised plan.
+For a new or substantially reshaped interface, choose a coherent direction for color, type, layout and hierarchy. Compare it with the brief and existing product before building; revise generic choices that don't serve this subject. For a narrow change, preserve the established system unless the task calls for changing it.
 
 When writing the code, be careful of structuring your CSS selector specificities. It's easy to generate CSS classes that cancel each other out (especially with a type-based selector like .section and an element-based selector like .cta). This can happen often with padding/margin between sections.
 

@@ -71,11 +71,11 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 
 All model-invoked; agents select relevant skills automatically:
 - [`potato-approach`](skills/potato-approach/SKILL.md): make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- [[`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md)](skills/theodore-kaczynski-nullifier/SKILL.md): fresh-agent autonomy: understand, change, establish outcomes, recover; shared tools own execution mechanics ([design principles](skills/theodore-kaczynski-nullifier/references/design-principles.md), [runtime outcomes and recovery](skills/theodore-kaczynski-nullifier/references/runtime-outcomes.md), [tracing](skills/theodore-kaczynski-nullifier/references/tracing.md))
-- [[`system-specs`](skills/system-specs/SKILL.md)](skills/system-specs/SKILL.md): requirement specs for systems agents change several times a day; tolerant at version boundaries, strict elsewhere; [data catalog](skills/system-specs/references/data.md), [release catalog](skills/system-specs/references/release.md), [API catalog](skills/system-specs/references/api.md), [access catalog](skills/system-specs/references/access.md), [observability catalog](skills/system-specs/references/observability.md), [dependencies catalog](skills/system-specs/references/dependencies.md), [AI catalog](skills/system-specs/references/ai.md)
+- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): make repositories understandable, changeable, verifiable and recoverable by agents
+- [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change frequently, including version boundaries
 - [`benchmark-checklist`](skills/benchmark-checklist/SKILL.md) (adapted from pstack): vet a performance number before reporting it
-- [[`hardware-deal-check`](skills/hardware-deal-check/SKILL.md)](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
-- [[`disk-cleanup`](skills/disk-cleanup/SKILL.md)](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
+- [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
+- [`disk-cleanup`](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
 - [`unslop`](skills/unslop/SKILL.md): concise, natural prose
 - [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
 - [`frontend-design`](skills/frontend-design/SKILL.md) (Anthropic): distinctive, intentional visual design
