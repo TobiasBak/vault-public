@@ -1,37 +1,22 @@
 # Vault
 
-Tobias's public knowledge bank. It exists for agents: they retrieve from it and maintain it. Tobias does not read it.
+Tobias's public knowledge bank is for agents. Keep knowledge that changes a future decision or action; project-specific work belongs in its own repository, not here.
 
-## Purpose
+## Work in the vault
 
-Notes that change how a future agent decides or acts: findings, corrections, preferences, rationale, useful failures, established procedures.
+Start at [index.md](index.md), then search with `rg`. Give each idea one home; link rather than copy. Index every note and skill, and link each note to another note. Resolve contradictions from the best evidence; ask Tobias only when the answer is his preference.
 
-## Values
+Lead each note with its actionable conclusion, and file it where its reader will look. Use kebab-case filenames, relative Markdown links and no note frontmatter. Date volatile facts and cite sources where authority or exact numbers matter. For an optimization, keep the baseline, change, effect and conditions.
 
-1. **Transferable knowledge beats completeness.** A note earns its place by changing a decision.
-2. **One home per idea beats restating.** Search first, edit the owning note, link instead of copying.
-3. **Mechanisms beat reminders.** A failing check first, then config, then a sentence.
-4. **Pointers beat an exhaustive index.** One line per note, plus `rg`.
+Notes based on externally owned facts such as prices, model catalogs, tool behavior, benchmarks and licenses carry `recheck-after: YYYY-MM-DD` near the top. Count from the last real verification, not the edit adding the date.
 
-## Loop
+Global skills live in `skills/`; [dotfiles](projects.md#dotfiles) owns their installation. Vault-only skills live in `.agents/skills/`, linked from `.claude/skills/`. Only `chief-of-staff` is explicit-invocation-only.
 
-**Find.** Start at [index.md](index.md), then search with `rg`.
-
-**Write.** Lead with the conclusion: rules and short bullets, no hedges, and an "X does not mean Y" only where the misreading would be costly. Date volatile facts and keep a source where authority or an exact number matters; for an optimization keep baseline, change, effect, conditions. File a note by its reader, not its subject: kebab-case filenames, relative Markdown links, no frontmatter, and a line in [index.md](index.md) when a note appears, moves or goes. Compress, merge and delete freely; when notes contradict, fix them from the best evidence, and ask Tobias only when the answer is his preference. Every note links to at least one other note.
-
-A note built on facts someone else owns carries `recheck-after: YYYY-MM-DD` near the top: prices, model catalogs, host and CLI behaviour, vendor terms, benchmarks, licenses. Count the date from when the fact was last checked, never from the edit that adds it.
-
-Deleting knowledge about an instance: move anything that generalizes to its class into the note that owns the class, then delete the rest. Record a rejection as a config rule wherever it can be one; the note only explains why the rule exists.
-
-**Skills.** `skills/<name>/` is the source of truth for the global skills; `.agents/skills/` holds vault-only ones, linked from `.claude/skills`, and only `chief-of-staff` keeps `disable-model-invocation` because only Tobias invokes it. Installing is `scripts/install-skills.sh --help`; the script owns the flags.
-
-**Check.** `scripts/check-vault` runs links, staleness, a note's outbound link, skill shape, duplicate authority, and the shape of this file and the index. It is also this repository's commit hook, installed with `ln -sf ../../scripts/check-vault .git/hooks/pre-commit`; the workstation secret scanner runs first and chains to it.
+Run `scripts/check-vault` to check the vault before landing.
 
 ## Boundaries
 
-- Never record project work: no status, progress, results, decisions, findings or plans for a specific project. That belongs in the project's repository; the chief of staff keeps its operational state in `~/.local/state/chief-of-staff/`.
-- [projects.md](projects.md) holds only routes to public repositories: path, remote, branch and where to start. Private repositories are never listed, and a line changes only when a route changes.
-- Keep secrets out: tokens, keys, passwords and credential contents. Also keep out private correspondence and other people's personal data. Everything else may be public (Tobias, 2026-10-18), including customer and order names and private-repo operational detail such as credential file paths, hosted project IDs and infrastructure state. Raw session histories and local runtime state stay out of Git.
-- Never bypass the workstation's secret-scanning hooks or GitHub push protection. On a finding or scan failure, stop and report only the path, commit SHA and rule ID; never add a scanner suppression here.
-- Land on `main` directly and push, with no PRs or branches.
+- [projects.md](projects.md) holds public repository routes only; never list private repositories.
+- Keep raw session histories and local runtime state out of Git. Never add a secret-scanner suppression in this vault.
+- Land directly on `main` and push, without branches or PRs.
 - `README.md` is the public landing page and links only to [index.md](index.md) and this file.

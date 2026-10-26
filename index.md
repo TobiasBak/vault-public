@@ -59,6 +59,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/ocr.md](software/ocr.md): Indra OCR candidate, local CPU operation, commercial-license restrictions and vendor benchmark conditions
 - [software/browser-derived-clients.md](software/browser-derived-clients.md): turning browser traces into HTTP clients; Danish supermarket offers
 - [software/openrouter.md](software/openrouter.md): listed vs effective prices, input-only price sort, speed floors, default routing, sticky sessions, ZDR, quantization labels, direct vs OpenRouter prices
+- [software/uncensored-model-hosting.md](software/uncensored-model-hosting.md): why uncensored frontier MoEs live only on specialist hosts, NanoGPT/Venice/Abliteration prices, self-host VRAM and GPU rent
 - [software/cloudflare.md](software/cloudflare.md): API tokens as JSON policy documents or Terraform/OpenTofu, bootstrap and state caveats, Access with Worker destinations
 - [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, privileged Storage completion, free-plan pausing and restore
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
