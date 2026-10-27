@@ -35,11 +35,11 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
-- [agents/coding-models.md](agents/coding-models.md): effort guidance, Sol vs Astra cost, API specifics, Haiku/Luna limits, free-model trials
+- [agents/coding-models.md](agents/coding-models.md): effort guidance, Sol vs Astra cost, Terra vs Sol trial, API specifics, Haiku/Luna limits, free-model trials
 - [agents/harness-operations.md](agents/harness-operations.md): routes to the harness notes plus global CLI install traps (pnpm release-age gating)
 - [agents/codex-operations.md](agents/codex-operations.md): app-server daemon pin, quota fields, context management, subagent inheritance
 - [agents/claude-code-operations.md](agents/claude-code-operations.md): attribution, effort defaults, compaction windows, discovery, auto memory
-- [agents/pi-operations.md](agents/pi-operations.md): verbosity, session usage, print-mode stdin, OpenRouter model overrides
+- [agents/pi-operations.md](agents/pi-operations.md): verbosity, session usage, print-mode stdin, ChatGPT quota and credits, OpenRouter model overrides
 - [agents/opencode-operations.md](agents/opencode-operations.md): v2 install and update failure, migration, Go/Zen data policies
 - [agents/pi-throughput.md](agents/pi-throughput.md): effective-TPS measurement, subscription rollout claims, local observations
 - [agents/ui-design-convergence.md](agents/ui-design-convergence.md): generic AI UI style and the restrained-design fix

@@ -45,6 +45,14 @@ Checked 2026-10-24: Codex Fast consumes included subscription allowance at 2.5x 
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
 
+## Terra vs Sol, 2026-10-27
+
+GPT-6.1 Terra costs half of Sol: $1 / $0.05 / $5 per MTok, credits 25 / 1.25 / 125 ([rate card](https://help.openai.com/en/articles/11481834-chatgpt-rate-card-business-enterpriseedu-credit-based-pricing)). Local trial, two runs per case: direction, not decimals. Capability evidence only; [compute routing](compute-routing.md) decides.
+
+- **Reviews: Terra wins.** Of 8 known real bugs, Sol `high` found 1 and Terra `xhigh` 4 (Pi); Sol `xhigh` 3 and Terra `max` 6 (Codex). Terra adds more unverified extra findings; Sol cites more evidence.
+- **Implementation: Sol wins or ties.** Terra `xhigh` matched Sol `high` on hidden tests at ~40% of the cost but fixed only the reported instance of a bug class. Terra `max` fixed the class but renamed a public method in both runs. Brief Terra to fix the whole defect class and keep public APIs stable.
+- **Terra `max` isn't cheap:** about 5x Terra `xhigh` on implementation, more than Sol `xhigh`.
+
 ## Local harness comparison, 2026-10-03
 
 One 8-task pass, one run per arm on GPT-6.1 Sol `medium`: built-in Pi codemode was ~21% faster and ~35% cheaper than Pi's own tool suite ($1.63 vs $2.49); Codex was slower at the same cost. Single pass with shared-host contention, and the artifacts are gone. Directional only — not a harness ranking, not a reason to change the daily provider.
