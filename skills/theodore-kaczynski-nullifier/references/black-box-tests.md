@@ -4,16 +4,17 @@ A test is an input at the published interface and a specified output. Nothing el
 
 ## The box
 
-- The box is the published interface: CLI, HTTP API, file-in/file-out contract, or a library's public API. Nothing narrower; calling an internal module a "product" to test it is forbidden. A GUI is a thin shell over an API: the API is the box, and the GUI gets cases only for its own contract.
-- **Input:** the request plus starting state: files, fake external services, clock, seeds.
-- **Output:** the response plus effects seen in the environment: files written, messages in a fake mailbox, rows in a fake external system.
-- Fakes replace external systems only, never the repo's own code. An external command is faked by a stub first on `PATH` that records its arguments and stdin; the record is the effect.
+- The box is the published interface: CLI, HTTP API, file-in/file-out contract, a library's public API, or a GUI. Nothing narrower; calling an internal module a "product" to test it is forbidden. Behavior a GUI reaches through an API is covered at the API; the GUI gets [its own cases](#gui-cases) for what it decides itself: client state, validation, navigation, optimistic and offline behavior, and what it shows.
+- **Input:** the request plus starting state: files, operated dependencies' state, fake external services, clock, seeds.
+- **Output:** the response plus effects seen in the environment: files written, rows in the product's database, messages in a fake mailbox, rows in a fake external system.
+- **Run what the product operates.** A dependency the product deploys and runs, such as its database, queue, cache or object store, runs for real at the production version, started once in the warm environment. Each case gets its own database, schema, bucket or key prefix. A fake of it tests only the fake.
+- **Fake what it doesn't.** Fakes replace only systems the product doesn't operate, never the repo's own code or an operated dependency. A fake answers from recorded real exchanges or the provider's published contract, and the `Behavior-Change:` trailer on a fake change names that source and version. Where the provider has a sandbox, send it the requests cases send the fake, on a schedule, and compare the answers; a difference is fake drift until shown otherwise and is fixed in the fake. An external command is faked by a stub first on `PATH` that records its arguments and stdin; the record is the effect.
 - Hard-to-reach paths go through the environment only: a fake service returning 500, a full disk, a kill at a crash point, a scripted clock.
 
 ## Allowed case kinds
 
 1. **Example:** input and expected output.
-2. **Relation:** a stated relation between outputs of related inputs (rotation keeps volume; a second import changes nothing).
+2. **Relation:** a stated relation between outputs of related inputs (rotation keeps volume; a second import changes nothing; parsing printed output returns the input). Inputs may be authored or [generated](#expected-output). A relation over generated inputs is a property test; its failing input goes through the reducer into the authored case it extends.
 3. **Robustness:** generated input; no crash, no hang, within budget.
 4. **Differential:** output matches a reference system on the same input.
 
@@ -27,9 +28,17 @@ A test is an input at the published interface and a specified output. Nothing el
 - If a scenario can't fit its budget, split off groups of behavior that run on their own; each case does its own startup, setup, readback, and teardown. Keep every original request and assertion exactly once and record where each went (a projection map). Extra setup may add requests, never replace assertions. Cases may share authored input files, never mutable starting state.
 - Don't start a product-performance project to keep a giant case whole. Verify the projection map, independent lifecycles, and complete fresh output counts. A giant case that didn't finish is no throughput baseline.
 
+## GUI cases
+
+- A GUI case drives the real app with a scripted browser or UI driver from the case's starting state. Its requests are user steps addressed by stable handles: role and accessible name, label, route. Never coordinates, or markup added only for tests.
+- A step waits for a condition the user would see, never a fixed delay. Clock and randomness are injected as in every case; motion is disabled.
+- Expected output is the resulting state read back through the API or environment, plus a canonical accessibility-tree fragment of the region each step changed. Copy belongs in expected output only when it is result data, not wording.
+- Screenshots are expected output only for a visual contract such as layout or chart rendering. Explain each pixel difference at the differing element through computed style and geometry; never hide it with a blanket threshold.
+- Interactive driving, including a browser MCP, is exploration: it finds and reproduces bugs, and what it finds extends a case. It never produces a verdict.
+
 ## Forbidden
 
-- Unit tests, tests of internal modules, private access, assertions on call order or internal data.
+- Unit tests, tests of internal modules, private access, assertions on internal call order or internal data. The order of effects in the environment, such as a charge recorded before a shipment, is output.
 - Expected values whose only source is the code under test.
 - Assertions on diagnostic stage dumps.
 - Cases that share mutable starting state.
@@ -122,7 +131,7 @@ To localize without unit tests: `--emit=<stage>` dumps intermediate stages for d
 
 ## Lifecycle
 
-- Every bug fix extends a case with the minimized input, or adds one when none can absorb it.
+- Every bug fix extends a case with the minimized input, or adds one when none can absorb it. Run it on the pre-fix build first: it fails with the reported symptom, and that failure output is kept as evidence. A case that passes before the fix doesn't reproduce the bug.
 - A case covering nothing another case doesn't is merged or deleted.
 - An internal rewrite changes no case. A case that breaks without a behavior change depends on internals; fix the case.
 - When mutation testing is adopted, run it on a schedule. Each surviving mutant extends a case until killed, or marks dead code to delete. Line coverage is not measured.

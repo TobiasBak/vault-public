@@ -8,7 +8,7 @@ recheck-after: 2027-01-24
 
 ## Measure the whole wait
 
-- Time verification request to returned verdict, including launcher preparation, admission, local locks, static checks, compile/link, test setup, execution and evidence publication. Also record last relevant edit to verdict availability so watchers and precomputation cannot hide work outside the timer.
+- Time verification request to returned verdict, including launcher preparation, exclusive-resource locks, static checks, compile/link, test setup, execution and evidence publication. Also record last relevant edit to verdict availability so watchers and precomputation cannot hide work outside the timer.
 - Use real source-content changes under the normal warm-workspace workflow. Separate source edits, unchanged-tree cache hits and cold toolchain/dependency changes. A cached green response or mtime-only rebuild does not establish edit-loop speed.
 - Report workload, input identity, cache state, concurrency, process boundary and executed obligations. Compare solo latency with representative multiagent load; include tail latency and failure-detection latency, not just averages or successful runs.
 - Follow the critical path. Summed parallel job time is neither wall time nor a saving. Moving a wait into another queue or preparation step does not shorten verification.

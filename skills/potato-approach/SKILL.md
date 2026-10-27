@@ -1,6 +1,6 @@
 ---
 name: potato-approach
-description: Design, implement, refactor, or review agent-maintained code so the easiest change is the correct one. Use for recurring mistakes, PR feedback, later regressions, enforced rules, shared engineering workflows, or project verification tools and feature maps. Not for prose or vault-note editing.
+description: Design, implement, refactor, or review agent-maintained code so the easiest change is the correct one. Use for recurring mistakes, PR feedback, later regressions, enforced rules, or shared engineering workflows. Not for prose or vault-note editing.
 ---
 
 # Potato approach
@@ -36,7 +36,6 @@ This order decides where knowledge lives, not what to do on every task. When a c
 | Rules that need judgment to check | [review-agents.md](references/review-agents.md) |
 | Mining PR comments, fix and revert commits, and escaped bugs for missing protection | [mistake-history.md](references/mistake-history.md) |
 | Choosing a design or screening a proposed shape | [design.md](references/design.md) |
-| Agents can't find, run, or verify product behavior | [verification.md](references/verification.md) |
 | Agents repeatedly need help choosing an investigation method | [engineering-workflows.md](references/engineering-workflows.md) |
 
 Combine them as needed: cleanup removes bad examples, and hardening prevents their return.

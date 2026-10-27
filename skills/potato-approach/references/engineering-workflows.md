@@ -28,4 +28,4 @@ Automate capture and comparison; keep interpretation with the agent. A CPU trace
 
 ## Improve through use
 
-Try the skill on another task. If it fails, fix the missing decision or tool rather than appending checklists. Give the skill an owner, and remove steps once a command or check handles them. Validate with the [handoff check](verification.md#handoff-check).
+Try the skill on another task. If it fails, fix the missing decision or tool rather than appending checklists. Give the skill an owner, and remove steps once a command or check handles them. Validate it in real sessions on representative tasks: agents use it without coaching.

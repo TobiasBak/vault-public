@@ -21,7 +21,7 @@ A command earns its place by answering a real repeated question. Adopt only what
 | `accept <case> --source "<truth>"` | Records inspected output and its oracle after [contract judgment](black-box-tests.md#evidence-and-authority); never establishes truth by recording it. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |
-| `env up\|reset\|down` | Fakes, services, platform VMs. Only where cases need managed external state. |
+| `env up\|reset\|down` | Operated dependencies, fakes, platform VMs. Only where cases need managed external state. |
 | `doctor` | Read-only check that this is the intended build with the edit loop's prerequisites. Missing optional capabilities are reported, never blocking; commands needing them block themselves. |
 | `mutants` | Mutation run; surviving mutants listed as tasks. |
 | `explain-miss <job>` | Field-by-field difference between this cache key and the nearest cached one. |

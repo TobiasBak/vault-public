@@ -27,9 +27,13 @@ Keep a control CLI for launch, reset, interaction, inspection and cleanup. Its f
 
 - couldn't find the feature: feature map or naming
 - couldn't set up or inspect: tools
+- couldn't establish what happened: observable state and causal diagnostics
+- couldn't recover from a relevant partial failure: explicit state and supported recovery
 - needed repeated diagnostic coaching: skill
 - made an architectural mistake: API or enforced boundary
 - claimed unsupported success: checks
+
+Confirm each fix in later real sessions.
 
 ## Bounded workload proof
 

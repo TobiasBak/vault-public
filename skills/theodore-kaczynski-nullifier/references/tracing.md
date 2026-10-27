@@ -14,7 +14,7 @@ Trace each operation at its owner. gah owns forwarding and landing spans; the re
 
 ## Host context
 
-- At trace start and end, record load, host-lease holders, and background jobs (ours and others).
+- At trace start and end, record load, exclusive-resource lock holders, and background jobs (ours and others).
 - Track overlap with background jobs during the run, including ones that start and finish between those snapshots. Mark an overlapped measurement as contaminated in the trace itself.
 
 ## Format
@@ -39,4 +39,4 @@ Finding the bottleneck must never require reading the raw trace.
 
 ## Baseline and enforcement
 
-Promotion runs keep baseline traces. A critical-path slowdown beyond the [repo's budget](manifest.md#9-budgets-are-visible) opens or updates an issue from the [promotion PR](enforcement.md#checks). Don't add a second enforcement path.
+Promotion runs keep baseline traces. A critical-path slowdown beyond the [repo's budget](manifest.md#9-budgets-are-visible) opens or updates an issue from the promotion PR, which the [active delivery policy](enforcement.md#landing-integration) owns. Don't add a second enforcement path.

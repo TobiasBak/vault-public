@@ -61,7 +61,7 @@ References define adopted capabilities, not a to-do list:
 |---|---|
 | Understanding the foundations or changing this skill | [design-principles.md](references/design-principles.md) |
 | Establishing runtime state, partial effects, or safe recovery | [runtime-outcomes.md](references/runtime-outcomes.md) |
-| Writing, changing, or migrating tests; judging evidence | [black-box-tests.md](references/black-box-tests.md) |
+| Writing, changing, or migrating tests; real dependencies and fakes; GUI cases; judging evidence | [black-box-tests.md](references/black-box-tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
 | Choosing and measuring a feedback cost to remove | [manifest.md](references/manifest.md) |
 | Tracing slow feedback | [tracing.md](references/tracing.md) |
@@ -72,6 +72,7 @@ References define adopted capabilities, not a to-do list:
 
 Prove what you delivered, not every capability here:
 - **Changed contract:** the [proof procedure](references/control-cli.md#proof), with expectations checked against their independent authority.
+- **Bug fix:** the extended case [fails on the pre-fix build](references/black-box-tests.md#lifecycle) with the reported symptom and passes on the fix.
 - **Runtime understanding or recovery:** the [outcome proof](references/runtime-outcomes.md#proof), including relevant partial failure when recovery changes.
 - **Agent-repo setup, navigation, or skill behavior:** run the changed guidance on a representative task yourself: the searches and commands it names reach the owning code, the change and its outcome check work, and supported recovery runs when needed. Don't stage a fresh agent; real sessions after landing are the remaining test. Claim a navigation improvement only from turn counts in real sessions before and after.
 - **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, enough to name its cause without a rerun.

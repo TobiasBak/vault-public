@@ -4,7 +4,7 @@ Use this branch of the [autonomy loop](../SKILL.md#the-loop) when a real workflo
 
 ## Optimization loop
 
-1. **Measure** from harness session logs. Separate model, navigation, build, test, platform, admission, forwarding, conflict, landing, child, and user time. Include shared-tool waits.
+1. **Measure** from harness session logs. Separate model, navigation, build, test, platform, forwarding, conflict, landing, child, and user time. Include shared-tool waits.
 2. **Pick one outcome:** workflow, users, frequency, current cost, and cause to remove. Fix the largest measured recurring cost at its owner, never with an instruction agents must remember.
 3. **Check value:** a baseline and named cause justify one or two before-and-after trials under the same conditions. Speed-motivated migrations, watchers, enforcement systems, and standalone proof efforts need a trial showing value. Otherwise shelve them. A demonstrated autonomy gap or correctness, security, or data-loss bug can justify a scoped fix without a speed claim.
 4. **Measure again.** Stop at the measured target or when a one-line edit reaches its verdict, rebuild included, faster than a model turn. Further optimization needs a new measured cost.
@@ -27,7 +27,7 @@ Symptom: `sleep 540; tail log`. Fix: `<cli> wait <job>` returns the verdict when
 
 Symptom: rerunning a suite that already passed on the same tree.
 
-- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, fake-environment version, and qualified execution environment. Inputs, not output bytes, current directory, or workspace ID.
+- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, operated-dependency and fake-environment versions, and qualified execution environment. Inputs, not output bytes, current directory, or workspace ID.
 - The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. Cache key, watcher, and `Behavior-Change:` guard read this same set.
 - Value: verdict, actual-output hash, duration, producer.
 - Stored by content hash outside disposable workspaces and build directories, shared by agents, beyond workspace cleanup.
@@ -40,7 +40,7 @@ Symptom: every edit followed by build, test, read.
 
 - One watcher per workspace, identified by workspace identity and running in its [mount namespace](control-cli.md#runs). On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
 - `<cli> status` returns the current tree's verdict, blocks while a run is in progress, never returns another tree's.
-- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the workspace or when idle; uses host admission (§11), skipping when busy.
+- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the workspace or when idle; skips and reports no new evidence when an exclusive resource it needs is held ([shared resources](control-cli.md#shared-resources)).
 - Agents never call the build tool directly.
 
 ## 5. Never pay for a cold start twice
