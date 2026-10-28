@@ -4,7 +4,7 @@ An agent-native codebase stays understandable, changeable, and verifiable across
 
 The [design principles](../skills/theodore-kaczynski-nullifier/references/design-principles.md) set the goal: a fresh agent understands the system, changes it correctly, establishes actual outcomes, and recovers when reality disagrees. They require independent authority for correctness, inspectable runtime behavior, recoverable failure, and constraints whose reasons remain discoverable.
 
-The [agentic engineering loop](agentic-engineering.md) connects this repository design to choosing and carrying out useful work.
+The [agentic engineering loop](agentic-engineering-loop.md) connects this repository design to choosing and carrying out useful work.
 
 ## Patch accretion is the main failure
 

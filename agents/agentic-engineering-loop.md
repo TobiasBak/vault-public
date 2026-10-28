@@ -1,4 +1,4 @@
-# Agentic engineering
+# Agentic engineering loop
 
 Choose a valuable outcome, establish how to recognize success, and give an agent the means to reach it. Improve those conditions from the blockers encountered in real work. More subscriptions, tokens, or agents are not prerequisites for this loop.
 
