@@ -22,7 +22,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 
 ## Agents
 
-- [agents/agent-native-codebases.md](agents/agent-native-codebases.md): patch accretion, making the easy change correct, the knowledge-placement order, enforce-first hardening
+- [agents/agent-native-codebases.md](agents/agent-native-codebases.md): patch accretion, making the easy change correct, decode once then trust types, the knowledge-placement order, enforce-first hardening
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image

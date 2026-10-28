@@ -36,6 +36,7 @@ These are Tobias's chosen policies for agent-maintained repositories without hum
 - **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
 - **Only black-box tests, as few as possible:** input at the published interface, specified output out. Extend a case before adding one. Static checks, types, linters, and formatters cover the rest. Keep an existing suite until an authorized [migration](references/black-box-tests.md#migrating-an-existing-suite) proves its replacement.
 - **Searchable names:** name things so `rg` finds them.
+- **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary. Where a linter can reject redundant checks or discarded errors, enable it.
 
 Case layouts, context templates, command names, and execution techniques are mechanisms, not these policies. Their reference contracts govern until an agreed replacement preserves the required behavior, safety, rationale, and consumers. Fix a wrong check against that contract; never weaken a correct check merely to pass.
 

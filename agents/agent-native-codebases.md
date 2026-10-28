@@ -28,3 +28,13 @@ The [potato-approach skill](../skills/potato-approach/SKILL.md) owns the order i
 Someone has to own this upkeep. Lauren Tan calls it gardening. Her Dune framework keeps features together, checks imports between Electron main and renderer, and bans comments. Combine constraints, skills, and [runtime verification](testing-with-agents.md) before scaling parallelism. Once agents can reproduce and verify, reports and alerts can become coding tasks automatically.
 
 Source: Lauren Tan, [September 2026 talk on trusting coding agents](https://x.com/poteto/status/2102050467505430555/video/1). The operational method lives in the [potato-approach skill](../skills/potato-approach/SKILL.md).
+
+## Decode once, then trust types
+
+Agents write defensively. A narrow task can't see the guarantee upstream, so a null check, a `catch` or a fallback default looks free. Each one adds a path nobody tests, hides the bug it was meant to catch, and teaches the next agent the type can't be trusted. It's patch accretion at line scale.
+
+- Decode untrusted data once, at the boundary that owns it, into types that exclude invalid states. Inward code never re-checks what a type, schema or constructor guarantees.
+- Handle an error only to recover, translate it at a boundary or clean up. Swallowing, defaulting away (`.ok()`, `unwrap_or_default()`, `catch {}`) or logging and continuing turns a failure into a wrong answer.
+- Inline single-use logic unless the helper owns a boundary. "It has a good name" is the excuse every extraction gives, so it doesn't count.
+
+Enforce it where a lint can: TypeScript `strict` with `@typescript-eslint/no-unnecessary-condition` rejects checks a type rules out, and Clippy's `map_err_ignore` and `let_underscore_must_use` reject discarded errors. Prose covers the rest. Origin: rules attributed to a large coding agent's `AGENTS.md` that circulated on X on 2026-10-28; the version here tightens their helper exception and replaces "avoid try/catch" with when to handle an error.
