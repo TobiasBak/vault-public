@@ -30,6 +30,8 @@ There's no mandatory inventory of commit rules, test reminders, or engineering m
 
 ## Task contract
 
+The [agentic engineering loop](agentic-engineering.md) puts this contract in the broader workflow.
+
 Supply these only where the request and repository leave a consequential gap:
 
 - **Outcome:** the user-visible result.
