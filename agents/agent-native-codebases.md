@@ -35,6 +35,6 @@ Agents write defensively. A narrow task can't see the guarantee upstream, so a n
 
 - Decode untrusted data once, at the boundary that owns it, into types that exclude invalid states. Inward code never re-checks what a type, schema or constructor guarantees.
 - Handle an error only to recover, translate it at a boundary or clean up. Swallowing, defaulting away (`.ok()`, `unwrap_or_default()`, `catch {}`) or logging and continuing turns a failure into a wrong answer.
-- Inline single-use logic unless the helper owns a boundary. "It has a good name" is the excuse every extraction gives, so it doesn't count.
+- Inline single-use logic unless the helper owns a boundary or names a domain rule. A row of named predicates, each one business rule, reads better than one inlined boolean; a name that restates its body doesn't earn the jump.
 
 Enforce it where a lint can: TypeScript `strict` with `@typescript-eslint/no-unnecessary-condition` rejects checks a type rules out, and Clippy's `map_err_ignore` and `let_underscore_must_use` reject discarded errors. Prose covers the rest. Origin: rules attributed to a large coding agent's `AGENTS.md` that circulated on X on 2026-10-28; the version here tightens their helper exception and replaces "avoid try/catch" with when to handle an error.
