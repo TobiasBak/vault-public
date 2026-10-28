@@ -7,9 +7,9 @@ Use this branch of the [autonomy loop](../SKILL.md#the-loop) when a real workflo
 1. **Measure** from harness session logs. Separate model, navigation, build, test, platform, forwarding, conflict, landing, child, and user time. Include shared-tool waits.
 2. **Pick one outcome:** workflow, users, frequency, current cost, and cause to remove. Fix the largest measured recurring cost at its owner, never with an instruction agents must remember.
 3. **Check value:** a baseline and named cause justify one or two before-and-after trials under the same conditions. Speed-motivated migrations, watchers, enforcement systems, and standalone proof efforts need a trial showing value. Otherwise shelve them. A demonstrated autonomy gap or correctness, security, or data-loss bug can justify a scoped fix without a speed claim.
-4. **Measure again.** Stop at the measured target or when a one-line edit reaches its verdict, rebuild included, faster than a model turn. Further optimization needs a new measured cost.
+4. **Measure again.** Stop at the measured target, or when verification costs less than a model turn ([edit-loop speed](../SKILL.md)). Further optimization needs a new measured cost.
 
-This work runs beside product work, never as its precondition.
+Never let this work block a product gate.
 
 ## 1. Ask the whole question in one call
 

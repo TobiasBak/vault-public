@@ -51,7 +51,7 @@ There is no host admission: the kernel shares CPU and memory, and repository ent
 
 A resource only one user may hold at a time, such as a VM device, is locked by its owning tool. Foreground work waits for that owner; opportunistic watchers skip when it is busy and report no new evidence. Long-lived services and independent triggers run in their own systemd user unit (`systemd-run --user`), so they outlive the caller's session scope; take any exclusive lock inside that unit.
 
-Missing required exclusive access is blocked, never a pass. Wait for process exit or file events, never fixed sleeps or poll loops.
+Missing required exclusive access is blocked, never a pass. Wait on the owner's exit or the file event that means it finished, never on a timer.
 
 ## Mutation technique
 

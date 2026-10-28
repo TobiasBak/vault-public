@@ -5,9 +5,9 @@ description: Design, implement, refactor, or review agent-maintained code so the
 
 # Potato approach
 
-A fresh agent should be able to understand the system, change it correctly, establish what actually happened, and recover when reality disagrees.
+Agents copy the code they read and take the easiest local path. Make that correct path the easiest one, and give agents the tools to see whether their change works.
 
-Agents copy the code they read and take the easiest local path. Make that path correct, and give agents the tools to see whether their change works. Source: Lauren Tan's [talk](https://x.com/poteto/status/2102050467505430555/video/1) (2026-09-21) and her [pstack](https://github.com/cursor/plugins/tree/main/pstack) skills, adapted.
+Source: Lauren Tan's [talk](https://x.com/poteto/status/2102050467505430555/video/1) (2026-09-21) and her [pstack](https://github.com/cursor/plugins/tree/main/pstack) skills, adapted.
 
 ## Understand and equip
 

@@ -23,6 +23,18 @@ Then search the notes for overlapping claims and classify each candidate:
 
 Report what changed and every open question, including a duplicate whose answer is the owner's preference rather than a fact.
 
+## Writing rules
+
+Each rule comes from a duplicate that was already in the vault; the pair in parentheses is where it was merged on 2026-10-28.
+
+- **A skill and its script are one owner.** The script holds the procedure; the skill holds the trigger, the stop condition and a pointer. (`chief-of-staff/SKILL.md` repeated 36- and 28-word passages from `scripts/brief.md`.)
+- **One charter sentence, one skill.** Two skills aiming at the same outcome link the aim rather than repeat it. (`potato-approach` and the nullifier's `design-principles.md` shared 22 words.)
+- **A reference file reuses its skill's principle only as a worked case.** Restated as the principle again, it is a copy. (Nullifier `manifest.md` and `SKILL.md` both gave the edit-loop target.)
+- **A safety gate is named at its point of use, never re-specified.** Approval differs by artifact — release values, a delegation brief — while the owner does not.
+- **A pointer names the idea and where it lives.** Naming a policy takes one clause; its conditions, thresholds and exceptions stay with the owner.
+
+`scripts/check-duplicate-authority.py` decides verbatim reuse of thirteen consecutive words or more across every tracked note. Eight to twelve words is usually one policy named twice, which needs the per-line question above; below that it is ordinary vocabulary. Attribution notices in `skills/*/SOURCE.md` and the index's one-line summaries are exempt because quoting is how they route a reader.
+
 ## Verification
 
 Every reported failure is either fixed or stated with its reason. No expired note keeps a moved date without a re-derived fact behind it.
