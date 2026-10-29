@@ -60,6 +60,10 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 - Omarchy's `omarchy-crash-watch` shows a "Process crashed" toast for every systemd-coredump journal entry with the coredump `MESSAGE_ID` (`fc2e22bc…`), sending Tobias investigating expected crashes. Verified with a probe binary on his PC, 2026-10-11.
 - `RLIMIT_CORE=0` (`ulimit -c 0`, `LimitCORE=0`) still journals "terminated abnormally without generating a coredump" under that ID. With a pipe `core_pattern`, 1 makes the kernel skip the helper entirely, so there is no entry or toast. This is the [documented kernel special case](https://man7.org/linux/man-pages/man5/core.5.html).
 
+## Accelerated test clocks
+
+A case clock that runs faster than real time also shortens every product deadline that reads it, so a timeout the case never configured fires on host scheduling delay and fails intermittently under load. In OrderReady, a 100× case clock turned a 40-second platform timeout into about 0.4 s, which explained six intermittent mailbox cases. Fake services must also seed their time from the case clock, or expiry checks drift. Run cases at 1× and advance time explicitly where a case tests a deadline, and test the deadline boundary itself with controlled monotonic time (just inside passes, just past fails). Don't loosen product timeouts or add load to "prove" robustness. Seen 2026-10-29.
+
 ## Tool-manager test doubles
 
 - Never shadow a tool manager on `PATH` with a delegating wrapper. A fake `mise` left first on `PATH` while the real `mise install` runs can trigger auto-reshimming that repoints every global shim in `~/.local/share/mise/shims` at the fake, breaking `cargo` and `rustc` across projects.
