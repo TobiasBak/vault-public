@@ -62,7 +62,7 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Accelerated test clocks
 
-A case clock that runs faster than real time also shortens every product deadline that reads it, so a timeout the case never configured fires on host scheduling delay and fails intermittently under load. In OrderReady, a 100× case clock turned a 40-second platform timeout into about 0.4 s, which explained six intermittent mailbox cases. Fake services must also seed their time from the case clock, or expiry checks drift. Run cases at 1× and advance time explicitly where a case tests a deadline, and test the deadline boundary itself with controlled monotonic time (just inside passes, just past fails). Don't loosen product timeouts or add load to "prove" robustness. Seen 2026-10-29.
+A case clock that runs faster than real time also shortens every product deadline that reads it, so a timeout the case never configured fires on host scheduling delay and fails intermittently under load. In OrderReady, a 100× case clock turned a 40-second platform timeout into about 0.4 s, which explained six intermittent mailbox cases. Fake services must also seed their time from the case clock, or expiry checks drift. Run cases at 1× and advance time explicitly where a case tests a deadline, and test the deadline boundary itself with controlled monotonic time (just inside passes, just past fails). Don't loosen product timeouts or add load to "prove" robustness. Fix every case at once and remove the acceleration option: the first fix moved only the six cases seen failing, and 44 cases still at 100× produced the same configuration and pairing failures later that day. Seen 2026-10-29.
 
 ## Tool-manager test doubles
 
