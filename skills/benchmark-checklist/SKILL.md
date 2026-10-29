@@ -14,6 +14,7 @@ For adoption decisions and confirmed performance claims, answer every question w
 - Write the hypothesis for a scout, or the claim you expect to ship ("export is 30% faster at p50 on the 60k-row dataset"). The questions test that sentence.
 - Read the measurement script: what it times, counts, and ignores.
 - Check `uptime` and `nproc`. If the machine is busy and you can't stop the load, interleave the sides so both see the same noise, and say so.
+- Deliberate contention experiments follow the global shared-host safety rule. Give a permitted run its own supervised process tree and an externally enforced deadline; an agent session's lifetime or a Python `finally` block does not bound it. Verify teardown, and invalidate the measurement if its load was interrupted.
 
 ## The questions
 
