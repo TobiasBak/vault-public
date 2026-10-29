@@ -1,4 +1,4 @@
 interface:
   display_name: "Theodore Kaczynski Nullifier"
-  short_description: "Self-explanatory repos and trustworthy agent output"
-  default_prompt: "Use $theodore-kaczynski-nullifier to build repositories a fresh agent can understand, change correctly, establish actual outcomes, and recover when reality disagrees without human source review or repair. Follow that autonomy loop on a real task. Treat the codebase as living documentation, preserve the chosen repository policies, and distinguish mechanical acceptance from behavioral evidence and judgment against independent authority. Explain every failure before fixing, retrying or handing it off: product, check, environment or missing evidence. Inspect and repair partial effects at their owner. Reuse shared infrastructure without copying its policies; remove measured feedback costs beside product work, then stop at the chosen target."
+  short_description: "Diagnose and shape repos for reliable agent development"
+  default_prompt: "Use $theodore-kaczynski-nullifier to trace a real change through this repo, diagnose misplaced ownership and hidden obligations, choose the simplest coherent design, and verify its behavior and recovery within the requested scope."

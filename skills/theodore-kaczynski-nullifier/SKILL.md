@@ -1,6 +1,6 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Build self-explanatory, hardened repositories that agents can understand, change safely, verify and recover. Use when designing agent-repo structure, product verification or agent context, diagnosing failing checks, unclear runtime outcomes or partial failure, cutting measured feedback waits, or writing AGENTS.md.
+description: Diagnose and shape agent-maintained repositories so fresh agents can understand, change, verify and recover them. Use for structural repo reviews and redesigns, tangled ownership or coupling, failing checks, unclear runtime outcomes, partial failure, product verification, agent context or measured feedback bottlenecks.
 ---
 
 # Theodore Kaczynski Nullifier
@@ -9,14 +9,15 @@ Build for fresh-agent autonomy: understanding the system, changing it correctly,
 
 ## The loop
 
-Start with a real product task and the outcome its users need, not a tooling checklist.
+Start with a real product task and the outcome its users need, not a tooling checklist. For repository diagnosis, choose representative changes and follow their actual paths. For a new repository, design around its first useful workflow rather than a directory template.
 
 1. **Understand:** find the published interface, authoritative contract, owning code, and boundaries where effects happen. Establish intended behavior independently of the implementation; identify compatibility obligations from consumers or persisted data.
-2. **Change:** repair the owning structure and bad examples, not just the symptom. Make known mistakes impossible or mechanically rejected where enforceable. Preserve the [chosen policies](#repository-rules); add machinery only for a demonstrated task gap, measured recurring cost, or broken contract.
-3. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/black-box-tests.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
-4. **Recover when needed:** inspect completed, incomplete, and uncertain effects at their owner before retrying. Use supported repair and verify the resulting state; a source revert does not undo external effects. Follow the [runtime outcome procedure](references/runtime-outcomes.md).
+2. **Diagnose and choose:** trace the decisions, callers and state writers behind the task. For structural work, use [repository diagnosis and design](references/repo-design.md) to separate symptoms from causes and compare coherent shapes. A smell is a lead, not a verdict; choose by the obligations removed from contributors and callers, not file counts or architectural fashion.
+3. **Change:** repair the owning structure and bad examples, not just the symptom. Make known mistakes impossible or mechanically rejected where enforceable. Preserve the [chosen policies](#repository-rules); add machinery only for a demonstrated task gap, measured recurring cost, or broken contract.
+4. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/black-box-tests.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
+5. **Recover when needed:** inspect completed, incomplete, and uncertain effects at their owner before retrying. Use supported repair and verify the resulting state; a source revert does not undo external effects. Follow the [runtime outcome procedure](references/runtime-outcomes.md).
 
-A missing answer is a task gap to fix at its owner, not a reason to build every capability here. In a new repo, build the first real workflow and its correctness checks. Whole-repo conformance is separate work.
+A missing answer is a task gap to fix at its owner, not a reason to build every capability here. Whole-repo conformance is separate work.
 
 ## Ownership
 
@@ -36,7 +37,7 @@ These are Tobias's chosen policies for agent-maintained repositories without hum
 - **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
 - **Black-box contracts, not private internals:** use the [appropriate production boundary](references/behavioral-boundaries.md), including a model's public API. Test count and launching the whole app do not establish value. Existing suites retain their [replacement-proof requirement](references/black-box-tests.md#migrating-an-existing-suite).
 - **Searchable names:** name things so `rg` finds them.
-- **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
+- **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. This does not make [changing facts timeless](references/repo-design.md#types-validation-and-changing-facts). Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
 
 Case layouts, context templates, command names, and execution techniques are mechanisms, not these policies. Their reference contracts govern until an agreed replacement preserves the required behavior, safety, rationale, and consumers. Fix a wrong check against that contract; never weaken a correct check merely to pass.
 
@@ -61,6 +62,7 @@ References define adopted capabilities, not a to-do list:
 | Job | Read |
 |---|---|
 | Understanding the foundations or changing this skill | [design-principles.md](references/design-principles.md) |
+| Diagnosing source structure, choosing boundaries, planning a refactor, or shaping a new repo | [repo-design.md](references/repo-design.md) |
 | Establishing runtime state, partial effects, or safe recovery | [runtime-outcomes.md](references/runtime-outcomes.md) |
 | Writing, changing, or migrating tests; real dependencies and fakes; GUI cases; judging evidence | [black-box-tests.md](references/black-box-tests.md) |
 | Separating model rules from native mechanisms, enforcing renderless builds, or transferring GUI assertions | [behavioral-boundaries.md](references/behavioral-boundaries.md) |
@@ -73,6 +75,7 @@ References define adopted capabilities, not a to-do list:
 ## Verification
 
 Prove what you delivered, not every capability here:
+- **Structural diagnosis or redesign:** the [design proof](references/repo-design.md#proof), including the representative change, preserved contracts and remaining uncertainty. A diagnosis-only request ends with supported findings, not unsolicited edits.
 - **Changed contract:** the [proof procedure](references/control-cli.md#proof), with expectations checked against their independent authority.
 - **Bug fix:** the extended case [fails on the pre-fix build](references/black-box-tests.md#lifecycle) with the reported symptom and passes on the fix.
 - **Runtime understanding or recovery:** the [outcome proof](references/runtime-outcomes.md#proof), including relevant partial failure when recovery changes.

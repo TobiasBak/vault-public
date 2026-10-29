@@ -74,7 +74,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 
 All model-invoked; agents select relevant skills automatically:
 - [`potato-approach`](skills/potato-approach/SKILL.md): make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): make repositories understandable, changeable, verifiable and recoverable by agents
+- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): diagnose repo structure, choose coherent designs, and make agent changes verifiable and recoverable
 - [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change frequently, including version boundaries
 - [`benchmark-checklist`](skills/benchmark-checklist/SKILL.md) (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
