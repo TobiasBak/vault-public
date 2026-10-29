@@ -8,7 +8,8 @@ Check acceptance establishes only the implemented mechanical property. Independe
 
 | Rule | Fails on | Approved path |
 |---|---|---|
-| Black-box tests only | Test code outside corpus and harness: inline test modules, per-module test files, test-only visibility hooks | A case in the corpus |
+| Declared behavioral test boundaries | Test targets outside the approved corpus, harness and public-contract targets; test-only visibility hooks | A [production contract target](behavioral-boundaries.md#make-the-model-the-production-owner) or corpus case |
+| Renderless model graph | Dependency edges outside the model's approved pure build closure | The [model boundary checks](behavioral-boundaries.md#keep-the-cheap-path-cheap) |
 | Expected-output metadata | A changed or deleted expected file without a `Behavior-Change:` trailer | `<cli> accept <case> --source "<truth>"` plus the trailer |
 | Harness-change metadata | Harness, canonicalizer, tolerance, or fake changes without the trailer; the guarded files are the cache key's harness set | The trailer |
 | Declared coverage | A behavior-and-entry-point pair in two cases' `covers`; a declared published entry point no case covers | Extend the covering case |
@@ -58,8 +59,8 @@ Trailer rules apply to the diff and message that will reach the target history:
 Ship every ban with its approved path in the same change. The failure names rule, location, and path, and states the reason in one clause when the rule name doesn't make it plain. That makes the check the first home for a [non-obvious reason](../SKILL.md#where-the-why-goes):
 
 ```
-no-unit-tests: src/parser/lexer.rs:212 defines a test module.
-Extend the corpus/parser/ case that covers this behavior, or add one with input, expected, case.toml.
+private-test-access: src/parser/lexer.rs:212 exposes state only for tests.
+Exercise the parser's production contract through its approved library test target or corpus case.
 
 no-cloud-run-iam-conditions: infra/run.tf:41 adds a condition to roles/run.invoker.
 Cloud Run ignores resource.name conditions. Grant the role on the service without one.

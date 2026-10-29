@@ -1,10 +1,10 @@
 # Black-box tests
 
-A test is an input at the published interface and a specified output. Nothing else is a test. A **case** is one scenario directory with input, expected output, and `case.toml`; the **corpus** is all cases. Few cases, each covering as much as it can.
+A behavioral test supplies input through a published production contract and checks its specified output. Choose its [proof boundary](behavioral-boundaries.md) before choosing a driver. A **corpus case** is one scenario directory with input, expected output, and `case.toml`; the **corpus** is those scenarios. Public model and library contracts may instead use ordinary test targets.
 
 ## The box
 
-- The box is the published interface: CLI, HTTP API, file-in/file-out contract, a library's public API, or a GUI. Nothing narrower; calling an internal module a "product" to test it is forbidden. Behavior a GUI reaches through an API is covered at the API; the GUI gets [its own cases](#gui-cases) for what it decides itself: client state, validation, navigation, optimistic and offline behavior, and what it shows.
+- The box is the production contract: CLI, HTTP API, file-in/file-out contract, a library or model API with real consumers, or a GUI. An arbitrary internal module is not a product boundary. Backend behavior stays at its API; pure client rules use their production model. [GUI cases](#gui-cases) prove the native or browser mechanisms connecting users to those rules.
 - **Input:** the request plus starting state: files, operated dependencies' state, fake external services, clock, seeds.
 - **Output:** the response plus effects seen in the environment: files written, rows in the product's database, messages in a fake mailbox, rows in a fake external system.
 - **Run what the product operates.** A dependency the product deploys and runs, such as its database, queue, cache or object store, runs for real at the production version, started once in the warm environment. Each case gets its own database, schema, bucket or key prefix. A fake of it tests only the fake.
@@ -38,7 +38,7 @@ A test is an input at the published interface and a specified output. Nothing el
 
 ## Forbidden
 
-- Unit tests, tests of internal modules, private access, assertions on internal call order or internal data. The order of effects in the environment, such as a charge recorded before a shipment, is output.
+- Tests coupled to private helpers, internal fields or incidental call order. A production model's public output is a contract, not a diagnostic dump. The order of effects in the environment, such as a charge recorded before a shipment, is also output.
 - Expected values whose only source is the code under test.
 - Assertions on diagnostic stage dumps.
 - Cases that share mutable starting state.
@@ -127,27 +127,29 @@ Read the source and check each changed expectation against it. Record the releva
 
 A failing case prints only: case path and behavior, the **first mismatch**, a small diff around it, the `.actual` path, and one command rerunning only this case. Passing cases print nothing. The `.actual` file is written before the comparison and survives the run, including failures, timeouts, and teardown.
 
-To localize without unit tests: `--emit=<stage>` dumps intermediate stages for diagnosis (never asserted on), and the reducer shrinks a failing input to a minimal one that extends a case.
+For diagnosis, `--emit=<stage>` exposes intermediate results without making them assertions. The reducer minimizes the failing input for its owning contract regression.
 
 ## Lifecycle
 
-- Every bug fix extends a case with the minimized input, or adds one when none can absorb it. Run it on the pre-fix build first: it fails with the reported symptom, and that failure output is kept as evidence. A case that passes before the fix doesn't reproduce the bug.
+- A bug fix gets regression proof at its owning public contract. Extend an existing corpus scenario or model/library test, adding one only for distinct behavior or starting state. Run it on the pre-fix build first: it fails with the reported symptom, and that failure output is kept as evidence. A check that passes before the fix doesn't reproduce the bug.
 - A case covering nothing another case doesn't is merged or deleted.
 - An internal rewrite changes no case. A case that breaks without a behavior change depends on internals; fix the case.
-- When mutation testing is adopted, run it on a schedule. Each surviving mutant extends a case until killed, or marks dead code to delete. Line coverage is not measured.
+- When mutation testing is adopted, run it on a schedule. A surviving mutant needs a regression at the approved boundary, or evidence that its code is dead and should go. Line coverage is not measured.
 
 ## Migrating an existing suite
+
+This procedure replaces a whole suite. A smaller [assertion transfer](behavioral-boundaries.md#transfer-assertions-without-transferring-away-the-native-proof) preserves the suite and has its own proof obligations.
 
 - Start only for a chosen outcome with explicit permission to delete the old suite.
 - First identify the authoritative public contract and agreed replacements or cutovers, and confirm the proof and its source of truth still matter after them. If the old suite's backend is being replaced, shelve the migration and keep the suite; a result on one backend doesn't carry over.
 - Read the old suite as a list of behaviors. Never port tests one to one; old names, grouping, and fixtures leave no trace. A pilot showing the migration infeasible or worthless can stop it, never authorize deletion without replacement proof.
 
 1. Freeze the old suite and fixture builders. No edits except deletion.
-2. Write large cases in the [finished shape](#case-layout) for those behaviors.
-3. Mutation-test the corpus, then run the old suite only on mutants the corpus missed. Sample at least a thousand mutants to estimate the old-suite-only kill rate; a hundred decides nothing.
+2. Implement replacement proofs at the [appropriate boundaries](behavioral-boundaries.md). Corpus scenarios use the [finished shape](#case-layout).
+3. Mutation-test the replacement proofs, then run the old suite only on mutants they missed. Sample at least a thousand mutants to estimate the old-suite-only kill rate; a hundred decides nothing.
    - Both suites first pass on the unmutated tree through the exact proof harness. A harness failing its baseline counts every mutant as killed.
    - Pilot fifty mutants. An old-only rate above a few percent is a harness bug until shown otherwise.
    - Estimate wall time from the pilot. Over an hour, change the method (cheaper build, mutants compiled once, fewer old-suite runs); never wait it out.
-4. Each mutant only the old suite kills extends a case, or its code is deleted as dead.
+4. Extend the relevant replacement proof for each old-suite-only kill, or delete code established to be dead.
 5. Delete the old suite, its fixtures, and every script that produced them.
-6. Turn on the unit-test ban.
+6. Enforce the approved behavioral test boundaries.

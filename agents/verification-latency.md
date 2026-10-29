@@ -26,7 +26,7 @@ Prefer Linux scheduling runnable work over adding userspace capacity queues. Exa
 
 ## Parked: Rust UI development like a game engine
 
-Tobias does not want to explore live Rust UI development as the route to the verification-latency goal. UI testing and browser automation are not established critical-path bottlenecks for this effort. Retain this research as background, not work to start; required behavioral tests still follow the changed contract and delivery policy.
+Tobias does not want to explore live Rust UI development as the route to the verification-latency goal. Retain this research as background, not work to start; required behavioral tests still follow the changed contract and delivery policy. [Renderless verification](renderless-verification.md) is a separate, measured change to the proof boundary, not hot-patching research.
 
 The idea is to keep the native application and an interesting UI scenario alive while delivering changed Rust code at explicit reload boundaries. Preserve or reconstruct valid state instead of rebuilding, relaunching and navigating back after every edit. This is actual code hot-patching, not necessarily a new presentation language.
 
