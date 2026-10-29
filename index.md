@@ -33,7 +33,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
 - [agents/renderless-verification.md](agents/renderless-verification.md): production-model proofs instead of repeated GUI state checks, enforced dependency boundaries, native obligations and measured limits
-- [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, shared compute and compiler/runtime research; live Rust UI is parked
+- [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, CPU attribution, shared compute and compiler/runtime research; live Rust UI is parked
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
@@ -53,7 +53,8 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/api-design.md](software/api-design.md): consumer-shaped APIs, one contract, lifecycle, events, errors, plugins, persisted-format renames
 - [software/ai-era-durability.md](software/ai-era-durability.md): what survives cheap AI, the typed-plan architecture, provider-native harnesses
 - [software/performance-aware-data-design.md](software/performance-aware-data-design.md): when data layout dominates hot paths
-- [software/cargo-target-cache.md](software/cargo-target-cache.md): shared Cargo target freshness hazards and safe A/B builds
+- [software/cargo-target-cache.md](software/cargo-target-cache.md): preserve Cargo contexts, measured pruning removal, source freshness and cold versus warm A/B controls
+- [software/background-work-coalescing.md](software/background-work-coalescing.md): request intent, complete reusable publications and admission-based race tests
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
 - [software/sql-type-inference.md](software/sql-type-inference.md): typed SQL-file imports, colinhacks demo, what it does and does not establish
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
@@ -66,7 +67,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/supabase.md](software/supabase.md): CLI config-push cwd quirk, privileged Storage completion, free-plan pausing and restore
 - [software/windows-gui-automation.md](software/windows-gui-automation.md): UIA-first tools, state capture, keeping the desktop alive after RDP
 - [software/t3-code-operations.md](software/t3-code-operations.md): thread/workspace mechanics, secret ownership, webhook setup, Connect and safe restarts
-- [software/omarchy-agent-operations.md](software/omarchy-agent-operations.md): package installation, privilege and unprivileged `/proc` safety checks
+- [software/omarchy-agent-operations.md](software/omarchy-agent-operations.md): package installation, privilege, safe CLI replacement and unprivileged `/proc` checks
 - [software/omarchy-windows-vm.md](software/omarchy-windows-vm.md): agent use of Tobias's local Windows VM: the `win-vm` CLI, lifecycle ownership, disposable runs, file transfers and setup ownership
 
 ## Global skills (`skills/`)

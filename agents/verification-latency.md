@@ -14,6 +14,10 @@ recheck-after: 2027-01-24
 - Follow the critical path. Summed parallel job time is neither wall time nor a saving. Moving a wait into another queue or preparation step does not shorten verification.
 - Preserve checks and independent expectations. The minute is a performance goal, not a timeout that turns incomplete work into success. A complete, wrong result should fail promptly; genuinely pending work still needs its completion evidence.
 
+## Explain why the hot work runs
+
+Attribute host load to workloads and their descendants before tuning a hot function. An LLVM-heavy profile locates compiler cost; it does not establish that those compilations were necessary. Trace the operation that scheduled or invalidated the work. See the measured [Cargo context preservation case](../software/cargo-target-cache.md#measured-preservation-result) and the [benchmark checklist](../skills/benchmark-checklist/SKILL.md).
+
 ## Build on shared warm state
 
 Build on gah's copy-on-write workspaces, inherited build outputs and stable source paths rather than creating another workspace provisioner or target copier. The repository owns incremental builds and product verification; the kernel shares host CPU and memory, with no host admission (Tobias, 2026-10-23). See the [feedback optimization loop](../skills/theodore-kaczynski-nullifier/references/manifest.md) for established mechanisms and [remote execution boundaries](../hardware/agent-era-dev-machine.md#make-extra-machines-execute-work).
