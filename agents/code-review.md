@@ -20,6 +20,7 @@ Reviewers need intent, requirements, invariants, base and candidate revisions, t
 - The writer chooses relevant behavioral checks and gives the reviewer the candidate revision, available results and untested scope. Static pre-push runs concurrently.
 - A clear review plus passing tests on byte-identical source counts as clear. Do not repeat review merely because previously unexecuted tests now pass.
 - Track the reviewed source identity. Fix blocking findings and validate the fixes without another independent review round.
+- Identify a review by its delta, not the whole landing tree: the reviewed base tree plus the reviewed result tree. Accept a forwarded candidate when main left every reviewed path unchanged, the reviewed paths match the reviewed result and no other path differs from main. An exact-tree rule forces a re-review whenever an unrelated landing moves main; on 2026-10-29 that cost OrderReady four forward/replay/re-review cycles for byte-identical patches. OrderReady's landing check enforces `Reviewed-Base`/`Reviewed-Tree` this way since `1776112ce` (2026-10-30).
 
 ## Reviewers
 
