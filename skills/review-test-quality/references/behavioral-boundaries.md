@@ -52,7 +52,7 @@ that order.
   an ordinary failure into an input-change block. Retain shrinking and replay
   evidence in run artifacts; promote useful counterexamples deliberately.
 
-The [enforcement rules](enforcement.md#checks) own gate integration. Reject a
+`$theodore-kaczynski-nullifier`'s enforcement rules own gate integration. Reject a
 known forbidden edge or effect and accept the supported model target through
 the real check entrypoint before relying on the guard.
 

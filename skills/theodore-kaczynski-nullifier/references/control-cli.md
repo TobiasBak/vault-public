@@ -14,11 +14,11 @@ A command earns its place by answering a real repeated question. Adopt only what
 |---|---|
 | `status` | Current tree's verdict, from matching evidence or a workspace-local watcher. Blocks while a run for these inputs is in progress. |
 | `wait <job>` | Blocks until the job's verdict exists, then returns it. |
-| `why <case>` | The [failure output](black-box-tests.md#failure-output) plus the `emit` command for the failing request. |
+| `why <case>` | The `$review-test-quality` failure output plus the `emit` command for the failing request. |
 | `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
 | `check` | Format, lint, types, enforcement rules. Never runs cases. |
 | `test [<case>...]` | Writer-invoked affected cases by default; `--full` for qualification when the active delivery policy requires it. |
-| `accept <case> --source "<truth>"` | Records inspected output and its oracle after [contract judgment](black-box-tests.md#evidence-and-authority); never establishes truth by recording it. The commit still needs `Behavior-Change:`. |
+| `accept <case> --source "<truth>"` | Records inspected output and its oracle after [contract judgment](runtime-outcomes.md#evidence-and-authority); never establishes truth by recording it. The commit still needs `Behavior-Change:`. |
 | `reduce <case>` | Shrinks a failing input to a minimal failing case. |
 | `emit <stage> <input>` | Diagnostic stage dump. |
 | `env up\|reset\|down` | Operated dependencies, fakes, platform VMs. Only where cases need managed external state. |
@@ -62,7 +62,7 @@ Only for an authorized mutation-testing effort:
 
 ## Proof
 
-Prove a changed contract through the real public entrypoint against [independently justified expectations](black-box-tests.md#evidence-and-authority): normal success, the targeted failure, relevant blocked prerequisites, and affected cache or cleanup behavior. Process changes also prove their deadlines and cleanup of what they own. Reuse valid evidence for unchanged parts, and don't run unrelated proofs just because this skill lists them.
+Prove a changed contract through the real public entrypoint against [independently justified expectations](runtime-outcomes.md#evidence-and-authority): normal success, the targeted failure, relevant blocked prerequisites, and affected cache or cleanup behavior. Process changes also prove their deadlines and cleanup of what they own. Reuse valid evidence for unchanged parts, and don't run unrelated proofs just because this skill lists them.
 
 A throwaway proof starts with a known-good pass in the same environment; a blocked baseline can't establish a failure. The task brief carries the environment setup and trust setup, scoped to the throwaway directory; tool-specific commands stay in the project or host setup.
 

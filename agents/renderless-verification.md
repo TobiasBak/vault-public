@@ -1,6 +1,6 @@
 # Renderless behavioral verification
 
-Use the [production-model proof boundary](../skills/theodore-kaczynski-nullifier/references/behavioral-boundaries.md)
+Use the [production-model proof boundary](../skills/review-test-quality/references/behavioral-boundaries.md)
 for rule-only changes. That reference owns the enforcement and migration rules;
 this case records the measured gain and its limits.
 

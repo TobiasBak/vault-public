@@ -92,13 +92,7 @@ Price list 2.1: an unknown SKU is refused with UNKNOWN_SKU.
 ]
 ```
 
-## Evidence and authority
-
-| Evidence | Establishes | Does not establish |
-|---|---|---|
-| Static check acceptance | The candidate satisfies the implemented structural and metadata rules | Correct behavior, meaningful coverage, or an authoritative oracle |
-| Behavioral execution and readback | The observed response and effects for the checked inputs, environment, and scope | General correctness, real-service delivery from a fake, or the authority of expected values |
-| Judgment against the contract | The named source governs this behavior and the expected values follow from it | That the implementation actually produces those values without execution |
+## Authority for expectations
 
 Read the source and check each changed expectation against it. Record the relevant section, version, or derivation in the oracle; its presence and a `Behavior-Change:` trailer establish traceability, not truth. A file's location does not establish independence. A reference implementation that preserves a known bug is not authority for behavior the governing contract rejects. If authority is missing or conflicting, resolve the contract before accepting outputs.
 
@@ -119,9 +113,9 @@ Read the source and check each changed expectation against it. Record the releva
 - Calls the real `main` in-process with the same arguments; a subprocess only when process behavior is the contract.
 - One build and one warm environment for the whole selection. Each case gets its own temp dir, port, and fake state so cases run in parallel; parallelize when the selection overruns its budget.
 - Clock and randomness injected; no real sleeps; seeds printed on failure.
-- Runs affected cases by default when the writer invokes verification; the [landing check stays static](enforcement.md#checks). If the full corpus fits the affected-case budget, always run it all and build no selection.
+- Runs affected cases by default when the writer invokes verification; the landing check stays static under `$theodore-kaczynski-nullifier`'s enforcement rules. If the full corpus fits the affected-case budget, always run it all and build no selection.
 - Reports every case over budget. A hung case is killed at its budget and fails, naming its request.
-- Writes the verdict cache and feeds the watcher.
+- Writes the verdict cache and feeds the watcher that `$theodore-kaczynski-nullifier`'s manifest defines.
 
 ## Failure output
 

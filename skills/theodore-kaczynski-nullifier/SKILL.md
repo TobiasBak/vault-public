@@ -14,7 +14,7 @@ Start with a real product task and the outcome its users need, not a tooling che
 1. **Understand:** find the published interface, authoritative contract, owning code, and boundaries where effects happen. Establish intended behavior independently of the implementation; identify compatibility obligations from consumers or persisted data.
 2. **Diagnose and choose:** trace the decisions, callers and state writers behind the task. For structural work, use [repository diagnosis and design](references/repo-design.md) to separate symptoms from causes and compare coherent shapes. A smell is a lead, not a verdict; choose by the obligations removed from contributors and callers, not file counts or architectural fashion.
 3. **Change:** repair the owning structure and bad examples, not just the symptom. Make known mistakes impossible or mechanically rejected where enforceable. Preserve the [chosen policies](#repository-rules); add machinery only for a demonstrated task gap, measured recurring cost, or broken contract.
-4. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/black-box-tests.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
+4. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/runtime-outcomes.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
 5. **Recover when needed:** inspect completed, incomplete, and uncertain effects at their owner before retrying. Use supported repair and verify the resulting state; a source revert does not undo external effects. Follow the [runtime outcome procedure](references/runtime-outcomes.md).
 
 A missing answer is a task gap to fix at its owner, not a reason to build every capability here. Whole-repo conformance is separate work.
@@ -35,7 +35,7 @@ These are Tobias's chosen policies for agent-maintained repositories without hum
 
 - **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
 - **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
-- **Black-box contracts, not private internals:** use the [appropriate production boundary](references/behavioral-boundaries.md), including a model's public API. `$review-test-quality` judges whether an existing test earns its place. Existing suites retain their [replacement-proof requirement](references/black-box-tests.md#migrating-an-existing-suite).
+- **Black-box contracts, not private internals:** tests exercise the appropriate production boundary, including a model's public API. `$review-test-quality` owns writing, judging, pruning and migrating tests, including the replacement proof an existing suite needs before deletion.
 - **Searchable names:** name things so `rg` finds them.
 - **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. This does not make [changing facts timeless](references/repo-design.md#types-validation-and-changing-facts). Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
 
@@ -63,10 +63,8 @@ References define adopted capabilities, not a to-do list:
 |---|---|
 | Understanding the foundations or changing this skill | [design-principles.md](references/design-principles.md) |
 | Diagnosing source structure, choosing boundaries, planning a refactor, or shaping a new repo | [repo-design.md](references/repo-design.md) |
-| Establishing runtime state, partial effects, or safe recovery | [runtime-outcomes.md](references/runtime-outcomes.md) |
-| Writing, changing, or migrating tests; real dependencies and fakes; GUI cases; judging evidence | [black-box-tests.md](references/black-box-tests.md) |
-| Reviewing, pruning, or merging existing tests | `$review-test-quality` |
-| Separating model rules from native mechanisms, enforcing renderless builds, or transferring GUI assertions | [behavioral-boundaries.md](references/behavioral-boundaries.md) |
+| Establishing runtime state, partial effects, or safe recovery; what evidence establishes | [runtime-outcomes.md](references/runtime-outcomes.md) |
+| Writing, reviewing, pruning, or migrating tests; proof boundaries; real dependencies and fakes; GUI cases | `$review-test-quality` |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
 | Choosing and measuring a feedback cost to remove | [manifest.md](references/manifest.md) |
 | Tracing slow feedback | [tracing.md](references/tracing.md) |
@@ -78,7 +76,7 @@ References define adopted capabilities, not a to-do list:
 Prove what you delivered, not every capability here:
 - **Structural diagnosis or redesign:** the [design proof](references/repo-design.md#proof), including the representative change, preserved contracts and remaining uncertainty. A diagnosis-only request ends with supported findings, not unsolicited edits.
 - **Changed contract:** the [proof procedure](references/control-cli.md#proof), with expectations checked against their independent authority.
-- **Bug fix:** the extended case [fails on the pre-fix build](references/black-box-tests.md#lifecycle) with the reported symptom and passes on the fix.
+- **Bug fix, test change, or suite deletion:** the matching `$review-test-quality` verification.
 - **Runtime understanding or recovery:** the [outcome proof](references/runtime-outcomes.md#proof), including relevant partial failure when recovery changes.
 - **Agent-repo setup, navigation, or skill behavior:** run the changed guidance on a representative task yourself: the searches and commands it names reach the owning code, the change and its outcome check work, and supported recovery runs when needed. Don't stage a fresh agent; real sessions after landing are the remaining test. Claim a navigation improvement only from turn counts in real sessions before and after.
 - **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, enough to name its cause without a rerun.
@@ -87,4 +85,3 @@ Prove what you delivered, not every capability here:
 - **Enforcement:** the [landing-entrypoint proof](references/enforcement.md#proof), including candidate and metadata. It proves the implemented check, not semantic correctness beyond it.
 - **Cache or watcher:** matching inputs reuse evidence; changed inputs reject it after forwarding or child integration. A watcher observes its own workspace.
 - **Edit-loop speed:** a one-line edit reaches its verdict, rebuild included, faster than a model turn. Cache hits prove nothing here.
-- **Suite deletion:** the [replacement proof](references/black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop a migration, never authorize deletion.
