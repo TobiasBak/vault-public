@@ -35,7 +35,7 @@ These are Tobias's chosen policies for agent-maintained repositories without hum
 
 - **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
 - **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
-- **Black-box contracts, not private internals:** use the [appropriate production boundary](references/behavioral-boundaries.md), including a model's public API. Test count and launching the whole app do not establish value. Existing suites retain their [replacement-proof requirement](references/black-box-tests.md#migrating-an-existing-suite).
+- **Black-box contracts, not private internals:** use the [appropriate production boundary](references/behavioral-boundaries.md), including a model's public API. `$review-test-quality` judges whether an existing test earns its place. Existing suites retain their [replacement-proof requirement](references/black-box-tests.md#migrating-an-existing-suite).
 - **Searchable names:** name things so `rg` finds them.
 - **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. This does not make [changing facts timeless](references/repo-design.md#types-validation-and-changing-facts). Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
 
@@ -65,6 +65,7 @@ References define adopted capabilities, not a to-do list:
 | Diagnosing source structure, choosing boundaries, planning a refactor, or shaping a new repo | [repo-design.md](references/repo-design.md) |
 | Establishing runtime state, partial effects, or safe recovery | [runtime-outcomes.md](references/runtime-outcomes.md) |
 | Writing, changing, or migrating tests; real dependencies and fakes; GUI cases; judging evidence | [black-box-tests.md](references/black-box-tests.md) |
+| Reviewing, pruning, or merging existing tests | `$review-test-quality` |
 | Separating model rules from native mechanisms, enforcing renderless builds, or transferring GUI assertions | [behavioral-boundaries.md](references/behavioral-boundaries.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
 | Choosing and measuring a feedback cost to remove | [manifest.md](references/manifest.md) |

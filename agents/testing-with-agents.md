@@ -115,7 +115,7 @@ Windows preparation and CI once differed only because uv injected `UV_INTERNAL__
 
 ## Pruning tests
 
-Keep tests that catch broken contracts or meaningful regressions across internal rewrites. Judge each assertion, not the test's category: a UI assertion may protect accessibility, a provider fixture may protect a protocol, and a registration test may be a discovery contract. Delete tests with no independent requirement, tests that mirror structure, and checks duplicated by cheaper equivalents. Coverage and count are not goals. The `review-test-quality` skill does this review.
+The [`review-test-quality`](../skills/review-test-quality/SKILL.md) skill decides which tests to keep, rewrite or delete.
 
 ## Refactor equivalence
 

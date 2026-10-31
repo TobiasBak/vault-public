@@ -22,7 +22,7 @@ A behavioral test supplies input through a published production contract and che
 
 - A case is a whole scenario, not one assertion, as large as its budget allows.
 - When the interface takes a list of subjects, send one request per payload, operation, and set of call-level arguments: quote three SKUs in one `quote` call, not three calls. Different call-level arguments and separate rejection scenarios are separate requests.
-- Extend a case before adding one. A new case needs an input no case can absorb: a conflicting starting state, a different kind, or a budget overrun.
+- Extend a case before adding one. A new case needs an input no case can absorb: a conflicting starting state, a different kind, or a budget overrun. Merging keeps the distinctions `$review-test-quality` names.
 - Each behavior-and-entry-point pair is covered by exactly one case, and every published entry point to a behavior is covered. Coverage through another entry point doesn't count.
 - Prove a write by reading it back through the interface or environment, never by the write's own response.
 - If a scenario can't fit its budget, split off groups of behavior that run on their own; each case does its own startup, setup, readback, and teardown. Keep every original request and assertion exactly once and record where each went (a projection map). Extra setup may add requests, never replace assertions. Cases may share authored input files, never mutable starting state.
@@ -132,7 +132,7 @@ For diagnosis, `--emit=<stage>` exposes intermediate results without making them
 ## Lifecycle
 
 - A bug fix gets regression proof at its owning public contract. Extend an existing corpus scenario or model/library test, adding one only for distinct behavior or starting state. Run it on the pre-fix build first: it fails with the reported symptom, and that failure output is kept as evidence. A check that passes before the fix doesn't reproduce the bug.
-- A case covering nothing another case doesn't is merged or deleted.
+- Review existing cases and tests for keep, rewrite, merge or delete with `$review-test-quality`.
 - An internal rewrite changes no case. A case that breaks without a behavior change depends on internals; fix the case.
 - When mutation testing is adopted, run it on a schedule. A surviving mutant needs a regression at the approved boundary, or evidence that its code is dead and should go. Line coverage is not measured.
 
