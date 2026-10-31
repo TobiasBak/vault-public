@@ -20,31 +20,24 @@ Attribute host load to workloads and their descendants before tuning a hot funct
 
 ## Build on shared warm state
 
-Build on gah's copy-on-write workspaces, inherited build outputs and stable source paths rather than creating another workspace provisioner or target copier. The repository owns incremental builds and product verification; the kernel shares host CPU and memory, with no host admission (Tobias, 2026-10-23). See the [feedback optimization loop](../skills/theodore-kaczynski-nullifier/references/manifest.md) for established mechanisms and [remote execution boundaries](../hardware/agent-era-dev-machine.md#make-extra-machines-execute-work).
+Build on gah's copy-on-write workspaces, inherited build outputs and stable source paths rather than creating another workspace provisioner or target copier. The repository owns incremental builds and product verification through the language's own build tool and test runner, with thin glue. The kernel shares CPU with no host admission (Tobias, 2026-10-23); memory is capped per heavy job, and nothing queues behind a host-wide lock. The [feedback speed reference](../skills/theodore-kaczynski-nullifier/references/manifest.md) owns those rules; see also [remote execution boundaries](../hardware/agent-era-dev-machine.md#make-extra-machines-execute-work).
 
-Share immutable preparation, compatible artifacts and exact-input proofs; join identical in-flight work. Keep each execution's mutable state isolated. Evaluate sharing by how much sooner an individual agent gets its verdict under load, not how many jobs can be admitted. More agents should not imply proportionally more compiler processes, test environments or copies of the same work.
+Evaluate sharing by how much sooner an individual agent gets its verdict under load, not how many jobs can be admitted. More agents should not imply proportionally more compiler processes, test environments or copies of the same work. Exact-key duplicate suppression and one writer per mutable build state are correctness constraints, not scheduling. Hardware limits are not an explanation for uninvestigated waits or wasted compute.
 
-Do not build a verification runner framework in every repository. Share execution and evidence mechanics; keep product-specific checks, required-test selection, fixtures and oracles at their product owner. Whether the shared implementation belongs in gah or a separate tool is an architectural choice, not a reason to duplicate it.
+## Measured: shared verification tooling did not pay (2026-10-31)
 
-Prefer Linux scheduling runnable work over adding userspace capacity queues. Exact-key duplicate suppression and one writer per mutable build state are correctness constraints, not CPU scheduling. Do not bake existing slot counts, weights or memory estimates into a new verifier as necessities. Measure their effect and any memory-safety need before retaining, changing or removing them at the host owner. Hardware limits are not an explanation for uninvestigated waits or wasted compute.
+verify-at-home (vah) is a shared execution and input-keyed evidence tool: 8,750 lines and a 22-requirement spec, built 2026-10-21 to 2026-10-30. Over its first 7 days of run reports (`~/.local/state/verify-at-home/v1/runs`, 3,816 runs, 28.5 h wall):
 
-## Parked: Rust UI development like a game engine
+| Measure | Value |
+|---|---:|
+| Jobs executed / reused inside runs | 17,990 / 323 (1.8% reuse) |
+| Work time | 24.4 h |
+| Of which Orderready `xtask` tests (the verification pipeline testing itself) | 16.4 h (67%) |
+| Every other job family | under 0.9 h each |
+| Identity and wait overhead inside vah | 1.2 h |
 
-Tobias does not want to explore live Rust UI development as the route to the verification-latency goal. Retain this research as background, not work to start; required behavioral tests still follow the changed contract and delivery policy. [Renderless verification](renderless-verification.md) is a separate, measured change to the proof boundary, not hot-patching research.
+Nearly every execution had a distinct key, so source edits invalidated almost everything. `vah status` lookups are not logged, so reuse that skipped a run entirely is unmeasured; the tool could not show its own saving, which is the gap a trial would have closed. The same week, a no-op cached read of all Orderready verdicts took 16.2 s, one `tools/or why` 11.8 s, and the 22–30-minute gate suite drove a 7.5-hour delegate.
 
-The idea is to keep the native application and an interesting UI scenario alive while delivering changed Rust code at explicit reload boundaries. Preserve or reconstruct valid state instead of rebuilding, relaunching and navigating back after every edit. This is actual code hot-patching, not necessarily a new presentation language.
+Conclusion: build shared verification machinery only after a [trial](../skills/theodore-kaczynski-nullifier/references/manifest.md#optimization-loop) on a real workflow shows the saving, and count its own test suite as its cost. Method: a job counts as executed when its artifacts sit in its own run directory and as reused otherwise; work time is the trace's `work` spans. Raw data stays outside the vault.
 
-[Dioxus Subsecond and ThinLink](https://github.com/DioxusLabs/dioxus/blob/main/packages/subsecond/subsecond/src/lib.rs) provide a concrete precedent: changed code, object-file differences, dynamic dependency linking and jump-table dispatch. The source inspected on 2026-10-21 documents tip-crate-only patching, thread-local restrictions and incompatible struct layouts requiring state reconstruction. Do not assume arbitrary workspace edits, live callbacks or native handles survive a patch safely.
-
-Any future pilot must measure a real UI change reaching its behavioral and rendered verdict, not merely the patch loading. Preserve ordinary exact-build and native-platform qualification.
-
-## Research directions for shared verification
-
-These are hypotheses to test against the latency goal, not an implementation mandate:
-
-- **Share execution across different candidate patches.** [AccMut](https://github.com/wangbo15/accmut) and [variational execution](https://www.cs.cmu.edu/~ckaestne/pdf/oopsla18.pdf) share compatible computations across program variants. Explore a family of actual agent patches together, separating work where implementations or values differ and retaining individual verdicts. Conditional-state overhead and early divergence can erase the benefit; ordinary caching and a combined executable do not provide this sharing by themselves.
-- **Defer native code generation.** [Sulong](https://www.graalvm.org/latest/reference-manual/llvm/) interprets LLVM bitcode before compiling hot regions; [LLVM ORC](https://llvm.org/docs/ORCv2.html#laziness) supports lazy native materialization. A tiered development runtime could return evidence before compiling every candidate body. Rust frontend work, versioned types and native interoperability remain constraints.
-- **Version executable knowledge.** [Unison](https://www.unison-lang.org/docs/the-big-idea/) identifies definitions and dependencies by content; [Julia world ages](https://docs.julialang.org/en/v1/manual/worldage/) give running tasks a defined view of code versions. These suggest shared compiler knowledge with explicit execution-world identities, rather than silently replacing code underneath live callers.
-- **Branch scenarios, not whole test campaigns.** [Antithesis](https://antithesis.com/docs/product/debugging/advanced_multiverse_debugging/moment_branch/) explores alternate futures from recorded moments. [FoundationDB](https://apple.github.io/foundationdb/testing.html) runs production implementation in a deterministic simulated environment. Reuse a scenario prefix only when changed code could not have affected it. Virtual time skips waiting, not CPU work; simulation does not establish native input, rendering or platform behavior it excludes.
-
-Use the [scout-first experiment loop](autoresearch.md#fast-loops-first-tobias-2026-10-12). First show that a proposed mechanism removes measured work on a real edit while preserving its verdict. Keep project measurements, designs and implementation plans in their owning repositories, not this note.
+[Parked verification research](verification-research-parked.md) holds ideas not to start without a new measured case.

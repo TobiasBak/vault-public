@@ -1,89 +1,57 @@
-# Manifest
+# Feedback speed
 
-Use this branch of the [autonomy loop](../SKILL.md#the-loop) when a real workflow has a measured feedback cost. Fix its owner without weakening correctness or recovery. The patterns below are not a priority ranking.
+The goal is many agents working at once, each getting a trustworthy verdict faster than a model turn, and none sitting in a queue. Remove measured waits; never build machinery for a wait nobody measured.
 
 ## Optimization loop
 
-1. **Measure** from harness session logs. Separate model, navigation, build, test, platform, forwarding, conflict, landing, child, and user time. Include shared-tool waits.
-2. **Pick one outcome:** workflow, users, frequency, current cost, and cause to remove. Fix the largest measured recurring cost at its owner, never with an instruction agents must remember.
-3. **Check value:** a baseline and named cause justify one or two before-and-after trials under the same conditions. Speed-motivated migrations, watchers, enforcement systems, and standalone proof efforts need a trial showing value. Otherwise shelve them. A demonstrated autonomy gap or correctness, security, or data-loss bug can justify a scoped fix without a speed claim.
-4. **Measure again.** Stop at the measured target, or when verification costs less than a model turn ([edit-loop speed](../SKILL.md)). Further optimization needs a new measured cost.
+1. **Measure** from real session logs. Separate model, navigation, build, test, forwarding, landing and wait time, including waits on other agents.
+2. **Pick one cost:** the largest recurring one, its cause and its owner. Fix it at the owner, never with an instruction agents must remember.
+3. **Trial before adopting.** A baseline and a named cause justify one or two before-and-after trials under the same conditions. A speed-motivated tool, cache, watcher, migration or enforcement system that has no trial showing it pays is shelved, and one already built is removed. A correctness, security or data-loss bug can justify a scoped fix without a speed claim.
+4. **Measure again** and stop at the target. More work needs a new measured cost.
 
-Never let this work block a product gate.
+Never let this work block product work.
 
-## 1. Ask the whole question in one call
+## Keep verification small
 
-Symptom: chains of `rg`, `tail`, `git log`, each its own turn.
+Verification code is product code with its own bugs, reviews and runtime. Use the build tool and test runner the language ships, and keep the repository's verification CLI thin glue over them.
 
-- Product commands answer product questions: "why did this case fail", "what changed since the last green verdict". One call returns verdict, failing cases, first mismatch, and rerun command. Workspace and landing questions go to gah, not a second implementation.
-- A probe sequence that repeats across sessions is a missing command. Independent reads go in one call.
-- `<cli> map [area]` answers "where is this behavior" from case records, never a hand-written map.
+- When the verification machinery's own tests cost more than the product's tests, or a slow suite exercises the pipeline with fake services rather than the product, the machinery is too big. Shrink it before adding to it.
+- A capability earns its place by a measured saving on a real workflow, not by matching a feature list. The [CLI commands](control-cli.md#commands) are the whole set; add none speculatively.
 
-## 2. Wait on exit, never on a clock
+## Never wait silently
 
-Symptom: `sleep 540; tail log`. Fix: `<cli> wait <job>` returns the verdict when the job exits; a job that dies at 35s answers at 35s.
+Most lost hours are waits nobody saw.
 
-## 3. Cache verdicts
+- Wait on process exit or a file event, never a clock. A job that dies at 35 s answers at 35 s.
+- No host-wide locks or queues, in tools, scripts or delegate briefs. Lock only a resource one user can hold at a time, such as a VM device, through its [owning tool](control-cli.md#shared-resources).
+- A wait with no progress for more than a few minutes is a blocker. The waiter reports what it waits on and who holds it, instead of blocking for an hour on `flock -w`.
+- Iterate on the one failing case and run the full selection once on final source.
 
-Symptom: rerunning a suite that already passed on the same tree.
+## Bound memory, not concurrency
 
-- Key: the build inputs the case uses (sources, lockfile, toolchain, flags), case files, harness version, operated-dependency and fake-environment versions, and qualified execution environment. Inputs, not output bytes, current directory, or workspace ID.
-- The harness is the CLI entrypoint plus everything the case runner imports, derived from the imports, never listed by hand. Cache key, watcher, and `Behavior-Change:` guard read this same set.
-- Value: verdict, actual-output hash, duration, producer.
-- Stored by content hash outside disposable workspaces and build directories, shared by agents, beyond workspace cleanup.
-- Nondeterminism is a bug in the case or the system.
-- After forwarding or integrating child work, compare the resulting inputs before reusing evidence. A new head whose diff touches none of a job's inputs reuses its verdict. Warm artifacts and a successful landing check are not case verdicts.
+The kernel shares CPU well; memory overcommit turns into swap thrash that slows every agent. Run each heavy job, such as a compile or a suite, in its own memory-capped scope (`systemd-run --user --scope -p MemoryMax=…`) so an out-of-memory kill fails that job, visibly, instead of thrashing the host or killing the agent that started it. A job that needs that much memory is a cost to fix at its owner: generated-code size, monolithic compilation units, needless whole-program optimization.
 
-## 4. Have the answer before the question
+## Cache verdicts only when measured
 
-Symptom: every edit followed by build, test, read.
+Rerunning a check on unchanged inputs is waste, but a cache adds key bugs, freshness bugs and review surface. Adopt one only after measuring how often identical inputs recur.
 
-- One watcher per workspace, identified by workspace identity and running in its [mount namespace](control-cli.md#runs). On change: wait for edits to settle, build, run affected cases, store the verdict for the tree hash.
-- `<cli> status` returns the current tree's verdict, blocks while a run is in progress, never returns another tree's.
-- The watcher starts on the first feedback command (`status`, `test`, `build`), never on read-only ones like `doctor`; exits with the workspace or when idle; skips and reports no new evidence when an exclusive resource it needs is held ([shared resources](control-cli.md#shared-resources)).
-- Agents never call the build tool directly.
+- Key: the git tree hash of the job's declared paths, the toolchain lock and the harness version. Not output bytes, directories or workspace IDs.
+- Store the verdict outside disposable workspaces, so every agent shares it.
+- Log every hit and miss. A cache whose hit rate and saved time aren't measured is not kept.
+- Warm build artifacts and a clean landing check are not verdicts.
 
-## 5. Never pay for a cold start twice
+## Never pay for a cold start twice
 
-Symptom: the same build, boot, or setup repeated across workspaces, parallel jobs, or runs.
+Use gah's warm build-state forks; do not build a second workspace provisioner, warmer or artifact copier. Share expensive immutable preparation, never mutable case state.
 
-- Use gah's warm build-state forks; do not build a second workspace provisioner, main warmer, or artifact copier. The repository supplies its build command and incremental configuration.
-- Diagnose remaining cold starts at their owner. Use existing snapshot/resume or shared caches for external environments when the measured workflow needs them.
-- Share expensive immutable preparation, not mutable case state. Each case still owns its state.
+## Keep qualification out of the edit loop
 
-## 6. Caches explain their misses
+Run the affected cases for feedback and keep the [landing check static](enforcement.md#checks). Delivery policy owns where full qualification runs.
 
-Symptom: "rebuilt again, no idea why." Fix: store the input details beside the key and on a miss print field-by-field differences against the nearest key. Compare inputs without building before retrying an expensive build. State that only affects execution stays out of the key.
+## Budgets are visible
 
-## 7. One input set drives selection and cache key
+Every tier has a budget beside its definition, and overruns print `budget 60s, took 158s`. Defaults: static checks ≤2 s, affected cases ≤10 s, full local corpus ≤60 s. A budget reports; it never fails a correct run ([runner](black-box-tests.md#runner)).
 
-Symptom: a docs change triggers the full matrix. Fix: each job declares its inputs once; test selection and cache key both come from it. A path no job claims is an error.
+## Failures only
 
-## 8. Keep qualification out of the edit loop
-
-Symptom: full qualification after every edit. Select relevant cases for feedback; keep the [landing check static](enforcement.md#checks). Shared-tool and session policy own where full qualification runs, not a second policy in the repository CLI.
-
-## 9. Budgets are visible
-
-Symptom: a step quietly got three times slower.
-
-- Every tier has a budget next to its definition, and overruns print `budget 60s, took 158s`.
-- Defaults: static checks ≤2s, affected cases ≤10s, full local corpus ≤60s, platform runs in the background.
-
-## 10. Failures only
-
-Symptom: passing output filling context. Fix: the [test failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.
-
-## 11. Host-wide heavy work
-
-Symptom: concurrent builds or VM runs slowing each other. Fix: let the kernel share CPU and memory and lock only exclusive resources through their owner ([shared resources](control-cli.md#shared-resources)). Never add a repo-local scheduler.
-
-## 12. Avoid repeated platform setup
-
-Symptom: secondary-platform startup or compilation dominates feedback. Use the qualification boundary set by the active delivery policy. Reuse prepared environments and build compatible artifacts once where the platform contract permits it; do not prohibit a platform-native build needed for valid evidence.
-
-Keep platform-specific code behind its owning boundary. Never substitute primary-platform success for a required secondary-platform result.
-
-## 13. Coordination has an owner
-
-Symptom: routine changes wait on invented approvals, or fixes restart unnecessary review rounds. Check the active delivery and review policy, measure the actual wait, and repair the owning integration. Do not add another review or approval system to the repository CLI.
+Passing output costs context. Use the [test failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.

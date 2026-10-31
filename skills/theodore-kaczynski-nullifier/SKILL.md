@@ -24,10 +24,10 @@ A missing answer is a task gap to fix at its owner, not a reason to build every 
 Use the shared platform for workspaces, warm state and landing. Build only the product-specific feedback it cannot provide.
 
 - **gah:** workspace isolation, forwarding, conflicts, child integration, warm build-state forks, and landing through the repository check. Its help and session instructions own the procedure.
-- **The kernel:** CPU and memory sharing. There is no host admission; entrypoints run commands directly and [lock only exclusive resources](references/control-cli.md#shared-resources) through their owning tool, never another scheduler.
+- **The kernel:** CPU sharing, with memory capped per heavy job. There is no host admission; entrypoints run commands directly and [lock only exclusive resources](references/control-cli.md#shared-resources) through their owning tool, never another scheduler.
 - **The repository:** published contract, product state and recovery boundaries, verification inputs, cases, static checks, incremental builds, and diagnostics. Recurring verification goes through a [product verification CLI](references/control-cli.md); product operations stay at their owning interface.
 
-Shared-tool help and active session instructions own delivery and authority policies. Self-contained guidance identifies these dependencies without copying their playbooks. Warm state and a clean merge are not behavioral proof; reuse evidence only when its [inputs still match](references/manifest.md#3-cache-verdicts).
+Shared-tool help and active session instructions own delivery and authority policies. Self-contained guidance identifies these dependencies without copying their playbooks. Warm state and a clean merge are not behavioral proof; reuse evidence only when its [inputs still match](references/manifest.md#cache-verdicts-only-when-measured).
 
 ## Repository rules
 
@@ -56,6 +56,8 @@ The [landing integration](references/enforcement.md#landing-metadata) must prese
 
 Use the [measured optimization loop](references/manifest.md#optimization-loop) beside product work, never as its precondition. Stop at the chosen target; further machinery needs a new demonstrated gap or measured cost.
 
+**Small beats complete.** Verification machinery is product code with its own bugs. Use the language's build tool and test runner with thin glue; adopt a cache, watcher, trace or custom runner only after a trial shows it pays, and remove one that doesn't. No host-wide locks or queues anywhere, delegate briefs included; [bound memory per job](references/manifest.md#bound-memory-not-concurrency) and report any wait that stops making progress.
+
 ## What to read
 
 References define adopted capabilities, not a to-do list:
@@ -67,8 +69,7 @@ References define adopted capabilities, not a to-do list:
 | Establishing runtime state, partial effects, or safe recovery; what evidence establishes | [runtime-outcomes.md](references/runtime-outcomes.md) |
 | Writing, reviewing, pruning, or migrating tests; proof boundaries; real dependencies and fakes; budgets | [tests.md](references/tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
-| Choosing and measuring a feedback cost to remove | [manifest.md](references/manifest.md) |
-| Tracing slow feedback | [tracing.md](references/tracing.md) |
+| Choosing and measuring a feedback cost to remove; locks, memory, caches | [manifest.md](references/manifest.md) |
 | Mechanical checks, candidate and metadata integration | [enforcement.md](references/enforcement.md) |
 | `AGENTS.md`, skills, moving docs out of the tree | [agent-context.md](references/agent-context.md) |
 
@@ -82,7 +83,6 @@ Prove what you delivered, not every capability here:
 - **Agent-repo setup, navigation, or skill behavior:** run the changed guidance on a representative task yourself: the searches and commands it names reach the owning code, the change and its outcome check work, and supported recovery runs when needed. Don't stage a fresh agent; real sessions after landing are the remaining test. Claim a navigation improvement only from turn counts in real sessions before and after.
 - **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, enough to name its cause without a rerun.
 - **Speedup:** before-and-after numbers for the targeted cost on the chosen workflow, including process boundary and conditions.
-- **Tracing:** a real run writes valid Chrome Trace JSON; an injected step delay appears as the top critical-path change in `<cli> trace`.
 - **Enforcement:** the [landing-entrypoint proof](references/enforcement.md#proof), including candidate and metadata. It proves the implemented check, not semantic correctness beyond it.
-- **Cache or watcher:** matching inputs reuse evidence; changed inputs reject it after forwarding or child integration. A watcher observes its own workspace.
+- **Cache:** matching inputs reuse evidence; changed inputs reject it after forwarding or child integration; logged hits show the saving the trial claimed.
 - **Edit-loop speed:** a one-line edit reaches its verdict, rebuild included, faster than a model turn. Cache hits prove nothing here.

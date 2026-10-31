@@ -57,4 +57,4 @@ Cheap enterprise hardware can lose on idle energy and noise. Separate new, refur
 
 Reject Macs for development. Consider a Mac as a CI box only when a project needs macOS verdicts. Apple Silicon's ARM VMs do not supply the required x86 Omarchy/Wayland and Windows environments.
 
-See [the feedback-loop skill](../skills/theodore-kaczynski-nullifier/SKILL.md) for cache/watcher ownership and [the Windows VM note](../software/omarchy-windows-vm.md) for VM memory and lifecycle constraints.
+See [the feedback-loop skill](../skills/theodore-kaczynski-nullifier/SKILL.md) for cache ownership and per-job memory bounds and [the Windows VM note](../software/omarchy-windows-vm.md) for VM memory and lifecycle constraints.

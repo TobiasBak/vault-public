@@ -125,7 +125,7 @@ The canonicalizer, comparator, runner and `accept` decide every verdict, so a bl
 - Runs affected cases by default when the writer invokes verification; the landing check stays static under the [enforcement rules](enforcement.md). If the full corpus fits the affected-case budget, always run it all and build no selection.
 - Selects any single case. Iterate on the failing case alone and run the full selection once on final source; if the runner can't select one case, fix that first.
 - **Budgets and deadlines are separate.** `budget_ms` is a feedback target: every overrun is reported as `budget 3s, took 3.09s` and never changes the verdict. The runner derives a hang deadline with wide headroom, such as ten times the budget; a case that reaches it is killed and fails, naming its request. Shared-host load must never fail a correct case.
-- Writes the verdict cache and feeds the watcher that the [manifest](manifest.md) defines.
+- Writes the verdict cache when one is [adopted](manifest.md#cache-verdicts-only-when-measured).
 
 ## Failure output
 

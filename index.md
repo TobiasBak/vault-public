@@ -33,7 +33,8 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
 - [agents/renderless-verification.md](agents/renderless-verification.md): production-model proofs that replaced GUI state checks before GUI tests were banned, enforced dependency boundaries, native obligations and measured limits
-- [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, CPU attribution, shared compute and compiler/runtime research; live Rust UI is parked
+- [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, CPU attribution, shared warm state, and the measured vah result that shared verification tooling did not pay
+- [agents/verification-research-parked.md](agents/verification-research-parked.md): parked live Rust UI hot-patching and shared-execution research; do not start without a measured case
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
