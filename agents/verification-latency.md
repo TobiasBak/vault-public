@@ -26,7 +26,7 @@ Evaluate sharing by how much sooner an individual agent gets its verdict under l
 
 ## Measured: shared verification tooling did not pay (2026-10-31)
 
-verify-at-home (vah) is a shared execution and input-keyed evidence tool: 8,750 lines and a 22-requirement spec, built 2026-10-21 to 2026-10-30. Over its first 7 days of run reports (`~/.local/state/verify-at-home/v1/runs`, 3,816 runs, 28.5 h wall):
+verify-at-home (vah) is a shared execution and input-keyed evidence tool: 8,750 lines and a 22-requirement spec, built 2026-10-21 to 2026-10-30. Over its first 7 days of run reports (3,816 runs, 28.5 h wall):
 
 | Measure | Value |
 |---|---:|
@@ -39,5 +39,7 @@ verify-at-home (vah) is a shared execution and input-keyed evidence tool: 8,750 
 Nearly every execution had a distinct key, so source edits invalidated almost everything. `vah status` lookups are not logged, so reuse that skipped a run entirely is unmeasured; the tool could not show its own saving, which is the gap a trial would have closed. The same week, a no-op cached read of all Orderready verdicts took 16.2 s, one `tools/or why` 11.8 s, and the 22–30-minute gate suite drove a 7.5-hour delegate.
 
 Conclusion: build shared verification machinery only after a [trial](../skills/theodore-kaczynski-nullifier/references/manifest.md#optimization-loop) on a real workflow shows the saving, and count its own test suite as its cost. Method: a job counts as executed when its artifacts sit in its own run directory and as reused otherwise; work time is the trace's `work` spans. Raw data stays outside the vault.
+
+vah was retired on 2026-10-31. Orderready (`2e2eac2f7`) now runs cargo and nextest behind a thin `tools/or`, with the slow self-test suite deleted. The dotfiles pin is removed, the repository is archived, and its 46 GB of local run state is deleted. On the same one-item edit to `core/order`, the targeted domain lint and test went from 44 s to 21 s on the first run and from 22 s to 4 s warm. A full landing check that selects all 188 jobs takes 260 s. Still open: `tools/or test --affected` after that edit selects 173 jobs and takes 444 s, because every reverse dependent and all 89 corpus cases count as affected.
 
 [Parked verification research](verification-research-parked.md) holds ideas not to start without a new measured case.
