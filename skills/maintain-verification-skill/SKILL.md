@@ -5,7 +5,7 @@ description: Check an existing project verification skill and case-derived featu
 
 # Maintain a verification skill
 
-Keep the project's verification skill, case records and generated feature map honest. Cover every mapped behavior and entry point, both from source and in the running app; one convenient passing path is not coverage.
+Keep the project's verification skill, case records and generated feature map honest. Cover every mapped behavior and entry point, both from source and through the running product's published non-GUI interfaces; one convenient passing path is not coverage. Tobias allows no GUI tests, and `$theodore-kaczynski-nullifier` owns the test rules: a GUI case, GUI driver or screenshot comparison found here is drift to remove, with any rule it protected moved to a model or API case.
 
 ## Scope
 
@@ -13,12 +13,12 @@ Find the verification skill, authoritative case records and product CLI's `map [
 
 ## Check against source
 
-Reconcile missing, duplicate and dead behavior-and-entry-point pairs in the case records, then regenerate the map; never edit generated output. For each behavior, locate its implementation and covering case, inspect every entry point, and derive a short live recipe from the case input and expected effects. Check recent user-facing changes for unmapped features, each backed by a concrete source path. Judge results against the intended product contract, not today's implementation. Combine steps within one scenario when every behavior and entry point stays visibly covered; separate cases keep independent mutable starting state.
+Reconcile missing, duplicate and dead behavior-and-entry-point pairs in the case records, then regenerate the map; never edit generated output. For each behavior, locate its implementation and covering case, check that each other entry point has a case for its own mechanism, and derive a short live recipe from the case input and expected effects. Check recent user-facing changes for unmapped features, each backed by a concrete source path. Judge results against the intended product contract, not today's implementation. Combine steps within one scenario when every behavior and entry point stays visibly covered; separate cases keep independent mutable starting state. A scenario copied to vary one input folds into the case that already has its setup.
 
 ## Live pass
 
-Follow the skill's launch model: drive long-lived servers and UIs serially, and give short-lived CLIs fresh isolated sessions.
-- Run doctor before the first drive and after any failure or surprise. A healthy process with a wedged UI needs a reset or relaunch.
+Follow the skill's launch model: drive long-lived servers serially, and give short-lived CLIs fresh isolated sessions.
+- Run doctor before the first drive and after any failure or surprise. A healthy process that stops answering needs a reset or relaunch.
 - Capture each action, its result, and its side effects. Keep proof outside scratch and confirm it survives cleanup.
 - Clean up failed attempts. Stop only what this run owns.
 - When a prerequisite blocks a feature, record the route attempted and what was missing. A different passing path doesn't cover it.

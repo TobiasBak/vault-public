@@ -85,7 +85,7 @@ All model-invoked; agents select relevant skills automatically:
 - [`maintainability-audit`](skills/maintainability-audit/SKILL.md): how easily fresh agents can change the source
 - [`repo-context-audit`](skills/repo-context-audit/SKILL.md): which instructions and docs earn their place
 - [`retro`](skills/retro/SKILL.md): repo improvements from session friction
-- [`create-verification-skill`](skills/create-verification-skill/SKILL.md), [`maintain-verification-skill`](skills/maintain-verification-skill/SKILL.md) (adapted from pstack): project verification skills and feature maps
+- [`create-verification-skill`](skills/create-verification-skill/SKILL.md), [`maintain-verification-skill`](skills/maintain-verification-skill/SKILL.md) (adapted from pstack): project verification skills and feature maps, proved through non-GUI interfaces
 
 ## Vault-only skills (`.agents/skills/`)
 
