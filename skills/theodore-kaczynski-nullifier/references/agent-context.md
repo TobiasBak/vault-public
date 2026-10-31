@@ -36,7 +36,7 @@ Keep orientation, task entrypoints, ownership and authority limits only where a 
 
 ## Contract migration
 
-- First apply `$review-test-quality`'s check that the contract and its proof will still matter after planned replacements.
+- First apply the [migration check](black-box-tests.md#migrating-an-existing-suite) that the contract and its proof will still matter after planned replacements.
 - Moving a decision or contract does not cancel it. Keep its authority, and the way its consumers reach it, before deleting its old prose.
 - Before deleting a contract doc, confirm nothing outside the repo reads it.
 - A contract an outside consumer reads is part of the published interface: keep only the smallest machine-checked form that consumer needs, and list its exact path in the gate.

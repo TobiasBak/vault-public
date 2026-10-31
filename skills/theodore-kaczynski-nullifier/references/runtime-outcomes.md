@@ -51,12 +51,12 @@ A source revert changes future execution, not existing external state. Direct st
 | Behavioral execution and readback | The observed response and effects for the checked inputs, environment, and scope | General correctness, real-service delivery from a fake, or the authority of expected values |
 | Judgment against the contract | The named source governs this behavior and the expected values follow from it | That the implementation actually produces those values without execution |
 
-An expectation's authority comes from its source's provenance, not from where it is recorded. `$review-test-quality` owns how test expectations are checked and recorded.
+An expectation's authority comes from its source's provenance, not from where it is recorded. [Black-box tests](black-box-tests.md#authority-for-expectations) own how test expectations are checked and recorded.
 
 ## Proof
 
 For the changed path, run the real public interface in an isolated environment and verify its effects by authoritative readback. Check expectations against the [independent contract](#evidence-and-authority); evidence from a fake external service establishes only the exercised fake-environment behavior.
 
-When recovery changes, use a relevant environment failure, such as a service accepting a write but losing its acknowledgement. Establish the resulting partial or uncertain state, exercise supported repair, and read back that the required outcome holds without duplicate effects or false success. Use the case boundaries `$review-test-quality` defines, not private hooks or permanent probe switches.
+When recovery changes, use a relevant environment failure, such as a service accepting a write but losing its acknowledgement. Establish the resulting partial or uncertain state, exercise supported repair, and read back that the required outcome holds without duplicate effects or false success. Use the [case boundaries](black-box-tests.md#the-box), not private hooks or permanent probe switches.
 
 Report what completed, what remains unknown or blocked, and the supported next action. Run only the failure needed to establish the changed recovery contract, not a speculative failure matrix.

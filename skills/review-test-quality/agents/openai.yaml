@@ -1,4 +1,0 @@
-interface:
-  display_name: "Review Test Quality"
-  short_description: "Write and judge tests as black-box contract checks"
-  default_prompt: "Use $review-test-quality to write or review the selected tests as black-box checks of published contracts, and recommend what to keep, rewrite, or delete."

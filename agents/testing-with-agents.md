@@ -115,11 +115,11 @@ Windows preparation and CI once differed only because uv injected `UV_INTERNAL__
 
 ## Pruning tests
 
-The [`review-test-quality`](../skills/review-test-quality/SKILL.md) skill decides which tests to keep, rewrite or delete.
+Theodore's [test guidance](../skills/theodore-kaczynski-nullifier/references/tests.md) decides which tests to keep, rewrite or delete.
 
 ## Refactor equivalence
 
-Compare base and candidate under the same tests. Record durable plans, HTTP exchanges and session writes; diff per test node and call index. List deliberate renames, removals and additions. Anything else is unexplained. Include normalized accessibility snapshots and screen diffs.
+Compare base and candidate under the same tests. Record durable plans, HTTP exchanges and session writes; diff per test node and call index. List deliberate renames, removals and additions. Anything else is unexplained.
 
 Normalisation pitfalls:
 

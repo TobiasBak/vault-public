@@ -62,7 +62,8 @@ This is the method he is growing toward, not a description of current habit:
 
 - [Verification latency](../agents/verification-latency.md) owns Tobias's speed goal for a single agent and for independent agents sharing hardware, including shared-compute research.
 - Match testing to consequence, lifetime, and risk. No elaborate test infrastructure for disposable prototypes. Test observable behavior, with expectations derived independently, never by repeating the implementation.
-- **Testing boundaries (2026-10-29):** [public-contract verification](../skills/review-test-quality/references/behavioral-boundaries.md) supersedes the blanket unit-test ban from 2026-10-09. The [renderless verification case](../agents/renderless-verification.md) records the evidence.
+- **Testing boundaries (2026-10-29):** [public-contract verification](../skills/theodore-kaczynski-nullifier/references/behavioral-boundaries.md) supersedes the blanket unit-test ban from 2026-10-09. The [renderless verification case](../agents/renderless-verification.md) records the evidence.
+- **No GUI tests, ever (2026-10-31):** nothing drives a GUI, browser or accessibility tree or compares screenshots. Orderready deleted all of its GUI cases. The [no-GUI rule](../skills/theodore-kaczynski-nullifier/references/behavioral-boundaries.md#no-gui-tests) owns what replaces them.
 - **Hard bug:** build the fastest repeatable signal for the exact symptom. Trace to the first incorrect state and the invariant owner. Minimize, change one variable at a time, keep the minimized case as a regression test at the real seam, and rerun the original scenario.
 - **Flaky bug:** raise and measure the reproduction rate through repetition, stress, narrowed timing windows, or pinned environment variables. Don't wait for full determinism.
 - **Parity scope (2026-10-17):** parity covers important business logic, not UI incidentals.

@@ -1,8 +1,10 @@
 # Renderless behavioral verification
 
-Use the [production-model proof boundary](../skills/review-test-quality/references/behavioral-boundaries.md)
-for rule-only changes. That reference owns the enforcement and migration rules;
-this case records the measured gain and its limits.
+Use the [production-model proof boundary](../skills/theodore-kaczynski-nullifier/references/behavioral-boundaries.md)
+for UI rules. That reference owns the enforcement rules and, since 2026-10-31,
+the ban on GUI tests; this case records the measured gain that made model proofs
+the default and its limits. The native scenarios it kept were deleted with every
+other Orderready GUI case on 2026-10-31.
 
 recheck-after: 2027-01-29
 

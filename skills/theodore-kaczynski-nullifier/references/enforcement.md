@@ -8,12 +8,13 @@ Check acceptance establishes only the implemented mechanical property. Independe
 
 | Rule | Fails on | Approved path |
 |---|---|---|
-| Declared behavioral test boundaries | Test targets outside the approved corpus, harness and public-contract targets; test-only visibility hooks | A production contract target or corpus case under `$review-test-quality` |
-| Renderless model graph | Dependency edges outside the model's approved pure build closure | The `$review-test-quality` model boundary checks |
+| Declared behavioral test boundaries | Test targets outside the approved corpus, harness and public-contract targets; test-only visibility hooks | A production contract target or [corpus case](black-box-tests.md) |
+| Renderless model graph | Dependency edges outside the model's approved pure build closure | The [model boundary checks](behavioral-boundaries.md#keep-the-cheap-path-cheap) |
+| No GUI tests | A test, case or dependency that drives a GUI, browser or accessibility tree; a screenshot comparison; a product hook only tests use to drive or observe the UI | The rule's [production model](behavioral-boundaries.md#no-gui-tests) |
 | Expected-output metadata | A changed or deleted expected file without a `Behavior-Change:` trailer | `<cli> accept <case> --source "<truth>"` plus the trailer |
 | Harness-change metadata | Harness, canonicalizer, tolerance, or fake changes without the trailer; the guarded files are the cache key's harness set | The trailer |
-| Declared coverage | A behavior-and-entry-point pair in two cases' `covers`; a declared published entry point no case covers | Extend the covering case |
-| Case shape | A `covers` entry not `<area>.<outcome>@<entry>`; a field outside the `$review-test-quality` case layout | That layout |
+| Declared coverage | A behavior-and-entry-point pair in two cases' `covers`; a declared published entry point no case covers | Extend the covering case, or add that entry point's [surface case](black-box-tests.md#large-scenario-cases) |
+| Case shape | A `covers` entry not `<area>.<outcome>@<entry>`; a field outside the [case layout](black-box-tests.md#case-layout) | That layout |
 | Every case has an oracle | A case record without one | The spec, reference system, or hand derivation |
 | Bare expected values | A matcher outside the fixed set; a matcher repeating the case tolerance or default normalization | A bare value, or a named relation |
 | Compact cases | An expected file not one line per request; two non-rejection requests with the same payload, operation, and call-level arguments where the interface takes a list | `<cli> accept`; merge the requests |
@@ -24,7 +25,7 @@ Check acceptance establishes only the implemented mechanical property. Independe
 | Agent context | Any nested `AGENTS.md`; prompt files (including `.codex/`, `.pi/`) or command docs; an unresolved concrete path or command reference in `AGENTS.md` or a skill; a host instruction file that isn't a symlink to root `AGENTS.md` | The [instruction owners and migration](agent-context.md) |
 | Skill shape | A missing description; an instructional file link escaping its skill directory; an unresolved concrete path or command reference | The [skill rules](agent-context.md#skills); judge relevance and duplication on a real task |
 | One verification entrypoint | A tracked runnable file (interpreter-run scripts included) or task-runner target outside the CLI's exact allowlist; a shell alias or wrapper duplicating a CLI command | The [single entrypoint](control-cli.md#one-entrypoint) |
-| Budget declarations | A case without a budget or its basis | Declare both; the `$review-test-quality` runner enforces runtime overruns |
+| Budget declarations | A case without a budget or its basis | Declare both; the [runner](black-box-tests.md#runner) reports overruns and fails only at the hang deadline |
 
 The **gate** is the landing path invoking `<cli> check`, the single implementation of the repository's static checks. It never selects or runs cases. Do not implement a second delivery system in the repository CLI.
 
@@ -70,11 +71,11 @@ Cloud Run ignores resource.name conditions. Grant the role on the service withou
 
 1. Choose the checks the real task gap or broken contract needs. A speed-motivated enforcement system first passes the [value check](manifest.md#optimization-loop). Unrelated conformance is separate work.
 2. Each adopted check covers the whole repo, existing violations included. Its failures call for repairs under that check, not adopting every other rule.
-3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Deleting a suite needs explicit permission and `$review-test-quality`'s migration proof.
+3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Deleting a suite needs explicit permission and the [migration proof](black-box-tests.md#migrating-an-existing-suite).
 4. Deliver gate and repairs together to the repo's designated merge owner.
 
 No baselines, suppressions, warning-only modes, or narrowed scope for an adopted check. Fix a wrong check against the contract; never weaken a correct one. If you stop early, leave the gate failing in the repair workspace with the command, remaining failures, and resume point in the task tracker.
 
 ## Proof
 
-Each check rejects its mechanically specified forbidden pattern and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. A metadata guard also proves final-message validation after squash or parent integration, and blocks when required metadata is unavailable. Report semantic obligations separately; accepting an oracle or trailer is not proof that its claim is correct.
+Each check rejects its mechanically specified forbidden pattern, including its plausible bypasses such as an ordinary refactor or alternate syntax, and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. A metadata guard also proves final-message validation after squash or parent integration, and blocks when required metadata is unavailable. Report semantic obligations separately; accepting an oracle or trailer is not proof that its claim is correct.

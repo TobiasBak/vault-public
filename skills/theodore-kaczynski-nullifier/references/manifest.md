@@ -72,7 +72,7 @@ Symptom: a step quietly got three times slower.
 
 ## 10. Failures only
 
-Symptom: passing output filling context. Fix: the `$review-test-quality` failure output and [CLI output](control-cli.md#output) contracts.
+Symptom: passing output filling context. Fix: the [test failure output](black-box-tests.md#failure-output) and [CLI output](control-cli.md#output) contracts.
 
 ## 11. Host-wide heavy work
 

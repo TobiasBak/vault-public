@@ -32,7 +32,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
-- [agents/renderless-verification.md](agents/renderless-verification.md): production-model proofs instead of repeated GUI state checks, enforced dependency boundaries, native obligations and measured limits
+- [agents/renderless-verification.md](agents/renderless-verification.md): production-model proofs that replaced GUI state checks before GUI tests were banned, enforced dependency boundaries, native obligations and measured limits
 - [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, CPU attribution, shared compute and compiler/runtime research; live Rust UI is parked
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
@@ -74,7 +74,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 
 All model-invoked; agents select relevant skills automatically:
 - [`potato-approach`](skills/potato-approach/SKILL.md): make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): diagnose repo structure, choose coherent designs, and make agent changes verifiable and recoverable
+- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): diagnose repo structure, choose coherent designs, make agent changes verifiable and recoverable, and write and judge tests as black-box contract checks with no GUI tests
 - [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change frequently, including version boundaries
 - [`benchmark-checklist`](skills/benchmark-checklist/SKILL.md) (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
@@ -85,7 +85,6 @@ All model-invoked; agents select relevant skills automatically:
 - [`maintainability-audit`](skills/maintainability-audit/SKILL.md): how easily fresh agents can change the source
 - [`repo-context-audit`](skills/repo-context-audit/SKILL.md): which instructions and docs earn their place
 - [`retro`](skills/retro/SKILL.md): repo improvements from session friction
-- [`review-test-quality`](skills/review-test-quality/SKILL.md): write, judge, prune, and migrate tests as black-box contract checks
 - [`create-verification-skill`](skills/create-verification-skill/SKILL.md), [`maintain-verification-skill`](skills/maintain-verification-skill/SKILL.md) (adapted from pstack): project verification skills and feature maps
 
 ## Vault-only skills (`.agents/skills/`)

@@ -1,6 +1,6 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Diagnose and shape agent-maintained repositories so fresh agents can understand, change, verify and recover them. Use for structural repo reviews and redesigns, tangled ownership or coupling, failing checks, unclear runtime outcomes, partial failure, product verification, agent context or measured feedback bottlenecks.
+description: Diagnose and shape agent-maintained repositories so fresh agents can understand, change, verify and recover them. Use for structural repo reviews and redesigns, tangled ownership or coupling, failing checks, writing, reviewing, pruning or migrating tests, unclear runtime outcomes, partial failure, product verification, agent context or measured feedback bottlenecks.
 ---
 
 # Theodore Kaczynski Nullifier
@@ -35,7 +35,8 @@ These are Tobias's chosen policies for agent-maintained repositories without hum
 
 - **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
 - **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
-- **Black-box contracts, not private internals:** tests exercise the appropriate production boundary, including a model's public API. `$review-test-quality` owns writing, judging, pruning and migrating tests, including the replacement proof an existing suite needs before deletion.
+- **Black-box contracts, not private internals:** tests exercise the appropriate production boundary, including a model's public API. [Tests](references/tests.md) owns writing, judging, pruning and migrating them, including the replacement proof an existing suite needs before deletion.
+- **No GUI tests:** nothing drives a GUI, browser or accessibility tree or compares screenshots, and the product carries no hooks for tests to drive its UI. UI rules live in a [production model](references/behavioral-boundaries.md#no-gui-tests) proved through its API.
 - **Searchable names:** name things so `rg` finds them.
 - **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. This does not make [changing facts timeless](references/repo-design.md#types-validation-and-changing-facts). Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
 
@@ -64,7 +65,7 @@ References define adopted capabilities, not a to-do list:
 | Understanding the foundations or changing this skill | [design-principles.md](references/design-principles.md) |
 | Diagnosing source structure, choosing boundaries, planning a refactor, or shaping a new repo | [repo-design.md](references/repo-design.md) |
 | Establishing runtime state, partial effects, or safe recovery; what evidence establishes | [runtime-outcomes.md](references/runtime-outcomes.md) |
-| Writing, reviewing, pruning, or migrating tests; proof boundaries; real dependencies and fakes; GUI cases | `$review-test-quality` |
+| Writing, reviewing, pruning, or migrating tests; proof boundaries; real dependencies and fakes; budgets | [tests.md](references/tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
 | Choosing and measuring a feedback cost to remove | [manifest.md](references/manifest.md) |
 | Tracing slow feedback | [tracing.md](references/tracing.md) |
@@ -76,7 +77,7 @@ References define adopted capabilities, not a to-do list:
 Prove what you delivered, not every capability here:
 - **Structural diagnosis or redesign:** the [design proof](references/repo-design.md#proof), including the representative change, preserved contracts and remaining uncertainty. A diagnosis-only request ends with supported findings, not unsolicited edits.
 - **Changed contract:** the [proof procedure](references/control-cli.md#proof), with expectations checked against their independent authority.
-- **Bug fix, test change, or suite deletion:** the matching `$review-test-quality` verification.
+- **Bug fix, test change, or suite deletion:** the matching [test verification](references/tests.md#verification).
 - **Runtime understanding or recovery:** the [outcome proof](references/runtime-outcomes.md#proof), including relevant partial failure when recovery changes.
 - **Agent-repo setup, navigation, or skill behavior:** run the changed guidance on a representative task yourself: the searches and commands it names reach the owning code, the change and its outcome check work, and supported recovery runs when needed. Don't stage a fresh agent; real sessions after landing are the remaining test. Claim a navigation improvement only from turn counts in real sessions before and after.
 - **Failure diagnosability:** an injected failure leaves the compared values, inputs and environment in retained evidence, enough to name its cause without a rerun.
