@@ -22,9 +22,9 @@ For each candidate, name the observable failure it detects, who relies on that b
 
 Split tests that mix useful and disposable assertions. When merging or parameterizing, keep distinctions such as one input vs many, persisted vs returned state, and recovery vs success. For a meaningful contract, name the check that remains or the replacement it needs. Keep maintenance and flake cost proportional to the consequence of a missed regression. Count, line reduction, and coverage are not goals.
 
-Rewrite signals:
+Rewrite signals, each a defect to fix:
 
-- A fake of a dependency the product itself runs, such as its database, queue or cache, instead of the real one at the production version. A fake of an external system needs recorded exchanges or the provider's published contract behind it.
+- A fake of a dependency the product itself runs, such as its database, queue or cache. Test against the real one at the production version. Fake only external systems the product doesn't run, and base those fakes on recorded exchanges or the provider's published contract.
 - A write proven by its own response instead of a readback through the interface or environment.
 - Expected output accepted from a run without checking it against its source, or assertions on diagnostic dumps or incidental call order.
 - Fixed sleeps, a real clock or randomness, shared mutable starting state, or GUI steps addressed by coordinates or test-only markup.
