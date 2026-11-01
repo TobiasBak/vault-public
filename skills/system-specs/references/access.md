@@ -50,7 +50,7 @@ An unknown permission in stored data decodes to `Unknown` ([D4](data.md#d4-unkno
 
 Reason: an older server reading a newer role must not guess what the role allows.
 
-Enforcement: the permission enum's `Unknown` variant has no grant path; a black-box case gives the previous server a role with a new permission.
+Enforcement: the permission enum's `Unknown` variant has no grant path; a black-box case decodes a role with a permission this version doesn't know and finds no grant.
 
 ### S6 Permission sweep
 

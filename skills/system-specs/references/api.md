@@ -41,11 +41,11 @@ Enforcement: a pre-push check fails when the committed schema differs from the g
 
 ### A4 Breaking-change gate
 
-A pre-push check diffs the generated schema against the last release. Breaking: removing or renaming a field, making a field required or adding a required request field, changing a type or default, narrowing accepted values, removing or repurposing an error code, and adding nulls or weakening a presence guarantee. Safe: adding optional request fields, response fields, endpoints and error codes. Changes to ordering, permissions or side effects are breaking too; the schema can't show them, so cross-version black-box cases cover them. Internal breaking changes take [D5](data.md#d5-two-step-destructive-changes)'s two steps; external ones need a new major (A5).
+A pre-push check diffs the generated schema against the last release. Breaking: removing or renaming a field, making a field required or adding a required request field, changing a type or default, narrowing accepted values, removing or repurposing an error code, and adding nulls or weakening a presence guarantee. Safe: adding optional request fields, response fields, endpoints and error codes. Changes to ordering, permissions or side effects are breaking too; the schema can't show them, so their change is declared breaking in its commit. Internal breaking changes take [D5](data.md#d5-two-step-destructive-changes)'s two steps; external ones need a new major (A5).
 
 Reason: an agent will rename a field in one change, and review won't catch every one.
 
-Enforcement: the schema diff in pre-push and on promotion; a black-box case runs the previous release's client against the new server.
+Enforcement: the schema diff in pre-push and on promotion.
 
 ### A5 External versions and retirement
 

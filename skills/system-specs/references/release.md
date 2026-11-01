@@ -115,7 +115,7 @@ A web client detects it runs an outdated build, saves unsent input, and reloads 
 
 Reason: a tab opened yesterday runs old code against today's server.
 
-Enforcement: black-box case: an old build's tab hits a new server, keeps its input and reloads.
+Enforcement: black-box case: a client reporting a build ID other than the server's keeps its input and reloads.
 
 ## Control
 

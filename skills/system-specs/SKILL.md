@@ -23,7 +23,7 @@ Tolerance and hardening don't conflict. They live in different places:
 ## Spec shape
 
 - One spec per domain. Each requirement has a stable ID (`D1`, `D2`), a one-sentence rule stated as observable behavior, and a one-line reason.
-- Each requirement names what enforces it: a type, a static check, or a black-box case. A requirement with no enforcement is listed as a gap, not passed off as met. Prefer a black-box case that runs two versions or old and new data together.
+- Each requirement names what enforces it: a type, a static check, or a black-box case. A requirement with no enforcement is listed as a gap, not passed off as met. Enforce version tolerance with types and the schema diff against the last release, never with tests that run an old version or data it wrote: such tests go stale with the next change.
 - No implementation narrative, plans or status. Those go in issues and PRs.
 - In a repository shaped by `theodore-kaczynski-nullifier`, a spec is an approved published contract whose consumer is Tobias: register its path in the prose gate.
 - Requirements change only by an explicit decision from Tobias. Agents report spec conflicts, not silently diverge.
@@ -53,4 +53,4 @@ A project's spec can adopt catalog requirements by ID and add its own. Check eac
 
 ## Verification
 
-For code a spec governs, show each touched requirement's enforcement working: the type or static check rejects the forbidden form and accepts the supported one, and the black-box case passes against data or peers from both the previous and the next version.
+For code a spec governs, show each touched requirement's enforcement working: the type or static check rejects the forbidden form and accepts the supported one, and the black-box case passes.

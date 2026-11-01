@@ -15,7 +15,7 @@ Readers accept fields they don't recognize and keep them intact.
 
 Reason: old code still running reads data new code wrote. Halting on an unknown field turns a deploy into an outage.
 
-Enforcement: persisted record types never reject unknown fields (serde: no `deny_unknown_fields`); a static check rejects it on persisted types. D12's cross-version case reads, modifies and rewrites a record with an extra field, and the field survives.
+Enforcement: persisted record types never reject unknown fields (serde: no `deny_unknown_fields`); a static check rejects it on persisted types. A black-box case reads, modifies and rewrites a record carrying a field this version doesn't know, and the field survives.
 
 ### D3 Defaults for missing fields
 
@@ -23,7 +23,7 @@ A new field has a declared default for records written before it existed.
 
 Reason: new code reads old records.
 
-Enforcement: new fields are optional or defaulted in the record type; D12's cross-version case reads old-version records.
+Enforcement: new fields are optional or defaulted in the record type; D12's diff rejects a new required field.
 
 ### D4 Unknown enum values
 
@@ -111,11 +111,11 @@ Enforcement: the deploy pipeline runs migrations before rollout; a static check 
 
 ### D12 Compatibility gate
 
-A pre-push check compares the schema and stored formats with the last release and classifies every change as additive or destructive. A destructive change is blocked unless D5's conditions hold. A black-box case runs the new code on data written by the previous release, and the previous release on data written by the new code.
+A pre-push check compares the schema and stored formats with the last release and classifies every change as additive or destructive. A destructive change is blocked unless D5's conditions hold.
 
 Reason: an agent will rename a field in one change; review won't catch every one.
 
-Enforcement: the check and case run in pre-push and on promotion.
+Enforcement: the check runs in pre-push and on promotion. It derives the last release's schema from Git, so no old data or build is kept as a fixture.
 
 ## Clients and versions
 
