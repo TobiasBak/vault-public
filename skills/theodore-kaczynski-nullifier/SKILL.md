@@ -25,7 +25,7 @@ Use the shared platform for workspaces, warm state and landing. Build only the p
 
 - **gah:** workspace isolation, forwarding, conflicts, child integration, warm build-state forks, and landing through the repository check. Its help and session instructions own the procedure.
 - **The kernel:** CPU sharing, with memory capped per heavy job. There is no host admission; entrypoints run commands directly and [lock only exclusive resources](references/control-cli.md#shared-resources) through their owning tool, never another scheduler.
-- **The repository:** published contract, product state and recovery boundaries, verification inputs, cases, static checks, incremental builds, and diagnostics. Recurring verification goes through a [product verification CLI](references/control-cli.md); product operations stay at their owning interface.
+- **The repository:** published contract, product state and recovery boundaries, verification inputs, tests, static checks, incremental builds, and diagnostics. Recurring verification goes through a [product verification CLI](references/control-cli.md); product operations stay at their owning interface.
 
 Shared-tool help and active session instructions own delivery and authority policies. Self-contained guidance identifies these dependencies without copying their playbooks. Warm state and a clean merge are not behavioral proof; reuse evidence only when its [inputs still match](references/manifest.md#cache-verdicts-only-when-measured).
 
@@ -34,19 +34,20 @@ Shared-tool help and active session instructions own delivery and authority poli
 These are Tobias's chosen policies for agent-maintained repositories without human source review or repair. Changing them needs his explicit agreement, not an optimization argument. They keep understanding tied to the executable system rather than parallel commentary, and tests tied to user-visible behavior rather than implementation structure.
 
 - **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
-- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, case records, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
+- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, a test's one-line authority, and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
 - **Black-box contracts, not private internals:** tests exercise the appropriate production boundary, including a model's public API. [Tests](references/tests.md) owns writing, judging, pruning and migrating them, including the replacement proof an existing suite needs before deletion.
 - **No GUI tests:** nothing drives a GUI, browser or accessibility tree or compares screenshots, and the product carries no hooks for tests to drive its UI. UI rules live in a [production model](references/behavioral-boundaries.md#no-gui-tests) proved through its API.
 - **Searchable names:** name things so `rg` finds them.
 - **Decode once, then trust types:** untrusted data becomes types that exclude invalid states at the boundary that owns it; inward code never re-checks what a type, schema or constructor guarantees. This does not make [changing facts timeless](references/repo-design.md#types-validation-and-changing-facts). Errors are handled only to recover, translate at a boundary or clean up, never swallowed, defaulted away or logged and continued. Single-use logic stays inline unless it owns a boundary or names a domain rule. Where a linter can reject redundant checks or discarded errors, enable it.
 
-Case layouts, context templates, command names, and execution techniques are mechanisms, not these policies. Their reference contracts govern until an agreed replacement preserves the required behavior, safety, rationale, and consumers. Fix a wrong check against that contract; never weaken a correct check merely to pass.
+Test helpers, context templates, command names, and execution techniques are mechanisms, not these policies. Their reference contracts govern until an agreed replacement preserves the required behavior, safety, rationale, and consumers. Fix a wrong check against that contract; never weaken a correct check merely to pass.
 
 ## Where the why goes
 
 Comments stay banned. A reason names and code can't show goes:
-1. Into something that runs: a check whose failure states the reason and approved path, or a case's `oracle` explaining the behavior.
-2. For a one-off decision no program can check, a `Why:` trailer in the final landed commit, found with `git log -S'<code>'` or `git blame`.
+1. Into something that runs: a check whose failure states the reason and approved path, a product refusal or self-audit message, or the authority line an example prints on failure.
+2. For a contract Tobias decided that no single test owns, such as a version or compatibility rule, one line in its [published contract file](references/agent-context.md#what-stays-out).
+3. For a one-off decision no program can check, a `Why:` trailer in the final landed commit, found with `git log -S'<code>'` or `git blame`.
 
 The [landing integration](references/enforcement.md#landing-metadata) must preserve applicable trailers through squashes and parent landings. Child commits alone are not their durable home. Other rationale belongs in issues or PRs.
 

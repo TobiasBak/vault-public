@@ -1,6 +1,6 @@
 # Product verification CLI
 
-One entrypoint owns recurring product verification: checks, builds, cases, evidence, and diagnostics. Agents use it for operations it covers. Reuse shared tooling for workspace lifecycle, warm build-state forks and landing; never wrap those commands just to put them behind this CLI.
+One entrypoint owns recurring product verification: checks, builds, tests, benchmarks, evidence, and diagnostics. Agents use it for operations it covers. Reuse shared tooling for workspace lifecycle, warm build-state forks and landing; never wrap those commands just to put them behind this CLI.
 
 ## One entrypoint
 
@@ -12,12 +12,11 @@ These are the whole set. A command earns its place by answering a question agent
 
 | Command | Does |
 |---|---|
-| `check` | Format, lint, types, enforcement rules. Never runs cases. |
-| `test [<case>...]` | Affected cases by default, any single case by name, `--full` when delivery policy requires it. |
+| `check` | Format, lint, types, enforcement rules. Never runs tests. |
+| `test [<test>...]` | Affected tests by default, any single test by name, `--full` when delivery policy requires it. |
 | `status` | The current tree's verdict from matching evidence, or none. |
-| `why <case>` | The [failure output](black-box-tests.md#failure-output) for the failing request. |
-| `accept <case> --source "<truth>"` | Records inspected output and its oracle after [contract judgment](runtime-outcomes.md#evidence-and-authority); never establishes truth by recording it. The commit still needs `Behavior-Change:`. |
-| `map [area]` | Behaviors, entry points, and covering cases, generated from case records. |
+| `why <test>` | The [failure output](black-box-tests.md#failure-output) of the last failing run. |
+| `bench` | Scores a non-deterministic component against its truth set ([benchmarks](black-box-tests.md#benchmarks)); reports, never gates. |
 
 ## Output
 

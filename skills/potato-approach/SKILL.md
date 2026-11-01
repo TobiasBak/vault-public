@@ -13,7 +13,7 @@ Source: Lauren Tan's [talk](https://x.com/poteto/status/2102050467505430555/vide
 
 - Establish the intended contract independently of the implementation. Existing behavior and nearby examples are evidence, not permission to repeat a mistake. Real compatibility obligations need evidence from consumers or persisted data.
 - Trace the behavior through its owning code, callers, state, and effects, and find how to run, observe, and recover it. Use both source and runtime; neither alone shows how the product behaves.
-- Make that understanding recoverable. Code structure carries ownership; a map generated from case records carries what the product does, how to reach it and which cases cover it.
+- Make that understanding recoverable. Code structure carries ownership; behavior-named tests carry what the product does, how to reach it and which test proves it.
 - Verification needs working capabilities, not "test your changes": set up state, exercise behavior, inspect results, collect diagnostics. Static checks protect settled rules; runtime verification shows the change works. You need both.
 
 ## Where knowledge goes

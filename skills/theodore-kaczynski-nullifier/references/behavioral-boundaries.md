@@ -27,7 +27,7 @@ only so tests can drive or observe its UI.
   have no automated proof. Keep the renderer a thin translation of model output
   and input intents, and report these as unverified when a change touches them.
 - An agent may open the app to reproduce a reported bug or judge a design. What
-  it finds becomes a model or API case, never a GUI case.
+  it finds becomes a model or API test, never a GUI test.
 
 ## Make the model the production owner
 

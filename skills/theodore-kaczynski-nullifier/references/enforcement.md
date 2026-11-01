@@ -8,26 +8,20 @@ Check acceptance establishes only the implemented mechanical property. Independe
 
 | Rule | Fails on | Approved path |
 |---|---|---|
-| Declared behavioral test boundaries | Test targets outside the approved corpus, harness and public-contract targets; test-only visibility hooks | A production contract target or [corpus case](black-box-tests.md) |
+| Declared behavioral test boundaries | Test targets outside the approved harness and public-contract targets; test-only visibility hooks | A production contract target ([black-box tests](black-box-tests.md)) |
 | Renderless model graph | Dependency edges outside the model's approved pure build closure | The [model boundary checks](behavioral-boundaries.md#keep-the-cheap-path-cheap) |
-| No GUI tests | A test, case or dependency that drives a GUI, browser or accessibility tree; a screenshot comparison; a product hook only tests use to drive or observe the UI | The rule's [production model](behavioral-boundaries.md#no-gui-tests) |
-| Expected-output metadata | A changed or deleted expected file without a `Behavior-Change:` trailer | `<cli> accept <case> --source "<truth>"` plus the trailer |
-| Harness-change metadata | Harness, canonicalizer, tolerance, or fake changes without the trailer; the guarded files are the cache key's harness set | The trailer |
-| Declared coverage | A behavior-and-entry-point pair in two cases' `covers`; a declared published entry point no case covers | Extend the covering case, or add that entry point's [surface case](black-box-tests.md#large-scenario-cases) |
-| Case shape | A `covers` entry not `<area>.<outcome>@<entry>`; a field outside the [case layout](black-box-tests.md#case-layout) | That layout |
-| Every case has an oracle | A case record without one | The spec, reference system, or hand derivation |
-| Bare expected values | A matcher outside the fixed set; a matcher repeating the case tolerance or default normalization | A bare value, or a named relation |
-| Compact cases | An expected file not one line per request; two non-rejection requests with the same payload, operation, and call-level arguments where the interface takes a list | `<cli> accept`; merge the requests |
+| No GUI tests | A test or dependency that drives a GUI, browser or accessibility tree; a screenshot comparison; a product hook only tests use to drive or observe the UI | The rule's [production model](behavioral-boundaries.md#no-gui-tests) |
+| No recorded expectations | Snapshot or golden-file assertions; an approve or accept command; expected files a tool writes from output | Owned values written from their [authority](black-box-tests.md#examples) |
+| Smoke per entry point | A declared published entry point without a [smoke run](black-box-tests.md#smoke-runs); no run starting from the previous release's data | Add the run |
 | One input set | A changed path no job claims | The owning job's inputs, or the explicit ignore list |
-| Committed inputs are readable | A corpus input far larger and more compressible than the repo's real inputs; the failure prints both and the limit | A builder call |
-| Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, a case's oracle, a `Why:` trailer |
-| Prose only where allowed | Prose outside root `AGENTS.md`, skills, `--help`, case records, and exact published-contract paths; docs directories outside those paths; any README, input directories included; a published contract failing its machine check | The [owners and contract migration](agent-context.md#what-stays-out) |
+| Committed inputs are readable | A committed test input far larger and more compressible than the repo's real inputs; the failure prints both and the limit | Build it in the test from a small base |
+| Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, an example's authority line, a `Why:` trailer |
+| Prose only where allowed | Prose outside root `AGENTS.md`, skills, `--help`, examples' authority lines, and exact published-contract paths; docs directories outside those paths; any README, input directories included; a published contract failing its machine check | The [owners and contract migration](agent-context.md#what-stays-out) |
 | Agent context | Any nested `AGENTS.md`; prompt files (including `.codex/`, `.pi/`) or command docs; an unresolved concrete path or command reference in `AGENTS.md` or a skill; a host instruction file that isn't a symlink to root `AGENTS.md` | The [instruction owners and migration](agent-context.md) |
 | Skill shape | A missing description; an instructional file link escaping its skill directory; an unresolved concrete path or command reference | The [skill rules](agent-context.md#skills); judge relevance and duplication on a real task |
 | One verification entrypoint | A tracked runnable file (interpreter-run scripts included) or task-runner target outside the CLI's exact allowlist; a shell alias or wrapper duplicating a CLI command | The [single entrypoint](control-cli.md#one-entrypoint) |
-| Budget declarations | A case without a budget or its basis | Declare both; the [runner](black-box-tests.md#runner) reports overruns and fails only at the hang deadline |
 
-The **gate** is the landing path invoking `<cli> check`, the single implementation of the repository's static checks. It never selects or runs cases. Do not implement a second delivery system in the repository CLI.
+The **gate** is the landing path invoking `<cli> check`, the single implementation of the repository's static checks. It never selects or runs tests. Do not implement a second delivery system in the repository CLI.
 
 ## Landing integration
 
@@ -49,11 +43,10 @@ A guard never re-judges commits already on the remote under newer rules. Integra
 
 Trailer rules apply to the diff and message that will reach the target history:
 
-- `Behavior-Change:` names the source of truth for changed expectations or harness behavior. Child validation does not replace validation of the combined candidate.
-- A squash or parent landing must carry applicable `Behavior-Change:` and `Why:` trailers into the proposed final message. Child commits alone do not preserve rationale in main's history. This is a landing-integration contract, not a reminder for agents to copy text.
-- The trailer guard receives the candidate diff and proposed message before landing. It must not inspect an old `HEAD` message or assume child messages become the final one. Missing metadata integration blocks an adopted guard; invoking a check command alone does not establish this integration. Fix the gap at the owning landing tool, not with a repo-local merge wrapper.
+- A squash or parent landing must carry applicable `Why:` trailers into the proposed final message. Child commits alone do not preserve rationale in main's history. This is a landing-integration contract, not a reminder for agents to copy text.
+- Fix a gap at the owning landing tool, not with a repo-local merge wrapper.
 
-`Why:` remains optional rationale; no check requires or validates its content.
+`Why:` is optional rationale; no check requires or validates its content. Changed expectations carry their authority in the test itself, so they need no trailer.
 
 ## Approved paths
 
@@ -61,7 +54,7 @@ Ship every ban with its approved path in the same change. The failure names rule
 
 ```
 private-test-access: src/parser/lexer.rs:212 exposes state only for tests.
-Exercise the parser's production contract through its approved library test target or corpus case.
+Exercise the parser's production contract through its public API.
 
 no-cloud-run-iam-conditions: infra/run.tf:41 adds a condition to roles/run.invoker.
 Cloud Run ignores resource.name conditions. Grant the role on the service without one.
@@ -78,4 +71,4 @@ No baselines, suppressions, warning-only modes, or narrowed scope for an adopted
 
 ## Proof
 
-Each check rejects its mechanically specified forbidden pattern, including its plausible bypasses such as an ordinary refactor or alternate syntax, and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. A metadata guard also proves final-message validation after squash or parent integration, and blocks when required metadata is unavailable. Report semantic obligations separately; accepting an oracle or trailer is not proof that its claim is correct.
+Each check rejects its mechanically specified forbidden pattern, including its plausible bypasses such as an ordinary refactor or alternate syntax, and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. Report semantic obligations separately; a cited authority or trailer is not proof that its claim is correct.

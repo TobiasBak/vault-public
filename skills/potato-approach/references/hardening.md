@@ -42,7 +42,7 @@ Prevent known mistake classes through the owning API and checks, but also make u
 
 ## Preserve the reason for constraints
 
-Keep the protected outcome and reason discoverable in the check's failure, behavioral oracle, or owning decision record. Reconsider the constraint when evidence shows its reason no longer holds; retire or replace obsolete mechanisms through an explicit policy decision. A failing check or inconvenient implementation is not evidence that a correct rule is obsolete. Keep an adopted rule enforced until that decision changes it.
+Keep the protected outcome and reason discoverable in the check's failure, a test's authority line, or the owning decision record. Reconsider the constraint when evidence shows its reason no longer holds; retire or replace obsolete mechanisms through an explicit policy decision. A failing check or inconvenient implementation is not evidence that a correct rule is obsolete. Keep an adopted rule enforced until that decision changes it.
 
 ## Cleanup
 

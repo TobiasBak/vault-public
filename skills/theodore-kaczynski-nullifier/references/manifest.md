@@ -25,7 +25,7 @@ Most lost hours are waits nobody saw.
 - Wait on process exit or a file event, never a clock. A job that dies at 35 s answers at 35 s.
 - No host-wide locks or queues, in tools, scripts or delegate briefs. Lock only a resource one user can hold at a time, such as a VM device, through its [owning tool](control-cli.md#shared-resources).
 - A wait with no progress for more than a few minutes is a blocker. The waiter reports what it waits on and who holds it, instead of blocking for an hour on `flock -w`.
-- Iterate on the one failing case and run the full selection once on final source.
+- Iterate on the one failing test and run the full selection once on final source.
 
 ## Bound memory, not concurrency
 
@@ -42,15 +42,15 @@ Rerunning a check on unchanged inputs is waste, but a cache adds key bugs, fresh
 
 ## Never pay for a cold start twice
 
-Use gah's warm build-state forks; do not build a second workspace provisioner, warmer or artifact copier. Share expensive immutable preparation, never mutable case state.
+Use gah's warm build-state forks; do not build a second workspace provisioner, warmer or artifact copier. Share expensive immutable preparation, never mutable test state.
 
 ## Keep qualification out of the edit loop
 
-Run the affected cases for feedback and keep the [landing check static](enforcement.md#checks). Delivery policy owns where full qualification runs.
+Run the affected tests for feedback and keep the [landing check static](enforcement.md#checks). Delivery policy owns where full qualification runs.
 
 ## Budgets are visible
 
-Every tier has a budget beside its definition, and overruns print `budget 60s, took 158s`. Defaults: static checks ≤2 s, affected cases ≤10 s, full local corpus ≤60 s. A budget reports; it never fails a correct run ([runner](black-box-tests.md#runner)).
+Every tier has a budget beside its definition, and overruns print `budget 60s, took 158s`. Defaults: static checks ≤2 s, affected tests ≤10 s, full local suite ≤60 s. A budget reports; it never fails a correct run ([runner](black-box-tests.md#runner)).
 
 ## Failures only
 

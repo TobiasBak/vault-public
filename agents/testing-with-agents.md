@@ -24,7 +24,7 @@ Check authoritative state, not success messages. Derive expectations independent
 [Renderless verification](renderless-verification.md) records the measured case
 for moving UI rules into a production model; GUI tests are banned since 2026-10-31.
 
-Keep a control CLI for launch, reset, interaction, inspection and cleanup. Its feature map is generated from case records linking behaviors and entry points to observable results, never a handwritten map or README. Commands stay in executable owners; the project's verification skill keeps only task steps the CLI cannot perform. Use `create-verification-skill` and `maintain-verification-skill`. Blocked or incomplete runs never pass.
+Keep a control CLI for launch, reset, interaction, inspection and cleanup. Its feature map is the test runner's list of behavior-named tests, never a handwritten map or README. Commands stay in executable owners; the project's verification skill keeps only task steps the CLI cannot perform. Use `create-verification-skill` and `maintain-verification-skill`. Blocked or incomplete runs never pass.
 
 **Handoff check:** in real sessions, can agents reproduce, fix and verify a representative report with normal tools and no coaching? Read those sessions; don't stage fresh agents for it (Tobias, 2026-10-24). Friction identifies the owner:
 

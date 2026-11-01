@@ -28,7 +28,7 @@ If an answer is missing on the real task, fix that gap at its owner. Do not crea
 Explain a failure before fixing, retrying, or handing it off.
 
 1. Read the first failing step and its raw evidence: the compared values, logs, exit status, and environment. If the evidence is missing, that gap is the first defect: fix capture at its owner before spending another scarce run.
-2. List the candidate causes: product, check or oracle, environment, missing evidence. Pick the cheapest observation that separates them, such as a host reproduction, a comparison on equivalent workloads, a bisection, or reading the installed code. State what each candidate predicts before running it.
+2. List the candidate causes: product, check or its expected value, environment, missing evidence. Pick the cheapest observation that separates them, such as a host reproduction, a comparison on equivalent workloads, a bisection, or reading the installed code. State what each candidate predicts before running it.
 3. Fix the established cause at its owner. If the check was wrong, show the reproduction that proves it and keep the behavior it was meant to guard.
 4. If a limit blocks the deciding observation, keep diagnosing everything else. Hand off the evidence inspected, the remaining explanations, the next probe, and the exact missing authority or capability. "Remaining: diagnose" is not a result.
 
@@ -47,11 +47,11 @@ A source revert changes future execution, not existing external state. Direct st
 
 | Evidence | Establishes | Does not establish |
 |---|---|---|
-| Static check acceptance | The candidate satisfies the implemented structural and metadata rules | Correct behavior, meaningful coverage, or an authoritative oracle |
+| Static check acceptance | The candidate satisfies the implemented structural and metadata rules | Correct behavior, meaningful coverage, or authoritative expected values |
 | Behavioral execution and readback | The observed response and effects for the checked inputs, environment, and scope | General correctness, real-service delivery from a fake, or the authority of expected values |
 | Judgment against the contract | The named source governs this behavior and the expected values follow from it | That the implementation actually produces those values without execution |
 
-An expectation's authority comes from its source's provenance, not from where it is recorded. [Black-box tests](black-box-tests.md#authority-for-expectations) own how test expectations are checked and recorded.
+An expectation's authority comes from its source's provenance, not from where it is recorded. [Black-box tests](black-box-tests.md#examples) own how test expectations are checked and recorded.
 
 ## Proof
 
