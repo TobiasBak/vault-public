@@ -21,7 +21,8 @@ Each obligation has one kind of proof. Choose by what the behavior is:
 | A domain rule with an authority: a statute, spec section, price list, protocol | An [example](#examples): authored input and the owned values the authority dictates |
 | An invariant over stored or returned state | [The product enforces it](#invariants-belong-to-the-product); its self-audit reports what slips through |
 | An engine with a large input space: parser, interpreter, solver, compiler, query planner | [Generated checks](#engines) against a reference or properties |
-| Each published entry point, and upgrading data from the previous release | One [smoke run](#smoke-runs) |
+| Each published entry point | One [smoke run](#smoke-runs) |
+| A schema or data migration | The [migration guards itself](#migrations) on the data it upgrades |
 | A non-deterministic component, such as a model call | A [benchmark](#benchmarks), reported and never gated |
 
 ## Examples
@@ -52,8 +53,14 @@ Each obligation has one kind of proof. Choose by what the behavior is:
 ## Smoke runs
 
 - One per published entry point: the real binary or server through a short representative session, then a clean self-audit and a handful of owned values. It covers what that surface owns: argument and schema decoding, exit codes, output shape, help and its own refusals. Where entry points share one dispatcher, a small sample runs the same operations through each and compares outputs. An entry point with its own implementation of a behavior is not covered through another.
-- One starts from data written by the previous release, upgrades it, and runs the self-audit. That is the version-boundary proof.
 - A cross-cutting stage, such as one more platform or pipeline phase, gets its own run; never add it to every test.
+
+## Migrations
+
+- No fixtures of old data. A store written by an earlier version is legacy the day the next migration lands, and a test per schema version only grows.
+- A migration runs in one transaction with the self-audit before commit, so a bad migration refuses on the store it meets, real data included, and leaves it untouched.
+- A landed migration is never edited; a fix is a new migration. A static check rejects the edit.
+- While writing a migration, run it once on a copy of a store the current release wrote; that is development evidence, not a kept test.
 
 ## Benchmarks
 

@@ -12,7 +12,8 @@ Check acceptance establishes only the implemented mechanical property. Independe
 | Renderless model graph | Dependency edges outside the model's approved pure build closure | The [model boundary checks](behavioral-boundaries.md#keep-the-cheap-path-cheap) |
 | No GUI tests | A test or dependency that drives a GUI, browser or accessibility tree; a screenshot comparison; a product hook only tests use to drive or observe the UI | The rule's [production model](behavioral-boundaries.md#no-gui-tests) |
 | No recorded expectations | Snapshot or golden-file assertions; an approve or accept command; expected files a tool writes from output | Owned values written from their [authority](black-box-tests.md#examples) |
-| Smoke per entry point | A declared published entry point without a [smoke run](black-box-tests.md#smoke-runs); no run starting from the previous release's data | Add the run |
+| Smoke per entry point | A declared published entry point without a [smoke run](black-box-tests.md#smoke-runs) | Add the run |
+| Landed migrations are immutable | A changed or deleted migration that main already contains | A new [migration](black-box-tests.md#migrations) |
 | One input set | A changed path no job claims | The owning job's inputs, or the explicit ignore list |
 | Committed inputs are readable | A committed test input far larger and more compressible than the repo's real inputs; the failure prints both and the limit | Build it in the test from a small base |
 | Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, an example's authority line, a `Why:` trailer |
