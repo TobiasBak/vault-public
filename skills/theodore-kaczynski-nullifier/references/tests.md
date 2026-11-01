@@ -38,7 +38,7 @@ Run focused checks when they settle a dispute.
 - **Discrimination:** name the plausible wrong implementation, such as the bug being fixed, a neighbouring rule, or a dropped dimension like date, period, identity or cached state. Would the test's inputs produce a different output under it? The same value at both dates can't test a date key; one receipt spanning two quarters can't test per-quarter allocation; a fault control without a pre-cached sibling can't test the cached path.
 - **Checker blind spots:** a pass is only as good as the comparison behind it. [Prove the checker](black-box-tests.md#prove-the-checker) before relying on a new canonicalizer, comparator, exception or gate.
 
-An injected fault can show lost detection, but tie it to a real contract before calling it valuable. A passing suite doesn't prove that pruning kept useful coverage. Separate demonstrated loss from inference.
+A passing suite doesn't prove that pruning kept useful coverage; naming the check that owns each removed contract does.
 
 ## Report
 
@@ -46,6 +46,6 @@ Lead with the recommendation and the inspected scope. For material findings, giv
 
 ## Verification
 
-- **Pruning or rewriting:** after an authorized change, run the focused retained or replacement checks against the real consumer boundary. Confirm they still detect the named contract failure, using an existing regression or a targeted fault when needed. Report what remains unverified.
+- **Pruning or rewriting:** after an authorized change, run the focused retained or replacement checks against the real consumer boundary. For each removed test, name the check that now owns its contract. Report what remains unverified.
 - **Bug fix:** the extended check [fails on the pre-fix build](black-box-tests.md#lifecycle) with the reported symptom, covers the defect's class rather than only the reported witness, and passes on the fix.
-- **Suite deletion:** the [replacement proof](black-box-tests.md#migrating-an-existing-suite). A failed pilot can stop a migration, never authorize deletion.
+- **Suite deletion:** the [behavior list](black-box-tests.md#migrating-an-existing-suite), with every kept behavior's replacement passing.

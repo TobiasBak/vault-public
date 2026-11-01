@@ -82,7 +82,7 @@ Each obligation has one kind of proof. Choose by what the behavior is:
 
 The self-audit, comparators and property assertions decide verdicts, so a blind spot passes everything it hides.
 
-- Show each comparison fails on a deliberate fault before relying on it: a planted violation for the audit, a mutated output for a differential, a wrong value for an example helper. A fault injected after normalization proves nothing about what normalization discards.
+- Show each comparison fails on a deliberate fault before relying on it: a planted violation for the audit, a wrong output for a differential, a wrong value for an example helper. A fault injected after normalization proves nothing about what normalization discards.
 - An allowed exception (unsupported, skipped, unproven) is accepted only when its eligibility is established independently of the side claiming it. Counting exceptions is not enforcement.
 - A crash, missing prerequisite or harness error is blocked, never a pass or a product failure.
 
@@ -107,7 +107,7 @@ For diagnosis, a product diagnostic flag exposes intermediate results without ma
 - **Cover the class, not the witness.** Before fixing, list the sibling inputs the same defect reaches, such as other entry points, chain depths, orderings, aliases and identities, and extend the test with them. A fix that makes only the reported reproduction pass leaves the next review to find its sibling.
 - Review existing tests for keep, rewrite, merge or delete with [tests.md](tests.md).
 - An internal rewrite changes no test. A test that breaks without a behavior change depends on internals; fix the test.
-- When mutation testing is adopted, run it on a schedule. A surviving mutant needs a regression at the approved boundary, or evidence that its code is dead and should go. Line coverage is not measured.
+- Line coverage is not measured.
 
 ## Migrating an existing suite
 
@@ -115,14 +115,9 @@ This procedure replaces a whole suite. GUI suites are deleted outright under the
 
 - Start only for a chosen outcome with explicit permission to delete the old suite.
 - First identify the authoritative public contract and agreed replacements or cutovers, and confirm the proof and its source of truth still matter after them. If the old suite's backend is being replaced, shelve the migration and keep the suite; a result on one backend doesn't carry over.
-- Read the old suite as a list of behaviors. Never port tests one to one; old names, grouping, and fixtures leave no trace. An old assertion that contradicts the current spec is a design difference to record, not a behavior to port. A recorded expectation with no authority is not ported: find its authority or let it go. A pilot showing the migration infeasible or worthless can stop it, never authorize deletion without replacement proof.
+- Read the old suite as a list of behaviors. Never port tests one to one; old names, grouping, and fixtures leave no trace. An old assertion that contradicts the current spec is a design difference to record, not a behavior to port. A recorded expectation with no authority is not ported: find its authority or let it go.
 
-1. Freeze the old suite and fixture builders. No edits except deletion.
-2. Implement replacement proofs in the [shape each behavior needs](#what-proves-what).
-3. Mutation-test the replacement proofs, then run the old suite only on mutants they missed. Sample at least a thousand mutants to estimate the old-suite-only kill rate; a hundred decides nothing.
-   - Both suites first pass on the unmutated tree through the exact proof harness. A harness failing its baseline counts every mutant as killed.
-   - Pilot fifty mutants. An old-only rate above a few percent is a harness bug until shown otherwise.
-   - Estimate wall time from the pilot. Over an hour, change the method (cheaper build, mutants compiled once, fewer old-suite runs); never wait it out.
-4. Extend the relevant replacement proof for each old-suite-only kill, or delete code established to be dead.
-5. Delete the old suite, its fixtures, and every script that produced them.
-6. Enforce the approved behavioral test boundaries.
+1. List every behavior the old suite asserts and its fate: a replacement proof in the [shape it needs](#what-proves-what), the existing check that already owns it, or dropped with the reason (no authority, owned elsewhere, contradicts the spec).
+2. Implement the replacement proofs and run them.
+3. Delete the old suite, its fixtures, and every script that produced them. No check asserts the deletion.
+4. Enforce the approved behavioral test boundaries.

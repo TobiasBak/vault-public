@@ -56,7 +56,7 @@ Contain descendants in the kernel, and derive nested ownership from their actual
 
 ## Expected crashes on Omarchy
 
-- For mutation testing, fuzzing and abort tests, set `LimitCORE=1` on the transient systemd unit to cover descendants, or set `RLIMIT_CORE` to 1 before exec.
+- For fuzzing and abort tests, set `LimitCORE=1` on the transient systemd unit to cover descendants, or set `RLIMIT_CORE` to 1 before exec.
 - Omarchy's `omarchy-crash-watch` shows a "Process crashed" toast for every systemd-coredump journal entry with the coredump `MESSAGE_ID` (`fc2e22bc…`), sending Tobias investigating expected crashes. Verified with a probe binary on his PC, 2026-10-11.
 - `RLIMIT_CORE=0` (`ulimit -c 0`, `LimitCORE=0`) still journals "terminated abnormally without generating a coredump" under that ID. With a pipe `core_pattern`, 1 makes the kernel skip the helper entirely, so there is no entry or toast. This is the [documented kernel special case](https://man7.org/linux/man-pages/man5/core.5.html).
 

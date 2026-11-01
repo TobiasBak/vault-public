@@ -65,7 +65,7 @@ Cloud Run ignores resource.name conditions. Grant the role on the service withou
 
 1. Choose the checks the real task gap or broken contract needs. A speed-motivated enforcement system first passes the [value check](manifest.md#optimization-loop). Unrelated conformance is separate work.
 2. Each adopted check covers the whole repo, existing violations included. Its failures call for repairs under that check, not adopting every other rule.
-3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Deleting a suite needs explicit permission and the [migration proof](black-box-tests.md#migrating-an-existing-suite).
+3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Deleting a suite needs explicit permission and the [migration](black-box-tests.md#migrating-an-existing-suite).
 4. Deliver gate and repairs together to the repo's designated merge owner.
 
 No baselines, suppressions, warning-only modes, or narrowed scope for an adopted check. Fix a wrong check against the contract; never weaken a correct one. If you stop early, leave the gate failing in the repair workspace with the command, remaining failures, and resume point in the task tracker.
