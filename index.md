@@ -57,6 +57,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/cargo-target-cache.md](software/cargo-target-cache.md): preserve Cargo contexts, measured pruning removal, source freshness and cold versus warm A/B controls
 - [software/background-work-coalescing.md](software/background-work-coalescing.md): request intent, complete reusable publications and admission-based race tests
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
+- [software/runtime-schemas.md](software/runtime-schemas.md): one definition for type, decoder and JSON Schema; TypeScript, Python and Rust libraries, eval-free validation, LLM provider schema subsets
 - [software/sql-type-inference.md](software/sql-type-inference.md): typed SQL-file imports, colinhacks demo, what it does and does not establish
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime

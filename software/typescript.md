@@ -14,7 +14,7 @@ recheck-after: 2027-01-24
 
 ## Runtime boundary
 
-Types are erased. Treat HTTP, DB, file, env, queue, user, and model data as untrusted until decoded with a runtime schema. `any`, assertions, unchecked indexing, and wrong declarations are escape hatches. [Effect](effect.md) adds an operational model without changing this.
+Types are erased. Treat HTTP, DB, file, env, queue, user, and model data as untrusted until decoded with a runtime schema. `any`, assertions, unchecked indexing, and wrong declarations are escape hatches. [Effect](effect.md) adds an operational model without changing this. Library choice and provider schema limits: [runtime schemas](runtime-schemas.md).
 
 ## One authority per layer
 
