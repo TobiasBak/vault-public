@@ -35,7 +35,7 @@ The [agentic engineering loop](agentic-engineering-loop.md) puts this contract i
 Supply these only where the request and repository leave a consequential gap:
 
 - **Outcome:** the user-visible result.
-- **Success criteria:** what must be true before you're done.
+- **Success criteria:** what must be true before you're done. For long-running work, make it a number on a named workload and machine: tibo.dog's bar was 60 fps with 500 enemies on a mid-range phone, and a first download its build caps near 124 KB gzipped ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01). The agent can measure its way there and knows when to stop.
 - **Constraints:** permissions, safety, business rules, side-effect limits.
 - **Tools:** relevant capabilities and lookups that must come first.
 - **Output:** required content, evidence, validation.

@@ -21,4 +21,4 @@ Client and server may run different engines, so the simulation avoids everything
 - No `Math.random`, `Date.now` or `performance.now`. Seed an integer PRNG and step on a fixed tick.
 - Only exactly specified arithmetic: `+ - * /`, `Math.sqrt`, rounding, `min`, `max`, `abs`, `sign`, `imul`. The spec defines `sqrt` as the correctly rounded result but calls `sin`, `cos`, `pow`, `hypot`, `exp`, `log` and the other transcendental functions "implementation-approximated", so V8 and JavaScriptCore may disagree in the last bit and a replay diverges. Use lookup tables or own implementations built from exact operations.
 
-Enforce both with a lint rule scoped to simulation files by path ([hardening](../skills/potato-approach/references/hardening.md#encode-a-files-role-in-its-path)), not with prose.
+Enforce both with a lint rule scoped to simulation files by path ([Theodore's path-role checks](../skills/theodore-kaczynski-nullifier/references/enforcement.md#scope-by-path-role)), not with prose.

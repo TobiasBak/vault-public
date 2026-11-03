@@ -61,7 +61,20 @@ no-cloud-run-iam-conditions: infra/run.tf:41 adds a condition to roles/run.invok
 Cloud Run ignores resource.name conditions. Grant the role on the service without one.
 ```
 
+## Scope by path role
+
+A rule that binds one kind of code, not every file, selects that kind by path. The filename then tells an agent the constraint before it opens the file, and the check needs no judgment. Name the role, not a location, and root it at its entrypoint: the role's first-party import closure must carry the role, so a helper outside it fails instead of quietly escaping the rule.
+
+| Role | Fails on | Reason |
+|---|---|---|
+| `*.hot.ts`: runs every frame or tick | Object and array literals, closures, `new` | Per-frame garbage makes collection pauses stutter the loop |
+| Deterministic simulation | `Math.random`, `Date.now`, `performance.now`; `Math` functions the language spec leaves approximate, such as `sin`, `pow`, `hypot` | Replays must reproduce on every engine |
+
+Both come from tibo.dog, an agent-built browser game whose loop allocates almost nothing ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01).
+
 ## Rollout
+
+Every fixed mistake asks one question: could a check have rejected its class? If yes, that check lands with the fix. Generalize from what the mistake protects, not from the accident of one patch. tibo.dog's author had an agent write a lint rule for each issue found, across about 1,150 PRs in four days.
 
 1. Choose the checks the real task gap or broken contract needs. A speed-motivated enforcement system first passes the [value check](manifest.md#optimization-loop). Unrelated conformance is separate work.
 2. Each adopted check covers the whole repo, existing violations included. Its failures call for repairs under that check, not adopting every other rule.
