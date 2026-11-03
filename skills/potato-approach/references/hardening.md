@@ -23,6 +23,10 @@ Start from a real correction. Identify what the engineer decided, what it protec
 
 *Example:* agents keep reading the file index inside UI components, which blocks the renderer. Provide `features/search/` with a shared contract (request, result, and failure types), a host service that owns index access, and a UI that calls the typed client. Add an import-graph check whose error points to the client. Copying the nearby example now preserves the boundary. Measure responsiveness separately.
 
+## Encode a file's role in its path
+
+When a rule applies to a class of code rather than one module, put the class in the path, so a lint config can select it and an agent sees the constraint before opening the file. tibo.dog gives every per-frame or per-tick file a `.hot.ts` suffix, and a lint rule bans allocation there (object literals, closures, `new`), so the game loop makes almost no garbage and garbage collection can't cause stutters ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01). Cold code keeps allocating freely. Add an import rule that lets hot files call only hot files; otherwise one allocating helper brings garbage back into the loop.
+
 ## Static checks are executable
 
 A static check is a program that exits nonzero on violation, with no agent interpreting it. AGENTS.md, skills, and review prompts are not checks, and a CI job named after a rule doesn't implement it.

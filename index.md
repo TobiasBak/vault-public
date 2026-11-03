@@ -32,6 +32,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
+- [agents/model-checking.md](agents/model-checking.md): TLA+ for concurrent state machines with timers and interrupts, tibo.dog's 11 interleaving bugs, spec drift
 - [agents/renderless-verification.md](agents/renderless-verification.md): production-model proofs that replaced GUI state checks before GUI tests were banned, enforced dependency boundaries, native obligations and measured limits
 - [agents/verification-latency.md](agents/verification-latency.md): sub-minute verification goal, CPU attribution, shared warm state, and the measured vah result that shared verification tooling did not pay, and its retirement
 - [agents/verification-research-parked.md](agents/verification-research-parked.md): parked live Rust UI hot-patching and shared-execution research; do not start without a measured case
@@ -54,6 +55,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/api-design.md](software/api-design.md): consumer-shaped APIs, one contract, lifecycle, events, errors, plugins, persisted-format renames
 - [software/ai-era-durability.md](software/ai-era-durability.md): what survives cheap AI, the typed-plan architecture, provider-native harnesses
 - [software/performance-aware-data-design.md](software/performance-aware-data-design.md): when data layout dominates hot paths
+- [software/deterministic-simulation.md](software/deterministic-simulation.md): replay, server-verified results and bot tuning from one property; JavaScript's exact versus approximated `Math`
 - [software/cargo-target-cache.md](software/cargo-target-cache.md): preserve Cargo contexts, measured pruning removal, source freshness and cold versus warm A/B controls
 - [software/background-work-coalescing.md](software/background-work-coalescing.md): request intent, complete reusable publications and admission-based race tests
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
