@@ -12,7 +12,7 @@ Notes based on externally owned facts such as prices, model catalogs, tool behav
 
 Global skills live in `skills/`; [dotfiles](projects.md#dotfiles) owns their installation. Vault-only skills live in `.agents/skills/`, linked from `.claude/skills/`. Only `chief-of-staff` is explicit-invocation-only.
 
-Run `scripts/check-vault` to check the vault before landing. It rejects thirteen identical consecutive words in two files; attribution notices and the index's note summaries quote by design and stay exempt.
+Run `scripts/check-vault` to check the vault before landing. It rejects thirteen identical consecutive words in two files; attribution notices and the index's note summaries quote by design and stay exempt. After changing a script, run its directory's tests: `python3 -I -m unittest discover -s <dir>` (each suite takes under 5 s).
 
 ## Boundaries
 

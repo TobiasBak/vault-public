@@ -25,14 +25,9 @@ def check_index() -> list[str]:
     text = (ROOT / INDEX).read_text()
     issues = []
     for path in tracked(".md"):
-        if path.parts[0] in CONTENT_DIRS:
-            needed = True
-        elif len(path.parts) == 2 and path.parent in SKILL_PARENTS:
-            needed = path.name == "SKILL.md"
-        elif len(path.parts) == 3 and path.parent.parent in SKILL_PARENTS:
-            needed = path.name == "SKILL.md"
-        else:
-            continue
+        needed = path.parts[0] in CONTENT_DIRS or (
+            path.name == "SKILL.md" and path.parent.parent in SKILL_PARENTS
+        )
         if needed and path.as_posix() not in text:
             issues.append(f"{INDEX}: no line for {path}")
     return issues

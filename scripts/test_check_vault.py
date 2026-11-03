@@ -65,6 +65,21 @@ class CheckVaultTests(unittest.TestCase):
         self.assertEqual(self.hook().returncode, 0)
         self.assertNotEqual(self.run_command("scripts/check-vault").returncode, 0)
 
+    def test_direct_check_reads_unstaged_and_untracked_notes(self):
+        self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "base", "--no-verify")
+        self.assertEqual(self.run_command("scripts/check-vault").returncode, 0)
+
+        self.write("agents/note.md", self.fresh.replace("9999-12-31", "2000-01-01"))
+        stale = self.run_command("scripts/check-vault")
+        self.assertNotEqual(stale.returncode, 0)
+        self.assertIn("stale note edited: agents/note.md", stale.stderr)
+
+        self.write("agents/note.md", self.fresh)
+        self.write("agents/lonely.md", "# Lonely\n")
+        lonely = self.run_command("scripts/check-vault")
+        self.assertNotEqual(lonely.returncode, 0)
+        self.assertIn("note links to no other note: agents/lonely.md", lonely.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

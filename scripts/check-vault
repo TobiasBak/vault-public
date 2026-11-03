@@ -30,6 +30,12 @@ if [[ $# -ne 0 ]]; then
 fi
 status=0
 
+base=$(git rev-parse --verify -q HEAD) || base=$(git hash-object -t tree /dev/null)
+changed_notes() {
+    git diff "$base" --name-only --diff-filter=d -z -- '*.md'
+    git ls-files --others --exclude-standard -z -- '*.md'
+}
+
 python3 scripts/verify_links.py --vault . || status=1
 python3 scripts/check-skills.py || status=1
 python3 scripts/check-duplicate-authority.py || status=1
@@ -49,7 +55,7 @@ while IFS= read -r -d '' file; do
     due=$(printf '%s\n' "$marker" | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}' | head -1) || continue
     [ -n "$due" ] || continue
     [[ "$due" < "$today" ]] && stale+=("$file (due $due)")
-done < <(git diff --cached --name-only --diff-filter=d -z -- '*.md')
+done < <(changed_notes)
 
 # A knowledge note must link to at least one other note, so a reader can
 # traverse sideways instead of returning to the index. Repo-root routers link
@@ -61,7 +67,7 @@ while IFS= read -r -d '' file; do
         skills/*|.agents/*|index.md|projects.md|AGENTS.md|README.md) continue ;;
     esac
     grep -qE '\]\([^)]*\.md' "$file" || lonely+=("$file")
-done < <(git diff --cached --name-only --diff-filter=d -z -- '*.md')
+done < <(changed_notes)
 
 if [ ${#lonely[@]} -gt 0 ]; then
     printf 'note links to no other note: %s\n' "${lonely[@]}" >&2
