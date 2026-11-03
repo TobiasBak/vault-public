@@ -1,11 +1,4 @@
 #!/usr/bin/env bash
-# Vault checks: broken internal links, malformed recheck markers, and notes that
-# are edited while still past their recheck date.
-#
-# Run it directly for the working tree, with --staged for the index, or install
-# it as this repository's commit hook (the
-# workstation secret scanner runs first and chains to it):
-#   ln -sf ../../scripts/check-vault .git/hooks/pre-commit
 set -uo pipefail
 
 root=$(git rev-parse --show-toplevel) || exit 1
@@ -25,7 +18,7 @@ if [[ ${1:-} == --staged || ${0##*/} == pre-commit ]]; then
 fi
 
 if [[ $# -ne 0 ]]; then
-    printf 'Usage: scripts/check-vault [--staged]\n' >&2
+    printf 'Usage: scripts/check-vault [--staged]\nInstall as the commit hook: ln -sf ../../scripts/check-vault .git/hooks/pre-commit\n' >&2
     exit 2
 fi
 status=0
@@ -40,13 +33,9 @@ python3 scripts/verify_links.py --vault . || status=1
 python3 scripts/check-skills.py || status=1
 python3 scripts/check-duplicate-authority.py || status=1
 python3 scripts/check-index.py || status=1
-# Expiry on its own is reported, not an error; only a malformed or duplicated
-# marker exits non-zero.
+python3 scripts/check-comments.py || status=1
 python3 scripts/verify_staleness.py --vault . || status=1
 
-# Editing a note means its facts are being restated, so they must not still be
-# past their recheck date. Bumping the date without re-deriving the facts is
-# the failure this check exists to catch.
 today=$(date +%Y-%m-%d)
 stale=()
 while IFS= read -r -d '' file; do
@@ -57,9 +46,6 @@ while IFS= read -r -d '' file; do
     [[ "$due" < "$today" ]] && stale+=("$file (due $due)")
 done < <(changed_notes)
 
-# A knowledge note must link to at least one other note, so a reader can
-# traverse sideways instead of returning to the index. Repo-root routers link
-# outward by design and are exempt.
 lonely=()
 while IFS= read -r -d '' file; do
     [ -f "$file" ] || continue

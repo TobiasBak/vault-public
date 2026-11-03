@@ -557,7 +557,6 @@ query($search: String!, $endCursor: String) {
 
 
 def merged_pr_counts(repo, since, until):
-    # Search by UTC dates, then apply the exact half-open timestamp window locally.
     search = f"repo:{repo} is:pr is:merged merged:{since.date()}..{until.date()}"
     pages = gh_json(["api", "graphql", "--paginate", "--slurp", "-f", f"query={MERGED_PRS_QUERY}",
                      "-f", f"search={search}"], timeout=30)
@@ -1000,18 +999,15 @@ def stalled_queues(snapshot, now):
             yield at, f"stalled queue {age(at, now)}: latest run queued with nothing running; cancel the queued run and resend | {snapshot.title(thread)} | {send_hint(snapshot, thread)}"
 
 
-# Snapshot-only detection: elapsed is process age, not continuous time in wchan.
 STEP_COMMAND = re.compile(r"(?:.*/)?(?:tools/or|xtask(?:\.exe)?|\.githooks/[^\s]+|scripts/check\.py)$")
 SECRET_ARGUMENT = re.compile(r"(?i)(?:token|password|passwd|secret|(?:api|access|private)[_-]?key|^--?key$)")
 
 
 def short_command(argv):
-    # Inline source is opaque. Suppress it regardless of shell/interpreter name.
     for index, arg in enumerate(argv[1:], 1):
         if re.fullmatch(r"-[A-Za-z]*[ce].*|(?i:--?(?:command|encodedcommand|eval))(?:=.*)?", arg, re.S):
             argv = [*argv[:index], "[payload omitted]"]
             break
-    # Redact before truncation, including URL credentials.
     safe = []
     hide_next = False
     for arg in argv:
@@ -1065,7 +1061,7 @@ def process_steps(proc):
                 "idle": "__watch-payload" in argv and "--idle" in argv,
             }
         except (OSError, ValueError, IndexError):
-            continue  # Processes can exit or become unreadable during the snapshot.
+            continue
     return processes
 
 
@@ -1078,7 +1074,6 @@ def process_ancestors(pid, processes):
 
 
 def admitted_processes():
-    # status resources are {name, holder: {pid, ...}}; waiters are NOT admitted.
     try:
         result = subprocess.run(["heavy-lease", "status", "--json"], capture_output=True, text=True, timeout=.3)
         if result.returncode:
@@ -1142,7 +1137,6 @@ def lock_description(proc, pid, holders, waits):
             try:
                 stat = fd.stat()
                 key = (os.major(stat.st_dev), os.minor(stat.st_dev), stat.st_ino)
-                # Btrfs stat.st_dev can differ from the mount device in /proc/locks.
                 if key not in holders and any(lock[2] == stat.st_ino for lock in holders):
                     try:
                         info = (directory / "fdinfo" / fd.name).read_text().splitlines()
@@ -1172,7 +1166,6 @@ def slow_steps(proc=Path("/proc"), threshold=120, preparation_threshold=60, lock
         print("GAP slow-steps: heavy-lease status unavailable; long-job exclusions unknown")
         admitted = set()
     idle = {pid for pid, process in processes.items() if process["idle"]}
-    # Exempt the admitted/idle tree and launcher wrappers waiting above it.
     exempt = {ancestor for pid in admitted | idle for ancestor in chains.get(pid, ())}
     holders, waits = process_locks(proc)
     for pid in sorted(candidates):

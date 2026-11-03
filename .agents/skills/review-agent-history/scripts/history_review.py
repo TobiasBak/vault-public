@@ -1,11 +1,4 @@
 #!/usr/bin/env python3
-"""Safely scan Pi and Codex histories into reviewable, redacted run files.
-
-The helper never edits source histories. It writes only under the vault's ignored
-.knowledge-bank/state directory. File mtime is intentionally used for selection:
-resumed sessions update their mtime, so they are reconsidered and older turns from
-a touched session may appear.
-"""
 from __future__ import annotations
 
 import argparse
@@ -48,7 +41,6 @@ def parse_time(value: str | None) -> datetime | None:
 
 
 def atomic_write(path: Path, content: str) -> None:
-    """Write content in the destination directory, then atomically replace path."""
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=path.parent)
     try:
@@ -66,7 +58,6 @@ def atomic_write(path: Path, content: str) -> None:
 
 
 def redact(text: str) -> tuple[str, list[str]]:
-    """Redact common credentials; this deterministic set is deliberately conservative."""
     warnings: list[str] = []
     patterns = [
         (r"-----BEGIN [A-Z0-9 ]*PRIVATE KEY-----.*?-----END [A-Z0-9 ]*PRIVATE KEY-----", "[REDACTED PRIVATE KEY]", re.S),
@@ -163,7 +154,6 @@ def parse_jsonl_diagnostics(path: Path) -> tuple[list[dict[str, Any]], list[dict
 
 
 def parse_jsonl(path: Path) -> list[dict[str, Any]]:
-    """Compatibility parser; callers needing integrity diagnostics use the detailed form."""
     return parse_jsonl_diagnostics(path)[0]
 
 
@@ -206,7 +196,6 @@ def _parse_pi_records(records: list[dict[str, Any]]) -> tuple[list[dict[str, str
 
 
 def pi_is_child(records: Iterable[dict[str, Any]]) -> bool:
-    """Recognize Pi's standard child session header as well as nested run paths."""
     for record in records:
         candidates: list[dict[str, Any]] = [record]
         payload = record.get("payload")
@@ -260,7 +249,6 @@ def parse_codex(path: Path) -> tuple[list[dict[str, str]], list[str], bool]:
 
 
 def session_metadata_records(records: Iterable[dict[str, Any]]) -> dict[str, Any]:
-    """Extract stable identity and cwd from the first session header, if present."""
     for record in list(records)[:8]:
         payload = record.get("payload")
         candidate = payload if isinstance(payload, dict) else record
@@ -278,12 +266,10 @@ def session_metadata_records(records: Iterable[dict[str, Any]]) -> dict[str, Any
 
 
 def session_metadata(path: Path) -> dict[str, Any]:
-    """Read only session header metadata, if present, for stable identity and cwd."""
     return session_metadata_records(parse_jsonl(path))
 
 
 def discover(root: Path, source: str, include_children: bool = False) -> tuple[list[Path], list[Path]]:
-    """Return readable JSONL paths and unsupported compressed JSONL paths."""
     if not root.exists():
         return [], []
     paths: list[Path] = []
@@ -325,7 +311,6 @@ def _search_roots(args: argparse.Namespace) -> list[tuple[str, Path]]:
 
 
 def _prefilter_history_paths(query: str, search_roots: list[tuple[str, Path]]) -> list[tuple[str, Path]]:
-    """Use ripgrep to avoid parsing every history file for a narrow recall."""
     output: list[tuple[str, Path]] = []
     for source, root in search_roots:
         completed = subprocess.run(
@@ -749,7 +734,6 @@ def complete(args: argparse.Namespace) -> int:
                 actual_normalized.add(entry.resolve())
         if actual_normalized != expected_normalized:
             raise ValueError("normalized files do not exactly match manifest sessions")
-        # Validate all update timestamps and stage both replacements before mutation.
         update_values = {source: _checkpoint_value(value) for source, value in updates.items()}
         scan_started = data.get("scan_started_at")
         if not isinstance(scan_started, str) or parse_time(scan_started) is None:
@@ -772,8 +756,6 @@ def complete(args: argparse.Namespace) -> int:
             actual_updates[source] = chosen
         completed = dict(data)
         completed["review_complete"] = True
-        # Mark completion before cleanup. A failed checkpoint write leaves a completed
-        # review that can safely be retried, rather than advancing an incomplete review.
         atomic_write(manifest_path, json.dumps(completed, ensure_ascii=False, indent=2) + "\n")
         if update_values:
             atomic_write(checkpoint_path, json.dumps(checkpoint_data, ensure_ascii=False, indent=2) + "\n")
@@ -793,7 +775,7 @@ def complete(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description=__doc__)
+    parser = argparse.ArgumentParser(description="Scan Pi and Codex histories into reviewable, redacted run files. Never edits source histories; writes only under the vault's ignored .knowledge-bank/state directory.")
     parser.add_argument("--vault", default=".")
     sub = parser.add_subparsers(dest="command", required=True)
     scan_parser = sub.add_parser("scan")

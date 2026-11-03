@@ -1,14 +1,4 @@
 #!/usr/bin/env python3
-"""No file may copy another file's prose. One owner per fact, others link.
-
-Verbatim reuse is the decidable part of duplicate authority: thirteen identical
-consecutive words is a copied passage, and the copies drift. Shorter overlaps are
-usually the same policy named twice, or ordinary vocabulary, and need the per-line
-question in `.agents/skills/audit-knowledge-consistency/SKILL.md`.
-
-Attribution notices (`skills/*/SOURCE.md`) and the index's one-line note
-summaries quote by design, so they are exempt.
-"""
 
 from __future__ import annotations
 
@@ -51,7 +41,6 @@ class Note:
 
 
 def passages(a: Note, b: Note) -> list[tuple[int, int, int]]:
-    """Maximal runs of identical words, as (words, start in a, start in b)."""
     shared = a.shingles.keys() & b.shingles.keys()
     if not shared:
         return []

@@ -1,12 +1,4 @@
 #!/usr/bin/env python3
-"""Mechanical skill-shape rules for `skills/` and `.agents/skills/`.
-
-A global skill is self-contained, so its instructional links stay inside its own
-directory; a vault-only skill may point at vault notes, which is what it is for.
-Judgment rules (when a skill earns its place, whether a description is useful)
-stay with the agent context skill. These are the parts a program can decide, so
-AGENTS.md does not restate them.
-"""
 
 from __future__ import annotations
 
@@ -19,7 +11,6 @@ ROOT = Path(__file__).resolve().parent.parent
 DESCRIPTION = re.compile(r"^description:\s*\S", re.MULTILINE)
 FLAG = re.compile(r"^\s*(disable-model-invocation|policy\.allow_implicit_invocation)\s*:", re.MULTILINE)
 LINK = re.compile(r"\]\(([^)\s]+)\)")
-# The one skill Tobias invokes himself, so it is the one that keeps the flag.
 TOBIAS_ONLY = Path(".agents/skills/chief-of-staff")
 
 

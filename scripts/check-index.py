@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""Check that the index lists tracked notes and skills."""
 
 from __future__ import annotations
 
@@ -9,7 +8,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 INDEX = Path("index.md")
-# Directories whose notes are content, and so must appear in the index.
 CONTENT_DIRS = ("agents", "software", "hardware", "tobias")
 SKILL_PARENTS = (Path("skills"), Path(".agents") / "skills")
 

@@ -301,7 +301,6 @@ class ReaderCliTests(unittest.TestCase):
             name = next(arg.removeprefix("name=") for arg in args if arg.startswith("name="))
             repo = next(repo for repo in self.health if repo.split("/")[1] == name)
             response = page(self.health[repo])
-            # Even a legacy full-suite context must not invent a main-suite obligation.
             response["data"]["repository"]["ref"]["branchProtectionRule"] = {
                 "requiredStatusCheckContexts": ["full-suite"]}
             return [response]

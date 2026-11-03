@@ -1,19 +1,4 @@
 #!/usr/bin/env python3
-"""Report vault notes whose dated facts are due for a recheck.
-
-A note carrying a `recheck-after` line holds facts that decay: prices, model
-catalogs, host behavior, vendor terms. The line states when that note is due to
-be re-derived rather than followed. An expired note is guidance asking to be
-rechecked, not an error: expiry exits 0 and is reported only.
-
-A marker that is malformed, duplicated, or missing its date does exit non-zero,
-because then the expiry is silently switched off and nobody notices.
-
-The marker is a line whose content begins with `recheck-after:` and a
-YYYY-MM-DD date. Mentioning the marker mid-sentence or inside code does not
-count, so prose about the convention is safe. Scanned files come from
-`verify_links.discover_files`, so both checks cover the same surface.
-"""
 
 from __future__ import annotations
 

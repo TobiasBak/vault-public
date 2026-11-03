@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-"""Verify internal links in a Markdown knowledge vault.
-
-Checks Obsidian wikilinks, relative Markdown links, headings, and block references.
-External URLs are counted but deliberately not fetched. Every maintained Markdown
-source is scanned, including vault-only skills under .agents; hidden runtime
-state (.git, tool caches, raw sessions) is not. Explicit link targets can be any
-hidden file or directory. Fenced or indented code, inline code, HTML comments,
-and Obsidian comments are excluded from link extraction.
-"""
 
 from __future__ import annotations
 
@@ -99,7 +90,6 @@ def mask_range(chars: list[str], start: int, end: int) -> None:
 
 
 def mask_ignored(text: str, *, mask_inline_code: bool = True) -> str:
-    """Return same-length text with fenced code and comments replaced by spaces."""
     chars = list(text)
     offset = 0
     fence_char: str | None = None
@@ -485,7 +475,6 @@ def extract_markdown_links(original: str, masked: str, occupied: list[tuple[int,
     links: list[Link] = []
     spans: list[tuple[int, int]] = []
 
-    # Extract images first so an image nested inside a linked label is also checked.
     image_spans: dict[int, int] = {}
     image_index = 0
     while image_index < len(working) - 1:
