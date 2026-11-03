@@ -72,9 +72,24 @@ A rule that binds one kind of code, not every file, selects that kind by path. T
 
 Both come from tibo.dog, an agent-built browser game whose loop allocates almost nothing ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01).
 
-## Rollout
+## Learn from mistakes
 
-Every fixed mistake asks one question: could a check have rejected its class? If yes, that check lands with the fix. Generalize from what the mistake protects, not from the accident of one patch. tibo.dog's author had an agent write a lint rule for each issue found, across about 1,150 PRs in four days.
+Every fixed mistake asks whether a check could have rejected its class. If a check can decide it, the check lands with the first fix; agents make writing one nearly free. tibo.dog's author had an agent write a lint rule for each issue found, across about 1,150 PRs in four days ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01). A guard that needs judgment, such as an `AGENTS.md` line or a skill step, waits for a second independent occurrence or a consequence that justifies it. A mistake that repeats a rule already written in prose proves the prose failed: enforce the rule or fix the owning structure ([pruning](agent-context.md#pruning)).
+
+Generalize from what the mistake violated, not from the accident of one patch. Repeated fixes to divergent adapters call for one owned typed interface, not a list of banned spellings. Some gaps need a behavioral regression test or a verification capability rather than a static rule.
+
+### Mining history
+
+When hardening a repository from its record, or when one area keeps getting fixed:
+
+- **Sources:** review comments, correction sections in PR descriptions (often the only review record in agent-only repos), fix and revert commits, escaped bugs, follow-ups that undo or redo work, workaround comments, and rules already in agent instructions. Stay in the requested window and state what you couldn't inspect.
+- **Verify each claim:** read a comment with its diff, follow-ups and resolution; a resolved thread may have fixed nothing. Separate confirmed corrections from disputed advice and changed requirements. Link a later bug to its introducing change and its fix, judging the contract at those revisions; the last change to a file isn't automatically the cause, and a requirement added later is not a defect in earlier work.
+- **Group by mechanism:** several comments plus a bug may be one failure. A mistake an existing gate caught before landing is protected; repeated reruns there are tooling friction, not a missing guard.
+- **Report one entry per opportunity:** the evidence; the failure and whether protection was missing, incomplete, bypassable or wrong; the proposed guard with owner, scope, approved path and level; how it rejects the historical failure and accepts valid behavior; its disposition. Rank by consequence, recurrence and callers affected, not comment volume, and confirm current code lacks the protection.
+
+Adapted from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack) skills and her [talk](https://x.com/poteto/status/2102050467505430555/video/1) (2026-09-21).
+
+## Rollout
 
 1. Choose the checks the real task gap or broken contract needs. A speed-motivated enforcement system first passes the [value check](manifest.md#optimization-loop). Unrelated conformance is separate work.
 2. Each adopted check covers the whole repo, existing violations included. Its failures call for repairs under that check, not adopting every other rule.

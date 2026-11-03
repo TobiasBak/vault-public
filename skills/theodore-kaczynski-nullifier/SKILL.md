@@ -1,6 +1,6 @@
 ---
 name: theodore-kaczynski-nullifier
-description: Diagnose and shape agent-maintained repositories so fresh agents can understand, change, verify and recover them. Use for structural repo reviews and redesigns, tangled ownership or coupling, failing checks, writing, reviewing, pruning or migrating tests, unclear runtime outcomes, partial failure, product verification, agent context or measured feedback bottlenecks.
+description: Diagnose and shape agent-maintained repositories so fresh agents can understand, change, verify and recover them. Use for structural repo reviews and redesigns, tangled ownership or coupling, recurring mistakes and review feedback worth enforcing, failing checks, writing, reviewing, pruning or migrating tests, unclear runtime outcomes, partial failure, product verification, agent context or measured feedback bottlenecks.
 ---
 
 # Theodore Kaczynski Nullifier
@@ -71,7 +71,7 @@ References define adopted capabilities, not a to-do list:
 | Writing, reviewing, pruning, or migrating tests; proof boundaries; real dependencies and fakes; budgets | [tests.md](references/tests.md) |
 | Product verification commands, output, runs, proofs | [control-cli.md](references/control-cli.md) |
 | Choosing and measuring a feedback cost to remove; locks, memory, caches | [manifest.md](references/manifest.md) |
-| Mechanical checks, candidate and metadata integration | [enforcement.md](references/enforcement.md) |
+| Mechanical checks, turning mistakes and their history into checks, candidate and metadata integration | [enforcement.md](references/enforcement.md) |
 | `AGENTS.md`, skills, moving docs out of the tree | [agent-context.md](references/agent-context.md) |
 
 ## Verification

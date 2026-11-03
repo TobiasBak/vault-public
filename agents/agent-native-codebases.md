@@ -16,21 +16,12 @@ Settle goals, contracts, invariants, and acceptance up front. Discover the detai
 
 ## Make the easiest change the correct one
 
-Agents copy the code they read. Types, APIs, boundaries, and accepted examples teach more than instructions do, and bad examples spread just as fast as good ones. Lock down routine choices so weak models and low-context humans can make correct changes:
+Agents copy the code they read. Types, APIs, boundaries, and accepted examples teach more than instructions do, and bad examples spread just as fast as good ones. Lock down routine choices so weak models and low-context humans can make correct changes. The [Theodore skill](../skills/theodore-kaczynski-nullifier/SKILL.md) owns the method: where a correction goes, checks with approved paths, enforce-first rollout, turning each fixed mistake into a check, and the zero-comment rule.
 
-- Keep feature code together, give state and effects one owner, enforce dependency boundaries, and use types that exclude invalid states.
-- Keep one conventional path per recurring change. Remove bad examples and block their return.
-- Pair every restriction with a usable alternative: an obvious location, a supported API, and an example worth copying. Checks reject the wrong way; interfaces make the right way easy. When agents keep fighting a boundary, fix the supported path before adding instructions.
 - Keep assets in forms agents can read, write and diff. tibo.dog ships no image or audio files: each sprite is a code file drawn from one shared palette and packed into an atlas at build time, and songs are text played by an in-browser chip synthesizer ([post](https://x.com/poteto/status/2117043478140276847), 2026-11-01). A binary made in an outside tool is opaque to an agent's diff and review.
-- Comments that justify a workaround make it look approved. Fix the design instead (see [documentation and naming](documentation-and-naming.md)).
+- Two exemplars of a mechanism replacing a reminder: the vault's link and staleness checks run as a commit hook, and the dotfiles routing hook denies model targets that prose had already ruled out ([routing](compute-routing.md)).
 
-The [potato-approach skill](../skills/potato-approach/SKILL.md) owns the order in which a correction goes into codebase structure, static checks, judgment rules, skills, or human-enforced style guides; prose sits at the bottom of it. Two exemplars: the vault's link and staleness checks run as a commit hook rather than as a remembered step, and the dotfiles routing hook denies model targets that prose had already ruled out ([routing](compute-routing.md)). A rule that keeps needing reminders is a missing mechanism.
-
-**Enforce first, repair end to end** (Tobias's rollout policy). Enable a settled rule over its full scope immediately and let existing violations fail; the failing gate is the work inventory. No baselines, suppressions, warning-only modes, or deferred type coverage. If work stops, leave the gate enabled and failing and record what remains. Unfinished repair is an acceptable handoff; false green is not.
-
-Someone has to own this upkeep. Lauren Tan calls it gardening. Her Dune framework keeps features together, checks imports between Electron main and renderer, and bans comments. Combine constraints, skills, and [runtime verification](testing-with-agents.md) before scaling parallelism. Once agents can reproduce and verify, reports and alerts can become coding tasks automatically.
-
-Source: Lauren Tan, [September 2026 talk on trusting coding agents](https://x.com/poteto/status/2102050467505430555/video/1). The operational method lives in the [potato-approach skill](../skills/potato-approach/SKILL.md).
+Someone has to own this upkeep. Lauren Tan calls it gardening. Her Dune framework keeps features together, checks imports between Electron main and renderer, and bans comments. Combine constraints, skills, and [runtime verification](testing-with-agents.md) before scaling parallelism. Once agents can reproduce and verify, reports and alerts can become coding tasks automatically. Source: Lauren Tan, [September 2026 talk on trusting coding agents](https://x.com/poteto/status/2102050467505430555/video/1).
 
 ## Decode once, then trust types
 

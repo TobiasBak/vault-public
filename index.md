@@ -23,7 +23,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 ## Agents
 
 - [agents/agentic-engineering-loop.md](agents/agentic-engineering-loop.md): choosing worthwhile work, establishing verification, equipping agents and removing demonstrated blockers
-- [agents/agent-native-codebases.md](agents/agent-native-codebases.md): patch accretion, making the easy change correct, decode once then trust types, the knowledge-placement order, enforce-first hardening
+- [agents/agent-native-codebases.md](agents/agent-native-codebases.md): patch accretion, making the easy change correct, assets as text, decode once then trust types
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image
@@ -77,8 +77,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 ## Global skills (`skills/`)
 
 All model-invoked; agents select relevant skills automatically:
-- [`potato-approach`](skills/potato-approach/SKILL.md): make agent-maintained codebases easy to change correctly, including design red flags and mining mistake history
-- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): diagnose repo structure, choose coherent designs, make agent changes verifiable and recoverable, and write and judge tests as black-box contract checks with no GUI tests
+- [`theodore-kaczynski-nullifier`](skills/theodore-kaczynski-nullifier/SKILL.md): diagnose repo structure, choose coherent designs, turn mistakes into checks, make agent changes verifiable and recoverable, and write and judge tests as black-box contract checks with no GUI tests
 - [`system-specs`](skills/system-specs/SKILL.md): requirement specs for systems agents change frequently, including version boundaries
 - [`benchmark-checklist`](skills/benchmark-checklist/SKILL.md) (adapted from pstack): vet a performance number before reporting it
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
