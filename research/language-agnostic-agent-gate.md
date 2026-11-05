@@ -16,7 +16,7 @@ The thesis is refuted if concept rules miss or misfire materially more often tha
 
 ## Capabilities
 
-Each capability exists because agents reliably produce the failure it blocks. Only decidable checks become rules. A heuristic, such as a new path landing beside an old one or a new symbol resembling an existing one, appears in `report` until it is narrowed into something decidable.
+Each capability exists because agents reliably produce the failure it blocks. Capabilities are anti-patterns, and anti-patterns do not depend on language: the suite has one rule per anti-pattern, and riprap applies it to whichever languages the candidate contains. Only decidable checks become rules. A heuristic, such as a new path landing beside an old one or a new symbol resembling an existing one, appears in `report` until it is narrowed into something decidable.
 
 ### Accretion
 
@@ -129,7 +129,8 @@ riprap does not duplicate the compilers. rustc already flags dead private code a
 
 Three kinds, available to the suite and to repositories alike:
 
-- **Violation rules** produce findings. Most are concept rules, written against the model with no language. A language rule names one or more languages and matches their syntax with an ast-grep condition, compiled once per language. One crate owns the ast-grep dependency and speaks riprap's own types, so replacing ast-grep later touches only that crate.
+- **Violation rules** produce findings. Every suite rule names an anti-pattern, and its id, message and approved path carry no language. Its language-specific shapes are conditions inside the rule, one per language, each an ast-grep condition or a model concept. Adding a language adds conditions; no suite rule changes, and one disable turns an anti-pattern off everywhere. A repository's own rules may still name a single language. One crate owns the ast-grep dependency and speaks riprap's own types, so replacing ast-grep later touches only that crate.
+- **Coverage** is explicit. For each anti-pattern and language, the rule either covers it, declares it not applicable with a reason, such as `except` in Rust, or leaves it unbuilt, and `riprap test` prints the matrix, so a gap is a visible cell rather than a missing file.
 - **Fact rules** add references or entry points to the model, so a repository's own dynamic patterns, such as a handler registry looked up by string, become visible to rules that read the graph. The suite ships fact rules for the frameworks in use, starting with pytest fixtures.
 - **Config** declares layers and the edges between them, boundaries, entry points, out-of-scope paths, parameters and ratchet values.
 
