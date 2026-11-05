@@ -70,7 +70,7 @@ Each obligation has one kind of proof. Choose by what the behavior is:
 
 ## Forbidden
 
-- Tests that drive a GUI, browser or accessibility tree, screenshot comparisons, and product hooks that exist only so tests can drive or observe a UI.
+- GUI tests of any kind, and product hooks that exist only for them ([no GUI tests](behavioral-boundaries.md#no-gui-tests)).
 - Tests coupled to private helpers, internal fields or incidental call order. A production model's public output is a contract, not a diagnostic dump. The order of effects in the environment, such as a charge recorded before a shipment, is also output.
 - Expected values whose only source is the code under test: snapshots, golden files and accept flows.
 - Whole-output comparisons and assertions on diagnostic dumps.

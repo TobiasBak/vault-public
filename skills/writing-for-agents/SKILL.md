@@ -24,6 +24,7 @@ The agent knows its trade. It does not know the goal, Tobias's choices, or what 
 - **Name the actor, the action and the artifact.** Abstract nouns give the agent nothing to do.
   - Abstract: "Ensure robust verification coverage across change surfaces."
   - Concrete: "Before landing, run the test that exercises the function you changed, and add one if none fails when you break it."
+- **Write vividly.** Tobias wants memorable wording that invites judgment over lists of abstract caveats. When adapting a strong source, keep its exact words wherever they still hold.
 - **Use one term per concept, and prefer words the model already knows.** "Tracer bullet" and "red test" each carry a whole practice in two words. A coined term costs a definition. Reuse the domain's word and the code's name, so the same word links the prompt, the docs and the code.
 
 ## Show the hard move
