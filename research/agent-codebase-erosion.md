@@ -47,7 +47,9 @@ Runs are real compute. Run them on an isolated or cloud machine, not the shared 
 
 ## Results
 
-None yet.
+No experiment runs yet.
+
+Pilot observation for hypothesis 3, 2026-11-05. An agent was asked to lower riprap's own concentrated complexity by real simplification and was told about this hypothesis. The share fell from 52.05 to 36.63, but total cyclomatic complexity fell only 4%, from 1588 to 1523, while functions grew from 361 to 383 and lines from 9149 to 9258. 58 of the 65 points removed came from one change, a capture-name dispatch turned into a data table. Most of the rest split functions into named pieces that kept the same branching, and the agent reported this itself. Even an honest agent that knows about the trap lowers the share mostly by redistribution, so the share alone is not a trustworthy gate. Total complexity per line is the companion measure splitting cannot lower.
 
 ## Open questions
 
