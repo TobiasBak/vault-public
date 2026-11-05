@@ -56,6 +56,17 @@ Agents add code and rarely delete it. This is the core of the tool.
 - Tests reading private state.
 - Skipped tests: `.skip`, `xfail`, `#[ignore]`.
 
+### Comments
+
+Agents write comments to explain a workaround or justify a choice, and the next agent copies the workaround along with the comment. A comment that has to defend the code usually marks a boundary in the wrong place. The default suite blocks every comment, docstrings and doc comments included, and the message points to where the knowledge belongs instead:
+
+```
+no-comments: src/orders/sync.py:41 has a comment.
+Code should explain itself through names and types. A comment that explains a workaround or justifies the code usually means the design is heading the wrong way: fix the owning boundary, or turn the constraint into a check whose failure message carries the reason. A decision with lasting tradeoffs belongs in an ADR.
+```
+
+Adapters report comments as one concept, so the rule carries no language. Directives that a toolchain reads and that have no other spelling, such as a shebang or Go's `//go:build`, are not comments. Suppression directives such as `noqa` or `@ts-expect-error` are comments and block like any other. The reasoning is in [documentation and naming](../agents/documentation-and-naming.md).
+
 ### Dependencies
 
 - A new third-party dependency not listed in the repository config. Adding it to the list is a gate-config change, so a human sees it.
@@ -77,7 +88,6 @@ These check the diff against the base revision, never the candidate's own config
 
 ### Hygiene
 
-- Comments, where the repository bans them.
 - Stray READMEs, docs directories and nested agent instruction files.
 - Hand edits to generated files.
 - Committed binaries and oversized fixtures.
