@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 built; all five build steps landed (2026-11-05).
+Status: v1 built; all five build steps and the two-layer suite landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -23,7 +23,7 @@ Each capability exists because agents reliably produce the failure it blocks. Ca
 Agents add code and rarely delete it. This is the core of the tool.
 
 - Unused exports, files and dependencies.
-- Names like `*_v2`, `new_*`, `legacy_*`, `utils2` and `helpers/`, on files, directories and definitions.
+- Names like `*_v2`, `new_*`, `legacy_*`, `utils2` and `helpers/` on files and directories. On definitions only `_v2` and `utils2` hold: every `legacy_*` and `new_*` definition in Tobias's repositories was a real name, compatibility handling or a creation verb.
 - Exact clones: production functions whose syntax trees match once names are numbered by first use and literals reduced to their kind, at 50 or more body tokens. Tests and trait-impl members are excluded.
 - Repeated literals: a module-level constant defined in two files of one language, either a distinctive string of eight or more characters or a same-named number above 10 that is neither round nor a power of two.
 
@@ -204,11 +204,13 @@ Build step 5, 2026-11-05: exact clones, repeated literals, `report`, ratchets an
 
 The orderready check settled at a median of 635 ms, with 6.6 s of CPU, under load average 6 to 9. Parallel file reads, query compilation and rule execution won back about 140 ms, and the new features cost about 74 ms. The check is now bound by tree-sitter parsing, which takes about 40 percent of the CPU, the model query and ast-grep, so the next large gain needs a cache or less parsing. omarchy measured 693 ms before the speed pass and 217 ms after; step 3's mention building over its 66 MB of text was serial, which made step 4's 153 ms figure stale.
 
+Two-layer suite, 2026-11-05: per-language twins such as `swallowed-error-python` merged into generic rules, with findings identical apart from ids on all 12 repositories. The coverage matrix has 90 cells: 80 covered, 7 not applicable for Rust with reasons, such as import cycles and redundant type checks, and 3 not built, which are Rust swallowed errors and private state in tests for Rust and TypeScript. New cells and rules all passed acceptance: a handler that only returns a default in all three languages, Rust log-and-continue limited to logging then `continue`, Rust rethrow-only limited to tail matches that `?` can always replace, and language-group rules for Python mutable defaults, TypeScript `any`, Rust `.unwrap()` in production code and `#[allow]`. Production-only rules exempt poisoned locks, panicked threads and literal parsing; `.unwrap()` hits on orderready dropped from 487 to 0 once test modules were recognized. Clones, literals and metrics now count production code only. A complexity-density metric, total cyclomatic complexity per thousand production lines, joined the report, ranging from 120 in orderready to 509 in pi-workspace-view. riprap declared its own layers and boundaries: zero layer-edge findings, and removing one declared edge produced seven, which proves the rule on real code. The orderready check measured 507 ms against 492 ms before.
+
 ## Open questions
 
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
 - **Rust swallowed errors.** `let _ =` and a statement-level `.ok();` were dropped from step 2: of 57 hits in Tobias's repositories, 23 sat in `Drop` impls and most of the rest were sends to a hung-up receiver or best-effort cleanup. Telling those from real swallowing needs types.
-- **Skipped Rust tests.** `#[ignore]` was dropped: orderready ignores fixture functions that parent tests start by name, which only the graph or a fact rule can see. Exempting `#[ignore = "reason"]` would turn the reason into an inline suppression.
+- **Private state in tests for Rust and TypeScript.** Python's `_name` convention is visible in syntax; Rust's non-`pub` items and TypeScript's `private` members need type information to tell from public access.
 - **Recall in classes with external bases.** riprap treats every method of such a class as a possible override, so a dead helper in a unittest subclass passes. A per-framework list of hook names would close it.
 - **TypeScript coverage.** Only two of Tobias's repositories carry real TypeScript, so the acceptance evidence there is thin.
 - **Other standards.** Which external style guides to absorb into the suite after v1, each rule passing the same acceptance run.
