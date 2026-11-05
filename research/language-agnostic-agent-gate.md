@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 design settled; build steps 1, 2 and 4 landed (2026-11-05).
+Status: v1 design settled; build steps 1 to 4 landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -187,11 +187,19 @@ Build step 2, 2026-11-05: 31 language rules joined the comment rule. Each had ze
 
 Build step 4, 2026-11-05: seven path rules over every file, with examples written as small file trees. All had zero false positives across the 12 repositories; the counts are mostly READMEs, 187 of them. orderready stayed at 403 ms. omarchy, which carries 190 MB of media, went from 43 to 153 ms because the binary check reads each file's first bytes in sequence.
 
+Build step 3, 2026-11-05: the model and graph, with cross-file resolution for Cargo workspaces, uv projects and TypeScript paths, workspaces and barrels. Usage in Rust and Python is matched by name, which gives up some recall to avoid false positives. Decorators and macros count as machinery, treated as used until a fact rule resolves them; pytest fixtures, autouse fixtures, hooks and Nautilus extensions ship as fact rules. Across the acceptance run every finding was judged real: 129 mocks of the repository's own modules, 60 test-only hooks, 44 unused definitions, 19 unused and 11 transitive dependencies, 7 unresolved sites, 4 internals accesses, 2 unused files and 1 test nothing starts. Rust import cycles were dropped because module cycles are legal Rust. Layer and boundary rules were proved on fixtures only, because no repository declares layers yet.
+
+Hypothesis 1, first evidence: on six Python repositories vulture reported 694 items. riprap flagged 17 of them and nothing vulture missed. Of the rest, 343 are outside riprap's scope, such as attributes and locals, 317 are framework or test code that riprap correctly keeps, and 17 were cases where riprap was right on inspection, such as names used only from strings. One was a real miss: a dead helper in a unittest subclass, which riprap keeps because it treats every method of a class with an external base as a possible override.
+
+The orderready check grew to a median of 685 to 776 ms against 406 to 414 ms for the step 4 binary, over three interleaved rounds of 11 warm runs under load average 1.8 to 5.7 from other agents. An instrumented run split the time into about 360 ms parsing and inspecting files, 95 ms building the graph and 45 ms in concept rules. It is under the one-second target, so no cache was added.
+
 ## Open questions
 
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
 - **Rust swallowed errors.** `let _ =` and a statement-level `.ok();` were dropped from step 2: of 57 hits in Tobias's repositories, 23 sat in `Drop` impls and most of the rest were sends to a hung-up receiver or best-effort cleanup. Telling those from real swallowing needs types.
 - **Skipped Rust tests.** `#[ignore]` was dropped: orderready ignores fixture functions that parent tests start by name, which only the graph or a fact rule can see. Exempting `#[ignore = "reason"]` would turn the reason into an inline suppression.
+- **Recall in classes with external bases.** riprap treats every method of such a class as a possible override, so a dead helper in a unittest subclass passes. A per-framework list of hook names would close it.
+- **TypeScript coverage.** Only two of Tobias's repositories carry real TypeScript, so the acceptance evidence there is thin.
 - **Other standards.** Which external style guides to absorb into the suite after v1, each rule passing the same acceptance run.
 
 ## References
