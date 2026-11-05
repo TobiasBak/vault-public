@@ -17,6 +17,7 @@ Each fact has one home; everywhere else links to it or says nothing.
 | Invariants and their reasons | Types, constraints and the product's self-audit; static checks for source rules. Failures state the reason and fix |
 | Why a one-off decision was made | A `Why:` commit trailer ([why](../SKILL.md#where-the-why-goes)) |
 | Ownership and structure | Directory and symbol names |
+| Domain terms and rejected synonyms | Root `GLOSSARY.md`, or per-context glossaries a root `GLOSSARY-MAP.md` lists; terms only, matching the code's names |
 | Plans, status, progress, handoffs | The task tracker and PRs, never the tree |
 | Decisions, rationale, ADRs | Issues and PRs, never the tree |
 
