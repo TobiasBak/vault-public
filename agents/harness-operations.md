@@ -4,10 +4,7 @@ Where each agent harness's mechanics live, plus the install traps that hit all o
 
 recheck-after: 2026-11-24
 
-- [Codex](codex-operations.md): app-server daemon pin, quota fields, context management, subagent inheritance
-- [Claude Code](claude-code-operations.md): attribution, effort defaults, compaction windows, discovery, auto memory
-- [Pi](pi-operations.md): verbosity, session usage, print-mode stdin, OpenRouter model overrides
-- [OpenCode](opencode-operations.md): v2 install and update failure, migration, Go/Zen data policies
+Each harness has its own note: [Codex](codex-operations.md), [Claude Code](claude-code-operations.md), [Pi](pi-operations.md) and [OpenCode](opencode-operations.md).
 
 ## Global CLI installs
 

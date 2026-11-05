@@ -127,6 +127,18 @@ class VerifyLinksTests(unittest.TestCase):
             ],
         )
 
+    def test_html_anchor_ids_resolve(self):
+        self.write("guide.md", '# Guide\n<a id="decision-log"></a>**Decision log**\n')
+        self.write("README.md", "[Log](guide.md#decision-log)\n[Missing](guide.md#absent)\n")
+
+        code, report = self.run_verifier()
+
+        self.assertEqual(code, 1)
+        self.assertEqual(
+            [(issue["code"], issue["line"]) for issue in report["issues"]],
+            [("missing-heading", 2)],
+        )
+
     def test_visible_target_case_mismatch_still_fails(self):
         self.write("Guide.md", "# Guide\n")
         self.write("README.md", "[Guide](guide.md)\n")

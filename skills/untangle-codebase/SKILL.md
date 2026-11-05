@@ -98,7 +98,7 @@ You're done when:
 - **Keep a decision log:** compaction is less of a problem that way.
 - **Use Git as evidence:** for how often pieces change, and what changes together.
 
-## Decision log example
+<a id="decision-log-example"></a>**Decision log example**
 
 The list of problems:
 

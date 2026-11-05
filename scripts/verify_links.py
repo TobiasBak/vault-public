@@ -18,6 +18,7 @@ DEFAULT_EXCLUDED_NAMES = {"node_modules", "__pycache__"}
 SCANNED_HIDDEN_ROOTS = {".agents"}
 SETEXT_UNDERLINE = re.compile(r"^ {0,3}(=+|-+)[ \t]*$")
 BLOCK_ID = re.compile(r"(?:^|[ \t])\^([A-Za-z0-9-]+)[ \t]*$")
+HTML_ID = re.compile(r"<a\s[^>]*\b(?:id|name)=\"([^\"]+)\"", re.IGNORECASE)
 REFERENCE_DEF = re.compile(r"^ {0,3}\[([^\]\n]+)\]:[ \t]*(.*)$", re.MULTILINE)
 AUTOLINK = re.compile(r"(?<!\\)<((?:https?://|mailto:|obsidian:|file:|tel:|ftp:|//)[^>\n]+)>")
 
@@ -206,6 +207,8 @@ def build_anchor_index(masked: str) -> HeadingIndex:
             if name and not looks_like_block:
                 anchors.names.add(nfc(name).casefold())
                 anchors.slugs.add(nfc(heading_slug(name)))
+        for html_id in HTML_ID.findall(line):
+            anchors.slugs.add(nfc(html_id))
         block = BLOCK_ID.search(line)
         if block:
             anchors.blocks.setdefault(block.group(1), []).append(line_number)
