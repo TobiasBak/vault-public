@@ -6,7 +6,7 @@ Code owns behavior; tests and examples express intended behavior. Prose keeps on
 
 - **Rationale:** first in a check's failure, a product refusal, or the authority line an example test prints on failure. A one-off decision no program can check gets a `Why:` trailer in the final landed commit. Other decisions, rationale and ADRs belong in issues or PRs, not a docs tree.
 - **Invariants:** types and checks. A consequential hazard that cannot be checked gets one root `AGENTS.md` boundary line.
-- **Domain language:** one preferred term per concept across names, types, APIs, tests and UI. Fix model drift rather than maintaining a parallel glossary that disagrees with the code.
+- **Domain language:** one preferred term per concept across names, types, APIs, tests and UI. Fix model drift rather than maintaining a parallel glossary that disagrees with the code; the [domain-modeling skill](../skills/domain-modeling/SKILL.md) settles contested terms.
 - **Navigation:** the test runner's list of behavior-named tests. No handwritten feature map or file inventory.
 - **External contracts:** the smallest machine-checked published form its outside consumer needs, at an exact gate-listed path.
 

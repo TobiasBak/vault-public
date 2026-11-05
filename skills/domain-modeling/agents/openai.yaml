@@ -1,0 +1,4 @@
+interface:
+  display_name: "Domain Modeling"
+  short_description: "Build and sharpen a domain model"
+  default_prompt: "Use $domain-modeling to challenge vague or conflicting terms, probe concept boundaries with scenarios, check claims against the code, and land each settled term in the code's names."
