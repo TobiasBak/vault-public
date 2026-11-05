@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 design settled, nothing built yet (2026-11-05).
+Status: v1 design settled; build step 1 landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -94,7 +94,7 @@ A comment that explains a workaround or justifies the code usually marks a desig
 
 One static Linux binary, `riprap`, named for the rock armour that stops shoreline erosion. `check` judges a candidate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters stay separate tools; the repository's landing command runs them beside riprap.
 
-Exit codes: `0` passes, `1` has findings, `2` means riprap could not run, for example on an invalid config or a rule that fails to decode. Each finding is one line naming the rule, `path:line:col`, the message and the approved path; `--json` gives the same for tools.
+Exit codes: `0` passes, `1` has findings, `2` means riprap could not run, for example on an invalid config, a rule that fails to decode, or a file it cannot parse. Each finding is one line naming the rule, `path:line:col`, the message and the approved path; `--json` gives the same for tools.
 
 ### Implementation language
 
@@ -134,7 +134,7 @@ A rule joins the suite only after a run across Tobias's repositories in which ev
 
 - The rule format has no severity field. A finding always fails `check`.
 - No inline or per-file way to silence a finding exists.
-- A file that fails to parse is a finding, so broken or unsupported syntax cannot hide code from the rules.
+- A file riprap cannot parse means riprap could not run: exit 2, naming each file and position, never a skipped file, so broken or unsupported syntax cannot hide code from the rules. riprap cannot tell a grammar gap from truly broken syntax, and the compiler catches the latter anyway. Vendored code that hits a gap becomes an out-of-scope path.
 - An unresolved site is a finding when the construct is avoidable: a computed `getattr` or `importlib` name, a non-literal `import()`, `eval`. The approved paths are an explicit registry, a fact rule or a declared entry point. Language machinery that cannot be avoided, such as Rust macros, Python decorators and barrel re-exports, resolves conservatively: whatever it names counts as used, which may miss dead code but never invents a finding.
 - A repository can disable a rule only as a whole, with a required reason, which stays visible in every diff of the config. Catching a loosened config is the developer's job in review, not riprap's.
 
@@ -180,7 +180,7 @@ Follow the [fast-loop funnel](../agents/autoresearch.md#fast-loops-first-tobias-
 
 ## Results
 
-None yet.
+Build step 1, 2026-11-05: a release build checked orderready's whole tree, 2,389 Rust files and about 640k lines, in 0.346 s wall on one warm run without a cache, on a shared Ryzen 7 7800X3D with 16 threads under load average 2.4. One run, so no variance figure. tree-sitter-rust 0.24.2 failed on four valid files under `third_party/`, among them `dyn 'static + FnOnce()`, which led to parse failures exiting 2 instead of being findings.
 
 ## Open questions
 
