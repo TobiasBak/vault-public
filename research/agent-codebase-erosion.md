@@ -43,7 +43,7 @@ Follow the [fast-loop funnel](../agents/autoresearch.md#fast-loops-first-tobias-
 
 Gaming threatens validity: a gate scored by the metric it enforces can look like a win while the code gets no better. Judge each gated arm also on metrics it does not enforce, and on whether later checkpoints get easier to pass.
 
-Runs are real compute. Run them on an isolated or cloud machine, not the shared workstation. Harness code and run artifacts live in their own repository.
+Runs are real compute. Run them on an isolated or cloud machine, not the shared workstation. Harness code and run artifacts live in their own repository. The gates come from the [language-agnostic gate](language-agnostic-agent-gate.md).
 
 ## Results
 
