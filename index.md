@@ -2,7 +2,7 @@
 
 Not exhaustive. Search with `rg`.
 
-Where a note goes: `agents/` how an agent should behave and what its harness does · `software/` facts about systems, tools and APIs · `hardware/` machines, compute and buying them · `tobias/` preferences, working style and open threads · `skills/` global skills, `.agents/skills/` vault-only ones · root holds only the routers and the landing page.
+Where a note goes: `agents/` how an agent should behave and what its harness does · `software/` facts about systems, tools and APIs · `hardware/` machines, compute and buying them · `research/` papers: one question each, thesis and hypotheses fixed before any run, results appended with dates, run code and artifacts in their own repository · `tobias/` preferences, working style and open threads · `skills/` global skills, `.agents/skills/` vault-only ones · root holds only the routers and the landing page.
 
 - [AGENTS.md](AGENTS.md): how to use and maintain this vault
 - [projects.md](projects.md): public repository routes (Dotfiles, T3 Code)
@@ -14,6 +14,10 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [tobias/partnership.md](tobias/partnership.md): agent character, voice, disagreement, and pressure tests
 - [tobias/shopping.md](tobias/shopping.md): shopping priorities and Danish availability
 - [tobias/how-to-win.md](tobias/how-to-win.md): Musk's "how to win" principles, Tobias's reflection and open threads; personal, grows over time
+
+## Research
+
+- [research/agent-codebase-erosion.md](research/agent-codebase-erosion.md): do agent-maintained codebases inevitably degrade? SlopCodeBench shows prompts lower the level but not the slope; tests whether deletion, clone, boundary and complexity gates flatten it
 
 ## Hardware
 
@@ -38,7 +42,6 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/verification-research-parked.md](agents/verification-research-parked.md): parked live Rust UI hot-patching and shared-execution research; do not start without a measured case
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
-- [agents/codebase-erosion.md](agents/codebase-erosion.md): research brief on agent code decaying across continuous feature work, SlopCodeBench evidence that prompts lower the level but not the slope, gate hypotheses and the ratchet question
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
 - [agents/coding-models.md](agents/coding-models.md): effort guidance, Sol vs Astra cost, Terra vs Sol trial, API specifics, Haiku/Luna limits, free-model trials
 - [agents/harness-operations.md](agents/harness-operations.md): routes to the harness notes plus global CLI install traps (pnpm release-age gating)
