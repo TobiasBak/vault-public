@@ -21,15 +21,15 @@ The thesis is refuted if any intervention clearly flattens the per-change qualit
 Each one tries to refute the thesis and names the result that would refute the hypothesis itself.
 
 1. **Gates lower the level.** Any hard gate on erosion or verbosity lowers starting values at least as much as an anti-slop prompt. Refuted if gated runs start no cleaner than prompted ones.
-2. **Deletion gates flatten the slope.** Gates on unused exports, files and dependencies (knip, cargo-machete) and on clones (jscpd) force the old path out when a new one lands, so they attack accretion itself. Predicted: a visibly flatter slope than baseline. Refuted if the slope matches the prompt arm.
+2. **Deletion gates flatten the slope.** Gates on unused code and dependencies (vulture, deptry) and on clones (jscpd) force the old path out when a new one lands, so they attack accretion itself. Predicted: a visibly flatter slope than baseline. Refuted if the slope matches the prompt arm.
 3. **Complexity caps get gamed.** A per-function complexity cap improves the erosion number by splitting functions into helpers that still carry the same branching and coupling. Predicted: erosion drops but total complexity, clone count and later pass rate don't improve. Refuted if transcripts show real consolidation rather than reshuffling.
-4. **Boundary locks attack the cause.** Erosion is a proxy for blurred ownership. Import boundaries (dependency-cruiser, import-linter, workspace dependency rules) should help most where later changes cross modules. Refuted if they show no effect there.
+4. **Boundary locks attack the cause.** Erosion is a proxy for blurred ownership. Import contracts between modules (import-linter) should help most where later changes cross modules. Refuted if they show no effect there.
 5. **Static gates can't see semantic duplication.** Two differently shaped implementations of one rule, or a feature in the wrong owner, pass every lint. A periodic consolidation pass, proved behavior-preserving by [refactor equivalence](../agents/testing-with-agents.md), flattens what gates leave. Refuted if gated-only runs already match it.
-6. **An editable gate decays.** An agent that can change lint config or add suppressions loosens the gate under pressure. The [zero-comment rule](../skills/theodore-kaczynski-nullifier/references/enforcement.md) already blocks comment-form suppressions such as `eslint-disable`, `noqa`, `type: ignore` and `@ts-expect-error`; Rust's `#[allow]`, per-file overrides and config edits remain. Predicted: denying agent writes to gate config in harness permissions removes those bypasses. Check transcripts for attempts.
+6. **An editable gate decays.** An agent that can change lint config or add suppressions loosens the gate under pressure. The [zero-comment rule](../skills/theodore-kaczynski-nullifier/references/enforcement.md) already blocks inline suppressions, which in Python are all comments: `noqa`, `type: ignore`, `pylint: disable`. Per-file ignores, vulture allowlists and config edits remain. Predicted: denying agent writes to gate config in harness permissions removes those bypasses. Check transcripts for attempts.
 
 ## Method
 
-The testbed is [SlopCodeBench](https://github.com/SprocketLab/slop-code-bench), where an agent extends its own solution across checkpoints as requirements change. Its two quality metrics can be computed by a check, so they can serve as gates:
+The testbed is [SlopCodeBench](https://github.com/SprocketLab/slop-code-bench), where an agent extends its own solution across checkpoints as requirements change. Problems allow any language, but the published runs and metrics are Python only, so solutions here are Python too. Its two quality metrics can be computed by a check, so they can serve as gates:
 
 - **Erosion:** the share of complexity mass, cyclomatic complexity times the square root of source lines, held by callables whose complexity exceeds 10.
 - **Verbosity:** lines flagged by 137 ast-grep rules or found in structural clones, divided by total lines.
@@ -55,12 +55,6 @@ None yet.
 
 ## References
 
-- [SlopCodeBench paper](https://arxiv.org/abs/2603.24755): agents extend their own solutions across 196 checkpoints in 36 problems as requirements change. Quality prompts lowered starting erosion and verbosity but not their rise per checkpoint; version 2, read 2026-11-05.
-- [SlopCodeBench code](https://github.com/SprocketLab/slop-code-bench): the harness, problems and metric implementations this paper's runs build on.
-- [Radon](https://radon.readthedocs.io): Python cyclomatic complexity tool. Its bounds supply the erosion metric's threshold of 10.
-- [ast-grep](https://ast-grep.github.io): structural code search and lint by syntax-tree pattern. It supplies the verbosity metric's flagged lines.
-- [knip](https://knip.dev): finds unused files, exports and dependencies in JavaScript and TypeScript projects. Deletion gate for hypothesis 2.
-- [cargo-machete](https://github.com/bnjbvr/cargo-machete): finds unused Cargo dependencies. Deletion gate for Rust.
-- [jscpd](https://github.com/kucherenko/jscpd): copy-paste detector across many languages. Clone gate for hypothesis 2.
-- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser): validates JavaScript and TypeScript imports against declared rules. Boundary lock for hypothesis 4.
-- [import-linter](https://github.com/seddonym/import-linter): enforces import contracts between Python modules. Boundary lock for hypothesis 4, and the fit for SlopCodeBench's Python problems.
+- [SlopCodeBench](https://arxiv.org/abs/2603.24755): agents extend their own code through 196 checkpoints as requirements change. Quality fell in about three quarters of runs, and anti-slop prompts made code start cleaner without slowing the fall.
+- [CodeThread](https://arxiv.org/abs/2606.21804): measures what degradation costs the next agent. Follow-up tasks built on agent-written code resolve up to 13.1% less often than on human-written code.
+- [tibo.dog](https://x.com/poteto/status/2117043478140276847): an agent-built browser game where each issue found became a lint rule, across about 1,150 PRs in four days. The closest real-world case against the thesis.
