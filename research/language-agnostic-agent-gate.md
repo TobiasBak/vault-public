@@ -94,7 +94,7 @@ These check the diff against the base revision, never the candidate's own config
 
 ### Shape
 
-One static Linux binary. `check` runs the gate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters such as `ruff format`, `rustfmt` and Clippy run as declared steps, so a repository still has one entrypoint, but the tool does not reimplement them.
+One static Linux binary, `riprap`, named for the rock armour that stops shoreline erosion. `check` runs the gate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters such as `ruff format`, `rustfmt` and Clippy run as declared steps, so a repository still has one entrypoint, but the tool does not reimplement them.
 
 ### Implementation language
 
@@ -169,7 +169,6 @@ None yet.
 
 ## Open questions
 
-- **Name.** The tool needs one.
 - **Rule syntax.** Extend ast-grep's pattern language, use raw tree-sitter queries, or define a small concept language over the shared model. The concept rules decide this.
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
 - **Where ratchet values live.** In the repository config, where lowering a value passes and raising one is a gate-integrity finding, or computed from the base revision on every run.
