@@ -9,7 +9,7 @@ Find which repository context adds information and which just constrains compete
 
 ## Instructions
 
-Compare each instruction with what the active model, host, tools, and task already supply. Being correct, prudent, or once useful doesn't mean an instruction adds value now. Sort them into three kinds:
+Compare each instruction with what the active model, host, tools, and task already supply. Being correct, prudent, or once useful doesn't mean an instruction adds value now. The model doesn't supply the user's goal or a rule's reason, so a line that states them adds value even when it reads like motivation. When you disagree about what the model does by default, run it with and without the line instead of arguing. Sort them into three kinds:
 
 - **Chosen collaboration:** how the user wants to work. Needs no error-prevention justification, but not every preference belongs in every session.
 - **Local facts:** real authority boundaries and contracts the agent would otherwise miss. A possible hazard doesn't create a prohibition.

@@ -87,7 +87,7 @@ Adapted from Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/p
 3. Repair until the gate passes and behavior holds. Deleting required behavior is not a repair. Deleting a suite needs explicit permission and the [migration](black-box-tests.md#migrating-an-existing-suite).
 4. Deliver gate and repairs together to the repo's designated merge owner.
 
-No baselines, suppressions, warning-only modes, or narrowed scope for an adopted check. Fix a wrong check against the contract; never weaken a correct one. If you stop early, leave the gate failing in the repair workspace with the command, remaining failures, and resume point in the task tracker.
+No baselines, suppressions, warning-only modes, or narrowed scope for an adopted check: an agent under pressure loosens any gate it can edit. Fix a wrong check against the contract; never weaken a correct one. If you stop early, leave the gate failing in the repair workspace with the command, remaining failures, and resume point in the task tracker.
 
 ## Proof
 

@@ -4,7 +4,7 @@ These govern repository design and changes to Theodore. Operational contracts be
 
 ## Aim
 
-A fresh agent should be able to understand the system, change it correctly, establish what actually happened, and recover when reality disagrees.
+No human reviews or repairs the source, so whatever a fresh agent needs must be in the repository or the running system. A fresh agent should be able to understand the system, change it correctly, establish what actually happened, and recover when reality disagrees.
 
 ## Principles
 

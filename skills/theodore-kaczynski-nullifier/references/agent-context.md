@@ -23,7 +23,7 @@ Each fact has one home; everywhere else links to it or says nothing.
 
 ## Root AGENTS.md
 
-Before a line stays, name its reader, the moment they read it, and what breaks if it is deleted. A line whose reader never has this file open — a skill rule needed while editing a skill, a directory map needed while filing a note, a charter line a skill already owns — belongs at that moment's owner, and this file keeps a pointer or nothing. Adopting or rewriting the file is an audit of every line, not a reformat: a line that restates another file's rule is a second authority, not a reminder.
+Before a line stays, name its reader, the moment they read it, and what breaks if it is deleted. A line whose reader never has this file open belongs at that moment's owner, such as a skill rule needed while editing a skill, a directory map needed while filing a note, or a charter line a skill already owns. This file keeps a pointer or nothing. Adopting or rewriting the file is an audit of every line, not a reformat: a line that restates another file's rule is a second authority, not a reminder.
 
 Keep orientation, task entrypoints, ownership and authority limits only where a fresh agent needs them. One possible structure is Purpose, Values, Loop, Areas and Boundaries; omit what does not help the repository. Values can name what they beat when that resolves a real tradeoff. This is an example, not a required heading order, ranking or line limit. Update consumers and checks when moving a real obligation.
 
@@ -50,15 +50,13 @@ A host that requires another instruction filename gets only a symlink to root `A
 
 ## Skills
 
-- Repo-local skills are allowed. Write them, and `AGENTS.md`, with the `writing-for-agents` skill.
-- Each skill is self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills. Name shared-tool and host dependencies; their active help and session instructions remain authoritative.
-- Within a skill, give each instruction one home and link to it instead of repeating it. Do not copy CLI `--help`, shared delivery policies, or instructions already supplied by the target repository's root `AGENTS.md`.
+- Repo-local skills are allowed. Write them, and `AGENTS.md`, with the `writing-for-agents` skill; it owns wording, self-containment and descriptions.
+- Shared tools' help and session instructions stay authoritative. A skill names them and copies neither them, CLI `--help`, shared delivery policies, nor what the repository's root `AGENTS.md` already says.
 - Every concrete path and command a skill names exists. The agent-context check validates mechanically resolvable references; relevance, duplication, and whether a procedure still earns its place require judgment on a representative task.
-- The description says when the skill applies.
 - When the CLI does a skill's whole procedure in one call, delete the skill or cut it to what remains.
 
 ## Pruning
 
-- Chosen policies and real authority limits need no failure experiment. Other instructional lines stay only when they supply information a fresh agent needs on a representative task.
+- Chosen policies and real authority limits need no failure experiment. Other instructional lines stay only when they supply information a fresh agent needs on a representative task. The goal a rule serves and its reason count as such information; a definition of something the model already knows does not.
 - When a check takes over a rule, delete the rule's line in the same change, except the common-path reminder allowed above.
 - When a line keeps being violated, fix the owning structure or enforce the mechanically decidable pattern. Do not claim a syntax check enforces a semantic judgment.
