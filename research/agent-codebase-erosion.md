@@ -52,3 +52,15 @@ None yet.
 ## Open questions
 
 - **Ratchets.** The [rollout rules](../skills/theodore-kaczynski-nullifier/references/enforcement.md#rollout) forbid baselines. That fits rule violations, which can reach zero. Continuous measures such as duplication share or total complexity have no zero state; they need a fixed threshold or a ratchet that may only improve. A ratchet is not a grandfathered violation list, but the current wording reads as banning it. Settle this with the scout results for hypotheses 2 and 3.
+
+## References
+
+- [SlopCodeBench paper](https://arxiv.org/abs/2603.24755): agents extend their own solutions across 196 checkpoints in 36 problems as requirements change. Quality prompts lowered starting erosion and verbosity but not their rise per checkpoint; version 2, read 2026-11-05.
+- [SlopCodeBench code](https://github.com/SprocketLab/slop-code-bench): the harness, problems and metric implementations this paper's runs build on.
+- [Radon](https://radon.readthedocs.io): Python cyclomatic complexity tool. Its bounds supply the erosion metric's threshold of 10.
+- [ast-grep](https://ast-grep.github.io): structural code search and lint by syntax-tree pattern. It supplies the verbosity metric's flagged lines.
+- [knip](https://knip.dev): finds unused files, exports and dependencies in JavaScript and TypeScript projects. Deletion gate for hypothesis 2.
+- [cargo-machete](https://github.com/bnjbvr/cargo-machete): finds unused Cargo dependencies. Deletion gate for Rust.
+- [jscpd](https://github.com/kucherenko/jscpd): copy-paste detector across many languages. Clone gate for hypothesis 2.
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser): validates JavaScript and TypeScript imports against declared rules. Boundary lock for hypothesis 4.
+- [import-linter](https://github.com/seddonym/import-linter): enforces import contracts between Python modules. Boundary lock for hypothesis 4, and the fit for SlopCodeBench's Python problems.
