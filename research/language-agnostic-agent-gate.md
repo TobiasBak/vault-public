@@ -106,8 +106,6 @@ Rust, because the hard parts already exist as Rust libraries and the tool must s
 - Rule files and config decode once through serde into types with no invalid states. With no severity field in the type, a warning level cannot exist.
 - Rust is among the first adapters, so the tool gates its own source early.
 
-Go is the runner-up, but tree-sitter needs cgo, which costs the easy static build, and nothing like `ast-grep-core` exists to reuse. TypeScript needs a runtime and parses slowly, Zig is pre-1.0, and Python misses the speed target.
-
 The cost is compile time in the agent's own edit loop. Split the workspace so a rule change never rebuilds the parser, and keep a warm [target cache](../software/cargo-target-cache.md).
 
 Extending the tool never requires Rust. Rules, fact rules and config are YAML, and adapters are mostly tree-sitter query files in the style of `tags.scm`, with Rust only where a language's name resolution needs real code. Adding a rule, or even a language, stays data an agent writes, and the Rust core stays small.
