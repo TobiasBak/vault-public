@@ -96,6 +96,22 @@ These check the diff against the base revision, never the candidate's own config
 
 One static Linux binary. `check` runs the gate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters such as `ruff format`, `rustfmt` and Clippy run as declared steps, so a repository still has one entrypoint, but the tool does not reimplement them.
 
+### Implementation language
+
+Rust, because the hard parts already exist as Rust libraries and the tool must ship as one fast binary.
+
+- Tree-sitter's best-maintained bindings and the grammar crates compile straight into the binary, and `ast-grep-core` supplies pattern matching for language-specific rules.
+- A static musl build has no runtime to install, so one mise entry installs it.
+- Parallel parsing and an in-memory incremental graph without garbage-collection pauses fit the sub-second target, as Ruff, Biome, oxc and ast-grep show.
+- Rule files and config decode once through serde into types with no invalid states. With no severity field in the type, a warning level cannot exist.
+- Rust is among the first adapters, so the tool gates its own source early.
+
+Go is the runner-up, but tree-sitter needs cgo, which costs the easy static build, and nothing like `ast-grep-core` exists to reuse. TypeScript needs a runtime and parses slowly, Zig is pre-1.0, and Python misses the speed target.
+
+The cost is compile time in the agent's own edit loop. Split the workspace so a rule change never rebuilds the parser, and keep a warm [target cache](../software/cargo-target-cache.md).
+
+Extending the tool never requires Rust. Rules, fact rules and config are YAML, and adapters are mostly tree-sitter query files in the style of `tags.scm`, with Rust only where a language's name resolution needs real code. Adding a rule, or even a language, stays data an agent writes, and the Rust core stays small.
+
 ### Shared model
 
 Language adapters built into the tool parse with tree-sitter and map each language into one model: files and modules, definitions and exports, imports and references, calls, error handlers, tests, comments and literals. Adapters also carry language meaning for shared concepts, such as what an ignored error or a sleep call looks like in that language. Adding a language means writing one adapter; no rule changes.
