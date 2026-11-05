@@ -18,7 +18,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 ## Research
 
 - [research/agent-codebase-erosion.md](research/agent-codebase-erosion.md): do agent-maintained codebases inevitably degrade? SlopCodeBench shows prompts lower the level but not the slope; tests whether deletion, clone, boundary and complexity gates flatten it
-- [research/language-agnostic-agent-gate.md](research/language-agnostic-agent-gate.md): design for one always-blocking Linux gate across languages: capabilities against agent erosion, a shared syntax model, violation and fact rules with built-in examples, per-repo config over a versioned default suite
+- [research/language-agnostic-agent-gate.md](research/language-agnostic-agent-gate.md): riprap's settled v1 design: one always-blocking whole-tree gate for Rust, Python and TypeScript, capabilities against agent erosion including over-engineering, a shared syntax model, concept and ast-grep rules with built-in examples, `riprap.toml` over the current suite
 
 ## Hardware
 
