@@ -38,6 +38,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/verification-research-parked.md](agents/verification-research-parked.md): parked live Rust UI hot-patching and shared-execution research; do not start without a measured case
 - [agents/learning-from-feedback.md](agents/learning-from-feedback.md): preserving evidence strength and scope, memory types, feedback weighting, evidence gates, outcome-based learning, forbidden inferences
 - [agents/autoresearch.md](agents/autoresearch.md): experiment-loop requirements, the fast-loop rule (cheap scouts first, rigor only at confirm) and Tobias's scout/screen/confirm system
+- [agents/codebase-erosion.md](agents/codebase-erosion.md): research brief on agent code decaying across continuous feature work, SlopCodeBench evidence that prompts lower the level but not the slope, gate hypotheses and the ratchet question
 - [agents/benchmark-trust.md](agents/benchmark-trust.md): benchmark failure types, SWE-Bench Pro vs DeepSWE, evidence ranking
 - [agents/coding-models.md](agents/coding-models.md): effort guidance, Sol vs Astra cost, Terra vs Sol trial, API specifics, Haiku/Luna limits, free-model trials
 - [agents/harness-operations.md](agents/harness-operations.md): routes to the harness notes plus global CLI install traps (pnpm release-age gating)
