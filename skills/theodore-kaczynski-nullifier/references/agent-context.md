@@ -19,7 +19,7 @@ Each fact has one home; everywhere else links to it or says nothing.
 | Ownership and structure | Directory and symbol names |
 | Domain terms and rejected synonyms | Root `GLOSSARY.md`, or per-context glossaries a root `GLOSSARY-MAP.md` lists; terms only, matching the code's names |
 | Plans, status, progress, handoffs | The task tracker and PRs, never the tree |
-| Other decisions and rationale | Issues and PRs, never the tree |
+| Other rationale and open decisions | A `Why:` commit trailer or an issue ([why](../SKILL.md#where-the-why-goes)), never the tree |
 
 ## Root AGENTS.md
 

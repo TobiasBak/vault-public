@@ -4,7 +4,7 @@ Code owns behavior; tests and examples express intended behavior. Prose keeps on
 
 ## Where knowledge lives
 
-- **Rationale:** first in a check's failure, a product refusal, or the authority line an example test prints on failure. A hard-to-reverse decision no program can check gets an ADR in `docs/adr/`, which is dated evidence that the current instruction can overrule. Other decisions and rationale belong in issues or PRs.
+- **Rationale:** the Theodore skill's [where the why goes](../skills/theodore-kaczynski-nullifier/SKILL.md#where-the-why-goes) owns the order, from a check's failure message down to a `Why:` commit trailer.
 - **Invariants:** types and checks. A consequential hazard that cannot be checked gets one root `AGENTS.md` boundary line.
 - **Domain language:** one preferred term per concept across `GLOSSARY.md`, names, types, APIs, tests and UI. The glossary holds terms only and changes with the code; the [domain-modeling skill](../skills/domain-modeling/SKILL.md) owns it.
 - **Navigation:** the test runner's list of behavior-named tests. No handwritten feature map or file inventory.

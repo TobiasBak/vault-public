@@ -50,7 +50,7 @@ Comments stay banned. When names and code can't show a reason, put it in the fir
 2. **A published contract file:** one line, for a contract Tobias decided that no single test owns, such as a version or compatibility rule.
 3. **An ADR in `docs/adr/`:** for a decision no program can check that clears the `domain-modeling` skill's ADR bar. That skill owns writing ADRs and treating them as dated evidence, not rules.
 
-Other rationale belongs in issues or PRs.
+The reason for one change goes in a `Why:` trailer in the commit that lands it; Tobias's repositories land on main without PRs. An unresolved decision goes in an issue.
 
 ## Faster feedback
 
