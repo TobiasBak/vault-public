@@ -6,17 +6,17 @@ recheck-after: 2027-02-05
 
 ## Abstract
 
-Existing linters stop at one language, and agents erode codebases in ways that are not tied to any language: they add code beside old code, cross boundaries, swallow errors and loosen their own gates. This paper designs a single Linux binary that checks those problems across the popular languages from one set of rules, configured per repository, with every finding blocking. It claims that most of the erosion agents cause is visible without a type checker, in a shared model of definitions, imports, references and diffs. The tool is also the apparatus for the gate hypotheses in the [codebase erosion paper](agent-codebase-erosion.md).
+Existing linters stop at one language, and agents erode codebases in ways that are not tied to any language: they add code beside old code, cross boundaries, swallow errors and loosen their own gates. This paper designs a single Linux binary that checks those problems across the popular languages from one set of rules, configured per repository, with every finding blocking. It claims that most of the erosion agents cause is visible without a type checker, in a language-neutral model of definitions, imports, references and diffs. The tool is also the apparatus for the gate hypotheses in the [codebase erosion paper](agent-codebase-erosion.md).
 
 ## Thesis
 
-A language-agnostic, always-blocking gate built on syntax trees can catch most of the erosion agents cause, with false positives rare enough that repositories keep every default rule on.
+A language-agnostic, always-blocking gate built on syntax trees can catch most of the erosion agents cause, with false positives rare enough that repositories keep every suite rule on.
 
-The thesis is refuted if concept rules miss or misfire materially more often than the per-language tools they replace, if unresolvable dynamic code swamps real repositories, or if repositories disable large parts of the default suite to stay usable.
+The thesis is refuted if concept rules miss or misfire materially more often than the per-language tools they replace, if unresolved sites swamp real repositories, or if repositories disable large parts of the suite to stay usable.
 
 ## Capabilities
 
-Each capability exists because agents reliably produce the failure it blocks. The default suite covers all of them.
+Each capability exists because agents reliably produce the failure it blocks. The suite covers all of them.
 
 ### Accretion
 
@@ -67,14 +67,14 @@ A comment that explains a workaround or justifies the code usually marks a desig
 
 ### Dependencies
 
-- A new third-party dependency not listed in the repository config. Adding it to the list is a gate-config change, so a human sees it.
+- A new third-party dependency not listed in the config. Adding it to the list changes a guarded file, so a human sees it.
 - A dependency imported directly that the manifest only has transitively.
 
-### Gate integrity
+### Guarded files
 
-These check the diff against the base revision, never the candidate's own config.
+These are diff rules, judged against the base, never against the candidate's own config.
 
-- Edits to lint, formatter, CI or gate config.
+- Edits to riprap's config and rule files, or to lint, formatter or CI config.
 - A new `disable`, a loosened threshold or a changed suite version.
 - Per-file ignores and allowlists in other tools' config.
 
@@ -94,7 +94,7 @@ These check the diff against the base revision, never the candidate's own config
 
 ### Shape
 
-One static Linux binary, `riprap`, named for the rock armour that stops shoreline erosion. `check` runs the gate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters such as `ruff format`, `rustfmt` and Clippy run as declared steps, so a repository still has one entrypoint, but the tool does not reimplement them.
+One static Linux binary, `riprap`, named for the rock armour that stops shoreline erosion. `check` judges a candidate and exits nonzero on any finding. `test` runs every rule's examples. `report` prints metrics and never fails. Formatters and type-aware linters such as `ruff format`, `rustfmt` and Clippy run as declared steps, so a repository still has one entrypoint, but the tool does not reimplement them.
 
 ### Implementation language
 
@@ -110,7 +110,7 @@ The cost is compile time in the agent's own edit loop. Split the workspace so a 
 
 Extending the tool never requires Rust. Rules, fact rules and config are YAML, and adapters are mostly tree-sitter query files in the style of `tags.scm`, with Rust only where a language's name resolution needs real code. Adding a rule, or even a language, stays data an agent writes, and the Rust core stays small.
 
-### Shared model
+### Model
 
 Language adapters built into the tool parse with tree-sitter and map each language into one model: files and modules, definitions and exports, imports and references, calls, error handlers, tests, comments and literals. Adapters also carry language meaning for shared concepts, such as what an ignored error or a sleep call looks like in that language. Adding a language means writing one adapter; no rule changes.
 
@@ -118,10 +118,10 @@ The first adapters cover Python, TypeScript and JavaScript, Rust and Go.
 
 ### Rules
 
-Three kinds, available to the default suite and to repositories alike:
+Three kinds, available to the suite and to repositories alike:
 
-- **Violation rules** report a problem. Most are written against the shared model and carry no language. A rule that targets one language's quirk names the language and uses a raw syntax pattern.
-- **Fact rules** add references or entry points to the model, so a repository's own dynamic patterns, such as a handler registry looked up by string, become visible to graph rules. The default suite ships fact rules for common frameworks.
+- **Violation rules** produce findings. Most are concept rules, written against the model with no language. A language rule targets one language's quirk, names the language and matches its syntax directly.
+- **Fact rules** add references or entry points to the model, so a repository's own dynamic patterns, such as a handler registry looked up by string, become visible to rules that read the graph. The suite ships fact rules for common frameworks.
 - **Config** declares layers, entry points, dependency lists and ratchet values.
 
 Every rule file carries its own examples: code it must flag and code it must pass, one snippet per supported language for concept rules, and expected references for fact rules. `test` fails on any mismatch, which proves a new rule catches the mistake it was written for and catches an adapter that maps a concept wrongly.
@@ -131,13 +131,13 @@ Every message names the rule, the location and the approved path. Output is plai
 ### Blocking
 
 - The rule format has no severity field. A finding always fails `check`.
-- No inline or per-file suppression exists.
+- No inline or per-file way to silence a finding exists.
 - Code the adapter cannot resolve, such as `getattr` with a computed name, is itself a finding. The approved paths are an explicit registry, a fact rule or a declared entry point.
-- A repository can disable a rule only as a whole, with a required reason, and adding that `disable` is a gate-integrity finding.
+- A repository can disable a rule only as a whole, with a required reason, and adding that disable changes a guarded file, which is itself a finding.
 
-### Repository config
+### Config
 
-One file in the repository root. It pins the default suite version, so upgrading the tool never changes what blocks until the repository moves to the new suite and fixes everything it finds in the same change. It then adds the repository's rule directory, overrides default rules by id, disables rules with reasons and sets parameters. Shared rule packs are importable but optional.
+One file in the repository root. It pins the suite version, so upgrading the tool never changes what blocks until the repository moves to the new suite and fixes everything it finds in the same change. It then adds the repository's rule directory, overrides suite rules by id, disables rules with reasons and sets parameters. Shared rule packs are importable but optional.
 
 ### Candidate
 
@@ -146,18 +146,18 @@ One file in the repository root. It pins the default suite version, so upgrading
 ## Hypotheses
 
 1. **Concept rules match per-language tools.** Unused-export, dead-file and boundary results agree with knip, vulture and import-linter on real repositories, except where code is dynamic. Refuted if disagreement outside dynamic code is common.
-2. **Unresolved code is rare.** On typical Python and TypeScript repositories, unresolved findings number few enough to fix with fact rules or entry points in one sitting. Refuted if they swamp the real findings.
-3. **The default suite stays quiet on good code.** On well-maintained open-source repositories, nearly every finding is judged real. Refuted if a rule's false positives would push a repository to disable it.
+2. **Unresolved sites are rare.** On typical Python and TypeScript repositories, they number few enough to fix with fact rules or entry points in one sitting. Refuted if they swamp the real findings.
+3. **The suite stays quiet on good code.** On well-maintained open-source repositories, nearly every finding is judged real. Refuted if a rule's false positives would push a repository to disable it.
 4. **Agents write correct rules in one pass.** Given a real mistake and its fix, an agent writes a rule whose examples pass and which rejects the original failure. Refuted if most attempts need human repair.
 5. **It is fast enough to run on every commit.** Checking a typical change in a medium repository takes well under a second warm. Refuted by measurement under the [benchmark checklist](../skills/benchmark-checklist/SKILL.md).
-6. **Blocking without silencing is livable.** Agents fix findings rather than editing gate config. The test belongs to hypothesis 6 of the [erosion paper](agent-codebase-erosion.md).
+6. **Blocking without silencing is livable.** Agents fix findings rather than editing guarded files. The test belongs to hypothesis 6 of the [erosion paper](agent-codebase-erosion.md).
 
 ## Method
 
-Build the shared model, the accretion and boundary rules, and the diff rules first. They are the part no existing tool covers across languages, and the erosion paper needs them.
+Build the model, the accretion and boundary rules, and the diff rules first. They are the part no existing tool covers across languages, and the erosion paper needs them.
 
 1. Compare graph rules against knip, vulture and import-linter on a handful of public repositories per language, and inspect every disagreement.
-2. Run the default suite on well-maintained public repositories and judge each finding real or false.
+2. Run the suite on well-maintained public repositories and judge each finding real or false.
 3. Replay recorded agent mistakes from review history: an agent writes the rule, and the rule must reject the historical change and pass the fix.
 4. Time `check` on real changes, warm and cold, on an isolated machine.
 
@@ -169,12 +169,12 @@ None yet.
 
 ## Open questions
 
-- **Rule syntax.** Extend ast-grep's pattern language, use raw tree-sitter queries, or define a small concept language over the shared model. The concept rules decide this.
+- **Rule syntax.** Extend ast-grep's pattern language, use raw tree-sitter queries, or define a small concept language over the model. The concept rules decide this.
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
-- **Where ratchet values live.** In the repository config, where lowering a value passes and raising one is a gate-integrity finding, or computed from the base revision on every run.
+- **Where ratchet values live.** In the config, where lowering a value passes and raising one is a finding, or computed from the base on every check.
 
 ## References
 
 - [ast-grep](https://ast-grep.github.io): fast tree-sitter pattern linter whose rules are short YAML files with separately tested valid and invalid examples. The closest existing base for the violation rules.
-- [tree-sitter code navigation](https://tree-sitter.github.io/tree-sitter/4-code-navigation.html): per-grammar `tags.scm` queries that mark definitions and references, the mechanism behind GitHub's code navigation. A ready start on the shared model.
+- [tree-sitter code navigation](https://tree-sitter.github.io/tree-sitter/4-code-navigation.html): per-grammar `tags.scm` queries that mark definitions and references, the mechanism behind GitHub's code navigation. A ready start on the model.
 - [knip](https://knip.dev): finds unused files, exports and dependencies in JavaScript and TypeScript, with entry points declared per framework. The model for fact rules and entry-point config.
