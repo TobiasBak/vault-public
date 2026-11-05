@@ -1,6 +1,6 @@
 # Repository diagnosis and design
 
-Judge structure by what a contributor must discover, coordinate and remember to make a correct change. Remove unnecessary obligations; do not optimize for a tidy tree or a low smell count. The [foundations](design-principles.md) set the goal; this procedure finds the structure that serves it.
+Agents take the smallest change that passes. Structure decides whether that change is also correct, so it is the lever on agent output, not polish after the easy wins. Judge it by one question: **must these pieces change together, and does the code show it?** Pieces that must change together but sit apart, pieces tied together that change for different reasons, and pieces with no reason of their own to change are the obligations a contributor must discover, coordinate and remember. Remove those; do not optimize for a tidy tree or a low smell count. The [foundations](design-principles.md) set the goal; this procedure finds the structure that serves it.
 
 ## Pick the change before judging the structure
 
@@ -20,18 +20,37 @@ A useful finding identifies the locations, the decision or invariant they share,
 
 Several smells can come from one cause. Duplicated validation, undocumented call ordering and scattered edits may all result from a missing owner. Report and repair that cause once rather than scoring three independent defects. Prioritize broken contracts, consequential failure and recurring friction over awkward but stable code. Recommend leaving sound structure alone.
 
-Use these lenses to form questions, not automatic rejection rules:
+Keep the working trace as a decision log: write each fix above the problems it removes. The fix that matters often looks nothing like the problems it clears, and a log of one problem per fix suggests symptoms are still being patched one at a time.
+
+```md
+- Decode orders once at the webhook, into an `Order` whose fields are guaranteed, so the fallbacks downstream go.
+  - `sync/webhook.ts:40` defaults a missing currency to "DKK".
+  - `invoices/build.ts:12` checks `order.lines?.length` before every total.
+  - `shipping/label.ts:88` catches a `TypeError` on `address.zip` and retries the label without it.
+- Model the order lifecycle as one state with named transitions, so the flags and the competing readings of them go.
+  - `orders/model.ts:20` has `isPaid`, `isCancelled` and `refundedAt`, and nothing stops all three being set.
+  - `invoices/build.ts:30` and `shipping/label.ts:15` each decide what "shippable" means from those flags, differently.
+```
+
+Use these lenses to form questions, not automatic rejection rules. Most ask the change-together question from one side:
 
 | Lens | Look for | Do not confuse it with |
 |---|---|---|
-| Decision ownership | Independent copies of one rule, competing writers, or callers coordinating private stages to preserve an invariant | Similar code with different reasons to change. One authority need not mean one class, file or process. |
+| Decision ownership | Independent copies of one rule, or callers coordinating private stages to preserve an invariant | Similar code with different reasons to change. One authority need not mean one class, file or process. |
 | Decomposition | A feature's knowledge spread across technical layers or load/validate/save stages, so one decision requires repeated interpretation | Shared infrastructure with a genuine common contract. Feature-first folders can conceal the same scattering. |
 | Contract leakage | Callers depend on storage layouts, vendor flags, ordering secrets or adapter details that the interface claims to hide | Explicit capabilities that genuinely differ. Do not force unlike integrations into a lying common interface. |
-| State modeling | Boolean and optional-field combinations permit contradictions; every caller must remember which combinations work | Drafts, partial outcomes and uncertainty that the product actually has. Model them honestly rather than declaring them impossible. |
 | Module depth | A large interface hides little, or many small files force repeated jumps to understand one operation | A substantial cohesive implementation behind a narrow contract. A "god file" is a responsibility problem, not a line threshold. |
 | Dependency boundaries | A dependency crosses authority, state ownership, runtime or isolation constraints; internals any module can import, so whatever compiles becomes interface; an import rule has no discoverable reason | A chosen layer diagram. Keep useful boundaries, revise mistaken ones, and avoid layers that only forward calls. |
 | Indirection | Delete a wrapper mentally: does policy or hidden knowledge return to callers, or only the callee's name? | A thin facade enforcing access or maintaining a public contract that existing consumers need. Hypothetical future substitution earns nothing. |
 | Change propagation | A rule change needs hand-synchronized edits to several authorities, or an omitted site silently changes behavior | Necessary updates to a public schema, implementation, consumers and independent behavioral checks. Generated projections are not competing authorities. |
+| Special cases | An `if` for one value, a parameter for one caller, a swallowed exception, a retry or sleep, a disabled test. Each is a requirement the design never accounted for; several often point to one missing owner | A domain exception the model names and owns, or a retry an external contract requires and one owner handles. |
+
+The question misses two lenses, and bugs often live there:
+
+| Lens | Look for | Do not confuse it with |
+|---|---|---|
+| State modeling | Boolean and optional-field combinations permit contradictions; every caller must remember which combinations work | Drafts, partial outcomes and uncertainty that the product actually has. Model them honestly rather than declaring them impossible. |
+| Effect ownership | Several places commit the same external effect or write the same fact, or no one owns idempotency when a step is retried after partial failure | One owner that delegates mechanics to adapters. [Runtime outcomes](runtime-outcomes.md) own inspecting and repairing effects. |
 
 Do not turn file length, folder names, identical syntax or the number of changed files into correctness gates. Mechanical enforcement needs a specific invariant, not a proxy for good design.
 

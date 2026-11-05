@@ -52,6 +52,7 @@ Keep it a snapshot, not a diary. Checkpoint at validated milestones, subsystem s
 - Tool results should return stable IDs, source location and revision, truncation status, and how to expand. Return selected matches and actionable errors rather than whole logs or API responses.
 - Use host filtering or [programmatic tool calling](orchestration.md#programmatic-tool-calling) for joins, ranking, and aggregation that need no model judgment.
 - Limit failures must name the budget, its limit, the actual value, and the fix. Silent truncation removes the evidence an agent needs to recover.
+- To reason across a whole codebase that doesn't fit in context, the [untangle-codebase skill](../skills/untangle-codebase/SKILL.md) scripts a skeleton without function bodies and a rerunnable import graph. Neither is measured here yet.
 - Conditional detail needs an applicability cue and a retrieval action. If agents keep missing material, sharpen the pointer before inlining it.
 
 ## Skills as conditional context

@@ -41,6 +41,8 @@ Supply these only where the request and repository leave a consequential gap:
 - **Output:** required content, evidence, validation.
 - **Stop rules:** when to retry, fall back, ask, escalate, or finish.
 
+**Say why, not just what.** A stated reason lets the model handle cases the rule doesn't name. Anthropic's example: "never use ellipses" works worse than the same rule explained by a text-to-speech engine reading the output ([prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#add-context-to-improve-performance), checked 2026-11-05). The reason that matters most names the real objective where the cheap path competes with it. Agents take the easiest wins (Tobias, 2026-11-05), so a refactor prompt that says structure is what produces good agent output should stop renames and dead-code deletion from passing as the job; the [untangle-codebase skill](../skills/untangle-codebase/SKILL.md) opens this way. Unmeasured: compare its problem list with and without that section on one repo. A prompt lowers the starting level of decay, not its slope across chained tasks ([erosion paper](../research/agent-codebase-erosion.md)).
+
 Reserve absolutes for invariants and give criteria for judgment calls. If a requested mechanism conflicts with boundaries, explain the conflict and recommend the coherent direction.
 
 ## Execution

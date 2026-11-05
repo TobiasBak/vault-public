@@ -1,0 +1,4 @@
+interface:
+  display_name: "Untangle Codebase"
+  short_description: "Untangle a whole codebase in one refactoring pass"
+  default_prompt: "Use $untangle-codebase to untangle this codebase and complete the refactor to the end."

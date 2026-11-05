@@ -17,7 +17,7 @@ Start with a real product task and the outcome its users need, not a tooling che
 4. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/runtime-outcomes.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
 5. **Recover when needed:** inspect completed, incomplete, and uncertain effects at their owner before retrying. Use supported repair and verify the resulting state; a source revert does not undo external effects. Follow the [runtime outcome procedure](references/runtime-outcomes.md).
 
-A missing answer is a task gap to fix at its owner, not a reason to build every capability here. Whole-repo conformance is separate work.
+A missing answer is a task gap to fix at its owner, not a reason to build every capability here. Whole-repo conformance is separate work; for a whole-codebase untangling pass, use the `untangle-codebase` skill.
 
 ## Ownership
 
