@@ -58,14 +58,12 @@ Agents add code and rarely delete it. This is the core of the tool.
 
 ### Comments
 
-Agents write comments to explain a workaround or justify a choice, and the next agent copies the workaround along with the comment. A comment that has to defend the code usually marks a boundary in the wrong place. The default suite blocks every comment, docstrings and doc comments included, and the message points to where the knowledge belongs instead:
+A comment that explains a workaround or justifies the code usually marks a design heading the wrong way, and the next agent copies both. The message steers toward names and types, a check that carries the reason, or an ADR. Reasoning in [documentation and naming](../agents/documentation-and-naming.md).
 
-```
-no-comments: src/orders/sync.py:41 has a comment.
-Code should explain itself through names and types. A comment that explains a workaround or justifies the code usually means the design is heading the wrong way: fix the owning boundary, or turn the constraint into a check whose failure message carries the reason. A decision with lasting tradeoffs belongs in an ADR.
-```
-
-Adapters report comments as one concept, so the rule carries no language. Directives that a toolchain reads and that have no other spelling, such as a shebang or Go's `//go:build`, are not comments. Suppression directives such as `noqa` or `@ts-expect-error` are comments and block like any other. The reasoning is in [documentation and naming](../agents/documentation-and-naming.md).
+- Line and block comments.
+- Docstrings and doc comments.
+- Suppression directives such as `noqa` and `@ts-expect-error`.
+- Not toolchain directives with no other spelling, such as a shebang or `//go:build`.
 
 ### Dependencies
 
