@@ -11,7 +11,6 @@ ROOT = Path(__file__).resolve().parent.parent
 DESCRIPTION = re.compile(r"^description:\s*\S", re.MULTILINE)
 FLAG = re.compile(r"^\s*(disable-model-invocation|policy\.allow_implicit_invocation)\s*:", re.MULTILINE)
 LINK = re.compile(r"\]\(([^)\s]+)\)")
-TOBIAS_ONLY = Path(".agents/skills/chief-of-staff")
 
 
 def skill_dirs() -> list[Path]:
@@ -55,7 +54,7 @@ def check() -> list[str]:
                     issues.append(
                         f"{path.relative_to(ROOT)}: link escapes the skill directory ({target})"
                     )
-            if FLAG.search(body) and skill.relative_to(ROOT) != TOBIAS_ONLY:
+            if FLAG.search(body):
                 issues.append(
                     f"{path.relative_to(ROOT)}: invocation flag on a model-invoked skill"
                 )
@@ -72,8 +71,8 @@ def main() -> int:
         print(f"skill: {issue}", file=sys.stderr)
     if issues:
         print(
-            "Fix the shape: one description per SKILL.md, no invocation flags outside\n"
-            f"{TOBIAS_ONLY}, instructional links inside the skill directory, and LICENSE\n"
+            "Fix the shape: one description per SKILL.md, no invocation flags (every skill\n"
+            "is model-invoked), instructional links inside the skill directory, and LICENSE\n"
             "beside SOURCE.md for adapted skills.",
             file=sys.stderr,
         )

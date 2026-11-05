@@ -37,7 +37,7 @@ recheck-after: 2027-01-24
 
 ## Make extra machines execute work
 
-Move work through Git, never by copying live worktrees or T3 state (Tobias, 2026-10-11). Commit and push all source state, using WIP branches for dirty work; put handoffs in the owning repos and the restart plan in CoS state. Start fresh threads on the destination. Copy only data Git cannot hold, as cold backups.
+Move work through Git, never by copying live worktrees or T3 state (Tobias, 2026-10-11). Commit and push all source state, using WIP branches for dirty work; put handoffs and the restart plan in the owning repos. Start fresh threads on the destination. Copy only data Git cannot hold, as cold backups.
 
 Keep a whole team's agents, worktrees, gates and caches on its chosen host when the harness supports separate environments. T3's [remote-access documentation](https://github.com/pingdotgg/t3code/blob/05e4f888a0d8591c790d036140080092cf024d30/docs/user/remote-access.md) describes this ownership and new-thread balancing, not gate reservations. Confirm installed capabilities before relying on upstream features.
 

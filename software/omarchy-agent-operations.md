@@ -4,6 +4,8 @@ Use Omarchy's package and privilege paths, not raw Arch package tools or root-eq
 
 recheck-after: 2027-01-24
 
+Put agent scratch clones, probes and artifacts under `~/.cache/agent-tmp/<task>/`, never `/tmp`: `/tmp` is RAM-backed tmpfs charged to the T3 memory slice, and 9 GB of leftovers there stalled orderready's memory admission for 29 minutes (2026-10-14).
+
 ## Packages and privilege
 
 - System packages go through `omarchy pkg add`, never raw `pacman` or `yay`. Agents have no terminal for sudo: run `pkexec /usr/share/omarchy/bin/omarchy-pkg-add <pkgs>` in the background so Tobias can approve the desktop polkit dialog. Do not hand him a command to paste.

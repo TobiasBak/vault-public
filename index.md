@@ -103,4 +103,3 @@ All model-invoked; agents select relevant skills automatically:
 
 - [`audit-knowledge-consistency`](.agents/skills/audit-knowledge-consistency/SKILL.md): judge duplicate, scoped and contradictory knowledge, including instruction files, and verify links
 - [`review-agent-history`](.agents/skills/review-agent-history/SKILL.md): mine Pi and Codex histories for reusable knowledge
-- [`chief-of-staff`](.agents/skills/chief-of-staff/SKILL.md) (Tobias-invoked only): Tobias's single point of contact; delegates to team threads, raises issues without blocking, diagnoses teams, keeps the vault. Its state lives outside the vault, in `~/.local/state/chief-of-staff/`.

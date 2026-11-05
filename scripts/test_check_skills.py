@@ -52,14 +52,13 @@ class CheckSkillsTests(unittest.TestCase):
         self.write("skills/demo/SKILL.md", "---\nname: demo\n---\n\n# Demo\n")
         self.assertRejected("skills/demo: SKILL.md frontmatter has no description")
 
-    def test_invocation_flag_outside_chief_of_staff_is_rejected(self):
+    def test_invocation_flag_is_rejected(self):
         self.write("skills/demo/SKILL.md", SKILL.replace("name: demo\n", "name: demo\ndisable-model-invocation: true\n"))
         self.assertRejected("skills/demo/SKILL.md: invocation flag on a model-invoked skill")
 
-    def test_chief_of_staff_keeps_its_invocation_flag(self):
-        self.write(".agents/skills/chief-of-staff/SKILL.md", SKILL.replace("name: demo\n", "name: chief-of-staff\ndisable-model-invocation: true\n"))
-        result = self.check()
-        self.assertEqual(result.returncode, 0, result.stderr)
+    def test_invocation_flag_in_a_vault_only_skill_is_rejected(self):
+        self.write(".agents/skills/demo/SKILL.md", SKILL.replace("name: demo\n", "name: demo\ndisable-model-invocation: true\n"))
+        self.assertRejected(".agents/skills/demo/SKILL.md: invocation flag on a model-invoked skill")
 
     def test_adapted_skill_without_license_is_rejected(self):
         self.write("skills/demo/SOURCE.md", "Adapted from upstream.\n")
