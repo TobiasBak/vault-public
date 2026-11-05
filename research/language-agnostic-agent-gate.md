@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 design settled; build steps 1 and 2 landed (2026-11-05).
+Status: v1 design settled; build steps 1, 2 and 4 landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -23,7 +23,7 @@ Each capability exists because agents reliably produce the failure it blocks. On
 Agents add code and rarely delete it. This is the core of the tool.
 
 - Unused exports, files and dependencies.
-- Names like `*_v2`, `new_*`, `legacy_*`, `utils2` and `helpers/`.
+- Names like `*_v2`, `new_*`, `legacy_*`, `utils2` and `helpers/`, on files, directories and definitions.
 - Exact structural clones above a size: the same logic pasted with renamed variables.
 - The same literal defined twice: a magic number, URL or status string repeated across modules.
 
@@ -80,9 +80,10 @@ A comment that explains a workaround or justifies the code usually marks a desig
 
 ### Hygiene
 
-- JavaScript files: TypeScript only, unless the file is an out-of-scope path.
-- Stray READMEs, docs directories and nested agent instruction files.
-- Committed binaries and oversized fixtures.
+- JavaScript files: TypeScript only. A repository whose runtime mandates JS disables the rule; a single served script becomes an out-of-scope path.
+- READMEs anywhere, docs directories except a root `docs/adr/`, and nested agent instruction files.
+- Committed binaries, decided by executable signature: ELF, Mach-O, PE, ar, WebAssembly, Python bytecode. Images and other assets never match.
+- Oversized fixtures: at least 128 KiB and compressing at least 64-fold. Real inputs in Tobias's repositories compress under 40-fold.
 
 ### Ratchets
 
@@ -183,6 +184,8 @@ Follow the [fast-loop funnel](../agents/autoresearch.md#fast-loops-first-tobias-
 Build step 1, 2026-11-05: a release build checked orderready's whole tree, 2,389 Rust files and about 640k lines, in 0.346 s wall on one warm run without a cache, on a shared Ryzen 7 7800X3D with 16 threads under load average 2.4. One run, so no variance figure. tree-sitter-rust 0.24.2 failed on four valid files under `third_party/`, among them `dyn 'static + FnOnce()`, which led to parse failures exiting 2 instead of being findings.
 
 Build step 2, 2026-11-05: 31 language rules joined the comment rule. Each had zero false positives in an acceptance run across Tobias's 12 repositories, judged by the building agent under his standards. Getting there took narrowing: `except: pass` counts only catch-all handlers, `.get(k, {})` only chained with a literal key, `unwrap_or_default()` only after a JSON accessor. Plain `print` and `console.log` were dropped because every hit was a script's real output. The same orderready check took a median of 387 ms over 10 warm runs (376 to 427 ms) on 16 threads, against 320 ms for the comment rule alone, so one shared walk for all language rules costs about 65 ms. Parsing each file once matters more: in the `patterns` measurements a second parse cost about three times the whole matching walk, and walking once per rule cost about 330 ms per rule.
+
+Build step 4, 2026-11-05: seven path rules over every file, with examples written as small file trees. All had zero false positives across the 12 repositories; the counts are mostly READMEs, 187 of them. orderready stayed at 403 ms. omarchy, which carries 190 MB of media, went from 43 to 153 ms because the binary check reads each file's first bytes in sequence.
 
 ## Open questions
 
