@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 design settled; build steps 1 to 4 landed (2026-11-05).
+Status: v1 built; all five build steps landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -24,8 +24,8 @@ Agents add code and rarely delete it. This is the core of the tool.
 
 - Unused exports, files and dependencies.
 - Names like `*_v2`, `new_*`, `legacy_*`, `utils2` and `helpers/`, on files, directories and definitions.
-- Exact structural clones above a size: the same logic pasted with renamed variables.
-- The same literal defined twice: a magic number, URL or status string repeated across modules.
+- Exact clones: production functions whose syntax trees match once names are numbered by first use and literals reduced to their kind, at 50 or more body tokens. Tests and trait-impl members are excluded.
+- Repeated literals: a module-level constant defined in two files of one language, either a distinctive string of eight or more characters or a same-named number above 10 that is neither round nor a power of two.
 
 ### Boundaries and ownership
 
@@ -87,7 +87,13 @@ A comment that explains a workaround or justifies the code usually marks a desig
 
 ### Ratchets
 
-- A metric, such as clone share or handler density, above the value committed in the config.
+- A metric above the value committed in the config. The finding sits on that value's line in `riprap.toml` and lists the metric's top contributors, because a ratchet promises something about the whole codebase and any single contributor may be untouched old code.
+
+The metrics `report` prints:
+
+- **Clone share:** the percentage of production lines in functions that copy an earlier function.
+- **Concentrated complexity:** the percentage of complexity mass, cyclomatic complexity times the square root of lines, held by functions above complexity 10.
+- **Handler density:** production error handlers per thousand production lines.
 
 ## Design
 
@@ -192,6 +198,10 @@ Build step 3, 2026-11-05: the model and graph, with cross-file resolution for Ca
 Hypothesis 1, first evidence: on six Python repositories vulture reported 694 items. riprap flagged 17 of them and nothing vulture missed. Of the rest, 343 are outside riprap's scope, such as attributes and locals, 317 are framework or test code that riprap correctly keeps, and 17 were cases where riprap was right on inspection, such as names used only from strings. One was a real miss: a dead helper in a unittest subclass, which riprap keeps because it treats every method of a class with an external base as a possible override.
 
 The orderready check grew to a median of 685 to 776 ms against 406 to 414 ms for the step 4 binary, over three interleaved rounds of 11 warm runs under load average 1.8 to 5.7 from other agents. An instrumented run split the time into about 360 ms parsing and inspecting files, 95 ms building the graph and 45 ms in concept rules. It is under the one-second target, so no cache was added.
+
+Build step 5, 2026-11-05: exact clones, repeated literals, `report`, ratchets and a speed pass. Both new rules had zero false positives across the 12 repositories after narrowing. Clones stopped flagging enum-to-string tables, `get` and `get_mut` twins, trait delegations and tests. Literals had to drop raw occurrences, which numbered in the thousands, coincidental numbers with different names, round numbers and comparisons across languages. orderready's real findings were mostly one colour and type-scale palette copied into about five UI modules. Metric values across the repositories ranged from 0 to 4.75 for clone share, 29 to 86 for concentrated complexity and 1.3 to 17 for handler density. riprap commits its own values as its first ratchets.
+
+The orderready check settled at a median of 635 ms, with 6.6 s of CPU, under load average 6 to 9. Parallel file reads, query compilation and rule execution won back about 140 ms, and the new features cost about 74 ms. The check is now bound by tree-sitter parsing, which takes about 40 percent of the CPU, the model query and ast-grep, so the next large gain needs a cache or less parsing. omarchy measured 693 ms before the speed pass and 217 ms after; step 3's mention building over its 66 MB of text was serial, which made step 4's 153 ms figure stale.
 
 ## Open questions
 
