@@ -1,6 +1,6 @@
 ---
 name: domain-modeling
-description: Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, when terms are vague, overloaded or contested, when names for one concept drift across code, APIs, tests and UI, or when an ADR or other recorded decision conflicts with the task.
+description: Build and sharpen a project's domain model. Use when discussing codebase terminology, writing or editing a GLOSSARY.md, recording or editing an ADR, when terms are vague, overloaded or contested, when names for one concept drift across code, APIs, tests and UI, or when an ADR or other recorded decision conflicts with the task.
 ---
 
 # Domain Modeling
@@ -43,16 +43,16 @@ In the same change, rename every drifted identifier, type, test name, command an
 
 Define what the concept is through its type: fields and constructors that exclude the states the domain forbids. When a term under `_Avoid_` keeps returning and the repository has a lint or check surface, reject it in identifiers mechanically.
 
-### Record decisions sparingly
+### Offer ADRs sparingly
 
-Never write an ADR or create a `docs/adr/` directory. A modeling decision earns a durable record only when all three hold:
+Only offer to create an ADR when all three are true:
 
 1. **Hard to reverse:** changing your mind later has a meaningful cost.
 2. **Surprising without context:** a future reader will wonder why it was done this way.
 3. **The result of a real trade-off:** there were genuine alternatives, and one was picked for specific reasons.
 
-If any is missing, record nothing and say which test failed. Record a qualifying decision at the repository's rationale owner; where `theodore-kaczynski-nullifier` governs the repository, follow its "Where the why goes".
+If any is missing, skip the ADR and say which test failed. Use the format in [ADR-FORMAT.md](ADR-FORMAT.md).
 
-### Treat recorded decisions as dated evidence
+### Treat ADRs as dated evidence
 
-Existing ADRs, `Why:` trailers and glossary entries record past reasoning, often agent-written and accepted without much scrutiny. They are not rules. The user's current instruction outranks them: name the conflicting record, do what was asked, and update or delete the record in the same change. When the code or requirements have moved past a record, challenge it with what changed instead of obeying it. Never refuse or stall by citing one.
+An ADR records past reasoning, often agent-written and accepted without much scrutiny. It is not a rule. The user's current instruction outranks it: name the conflicting ADR, do what was asked, and rewrite or delete the ADR in the same change. When the code or requirements have moved past an ADR, challenge it with what changed instead of obeying it. Never refuse or stall by citing one. Glossary entries age the same way.

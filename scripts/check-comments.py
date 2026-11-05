@@ -88,7 +88,7 @@ def main() -> int:
     if issues:
         print(
             "Tracked files carry no comments or docstrings. Say it with a name, a check's failure\n"
-            "message or CLI help, or put a one-off reason in a `Why:` trailer of the landing commit.",
+            "message or CLI help, or put the reason in the note that owns it.",
             file=sys.stderr,
         )
         return 1

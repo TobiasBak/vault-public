@@ -84,7 +84,7 @@ All model-invoked; agents select relevant skills automatically:
 - [`disk-cleanup`](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
 - [`unslop`](skills/unslop/SKILL.md): concise, natural prose
 - [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
-- [`domain-modeling`](skills/domain-modeling/SKILL.md) (adapted from Matt Pocock): sharpen contested domain terms while designing, keep `GLOSSARY.md` and code names in step, write no ADRs and treat existing ones as challengeable evidence
+- [`domain-modeling`](skills/domain-modeling/SKILL.md) (adapted from Matt Pocock): sharpen contested domain terms while designing, keep `GLOSSARY.md` and code names in step, write ADRs sparingly and treat them as dated, challengeable evidence
 - [`frontend-design`](skills/frontend-design/SKILL.md) (Anthropic): distinctive, intentional visual design
 - [`maintainability-audit`](skills/maintainability-audit/SKILL.md): how easily fresh agents can change the source
 - [`repo-context-audit`](skills/repo-context-audit/SKILL.md): which instructions and docs earn their place

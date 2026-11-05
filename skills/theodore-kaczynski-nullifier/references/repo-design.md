@@ -61,7 +61,7 @@ Write the proposed caller interaction, including a meaningful failure, and ask:
 
 Prefer the least complicated complete system satisfying the actual constraints. Reject both a small patch that adds another authority and a grand redesign that merely rearranges files. A larger cohesive module can beat tiny wrappers; a targeted extraction can beat retaining several independent responsibilities together. The driver decides, not a mandatory paradigm.
 
-Record the chosen shape, its material tradeoff and the evidence that would make it worth revisiting. Use the existing task or decision owner; do not create an ADR tree or new documentation system for the exercise.
+Record the chosen shape, its material tradeoff and the evidence that would make it worth revisiting. Record it in an ADR when it clears the bar, otherwise in the task or PR; do not create another documentation system for the exercise.
 
 ## Repair the whole affected path
 

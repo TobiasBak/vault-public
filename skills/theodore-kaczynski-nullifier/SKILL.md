@@ -11,7 +11,7 @@ Build for fresh-agent autonomy: understanding the system, changing it correctly,
 
 Start with a real product task and the outcome its users need, not a tooling checklist. For repository diagnosis, choose representative changes and follow their actual paths. For a new repository, design around its first useful workflow rather than a directory template.
 
-1. **Understand:** find the published interface, authoritative contract, owning code, and boundaries where effects happen. Establish intended behavior independently of the implementation; identify compatibility obligations from consumers or persisted data. When the domain's terms are vague, contested or disagree with the code, settle them with the `domain-modeling` skill before choosing structure; it owns `GLOSSARY.md`.
+1. **Understand:** find the published interface, authoritative contract, owning code, and boundaries where effects happen. Establish intended behavior independently of the implementation; identify compatibility obligations from consumers or persisted data. When the domain's terms are vague, contested or disagree with the code, settle them with the `domain-modeling` skill before choosing structure; it owns `GLOSSARY.md` and `docs/adr/`.
 2. **Diagnose and choose:** trace the decisions, callers and state writers behind the task. For structural work, use [repository diagnosis and design](references/repo-design.md) to separate symptoms from causes and compare coherent shapes. A smell is a lead, not a verdict; choose by the obligations removed from contributors and callers, not file counts or architectural fashion.
 3. **Change:** repair the owning structure and bad examples, not just the symptom. Make known mistakes impossible or mechanically rejected where enforceable. Preserve the [chosen policies](#repository-rules); add machinery only for a demonstrated task gap, measured recurring cost, or broken contract.
 4. **Establish outcomes:** execute the changed path through its published interface and read back its effects. Separate [static acceptance, observed behavior, and contract judgment](references/runtime-outcomes.md#evidence-and-authority). State the inputs, environment, scope, and anything blocked or unknown. [Explain any failure](references/runtime-outcomes.md#explain-a-failure) before fixing, retrying, or handing it off.
@@ -34,7 +34,7 @@ Shared-tool help and active session instructions own delivery and authority poli
 These are Tobias's chosen policies for agent-maintained repositories without human source review or repair. Changing them needs his explicit agreement, not an optimization argument. They keep understanding tied to the executable system rather than parallel commentary, and tests tied to user-visible behavior rather than implementation structure.
 
 - **Zero comments:** no explanatory or doc comments, TODOs, banners, or commented-out code. A line-1 `#!` is not a comment.
-- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, a test's one-line authority, the [domain glossary](references/agent-context.md#owners), and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
+- **Prose only in** root `AGENTS.md`, [skills](references/agent-context.md#skills), CLI `--help`, a test's one-line authority, the [domain glossary and ADRs](references/agent-context.md#owners), and [published contract files](references/agent-context.md#what-stays-out) at exact gate-listed paths. No README.
 - **Black-box contracts, not private internals:** tests exercise the appropriate production boundary, including a model's public API. [Tests](references/tests.md) owns writing, judging, pruning and migrating them, including replacing an existing suite.
 - **No GUI tests:** nothing drives a GUI, browser or accessibility tree or compares screenshots, and the product carries no hooks for tests to drive its UI. UI rules live in a [production model](references/behavioral-boundaries.md#no-gui-tests) proved through its API.
 - **Searchable names:** name things so `rg` finds them.
@@ -47,9 +47,9 @@ Test helpers, context templates, command names, and execution techniques are mec
 Comments stay banned. A reason names and code can't show goes:
 1. Into something that runs: a check whose failure states the reason and approved path, a product refusal or self-audit message, or the authority line an example prints on failure.
 2. For a contract Tobias decided that no single test owns, such as a version or compatibility rule, one line in its [published contract file](references/agent-context.md#what-stays-out).
-3. For a one-off decision no program can check, a `Why:` trailer in the final landed commit, found with `git log -S'<code>'` or `git blame`.
+3. For a decision no program can check that clears the `domain-modeling` skill's ADR bar, an ADR in `docs/adr/`. That skill owns writing ADRs and treating them as dated evidence, not rules.
 
-The [landing integration](references/enforcement.md#landing-metadata) must preserve applicable trailers through squashes and parent landings. Child commits alone are not their durable home. Other rationale belongs in issues or PRs.
+Other rationale belongs in issues or PRs.
 
 ## Faster feedback
 

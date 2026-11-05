@@ -4,13 +4,13 @@ Code owns behavior; tests and examples express intended behavior. Prose keeps on
 
 ## Where knowledge lives
 
-- **Rationale:** first in a check's failure, a product refusal, or the authority line an example test prints on failure. A one-off decision no program can check gets a `Why:` trailer in the final landed commit. Other decisions, rationale and ADRs belong in issues or PRs, not a docs tree.
+- **Rationale:** first in a check's failure, a product refusal, or the authority line an example test prints on failure. A hard-to-reverse decision no program can check gets an ADR in `docs/adr/`, which is dated evidence that the current instruction can overrule. Other decisions and rationale belong in issues or PRs.
 - **Invariants:** types and checks. A consequential hazard that cannot be checked gets one root `AGENTS.md` boundary line.
 - **Domain language:** one preferred term per concept across `GLOSSARY.md`, names, types, APIs, tests and UI. The glossary holds terms only and changes with the code; the [domain-modeling skill](../skills/domain-modeling/SKILL.md) owns it.
 - **Navigation:** the test runner's list of behavior-named tests. No handwritten feature map or file inventory.
 - **External contracts:** the smallest machine-checked published form its outside consumer needs, at an exact gate-listed path.
 
-Repository prose stays in root `AGENTS.md`, skills, CLI `--help`, example tests' authority lines, the glossary and those published contracts. No README or docs tree. Commands stay in executable owners; skills keep only task steps the CLI cannot perform. See [Theodore's context ownership](../skills/theodore-kaczynski-nullifier/references/agent-context.md).
+Repository prose stays in root `AGENTS.md`, skills, CLI `--help`, example tests' authority lines, the glossary, ADRs and those published contracts. No README or other docs tree. Commands stay in executable owners; skills keep only task steps the CLI cannot perform. See [Theodore's context ownership](../skills/theodore-kaczynski-nullifier/references/agent-context.md).
 
 **Comments:** Tobias prefers a repo-wide no-comments rule enforced by lint or CI. A comment explaining a workaround teaches the next agent to copy it. Fix the boundary or add a check instead; preserve the reason at its owner above.
 

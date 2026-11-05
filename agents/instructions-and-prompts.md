@@ -17,7 +17,7 @@ There's no mandatory inventory of commit rules, test reminders, or engineering m
 | Task goal, scope, success criteria | The request and working state |
 | Behavior across repos | Global instructions |
 | Repo rules, authority boundaries, retrieval triggers | Repo or nested `AGENTS.md` |
-| Rationale and decisions | Checks, example tests' authority lines, landed `Why:` trailers, issues or PRs |
+| Rationale and decisions | Checks, example tests' authority lines, ADRs, issues or PRs |
 | Transferable domain knowledge and findings | Owning vault note; project-specific knowledge stays in its repo |
 | Reusable method that needs judgment | Narrowly triggered skill |
 | Mechanical invariant or repeatable operation | Types, checks, tools |

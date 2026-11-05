@@ -15,11 +15,11 @@ Each fact has one home; everywhere else links to it or says nothing.
 | Behaviors and their authority | Test names and authority lines, found with `rg` |
 | Settled choices | A check, or one Boundaries line when no program can decide it |
 | Invariants and their reasons | Types, constraints and the product's self-audit; static checks for source rules. Failures state the reason and fix |
-| Why a one-off decision was made | A `Why:` commit trailer ([why](../SKILL.md#where-the-why-goes)) |
+| Why a hard-to-reverse decision was made | An ADR in `docs/adr/` ([why](../SKILL.md#where-the-why-goes)) |
 | Ownership and structure | Directory and symbol names |
 | Domain terms and rejected synonyms | Root `GLOSSARY.md`, or per-context glossaries a root `GLOSSARY-MAP.md` lists; terms only, matching the code's names |
 | Plans, status, progress, handoffs | The task tracker and PRs, never the tree |
-| Decisions, rationale, ADRs | Issues and PRs, never the tree |
+| Other decisions and rationale | Issues and PRs, never the tree |
 
 ## Root AGENTS.md
 
@@ -33,7 +33,7 @@ Keep orientation, task entrypoints, ownership and authority limits only where a 
 - Command docs; `--help` owns them. Shared-platform procedures and global agent habits stay out too.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
-- Docs directories. Their contracts become checks and tests through [contract migration](#contract-migration). The one exception is a published contract file: one an outside consumer reads (an OpenAPI spec, a schema), kept at an exact path the gate lists.
+- Docs directories other than `docs/adr/`. Their contracts become checks and tests through [contract migration](#contract-migration). The other exception is a published contract file: one an outside consumer reads (an OpenAPI spec, a schema), kept at an exact path the gate lists.
 
 ## Contract migration
 

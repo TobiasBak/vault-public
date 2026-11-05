@@ -11,11 +11,11 @@ Principles:
 
 ### P1 Dependency gate
 
-A new direct dependency needs a one-line `Why:` trailer in its commit and passes an automated policy: allowed license (P5), actively maintained, published for a minimum time with real downloads, no known vulnerabilities, no build-time scripts (P6). Prefer the standard library or an existing dependency; reject a dependency that replaces a few lines of code. Failing a criterion, or touching crypto, auth or serialization, makes it approval-class.
+A new direct dependency passes an automated policy: allowed license (P5), actively maintained, published for a minimum time with real downloads, no known vulnerabilities, no build-time scripts (P6). Prefer the standard library or an existing dependency; reject a dependency that replaces a few lines of code. Failing a criterion, or touching crypto, auth or serialization, makes it approval-class. A dependency that carries lock-in gets an ADR.
 
 Reason: agents invent plausible package names, and attackers register them ("slopsquatting"); the age and download check catches it. Every dependency is code nobody on the team wrote or reviews.
 
-Enforcement: a pre-push check on manifest changes runs the policy and requires the trailer.
+Enforcement: a pre-push check on manifest changes runs the policy.
 
 ### P2 Sources
 

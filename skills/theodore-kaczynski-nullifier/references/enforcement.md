@@ -16,8 +16,8 @@ Check acceptance establishes only the implemented mechanical property. Independe
 | Landed migrations are immutable | A changed or deleted migration that main already contains | A new [migration](black-box-tests.md#migrations) |
 | One input set | A changed path no job claims | The owning job's inputs, or the explicit ignore list |
 | Committed inputs are readable | A committed test input far larger and more compressible than the repo's real inputs; the failure prints both and the limit | Build it in the test from a small base |
-| Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, an example's authority line, a `Why:` trailer |
-| Prose only where allowed | Prose outside root `AGENTS.md`, skills, `--help`, examples' authority lines, glossaries, and exact published-contract paths; docs directories outside those paths; any README, input directories included; a published contract failing its machine check | The [owners and contract migration](agent-context.md#what-stays-out) |
+| Zero comments | Any comment in a tracked file; a tracked format with no comment scanner not declared comment-free. Generated files exempt by exact name | Names, types, a check's failure message, an example's authority line, an ADR |
+| Prose only where allowed | Prose outside root `AGENTS.md`, skills, `--help`, examples' authority lines, glossaries, `docs/adr/`, and exact published-contract paths; docs directories outside those paths; any README, input directories included; a published contract failing its machine check | The [owners and contract migration](agent-context.md#what-stays-out) |
 | Agent context | Any nested `AGENTS.md`; prompt files (including `.codex/`, `.pi/`) or command docs; an unresolved concrete path or command reference in `AGENTS.md` or a skill; a host instruction file that isn't a symlink to root `AGENTS.md` | The [instruction owners and migration](agent-context.md) |
 | Skill shape | A missing description; an instructional file link escaping its skill directory; an unresolved concrete path or command reference | The [skill rules](agent-context.md#skills); judge relevance and duplication on a real task |
 | One verification entrypoint | A tracked runnable file (interpreter-run scripts included) or task-runner target outside the CLI's exact allowlist; a shell alias or wrapper duplicating a CLI command | The [single entrypoint](control-cli.md#one-entrypoint) |
@@ -35,19 +35,10 @@ The repository supplies static checks, behavioral jobs and their inputs, evidenc
 Check the exact candidate being landed, not whichever tree is easiest to inspect:
 
 - **gah:** check the forwarded workspace, including integrated child changes. There is no staged snapshot; workspace `HEAD` alone is not the candidate. If the candidate changes before landing, rerun its checks.
-- **Ordinary Git:** hooks adapt the actual staged or outgoing candidate supplied by the landing path to the same check implementation. Trailer guards inspect outgoing commits only. Changed candidate inputs invalidate their previous checks.
+- **Ordinary Git:** hooks adapt the actual staged or outgoing candidate supplied by the landing path to the same check implementation. Changed candidate inputs invalidate their previous checks.
 - Required candidate inputs that an entrypoint cannot supply are blocked prerequisites, never a pass or a rule rejection.
 
 A guard never re-judges commits already on the remote under newer rules. Integration supplies evidence to the existing delivery system rather than adding another CI or qualification path.
-
-## Landing metadata
-
-Trailer rules apply to the diff and message that will reach the target history:
-
-- A squash or parent landing must carry applicable `Why:` trailers into the proposed final message. Child commits alone do not preserve rationale in main's history. This is a landing-integration contract, not a reminder for agents to copy text.
-- Fix a gap at the owning landing tool, not with a repo-local merge wrapper.
-
-`Why:` is optional rationale; no check requires or validates its content. Changed expectations carry their authority in the test itself, so they need no trailer.
 
 ## Approved paths
 
@@ -100,4 +91,4 @@ No baselines, suppressions, warning-only modes, or narrowed scope for an adopted
 
 ## Proof
 
-Each check rejects its mechanically specified forbidden pattern, including its plausible bypasses such as an ordinary refactor or alternate syntax, and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. Report semantic obligations separately; a cited authority or trailer is not proof that its claim is correct.
+Each check rejects its mechanically specified forbidden pattern, including its plausible bypasses such as an ordinary refactor or alternate syntax, and accepts the approved one through the real landing entrypoint. Prove it checks the candidate rather than an old base or unrelated staged tree. Report semantic obligations separately; a cited authority or ADR is not proof that its claim is correct.
