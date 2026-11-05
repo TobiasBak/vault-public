@@ -86,6 +86,7 @@ All model-invoked; agents select relevant skills automatically:
 - [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
 - [`domain-modeling`](skills/domain-modeling/SKILL.md) (adapted from Matt Pocock): sharpen contested domain terms while designing, keep `GLOSSARY.md` and code names in step, write ADRs sparingly and treat them as dated, challengeable evidence
 - [`frontend-design`](skills/frontend-design/SKILL.md) (Anthropic): distinctive, intentional visual design
+- [`show-me`](skills/show-me/SKILL.md) (adapted from HumanLayer): explain the current topic with the smallest diagram, code-shape sketch or HTML view
 - [`maintainability-audit`](skills/maintainability-audit/SKILL.md): how easily fresh agents can change the source
 - [`repo-context-audit`](skills/repo-context-audit/SKILL.md): which instructions and docs earn their place
 - [`retro`](skills/retro/SKILL.md): repo improvements from session friction

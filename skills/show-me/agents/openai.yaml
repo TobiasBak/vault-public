@@ -1,0 +1,4 @@
+interface:
+  display_name: "Show Me"
+  short_description: "Explain the current topic visually"
+  default_prompt: "Use $show-me to show the current topic as the smallest diagram, code-shape sketch or HTML view that makes the key point clear."
