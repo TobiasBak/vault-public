@@ -29,7 +29,7 @@ Keep orientation, task entrypoints, ownership and authority limits only where a 
 
 ## What stays out
 
-- Rationale, history, generic advice, and descriptions of what the code does.
+- Decision history and its rationale, generic advice, and descriptions of what the code does.
 - Command docs; `--help` owns them. Shared-platform procedures and global agent habits stay out too.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
@@ -50,7 +50,7 @@ A host that requires another instruction filename gets only a symlink to root `A
 
 ## Skills
 
-- Repo-local skills are allowed.
+- Repo-local skills are allowed. Write them, and `AGENTS.md`, with the `writing-for-agents` skill.
 - Each skill is self-contained: instructional file links stay inside its own directory, not vault notes or sibling skills. Name shared-tool and host dependencies; their active help and session instructions remain authoritative.
 - Within a skill, give each instruction one home and link to it instead of repeating it. Do not copy CLI `--help`, shared delivery policies, or instructions already supplied by the target repository's root `AGENTS.md`.
 - Every concrete path and command a skill names exists. The agent-context check validates mechanically resolvable references; relevance, duplication, and whether a procedure still earns its place require judgment on a representative task.

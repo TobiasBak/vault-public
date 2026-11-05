@@ -88,6 +88,7 @@ All model-invoked; agents select relevant skills automatically:
 - [`hardware-deal-check`](skills/hardware-deal-check/SKILL.md): find and assess Danish-deliverable development-hardware deals against Tobias's price ceilings
 - [`disk-cleanup`](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
 - [`untangle-codebase`](skills/untangle-codebase/SKILL.md) (adapted from caldoai): refactor a whole codebase in one pass around "should these pieces change together?", listing every problem, then redesigning from the special cases
+- [`writing-for-agents`](skills/writing-for-agents/SKILL.md): write skills, `AGENTS.md`, prompts and briefs: say the goal and why, positive targets, concrete wording, one worked example, checkable steps
 - [`unslop`](skills/unslop/SKILL.md): concise, natural prose
 - [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
 - [`domain-modeling`](skills/domain-modeling/SKILL.md) (adapted from Matt Pocock): sharpen contested domain terms while designing, keep `GLOSSARY.md` and code names in step, write ADRs sparingly and treat them as dated, challengeable evidence

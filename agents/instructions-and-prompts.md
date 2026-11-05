@@ -17,7 +17,7 @@ There's no mandatory inventory of commit rules, test reminders, or engineering m
 | Task goal, scope, success criteria | The request and working state |
 | Behavior across repos | Global instructions |
 | Repo rules, authority boundaries, retrieval triggers | Repo or nested `AGENTS.md` |
-| Rationale and decisions | Checks, example tests' authority lines, ADRs, issues or PRs |
+| Decision history and its rationale | Checks, example tests' authority lines, ADRs, issues or PRs |
 | Transferable domain knowledge and findings | Owning vault note; project-specific knowledge stays in its repo |
 | Reusable method that needs judgment | Narrowly triggered skill |
 | Mechanical invariant or repeatable operation | Types, checks, tools |
@@ -41,7 +41,7 @@ Supply these only where the request and repository leave a consequential gap:
 - **Output:** required content, evidence, validation.
 - **Stop rules:** when to retry, fall back, ask, escalate, or finish.
 
-**Say why, not just what.** A stated reason lets the model handle cases the rule doesn't name. Anthropic's example: "never use ellipses" works worse than the same rule explained by a text-to-speech engine reading the output ([prompting best practices](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#add-context-to-improve-performance), checked 2026-11-05). The reason that matters most names the real objective where the cheap path competes with it. Agents take the easiest wins (Tobias, 2026-11-05), so a refactor prompt that says structure is what produces good agent output should stop renames and dead-code deletion from passing as the job; the [untangle-codebase skill](../skills/untangle-codebase/SKILL.md) opens this way. Unmeasured: compare its problem list with and without that section on one repo. A prompt lowers the starting level of decay, not its slope across chained tasks ([erosion paper](../research/agent-codebase-erosion.md)).
+**Say why, not just what.** The [writing-for-agents skill](../skills/writing-for-agents/SKILL.md) owns how to word agent-facing text. Its premise comes from two Anthropic guides that only look opposed: add only what Claude doesn't already know ([skill authoring](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices#concise-is-key)), and give the reason behind an instruction ([prompting](https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices#add-context-to-improve-performance)), both checked 2026-11-05. The goal is exactly what Claude doesn't know. Reading only the first, an agent reviewing the [untangle-codebase skill](../skills/untangle-codebase/SKILL.md) called its why section a pitch; Tobias corrected it: agents take the easiest wins unless told the bigger change is the job (2026-11-05). Unmeasured: compare its problem list with and without that section on one repo. A prompt lowers the starting level of decay, not its slope across chained tasks ([erosion paper](../research/agent-codebase-erosion.md)).
 
 Reserve absolutes for invariants and give criteria for judgment calls. If a requested mechanism conflicts with boundaries, explain the conflict and recommend the coherent direction.
 

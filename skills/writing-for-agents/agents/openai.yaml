@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing for Agents"
+  short_description: "Write skills, AGENTS.md, prompts and briefs agents act on"
+  default_prompt: "Use $writing-for-agents to write or revise this agent-facing text."
