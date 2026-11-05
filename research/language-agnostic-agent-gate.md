@@ -1,6 +1,6 @@
 # One blocking gate for agent-written code in any language
 
-Status: v1 design settled; build step 1 landed (2026-11-05).
+Status: v1 design settled; build steps 1 and 2 landed (2026-11-05).
 
 recheck-after: 2027-02-05
 
@@ -36,7 +36,7 @@ Agents add code and rarely delete it. This is the core of the tool.
 
 ### Defensive slop
 
-- Swallowed errors: `except: pass`, `catch {}`, `.ok()`, `let _ =`.
+- Swallowed errors: a catch-all `except: pass`, an empty `catch {}`.
 - Catch-all handlers that log and continue.
 - Fallback defaults on decoded data: `?? default`, `.get(k, {})`, `unwrap_or_default()`.
 
@@ -54,7 +54,7 @@ Handler density per thousand lines is a metric in `report`, which a repository c
 ### Unfinished and leftover code
 
 - Stubs: `todo!()`, `unimplemented!()`, `raise NotImplementedError`, a function whose body only passes.
-- Debug output: `print`, `console.log`, `dbg!`.
+- Debugger calls: `breakpoint()`, `pdb`, `debugger`, `dbg!`.
 - Disabled code: `if False:`, `if (false)`, dead branches behind constant conditions.
 
 ### Tests that lie
@@ -122,7 +122,7 @@ riprap does not duplicate the compilers. rustc already flags dead private code a
 
 Three kinds, available to the suite and to repositories alike:
 
-- **Violation rules** produce findings. Most are concept rules, written against the model with no language. A language rule targets one language's quirk and matches its syntax with an ast-grep pattern. One crate owns the ast-grep dependency and speaks riprap's own types, so replacing ast-grep later touches only that crate.
+- **Violation rules** produce findings. Most are concept rules, written against the model with no language. A language rule names one or more languages and matches their syntax with an ast-grep condition, compiled once per language. One crate owns the ast-grep dependency and speaks riprap's own types, so replacing ast-grep later touches only that crate.
 - **Fact rules** add references or entry points to the model, so a repository's own dynamic patterns, such as a handler registry looked up by string, become visible to rules that read the graph. The suite ships fact rules for the frameworks in use, starting with pytest fixtures.
 - **Config** declares layers and the edges between them, boundaries, entry points, out-of-scope paths, parameters and ratchet values.
 
@@ -182,9 +182,13 @@ Follow the [fast-loop funnel](../agents/autoresearch.md#fast-loops-first-tobias-
 
 Build step 1, 2026-11-05: a release build checked orderready's whole tree, 2,389 Rust files and about 640k lines, in 0.346 s wall on one warm run without a cache, on a shared Ryzen 7 7800X3D with 16 threads under load average 2.4. One run, so no variance figure. tree-sitter-rust 0.24.2 failed on four valid files under `third_party/`, among them `dyn 'static + FnOnce()`, which led to parse failures exiting 2 instead of being findings.
 
+Build step 2, 2026-11-05: 31 language rules joined the comment rule. Each had zero false positives in an acceptance run across Tobias's 12 repositories, judged by the building agent under his standards. Getting there took narrowing: `except: pass` counts only catch-all handlers, `.get(k, {})` only chained with a literal key, `unwrap_or_default()` only after a JSON accessor. Plain `print` and `console.log` were dropped because every hit was a script's real output. The same orderready check took a median of 387 ms over 10 warm runs (376 to 427 ms) on 16 threads, against 320 ms for the comment rule alone, so one shared walk for all language rules costs about 65 ms. Parsing each file once matters more: in the `patterns` measurements a second parse cost about three times the whole matching walk, and walking once per rule cost about 330 ms per rule.
+
 ## Open questions
 
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
+- **Rust swallowed errors.** `let _ =` and a statement-level `.ok();` were dropped from step 2: of 57 hits in Tobias's repositories, 23 sat in `Drop` impls and most of the rest were sends to a hung-up receiver or best-effort cleanup. Telling those from real swallowing needs types.
+- **Skipped Rust tests.** `#[ignore]` was dropped: orderready ignores fixture functions that parent tests start by name, which only the graph or a fact rule can see. Exempting `#[ignore = "reason"]` would turn the reason into an inline suppression.
 - **Other standards.** Which external style guides to absorb into the suite after v1, each rule passing the same acceptance run.
 
 ## References
