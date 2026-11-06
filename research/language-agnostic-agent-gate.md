@@ -2,7 +2,7 @@
 
 Status: v1 built; all five build steps and the two-layer suite landed (2026-11-05).
 
-recheck-after: 2027-02-05
+recheck-after: 2027-02-06
 
 ## Abstract
 
@@ -33,10 +33,11 @@ Agents add code and rarely delete it. This is the core of the tool.
 - Import cycles between modules.
 - Reaching into another module's internals instead of its public entry point.
 - Test-only hooks in production code.
+- Dispatch on strings outside a boundary: three or more branches that compare one value against identifier-like literals, or assign one state variable three or more of them, when most of those strings recur elsewhere in production code. A match whose every arm builds a typed value is a decoder and passes, as does a TypeScript switch over a declared union of literal types.
 
 ### Defensive slop
 
-- Swallowed errors: a catch-all `except: pass`, an empty `catch {}`.
+- Swallowed errors: a catch-all `except: pass`, an empty `catch {}`, and in Rust a discarded `Result` (`let _ =`, a statement-level `.ok()`, an `unwrap_or` that ignores the error) when a repository signature or a known standard call shows the value is a `Result`.
 - Catch-all handlers that log and continue.
 - Fallback defaults on decoded data: `?? default`, `.get(k, {})`, `unwrap_or_default()`.
 
@@ -45,7 +46,8 @@ Agents add code and rarely delete it. This is the core of the tool.
 Agents cover edge cases the types already exclude, with fallback on fallback and checks repeated deep inside code that should trust its inputs.
 
 - Type checks an annotation already guarantees: `isinstance(x, int)` when `x: int`, `typeof x === "string"` when `x: string`, `if x is None` when `x` is not optional.
-- Error handling outside a boundary.
+- Error handling outside a boundary, `catch_unwind` included.
+- Lonely abstractions: a trait, interface, `Protocol` or ABC that declares methods and has exactly one implementation, tests included. Blanket, generic and macro-expanded impls stand for many types; an extension trait on a foreign type that no bound names, and an abstraction a layer defines for a layer it may not import, pass because removing them is impossible or would break a layer edge.
 - Useless handlers: a catch that only rethrows, a `try` nested inside a handler, a handler that returns a default.
 - Fallback chains of three or more: `a ?? b ?? c ?? d`, `x or y or z or {}`, `getattr(o, "k", None)` on a typed object.
 
@@ -211,16 +213,19 @@ First adoption, orderready, 2026-11-06: 309 findings in 2,911 files with no decl
 
 Second adoption pass, orderready, 2026-11-06: two findings were false positives. sleep-in-test flagged a fake server's handler sleeping to simulate a slow dependency, and exact-clone flagged two public lookups that pass different literals to one shared helper. The first narrowing of sleep-in-test, which exempted every nested closure, also dropped a real wait in dev-loop-lab: a nushell test whose body runs inside a `Playground::setup` closure and sleeps so file times differ. Assertions told the two apart. Across the 12 repositories, with dev-loop-lab's one unparseable vendored file declared out of scope, exactly those two findings disappeared and none appeared; orderready went from 94 to 92 findings. A third false positive followed: two orderready dispatchers that bind a clock reading, then pass differently built messages to one function, missed the exemption only because of the leading binding. Parameterizations now allow plain bindings the call uses, while a second statement call, a discarded binding or a method chain anywhere still makes a clone. That widening removed only that finding across the 12 repositories, out of 170 exact clones, and orderready went from 82 to 81.
 
+Standards pass, 2026-11-06: four detectors drawn from the [SlopCodeBench](agent-codebase-erosion.md) rubric and Google's Rust style guide, judged on the 12 repositories with orderready's real declaration and a stand-in `boundaries = ["edge"]` for repositories without one. Rust swallowed-error now flags a discarded `Result` when a repository signature or a known standard call proves the type. Saturating `try_from`, discards in `Drop`, discards an `#[expect]` with a reason declares and cleanup just before an error exit pass. It found 11, none in orderready. `catch_unwind` now counts as a catch-all handler and found 2 real ones in orderready, an updater and a job runner that log the panic and drop its payload. string-dispatch first flagged one-shot decoders and data tables such as material aliases. Requiring identifier-like literals, most of them recurring elsewhere, and three or more state values, which gives up binary choices such as `kind = "solid"` or `"surface"`, left 34 in orderready, all judged real: review codes mapped to messages in several places, form sections and field names matched across modules, and SASL mechanism names matched twice in one login. Stand-in findings sit mostly in CLI and protocol code the stand-in leaves outside every boundary. riprap's own two findings, manifest file names and Rust path keywords, became enums. lonely-abstraction flags one trait in orderready and one in stepkit-geometry, a numeric bound only `f64` implements. Before narrowing it also flagged six orderready ports that a layer defines for a layer it may not import, blanket impls over closures, generic facades behind `dyn`, and traits whose second impl targets `()` or `f64`, which the first parser missed. Python and TypeScript produced no findings, on little evidence. A fourth detector, a wildcard arm over the repository's own enum, did not ship; see open questions. The coverage matrix has 96 cells, 2 not built.
+
 ## Open questions
 
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
-- **Rust swallowed errors.** `let _ =` and a statement-level `.ok();` were dropped from step 2: of 57 hits in Tobias's repositories, 23 sat in `Drop` impls and most of the rest were sends to a hung-up receiver or best-effort cleanup. Telling those from real swallowing needs types.
+- **Rust swallowed errors.** The rule sees a `Result` only through a repository signature or a short list of standard calls, so it flags 1 of 23 statement-level discards and 10 of 792 `unwrap_or` calls in Tobias's repositories. Most of the rest discard channel sends, which fail only once the receiver hung up, or `Option`s that look the same without types.
 - **Private state in tests for Rust and TypeScript.** Python's `_name` convention is visible in syntax; Rust's non-`pub` items and TypeScript's `private` members need type information to tell from public access.
 - **Recall in classes with external bases.** riprap treats every method of such a class as a possible override, so a dead helper in a unittest subclass passes. A per-framework list of hook names would close it.
 - **Ratchets still reward splitting.** Splitting a complexity-20 function into two of complexity 10 drops complex-function mass to zero. Deletion no longer forces that reshuffle, but an agent may still choose it; the [erosion paper](agent-codebase-erosion.md) tests whether it does.
-- **Handler recall.** A log-only handler that routes the error through a project's own reporting function counts as keeping it, and `.ok()`, `unwrap_or` and `if let Ok` without `else` are not treated as handlers at all. Closing either without types risks the false positives the rule just shed.
+- **Handler recall.** A log-only handler that routes the error through a project's own reporting function counts as keeping it. Rust `.ok()` and `unwrap_or` count as discards on known `Result`s anywhere rather than as handlers outside a boundary, and `if let Ok` without `else` counts as neither.
+- **Wildcard arms on own enums.** A Rust `_ =>` resolved to a closed repository enum in 128 production matches, and in 1 of orderready's 290. Single-variant projections and wildcards that reject or return nothing are safe to pass. The rest mixed real hidden cases, such as `_ => a >= b` standing for one comparison operator among thirteen, with general algorithms that are right for any variant, such as a numeric projection for every non-planar surface. Syntax cannot tell them apart, and the narrowest exact version, a wildcard covering exactly one variant, found 1 match across the 12 repositories. Python and TypeScript had almost no candidate matches.
 - **TypeScript coverage.** Only two of Tobias's repositories carry real TypeScript, so the acceptance evidence there is thin.
-- **Other standards.** Which external style guides to absorb into the suite after v1, each rule passing the same acceptance run.
+- **Other standards.** Which external style guides to absorb after SlopCodeBench and Google's Rust guide, each rule passing the same acceptance run.
 
 ## References
 
