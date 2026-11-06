@@ -65,6 +65,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [software/background-work-coalescing.md](software/background-work-coalescing.md): request intent, complete reusable publications and admission-based race tests
 - [software/typescript.md](software/typescript.md): TypeScript 7 baseline, one authority per layer
 - [software/runtime-schemas.md](software/runtime-schemas.md): one definition for type, decoder and JSON Schema; TypeScript, Python and Rust libraries, eval-free validation, LLM provider schema subsets
+- [software/scip-indexers.md](software/scip-indexers.md): rust-analyzer, scip-typescript and scip-python: what each executes, the flags that keep untrusted code from running, and measured wall time, memory and index size
 - [software/sql-type-inference.md](software/sql-type-inference.md): typed SQL-file imports, colinhacks demo, what it does and does not establish
 - [software/effect.md](software/effect.md): Effect, and when it's worth it
 - [software/gigatoken.md](software/gigatoken.md): fast Rust tokenizer runtime
