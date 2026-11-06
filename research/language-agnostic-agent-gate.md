@@ -81,7 +81,7 @@ A comment that explains a workaround or justifies the code usually marks a desig
 ### Hygiene
 
 - JavaScript files: TypeScript only. A repository whose runtime mandates JS disables the rule; a single served script becomes an out-of-scope path.
-- READMEs anywhere, docs directories except a root `docs/adr/`, and nested agent instruction files.
+- READMEs anywhere and nested agent instruction files. Docs directories are allowed.
 - Committed binaries, decided by executable signature: ELF, Mach-O, PE, ar, WebAssembly, Python bytecode. Images and other assets never match.
 - Oversized fixtures: at least 128 KiB and compressing at least 64-fold. Real inputs in Tobias's repositories compress under 40-fold.
 

@@ -33,7 +33,6 @@ Keep orientation, task entrypoints, ownership and authority limits only where a 
 - Command docs; `--help` owns them. Shared-platform procedures and global agent habits stay out too.
 - Any rule a check enforces, unless agents hit it on the common path. Then one line, no explanation.
 - Plans, status, and progress. A stale plan in the tree misleads every later agent.
-- Docs directories other than `docs/adr/`. Their contracts become checks and tests through [contract migration](#contract-migration). The other exception is a published contract file: one an outside consumer reads (an OpenAPI spec, a schema), kept at an exact path the gate lists.
 
 ## Contract migration
 
