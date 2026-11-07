@@ -151,7 +151,9 @@ Three kinds, available to the suite and to repositories alike:
 - **Fact rules** add references or entry points to the model, so a repository's own dynamic patterns, such as a handler registry looked up by string, become visible to rules that read the graph. The suite ships fact rules for the frameworks in use, starting with pytest fixtures.
 - **Config** declares layers and the edges between them, boundaries, entry points, out-of-scope paths, parameters and ratchet values.
 
-Every rule file carries its own examples: code it must flag and code it must pass, one snippet per supported language for concept rules, and expected references for fact rules. `test` fails on any mismatch, which proves a new rule catches the mistake it was written for and catches an adapter that maps a concept wrongly.
+Every rule file carries examples that must flag or pass, and fact rules prove the references they add. Syntax rules and comment cells can use snippets; concept cells that read the graph use file trees. `test` rejects any disagreement between the rule and its examples.
+
+A language rule or one covered cell can narrow its findings with `paths`, a nonempty list of globs rooted at the repository, without removing those files from the shared model or changing another rule. This is rule applicability, not a per-file suppression. A scoped rule needs trees proving both an included finding and excluded code that the same rule would flag without its path scope. Pathless snippets still prove syntax as covered code, with companion trees proving scope. riprap's `AGENTS.md` owns the authoring format.
 
 A rule joins the suite only after a run across Tobias's repositories in which every finding is a real problem. One false positive means narrowing the rule first. Real findings are not a blocker; each repository fixes them when it upgrades riprap.
 
