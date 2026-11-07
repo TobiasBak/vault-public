@@ -1,6 +1,6 @@
 # Do agent-maintained codebases inevitably degrade?
 
-Status: pre-registered, no runs yet (2026-11-05).
+Status: pre-registered; one scout run, no replicated runs (2026-11-07).
 
 recheck-after: 2027-02-05
 
@@ -47,9 +47,11 @@ Runs are real compute. Run them on an isolated or cloud machine, not the shared 
 
 ## Results
 
-No experiment runs yet.
+No replicated runs yet.
 
 Pilot observation for hypothesis 3, 2026-11-05. An agent was asked to lower riprap's own concentrated complexity by real simplification and was told about this hypothesis. The share fell from 52.05 to 36.63, but total cyclomatic complexity fell only 4%, from 1588 to 1523, while functions grew from 361 to 383 and lines from 9149 to 9258. 58 of the 65 points removed came from one change, a capture-name dispatch turned into a data table. Most of the rest split functions into named pieces that kept the same branching, and the agent reported this itself. Even an honest agent that knows about the trap lowers the share mostly by redistribution, so the share alone is not a trustworthy gate. Total complexity per line is the companion measure splitting cannot lower.
+
+Scout, 2026-11-07. Sol 6.1 solved three SlopCodeBench problems, one run per arm: plain, riprap as a gate, and riprap with default ratchets; there was no anti-slop arm. Scores are in the [gate paper's results](language-agnostic-agent-gate.md#results). Neither gate changed correctness. In the plain arm, erosion rose across checkpoints, from 0.45 to 0.75 on the REST service. The gate alone held it near 0.2–0.3 at no extra cost. With default ratchets it stayed at 0, partly by construction, because the gate enforces a near-relative of the metric. That arm also reproduced the redistribution seen above: one program grew from 1,549 to 1,994 production lines and from 15 to 43 files, and cost rose 31 percent. The scout ran on the shared workstation at Tobias's request, capped at two 2-CPU containers.
 
 ## Open questions
 

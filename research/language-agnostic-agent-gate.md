@@ -317,6 +317,40 @@ Implicit state machines, 2026-11-07. Tobias's rules now forbid implicit state ma
 
 Lexical modes are the closest: precise on real lexers, but its corpus evidence is one shell-lexing repository. Before restricting the loop to character or byte iteration it flagged separator flags such as ripgrep's `first` at equal rates in agent and ordinary code.
 
+SlopCodeBench with and without the gate, 2026-11-07. Codex 0.166 with Sol 6.1 at high effort solved three SlopCodeBench problems through all their checkpoints: dynamic_config_service_api, file_backup and xjq, 13 checkpoints. It ran under SCB's just-solve prompt in SCB's Docker environment, with one run per problem and arm. Arm A had no gate. Arm B blocked every checkpoint on riprap 0b357b6, whose config held only out-of-scope paths, so no ratchet applied. Arm B2 changed only the binary, to e9502b5 with default ratchets. In both gated arms, the harness fed findings back and resumed the agent up to three times. Scores are SCB's own tests and deterministic quality metrics. Riprap counts are diagnostic, since its rules were partly calibrated on SCB solutions.
+
+| | A, no gate | B, gate | B2, gate with default ratchets |
+|---|---|---|---|
+| Test executions passed | 761 of 995 | 769 of 995 | 769 of 995 |
+| Checkpoints fully solved | 2 of 13 | 2 of 13 | 2 of 13 |
+| Mean erosion | 0.56 | 0.26 | 0.05 |
+| Mean cognitive erosion | 0.77 | 0.55 | 0.27 |
+| Mean verbosity | 0.20 | 0.14 | 0.16 |
+| Largest function complexity | 56 | 25 | 17 |
+| API-equivalent cost | $2.88 | $2.70 | $3.54 |
+| Inference minutes | 68 | 63 | 78 |
+
+**The gate left correctness unchanged.**
+- B2 matched B on every individual test status.
+- B's eight extra passes over A all came from xjq.
+- Every remaining failure was a spec reading that no lint rule can see: per-element grouping for `--text-all`, and an older backup destination scheme.
+
+**Quality improved at no added cost.** B lowered erosion in every problem at slightly lower total cost than A, even though riprap never flagged complexity there. Over 90 percent of A's diagnostic findings were comments and READMEs. The gain therefore came from the agent working under a gate it ran itself, not from rules firing.
+
+**Agents fixed findings themselves.** In all 26 gated checkpoints, the agent ran `riprap check` while it worked and finished with zero findings. The harness never had to resume it. Fixes included:
+- deleting docstrings;
+- replacing a mock of the agent's own module with a real test;
+- moving README rationale into an ADR.
+
+**Default ratchets traded size and cost for lower erosion.** B2 split every function above complexity 10 without breaking behaviour. The REST service's production code grew from 1,549 to 1,994 lines and from 15 to 43 files, xjq's verbosity doubled, and cost rose 31 percent over B. Its erosion gain is partly by construction, because complex-function mass and SCB erosion both weight complex functions by size.
+
+**Limits.**
+- One run per arm gives no error bars.
+- Only Python was exercised.
+- B2's xjq and file_backup runs used B's final scope adapter rather than B's original mounts.
+- SCB's quality scorer includes the agents' own tests.
+- SCB's snapshot extraction stripped A's bundled OPA binary of its execute bit. The scores above come from a permission-preserving re-evaluation.
+
 ## Open questions
 
 - **Clone detection across languages.** Normalized syntax trees find renamed copies within a language; whether the model can find the same logic written in two languages is unknown and probably not worth it.
@@ -336,6 +370,7 @@ Lexical modes are the closest: precise on real lexers, but its corpus evidence i
 - **Single-file programs.** A stand-in that makes a benchmark's one program file the boundary silences every boundary-gated rule; treating it as core does not. Which is right depends on whether a single-file CLI has a core at all.
 - **Residual corpus false positives.** forwarding-wrapper resolves some foreign methods to a same-named repository function, such as `s.trim()`, Prisma's `findUnique` and `Response.json`. literal-bool-argument flags serde's imposed `visit_bool`. radicale loads plugins through `import_module` on a variable with no package, leaving 17 unused files. 39 TypeScript files fall outside the grammar, and vite-plugin-react's example apps are copies of each other.
 - **TypeScript coverage.** Only two of Tobias's repositories carry real TypeScript; the corpus adds zod, ky, vite-plugin-react, umami, shlink-web-client, jsoncrack and agent-written TypeScript, so most TypeScript evidence now comes from public code.
+- **Default complexity cap on new code.** In the [SlopCodeBench comparison](#results), a default complex-function-mass of 0 kept every function at complexity 10 or below. It also grew one program by 29 percent in production lines and nearly tripled its file count. Whether a cap of 10 fragments new code systematically, or a higher per-function bar would keep the erosion gain at less size and cost, needs more than one run per problem.
 - **Other standards.** Which external style guides to absorb after SlopCodeBench and Google's Rust guide, each rule passing the same acceptance run.
 
 ## References
