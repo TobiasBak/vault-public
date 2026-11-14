@@ -1,14 +1,14 @@
 # Coding models
 
-OpenAI checked 2026-09-29, Anthropic 2026-09-26. Effort guidance is the provider's own; Tobias's [compute routing](compute-routing.md) owns the choices, and no local number here outranks it. Host mechanics — version pins, compaction windows, updater gaps — live in [harness operations](harness-operations.md).
+OpenAI checked 2026-09-29, Anthropic 2026-09-26. Effort guidance is the provider's own. Host mechanics — version pins, compaction windows, updater gaps — live in [harness operations](harness-operations.md).
 
 recheck-after: 2026-11-24
 
 ## Current choice
 
-Follow Tobias's [compute routing](compute-routing.md) for model roles, targets, and effort. Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](pi-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
+Tobias chose Sol over Astra on 2026-09-29 for capability per task cost. Include [Pi child costs](pi-operations.md#pi). [Dotfiles](../projects.md#dotfiles) owns installed config.
 
-Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment, not a routing exception. Follow the [compute routing](compute-routing.md) for permitted roles. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
+Tobias, 2026-10-14: Sol 6.1 is a much stronger non-UI reviewer than Opus 5.5; Opus is the better designer and planner. His hypothetical preference, "with unlimited usage, Opus 5.5 for everything and Sol 6.1 as the reviewer", is a capability judgment. Harden lead tooling and skills so Sol leads close the gap through mechanisms, not reminders.
 
 ## Effort guidance
 
@@ -40,14 +40,14 @@ Checked 2026-10-24: Codex Fast consumes included subscription allowance at 2.5x 
 ## Choosing a setup
 
 - Compare model, effort, instructions, tools, and host together; see [host vs API capabilities](orchestration.md#programmatic-tool-calling) and [benchmark trust](benchmark-trust.md). Measure correctness, architectural fit, corrective turns, time, and cost per successful task.
-- Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). The [compute routing](compute-routing.md) owns effort choices, not provider defaults or benchmark arms.
+- Tobias rejected `low` for skipped searches, checks, and work, and `max` for costing far more than `xhigh` with little gain (2026-10-10). On one fresh run of a routine review plus a test change (2026-10-20), `medium` cut Sol's model time 141→96 s but missed a valid review note that `high` caught.
 - Judge a cheap or free arm by whole-task cost, never by token price: in a free-tier trial about 40% of tasks came back wrong, and the lead's rework outweighed the tokens saved. Passing checks never established equivalence to the reference fix ([feedback](learning-from-feedback.md)).
 - Effort labels differ across models. Length isn't difficulty: large mechanical edits and short open design questions need different effort.
 - Verbosity is visible detail, not reasoning depth. Dropping a consequential qualifier fails even in a short answer.
 
 ## Terra vs Sol, 2026-10-27
 
-GPT-6.1 Terra costs half of Sol: $1 / $0.05 / $5 per MTok, credits 25 / 1.25 / 125 ([rate card](https://help.openai.com/en/articles/11481834-chatgpt-rate-card-business-enterpriseedu-credit-based-pricing)). Local trial, two runs per case: direction, not decimals. Capability evidence only; [compute routing](compute-routing.md) decides.
+GPT-6.1 Terra costs half of Sol: $1 / $0.05 / $5 per MTok, credits 25 / 1.25 / 125 ([rate card](https://help.openai.com/en/articles/11481834-chatgpt-rate-card-business-enterpriseedu-credit-based-pricing)). Local trial, two runs per case: direction, not decimals.
 
 - **Reviews: Terra wins.** Of 8 known real bugs, Sol `high` found 1 and Terra `xhigh` 4 (Pi); Sol `xhigh` 3 and Terra `max` 6 (Codex). Terra adds more unverified extra findings; Sol cites more evidence.
 - **Implementation: Sol wins or ties.** Terra `xhigh` matched Sol `high` on hidden tests at ~40% of the cost but fixed only the reported instance of a bug class. Terra `max` fixed the class but renamed a public method in both runs. Brief Terra to fix the whole defect class and keep public APIs stable.
@@ -90,10 +90,9 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 - Easy set: all perfect; Haiku `low` through `xhigh`, Luna `medium`.
 - Haiku's `medium` miss: changed 7/9 sites, claimed "all seven". Luna below `xhigh`: import closure stopped at 3–5/24 files, empty review, bug line 6 lines off, required format broken twice.
 - No request exceeded 100K. Haiku prompts reached 97K at `xhigh`; Claude Code base prompt ~23K vs Pi ~6K. Three reps per cell on synthetic tasks of unknown representativeness: trust direction, not decimals.
-- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. The benchmark arms are experiments, not approved delegation roles; follow Tobias's [compute routing](compute-routing.md). Luna's 272K tier is more forgiving; no tested task approached it.
+- **Haiku `high` findings:** it bought reliability and half Luna `xhigh`'s latency for 1.4x its cost. Luna's 272K tier is more forgiving; no tested task approached it.
 - **Base prompts must be far below 100K.** A T3/OpenCode setup's 100K Haiku cap with ~163K base prompt compacted every step, never finished ([issue](https://github.com/SpyrosPsarras/epaflix/issues/1739)). Haiku 5.5's tokenizer counts ~30% more tokens than 4.5's. Anthropic positions it for "summaries, compactions, or database queries" ([@ClaudeDevs](https://x.com/ClaudeDevs/status/2107895955144208813)).
 - **API:** adaptive thinking only; effort `low`–`max`, default `medium`. Anthropic warns of early stopping at `low` in long agent prompts, skipped verification at `low`/`medium`, occasional empty replies at `xhigh`. Claude Code harness prompt is ~17–25K before the task.
-- **Routing:** retired from delegation (Tobias, 2026-10-12); see the [compute routing](compute-routing.md).
 
 ### Astra specifics
 
@@ -105,6 +104,6 @@ Haiku used `claude -p`; Luna/Sol `pi -p`. Hard set: 3 reps, Sol 2; API-rate mean
 
 Kept to avoid re-running what already failed, not as a ranking. One `opencode run` per model, two small public dotfiles fixes with a test check, six concurrent, 20-minute cap; diffs read against the merged fix. One pass each on tasks nobody has checked for representativeness, and the transcripts are gone (checked 2026-10-20) — treat every result below as a recollection, not data.
 
-- **Initial results, not current routing:** Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research).
+- **Initial results:** Muse Spark 1.3 (fastest, 54/112 s; overstated manual coverage), Big Pickle (122/137 s; invented a fact in docs), MiMo-V2.6-Flash (slower, sound research).
 - **Avoid:** Nemotron 3.5 Lightning (failed both, littered debug files, claimed success), Nemotron 3 Ultra (hardcoded, timed out flailing), Step 5 Preview (passed, then spent 10 minutes repairing its own throwaway harness). Ling 3.1 Flash works but is slow and hit upstream 429s. Exo Free was already deprecated.
-- **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Passing checks and a confident report did not establish equivalence to the reference. This historical trial grants no routing or review-policy exception.
+- **None matched the reference fix.** Every model passed the checks yet missed edge cases the reference handled (`~` paths, concurrent-edit refusal, preserving `-` directives). Passing checks and a confident report did not establish equivalence to the reference.

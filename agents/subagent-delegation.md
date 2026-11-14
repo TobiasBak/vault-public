@@ -1,12 +1,12 @@
 # Subagent delegation
 
-An agent does its own work: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Compaction summarizes work already done; a brief is written before the work, so it cannot contain what the parent hasn't discovered yet. [Dotfiles](../projects.md#dotfiles) owns the global rule; this note covers how to divide work where dividing is allowed. Follow [compute routing](compute-routing.md) for model roles and effort.
+An agent does its own work: reading, research, exploration, design, implementation, tests and verification. Tobias's own outcome (2026-10-25): he gets more done, more accurately, with one agent than with an orchestrator in most cases; the rule began as 2026-10-24 (agents spawning far too many subagents). Compaction summarizes work already done; a brief is written before the work, so it cannot contain what the parent hasn't discovered yet. This note covers how to divide work where dividing is allowed.
 
 recheck-after: 2027-01-24
 
 ## Who divides
 
-Tobias, 2026-10-25: agents do their own work by preference, but any top-level agent whose large task divides into independent packages may delegate them to a strong model, and each delegate does all of its package itself. He never wants explorer-style agents; review subagents are fine. No subagent runs on Opus: there is no quota for it.
+Tobias, 2026-10-25: agents do their own work by preference, but any top-level agent whose large task divides into independent packages may delegate them to a strong model, and each delegate does all of its package itself. He never wants explorer-style agents; review subagents are fine.
 
 - **Top-level agents with a large, divisible task:** packages that are independent and testable on their own.
 - **Read before you size.** A task is large when the change it needs is large, not when the files it touches are. Read the targets and find what actually has to change before deciding to split. Example (2026-11-05): a vault rewrite was briefed to four writers by word count (~30k words), without reading the files; the writers failed on a login error, and reading showed one skill entry file and a few lines needed changing, which took minutes without delegating.
@@ -71,10 +71,7 @@ State the goal and deliverable, the minimum context with exact evidence location
 - Wait only on correctness-critical results. Schedule on events rather than in barrier batches, and cancel optional work once the evidence suffices.
 - Workers verify their own boundary; the orchestrator runs integration validation once. Report blocked shared tooling instead of having every worker investigate it.
 - Review handoffs follow [code review](code-review.md). Keep the reviewer independent of the author's narrative. Don't impose a fixed scout, planner, implementer, reviewer pipeline.
-
-## Compute routing
-
-Model roles, targets and effort live in [compute routing](compute-routing.md), including the T3 inheritance trap and the routing hook. Judge delegation by correctness, latency, cost per success including retries, duplication, and recovery from failed children.
+- Judge delegation by correctness, latency, cost per success including retries, duplication, and recovery from failed children.
 
 ## T3 Code feedback
 

@@ -32,8 +32,7 @@ Where a note goes: `agents/` how an agent should behave and what its harness doe
 - [agents/documentation-and-naming.md](agents/documentation-and-naming.md): what prose keeps, the no-comments rule, code as a search surface
 - [agents/instructions-and-prompts.md](agents/instructions-and-prompts.md): what belongs in AGENTS.md, placement, task contracts, execution habits
 - [agents/context-engineering.md](agents/context-engineering.md): working set vs record, state tiers, compaction and checkpoints, tool output, skills, text-as-image
-- [agents/subagent-delegation.md](agents/subagent-delegation.md): who may delegate (top-level agents splitting a large task into whole packages; no explorers; review subagents fine), whole-outcome splits, when a specialist earns its own context and how to fold it in, model routing and effort, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
-- [agents/compute-routing.md](agents/compute-routing.md): model roles, targets and effort for delegated work, T3 inheritance, routing hook
+- [agents/subagent-delegation.md](agents/subagent-delegation.md): who may delegate (top-level agents splitting a large task into whole packages; no explorers; review subagents fine), whole-outcome splits, when a specialist earns its own context and how to fold it in, bounded tasks and fresh contexts, checkpoint budgets, handoffs, one writer
 - [agents/code-review.md](agents/code-review.md): reviewer inputs, retrieval, lenses, findings
 - [agents/orchestration.md](agents/orchestration.md): loops vs graphs, why a fixed graph is a bet against the model, tool surface and deferred loading, programmatic tool calling (OpenAI and Anthropic), OpenAI dots
 - [agents/testing-with-agents.md](agents/testing-with-agents.md): agentic E2E, verification CLIs and feature maps, real-session handoff check, refactor equivalence, test pruning, team adoption
@@ -90,7 +89,6 @@ All model-invoked; agents select relevant skills automatically:
 - [`disk-cleanup`](skills/disk-cleanup/SKILL.md): reclaim unused compiler output and caches without disrupting concurrent agents; gah ownership and compressed-btrfs measurements
 - [`untangle-codebase`](skills/untangle-codebase/SKILL.md) (adapted from caldoai): refactor a whole codebase in one pass around "should these pieces change together?", listing every problem, then redesigning from the special cases
 - [`writing-for-agents`](skills/writing-for-agents/SKILL.md): write skills, `AGENTS.md`, prompts and briefs: say the goal and why, positive targets, concrete wording, one worked example, checkable steps
-- [`unslop`](skills/unslop/SKILL.md): concise, natural prose
 - [`grilling`](skills/grilling/SKILL.md) (Matt Pocock): stress-test a plan by interview
 - [`domain-modeling`](skills/domain-modeling/SKILL.md) (adapted from Matt Pocock): sharpen contested domain terms while designing, keep `GLOSSARY.md` and code names in step, write ADRs sparingly and treat them as dated, challengeable evidence
 - [`frontend-design`](skills/frontend-design/SKILL.md) (Anthropic): distinctive, intentional visual design

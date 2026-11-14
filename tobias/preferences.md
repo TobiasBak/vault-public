@@ -5,7 +5,7 @@ Weigh these heavily when they fit; repository reality and explicit project polic
 ## How Tobias works
 
 - All development happens through agents: exploration, design, implementation, review, validation. Tobias supplies intent and challenges recommendations; agents decide in-scope product and architecture choices. There is no human coding or source-review phase, so code, tests, docs, and history are the handoff between contexts.
-- Daily host: T3 Code. Follow [team routing](../agents/compute-routing.md) for model roles, targets, and effort; see [coding models](../agents/coding-models.md) for provider and host details.
+- Daily host: T3 Code. Agents choose their own models, delegation targets and effort; Tobias keeps no routing policy (2026-11-14). [Coding models](../agents/coding-models.md) holds the capability and price evidence.
 - Prefer using applications in the browser when practical. A local background companion service is fine; use a native app as the fallback when browser support falls short.
 - Pi should stay vanilla: upstream defaults and built-in tools, no `pi-tools` or other third-party extensions, custom themes, keybindings, prompt templates, or tuning. Keep the shared global agent instructions and skills. Enable built-in codemode alongside the normal tools, not in codemode-only mode.
 - Decide product and architecture choices within the authorized scope; report consequential tradeoffs and reopen Tobias's settled choices only on new evidence.

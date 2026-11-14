@@ -38,7 +38,6 @@ Give one worked example for the step agents get wrong, with real-looking paths a
 - **Inline what every run needs; move what only some cases need behind a pointer.** Word the pointer as the condition for reading it, and keep references one level deep from `SKILL.md`. Keep a concept's rule, reason and caveats together.
 - **The description is the only always-loaded part.** It says what the skill does and when to use it, with one trigger per distinct case, leading with the words a request would use. Tobias's global skills are model-invoked, so the trigger must be precise.
 - **Give each instruction one home** and name the owner instead of restating it. A skill stays self-contained: its instructional links stay inside its own directory, and it names other skills and tools it depends on.
-- **Follow the `unslop` skill for sentence style.** This skill decides what the text says; `unslop` decides how each sentence reads.
 
 ## Check it
 
